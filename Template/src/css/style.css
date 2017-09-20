@@ -7,7 +7,7 @@ body {
   opacity: 0.8; }
 
 #home-section {
-  background: url("../img/home.jpeg") no-repeat;
+  background: url("../img/home.jpg") no-repeat;
   min-height: 700px;
   background-size: cover;
   background-attachment: fixed; }
@@ -19,12 +19,11 @@ body {
     width: 100%;
     min-height: 700px; }
   #home-section .home-inner {
-    padding-top: 150px; }
+    padding-top: 120px; }
   #home-section .card-form {
     opacity: 0.8; }
   #home-section .fa {
-    color: #008ed6;
-    background: #fff;
+    color: #fff;
     padding: 4px;
     border-radius: 5px;
     font-size: 30px; }
