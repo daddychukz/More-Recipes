@@ -1,5 +1,4 @@
 body {
-  background: #333;
   color: #fff; }
 
 .navbar {
@@ -10,7 +9,8 @@ body {
   background: url("../img/home.jpg") no-repeat;
   min-height: 700px;
   background-size: cover;
-  background-attachment: fixed; }
+  background-attachment: fixed;
+  /* Custom */ }
   #home-section .dark-overlay {
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
@@ -27,6 +27,11 @@ body {
     padding: 4px;
     border-radius: 5px;
     font-size: 30px; }
+  #home-section .main-color-bg {
+    background: #333;
+    border: #008ed6 3px solid; }
+  #home-section a {
+    color: #fff; }
 
 #explore-section .fa, #share-section .fa {
   color: #fff;
@@ -41,3 +46,20 @@ body {
   padding: 4px;
   border-radius: 5px;
   font-size: 30px; }
+
+/* Header */
+#header {
+  background: #333333;
+  color: #ffffff;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  padding-top: 75px; }
+
+.breadcrumb a {
+  color: #008ed6; }
+
+#display {
+  color: #333; }
+
+.obj-color {
+  color: #008ed6; }
