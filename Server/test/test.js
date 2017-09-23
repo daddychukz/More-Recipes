@@ -4,7 +4,7 @@
 import request from 'supertest';
 import chai from 'chai';
 import app from '../src/app';
-import fakeData from './helpers/fakeData';
+import fakeData from './helpers/dummyData';
 
 const expect = chai.expect;
 
