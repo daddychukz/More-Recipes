@@ -10,6 +10,13 @@ module.exports = {
     Upvotes: 0
   },
 
+  recipe2: {
+    id: 4,
+    Title: '',
+    Description: faker.Lorem.sentences(2),
+    Upvotes: 0
+  },
+
   user: {
     Username: 'Chuks',
   },
