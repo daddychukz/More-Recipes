@@ -20,6 +20,30 @@ describe('More-Recipes', () => {
         done();
       });
   });
+
+  it('Fails to load the home page', (done) => {
+    request(app)
+      .get('/home')
+      .expect(404)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+  });
+
+  it('Fails to post to undeclared route', (done) => {
+    request(app)
+      .post('/home')
+      .expect(404)
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        done();
+      });
+  });
 });
 
 describe('More-Recipes', () => {
@@ -33,6 +57,45 @@ describe('More-Recipes', () => {
         expect(res.body.recipes[0]).to.have.property('Title');
         expect(res.body.Message).to.equal('Recipe successfully added');
         expect(res.body.recipes.length).to.equal(4);
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('Fails to add a recipe', (done) => {
+    request(app)
+      .post('/api/recipes')
+      .set('Content-Type', 'application/json')
+      .send(fakeData.recipe2)
+      .expect(404)
+      .end((err, res) => {
+        expect(res.body.Message).to.equal('Title Missing');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('Fails upvote a recipe', (done) => {
+    request(app)
+      .put('/api/recipes/10/upvote')
+      .set('Content-Type', 'application/json')
+      .send(fakeData.user)
+      .expect(404)
+      .end((err, res) => {
+        expect(res.body.Message).to.equal('Recipe not found');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('Fails to add a User review', (done) => {
+    request(app)
+      .post('/api/recipes/10/reviews')
+      .set('Content-Type', 'application/json')
+      .send(fakeData.reviews)
+      .expect(404)
+      .end((err, res) => {
+        expect(res.body.Message).to.equal('Recipe not found');
         if (err) return done(err);
         done();
       });
@@ -86,6 +149,18 @@ describe('More-Recipes', () => {
       .expect(201)
       .end((err, res) => {
         expect(res.body.Recipes.length).to.equal(3);
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('Get Recipe by Most Upvotes', (done) => {
+    request(app)
+      .get('/api/recipe?sort=upvotes&order=des')
+      .set('Content-Type', 'application/json')
+      .expect(201)
+      .end((err, res) => {
+        expect(res.body.Message).to.equal('Most Upvotes');
         if (err) return done(err);
         done();
       });
