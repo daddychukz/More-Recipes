@@ -77,14 +77,9 @@ const Delete = (req, res) => {
 
 /* Update a recipe */
 const Update = (req, res) => {
-  if (!req.body.Title) {
+  if (!req.body.Title && !req.body.Description) {
     return res.status(404).json({
-      Message: 'Title Missing',
-      Error: true
-    });
-  } else if (!req.body.Description) {
-    return res.status(404).json({
-      Message: 'Description Missing',
+      Message: 'No Changes Made',
       Error: true
     });
   }
