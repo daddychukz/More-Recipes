@@ -14,7 +14,7 @@ const recipes = [
   },
   {
     id: 3,
-    Title: 'Onion Stew',
+    Title: 'Egusi Soup',
     Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.',
     Upvotes: 1
   }
