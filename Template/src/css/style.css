@@ -1,37 +1,52 @@
 body {
-  color: #fff; }
+  color: #fff; 
+}
 
 .navbar {
   border-bottom: #008ed6 3px solid;
-  opacity: 0.8; }
+  opacity: 0.8; 
+}
 
+/* LOGIN STYLINGS */
 #home-section {
   background: url("../img/home.jpg") no-repeat;
   min-height: 700px;
   background-size: cover;
-  background-attachment: fixed;
-  /* Custom */ }
+  background-attachment: fixed; 
+}
+
   #home-section .dark-overlay {
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 700px; }
+    min-height: 700px; 
+  }
+
   #home-section .home-inner {
-    padding-top: 120px; }
+    padding-top: 120px; 
+  }
+
   #home-section .card-form {
-    opacity: 0.8; }
+    opacity: 0.8; 
+  }
+
   #home-section .fa {
     color: #fff;
     padding: 4px;
     border-radius: 5px;
-    font-size: 30px; }
+    font-size: 30px; 
+  }
+
   #home-section .main-color-bg {
     background: #333;
-    border: #008ed6 3px solid; }
+    border: #008ed6 3px solid; 
+  }
+
   #home-section a {
-    color: #fff; }
+    color: #fff; 
+  }
 
 /* Header */
 #header {
@@ -39,7 +54,8 @@ body {
   color: #ffffff;
   padding-bottom: 10px;
   margin-bottom: 15px;
-  padding-top: 75px; }
+  padding-top: 75px; 
+}
 
 .breadcrumb a {
   color: #008ed6; }
@@ -47,5 +63,7 @@ body {
 #display {
   color: #333; }
 
+/* CUSTOM COLOR */
 .obj-color {
-  color: #008ed6; }
+  color: #008ed6; 
+}
