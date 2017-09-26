@@ -1,9 +1,5 @@
 # More-Recipes
 A platform for users to share the awesome and exciting  recipe ideas they  have invented or learnt.
-[![Build Status](https://travis-ci.org/daddychukz/OLMS.svg?branch=refactored)](https://travis-ci.org/daddychukz/OLMS)
-[![Coverage Status](https://coveralls.io/repos/github/daddychukz/OLMS/badge.svg)](https://coveralls.io/github/daddychukz/OLMS)
-[![Code Climate](https://codeclimate.com/github/daddychukz/OLMS.png)](https://codeclimate.com/github/daddychukz/OLMS)
-
 
 # MORE-RECIPES
 More-Recipes provides a platform for users to share the awesome and exciting  recipe ideas they 
