@@ -88,7 +88,7 @@ const Update = (req, res) => {
       recipes[i].Title = req.body.Title;
       recipes[i].Description = req.body.Description;
       return res.status(201).json({
-        Message: 'Update Success',
+        Message: 'Update Successful',
         recipes,
         Error: false
       });
