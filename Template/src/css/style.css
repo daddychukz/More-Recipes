@@ -2,7 +2,7 @@ body {
   color: #fff; }
 
 .navbar {
-  border-bottom: #008ed6 3px solid;
+  border-bottom: #17a2b8 3px solid;
   opacity: 0.8; }
 
 /* HOME STYLINGS */
@@ -29,7 +29,7 @@ body {
     font-size: 30px; }
   #home-section .main-color-bg {
     background: #333;
-    border: #008ed6 3px solid; }
+    border: #17a2b8 3px solid; }
   #home-section a {
     color: #fff; }
 
@@ -46,10 +46,14 @@ body {
   padding-top: 70px; }
 
 .breadcrumb a {
-  color: #008ed6; }
+  color: #17a2b8; }
 
 #display {
   color: #333; }
 
-.obj-color {
-  color: #008ed6; }
+.obj-color, a {
+  color: #17a2b8; }
+
+.list-group-item.active {
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important; }
