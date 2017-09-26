@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- CSS LINKS -->
+        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/style.css">
+        <title>More-Recipes | Recipe</title>
+    </head>
+
+    <body id="home">
+
+        <!-- NAVIGATION SECTION -->
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+            <div class="container">
+                <a href="index.html" class="navbar-brand"><h1 id="logo">More-Recipes</h1></a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="add-recipe.html" class="nav-link">Add Recipe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="my-recipe.html" class="nav-link">My Recipes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="my-favorite.html" class="nav-link">Favorites</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- <a href="profile.html" class="nav-link">Profile</a> -->
+                            <div class="btn-group open">
+                                <i class="fa fa-user-circle fa-2x pull-right" data-toggle="dropdown" aria-hidden="true"></i>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                                  <li class="divider"></li>
+                                  <li><a class="dropdown-item" href="login.html">Logout</a></li>                        
+                                </ul>
+                              </div>                                                        
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- HOME SECTION -->
+        <header id="header">
+            
+        </header>
+
+        <!-- BREADCRUMB -->
+        <div class="container">
+            <nav class="breadcrumb">            
+                <a class="breadcrumb-item" href="index.html">Home</a>
+                <span class="breadcrumb-item active">Recipe</span>            
+            </nav>  
+        </div>
+
+        <!-- MAIN SECTION -->
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="list-group mb-3">
+                            <li class="list-group-item active text-center"><h5>DURUGO CHUKS</h5></li>
+                            <a href="my-recipe.html" class="list-group-item"><i class="fa fa-cutlery" aria-hidden="true"></i> My Recipes <span class="badge badge-pill badge-info float-right">12</span></a>
+                            <a href="my-favorite.html" class="list-group-item"><i class="fa fa-star" aria-hidden="true"></i> My Favourites <span class="badge badge-pill badge-info float-right">20</span></a>
+                            <a href="profile.html" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> My Profile</a>
+                        </div>
+                    
+                        <!-- TOP RECIPE -->
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item active text-center"><h5>Top 3 Favorite Recipes</h5></li>
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1"><a href="#" class="mb-1"><strong>Egusi Recipe</strong></a></h5>
+                                    <small class="text-muted">7 days ago</small>
+                                </div>
+                                <p class="mb-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, maxime!</p>
+                            </div>
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1"><a href="#"><strong>Roasted Plantain</strong></a></h5>
+                                    <small class="text-muted">5 days ago</small>
+                                </div>
+                                <p class="mb-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, maxime!</p>
+                            </div>
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1"><a href="#"><strong>Sweetened Bean Cake</strong></a></h5>
+                                    <small class="text-muted">2 days ago</small>
+                                </div>
+                                <p class="mb-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, maxime!</p>
+                            </div>
+                        </ul>                        
+                    </div>
+
+                    <!-- RECIPE CATALOG -->
+                    <div class="col-md-8" id="display">
+                        <h1 class="text-center obj-color">Onion Stew</h1><h6 class="text-muted text-center">by: Emeka Onyeka</h6>                        
+                                                   
+                        <br>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni officia quasi deserunt impedit, vitae totam consequatur a nemo. Amet, unde! Suscipit placeat commodi iusto totam similique animi, doloribus adipisci modi harum obcaecati, magnam deserunt rerum distinctio ea praesentium quia blanditiis dolore voluptas fugit accusamus laboriosam iure? Eaque totam placeat, delectus, voluptatem atque voluptatibus ullam ab sapiente sint in ipsam doloribus qui. </p>
+                        <img src="./img/rec6.jpeg" alt="recipe 1" class="float-right" width="300" height="200">
+                        <p>Corporis libero dignissimos incidunt voluptates non assumenda, nihil natus quam ex itaque quae earum, consequatur ducimus atque id ipsam aliquid, asperiores esse. Adipisci sunt, voluptatibus fugit sequi neque vitae dignissimos recusandae nostrum porro eveniet corporis, suscipit quaerat dolorem laboriosam tempora? Numquam nesciunt temporibus vitae, id nulla blanditiis labore harum praesentium exercitationem asperiores nam, aut veritatis soluta aperiam debitis mollitia ipsum eaque sit dolor a architecto, accusantium vel facilis libero! Libero tempora fuga cum magnam error aperiam optio, ex veritatis, impedit quo porro nobis asperiores distinctio iusto voluptates officiis temporibus vitae, tenetur minus quia adipisci deleniti maiores commodi. Vero nihil ab, ipsam odio perferendis dicta, fuga ex reprehenderit beatae esse, adipisci quos earum aspernatur? Minima earum porro quia recusandae voluptates voluptatem consequuntur consectetur illum labore eaque fugit ut maiores, sunt voluptas consequatur vitae, nihil cumque modi perferendis natus dolorum aspernatur.</p>       
+                        <hr>              
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a class="btn btn-sm" href="#" title="Upvote"><i class="fa fa-2x fa-thumbs-o-up"></i></a><span class="badge badge-info" title="Upvotes">12</span>&nbsp; </li>
+                            |
+                            <li class="list-inline-item"><a class="btn btn-sm" href="#" title="Downvote"><i class="fa fa-2x fa-thumbs-o-down"></i></a><span class="badge badge-info" title="Downvotes">2</span></li>
+                            |
+                            <li class="list-inline-item"><a class="btn btn-sm" title="Views"><i class="fa fa-2x fa-eye obj-color"></i></a><span class="badge badge-info" title="Views">30</span></li>
+
+                            <li class="list-inline-item float-right"><a class="btn btn-sm" href="#" title="Favorite" data-toggle="modal" data-target="#favorite"><i class="fa fa-2x fa-star-o"></i></a>
+                        </ul>
+                        <br>
+                        <h3>Reviews</h3>
+                        <div class="mb-3" style="border: #E9ECEF 1px solid">
+                            <div class="d-flex flex-row">
+                                <div class="p-2 align-self-start">
+                                    <img src="./img/user-female.png" alt="user" class="img-fluid rounded-circle" width="50" height="50">
+                                </div>
+                                <div class="p-2 align-self-end">                                    
+                                    <h3><a href="recipe.html">Janet John</a></h3>                
+                                    <small class="text-muted">September 18, 2017</small>                    
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row">
+                                <div class="p-2 align-self-start">
+                                    <img src="./img/user-male.jpg" alt="user" class="img-fluid rounded-circle" width="50" height="50">
+                                </div>
+                                <div class="p-2 align-self-end">                                    
+                                    <h3><a href="recipe.html">Fred Mat</a></h3> 
+                                    <small class="text-muted">September 19, 2017</small>                                  
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <form class="mb-3">
+                            <h3>Post a Review</h3>
+                            <div class="form-group">
+                                <textarea class="form-control"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary">Post Review</button>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+
+            <!-- MAIN FOOTER -->
+            <footer id="main-footer" class="bg-dark">
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <div class="py-4" style="color:white">
+                                <h1 class="h3">More-Recipes</h1>
+                                <p>Copyright &copy; 2017</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Recipe MODAL -->
+            <div class="modal fade text-dark" id="addRecipe">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title" style="color:rgb(255, 255, 255)" id="contactModalTitle">
+                                    Add Recipe
+                                </h5>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="name">Recipe Title</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="messager">Recipe Description</label>
+                                        <textarea class="form-control" rows="6"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="imgFile">Upload Image</label>
+                                        <input type="file" class="form-control-file" id="imgFile" aria-describedby="fileHelp">
+                                        <small id="fileHelp" class="form-text text-muted">Please upload an example image of recipe for better reviews.</small>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary btn-block" data-dismiss="modal">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAVORITE MODAL -->
+                <div class="modal fade text-dark" id="favorite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Successfully Added to Your Favorites
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
