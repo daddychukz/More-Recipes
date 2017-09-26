@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha ./Server/tests/first --compilers js:babel-register",
-    "postinstall": "npm run build",
+    "heroku-postbuild": "npm run build",
     "start": "nodemon ./server/dist/app.js",
     "build": "babel ./server/src --watch -d ./server/dist"
   },
