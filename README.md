@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/daddychukz/More-Recipes.svg?branch=feature_API_Badges_Dummy_Data)](https://travis-ci.org/daddychukz/More-Recipes)
+
 # MORE-RECIPES
 More-Recipes provides a platform for users to share the awesome and exciting  recipe ideas they 
 have invented or learnt.  Suppose a user comes up with a recipe,  he/she can post it on 
