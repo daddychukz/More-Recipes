@@ -14,9 +14,9 @@
     <body id="home">
 
         <!-- NAVIGATION SECTION -->
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
             <div class="container">
-                <a href="index.html" class="navbar-brand">More-Recipes</a>
+                <a href="index.html" class="navbar-brand"><h1 id="logo">More-Recipes</h1></a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -26,13 +26,24 @@
                             <a href="index.html" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="my-recipe.html" class="nav-link">Recipe</a>
+                            <a href="add-recipe.html" class="nav-link">Add Recipe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="my-recipe.html" class="nav-link">My Recipes</a>
                         </li>
                         <li class="nav-item">
                             <a href="my-favorite.html" class="nav-link">Favorites</a>
                         </li>
                         <li class="nav-item">
-                            <a href="profile.html" class="nav-link active">Profile</a>
+                            <!-- <a href="profile.html" class="nav-link">Profile</a> -->
+                            <div class="btn-group open">
+                                <i class="fa fa-user-circle fa-2x pull-right" data-toggle="dropdown" aria-hidden="true"></i>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                                  <li class="divider"></li>
+                                  <li><a class="dropdown-item" href="login.html">Logout</a></li>                        
+                                </ul>
+                              </div>                                                        
                         </li>
                     </ul>
                 </div>
@@ -41,27 +52,7 @@
 
         <!-- PROFILE SECTION -->
         <header id="header">
-            <div class="home-inner">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h1><i class="fa fa-user" aria-hidden="true"></i> Profile - Durugo Chuks</h1>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="dropdown show">
-                                <a class="btn bg-white dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addRecipe">Add Recipe</a>
-                                    <a class="dropdown-item" href="profile.html" data-toggle="modal" data-target="#editProfile">Edit Profile</a>
-                                    <a class="dropdown-item" href="login.html">Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </header>
 
         <!-- BREADCRUMB -->
