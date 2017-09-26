@@ -37,3 +37,6 @@ server/dist/
 .env
 .nyc_output/
 .coveralls.yml
+Client/
+Server/
+Template/
