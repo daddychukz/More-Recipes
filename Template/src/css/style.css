@@ -33,6 +33,10 @@ body {
   #home-section a {
     color: #fff; }
 
+#logo {
+  font-family: 'Pacifico', cursive;
+  color: #fff; }
+
 /* Header */
 #header {
   background: #333333;
