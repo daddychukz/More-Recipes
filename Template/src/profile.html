@@ -115,7 +115,7 @@
                                 <address><i class="fa fa-map-marker obj-color" aria-hidden="true"></i>&nbsp Sabo-Yaba, Nigeria</address>                          
                                 <p><i class="fa fa-phone obj-color" aria-hidden="true"></i>&nbsp 08088017116</p>
                                 <p><i class="fa fa-user obj-color" aria-hidden="true"></i>&nbsp Crystaldee</p>
-                                <a href="#" data-toggle="modal" data-target="#changePassword">Change Password</a>
+                                <a class="btn btn-info" href="#" role="button" data-toggle="modal" data-target="#changePassword">Change Password</a>
                             </div>
                         </div>
                         </div>
@@ -176,13 +176,17 @@
             <div class="modal fade text-dark" id="changePassword">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header bg-primary">
+                            <div class="modal-header bg-info">
                                 <h5 class="modal-title" style="color:rgb(255, 255, 255)" id="contactModalTitle">
                                     Change Password
                                 </h5>
                             </div>
                             <div class="modal-body">
                                 <form>
+                                    <div class="form-group">
+                                        <label for="name">Old Password</label>
+                                        <input type="password" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         <label for="name">New Password</label>
                                         <input type="password" class="form-control">
@@ -194,7 +198,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-primary btn-block">Change</button>
+                                <button class="btn btn-info btn-block">Change</button>
                             </div>
                         </div>
                     </div>
