@@ -4,7 +4,7 @@
   "description": "A platform to share exciting recipe ideas",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./server/tests/test.js --compilers js:babel-register",
+    "test": "mocha ./server/tests/first --compilers js:babel-register",
     "start": "nodemon ./server/dist/app.js",
     "build": "babel ./server/src --watch -d ./server/dist"
   },
