@@ -4,9 +4,10 @@
   "description": "A platform to share exciting recipe ideas",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./Server/tests/first --compilers js:babel-register",
+    "test": "nyc --reporter=html --reporter=text mocha ./Server/tests/first --compilers js:babel-register",
     "start": "nodemon ./Server/dist/app.js",
     "build": "babel ./Server/src -d ./Server/dist",
+    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "postinstall": "npm run build"
   },
   "repository": {
