@@ -28,12 +28,7 @@ const retrieveRecipes = (req, res) => res.status(201).json({
 
 /* Add new recipe */
 const createRecipe = (req, res) => {
-  if (!req.body.id) {
-    return res.status(404).json({
-      Message: 'ID Missing',
-      Error: true
-    });
-  } else if (!req.body.Title) {
+  if (!req.body.Title) {
     return res.status(404).json({
       Message: 'Title Missing',
       Error: true
@@ -45,7 +40,7 @@ const createRecipe = (req, res) => {
     });
   }
   recipes.push({
-    id: req.body.id,
+    id: recipes[recipes.length - 1].id + 1,
     Title: req.body.Title,
     Description: req.body.Description,
     Upvotes: 0
