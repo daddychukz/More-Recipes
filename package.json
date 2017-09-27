@@ -7,6 +7,7 @@
     "test": "nyc --reporter=html --reporter=text mocha ./Server/tests/first --compilers js:babel-register",
     "start": "nodemon ./Server/dist/app.js",
     "build": "babel ./Server/src -d ./Server/dist",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "postinstall": "npm run build"
   },
