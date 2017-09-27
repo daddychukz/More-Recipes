@@ -1,0 +1,18 @@
+
+engines:
+  duplication:
+    enabled: false
+    checks:
+        Similar code:
+          enabled: false
+    config:
+      languages:
+        javascript:
+          mass_threshold: 20
+ratings:
+  paths:
+  - "Server/**.js"
+exclude_paths:
+- "tests/"
+- "node_modules/"
+- "Template/"
