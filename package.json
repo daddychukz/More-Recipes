@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha ./Server/tests/first --compilers js:babel-register",
     "start": "nodemon ./Server/dist/app.js",
-    "build": "babel ./Server/src --watch -d ./Server/dist",
+    "build": "babel ./Server/src -d ./Server/dist",
     "postinstall": "npm run build"
   },
   "repository": {
