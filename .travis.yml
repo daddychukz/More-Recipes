@@ -12,4 +12,6 @@ env:
 script:
   - npm test
   - npm install
+  - npm run coverage
   
+after_success: 'npm run coveralls'
