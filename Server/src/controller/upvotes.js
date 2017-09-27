@@ -21,7 +21,7 @@ const recipes = [
 ];
 
 /* Upvote a recipe */
-const upvote = (req, res) => {
+const upvoteRecipe = (req, res) => {
   if (!req.body.Username) {
     return res.status(404).json({
       Message: 'Username Missing',
@@ -45,7 +45,7 @@ const upvote = (req, res) => {
 };
 
 /* Most Upvotes */
-const mostUpvote = (req, res) => {
+const mostRecipeUpvote = (req, res) => {
   const compareFunction = ((a, b) => b.Upvotes - a.Upvotes);
   if (req.query.sort === 'upvotes' && req.query.order === 'des') {
     recipes.sort(compareFunction);
@@ -63,7 +63,7 @@ const mostUpvote = (req, res) => {
 
 /* Export all methods */
 export default {
-  upvote,
-  mostUpvote
+  upvoteRecipe,
+  mostRecipeUpvote
 };
 

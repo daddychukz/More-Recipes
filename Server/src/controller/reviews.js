@@ -23,7 +23,7 @@ const recipes = [
 const reviews = [];
 
 /* Review a recipe */
-const review = (req, res) => {
+const reviewRecipe = (req, res) => {
   if (!req.body.Review) {
     return res.status(404).json({
       Message: 'Review Missing',
@@ -57,5 +57,5 @@ const review = (req, res) => {
 
 /* Export all methods */
 export default {
-  review
+  reviewRecipe
 };

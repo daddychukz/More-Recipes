@@ -21,13 +21,13 @@ const recipes = [
 ];
 
 /* Get all recipes in catalog */
-const retrieveAll = (req, res) => res.status(201).json({
+const retrieveRecipes = (req, res) => res.status(201).json({
   Recipes: recipes,
   Error: false
 });
 
 /* Add new recipe */
-const create = (req, res) => {
+const createRecipe = (req, res) => {
   if (!req.body.id) {
     return res.status(404).json({
       Message: 'ID Missing',
@@ -58,7 +58,7 @@ const create = (req, res) => {
 };
 
 /* Delete a recipe */
-const Delete = (req, res) => {
+const deleteRecipe = (req, res) => {
   for (let i = 0; i < recipes.length; i++) {
     if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
       recipes.splice(i, 1);
@@ -76,7 +76,7 @@ const Delete = (req, res) => {
 };
 
 /* Update a recipe */
-const Update = (req, res) => {
+const updateRecipe = (req, res) => {
   if (!req.body.Title && !req.body.Description) {
     return res.status(404).json({
       Message: 'No Changes Made',
@@ -101,7 +101,7 @@ const Update = (req, res) => {
 };
 
 /* Get a recipe by ID */
-const retrieve = (req, res) => {
+const retrieveRecipe = (req, res) => {
   for (let i = 0; i < recipes.length; i++) {
     if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
       return res.status(201).json({
@@ -119,9 +119,9 @@ const retrieve = (req, res) => {
 
 /* Export all methods */
 export default {
-  retrieveAll,
-  create,
-  Delete,
-  Update,
-  retrieve
+  retrieveRecipes,
+  createRecipe,
+  deleteRecipe,
+  updateRecipe,
+  retrieveRecipe
 };
