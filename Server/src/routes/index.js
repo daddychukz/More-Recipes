@@ -38,20 +38,20 @@ router.get('/recipe', upvotesController.mostRecipeUpvote);
 
 
 // A catch-all routes not define.
-router.get('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.get('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
-router.delete('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.delete('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
-router.post('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.post('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
-router.put('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.put('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
 export default router;
