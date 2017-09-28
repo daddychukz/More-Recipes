@@ -133,7 +133,7 @@ describe('More-Recipes', () => {
     request(app)
       .delete('/api/recipes/4')
       .set('Content-Type', 'application/json')
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
         expect(res.body.Message).to.equal('Recipe Successfully Deleted');
         expect(res.body.recipes.length).to.equal(3);
@@ -146,7 +146,7 @@ describe('More-Recipes', () => {
     request(app)
       .get('/api/recipes')
       .set('Content-Type', 'application/json')
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
         expect(res.body.Recipes.length).to.equal(3);
         if (err) return done(err);
@@ -158,7 +158,7 @@ describe('More-Recipes', () => {
     request(app)
       .get('/api/recipe?sort=upvotes&order=des')
       .set('Content-Type', 'application/json')
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
         expect(res.body.Message).to.equal('Most Upvotes');
         if (err) return done(err);
