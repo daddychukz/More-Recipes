@@ -21,7 +21,7 @@ const recipes = [
 ];
 
 /* Get all recipes in catalog */
-const retrieveRecipes = (req, res) => res.status(201).json({
+const retrieveRecipes = (req, res) => res.status(200).json({
   Recipes: recipes,
   Error: false
 });
@@ -57,7 +57,7 @@ const deleteRecipe = (req, res) => {
   for (let i = 0; i < recipes.length; i++) {
     if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
       recipes.splice(i, 1);
-      return res.status(201).json({
+      return res.status(200).json({
         Message: 'Recipe Successfully Deleted',
         recipes,
         Error: false
@@ -99,7 +99,7 @@ const updateRecipe = (req, res) => {
 const retrieveRecipe = (req, res) => {
   for (let i = 0; i < recipes.length; i++) {
     if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
-      return res.status(201).json({
+      return res.status(200).json({
         Recipe: recipes[i],
         Message: 'Success',
         Error: false
