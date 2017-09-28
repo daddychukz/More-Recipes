@@ -13,28 +13,28 @@ router.get('/', (req, res) => {
 /* All API Routes */
 
 // Retrieve all recipes
-router.get('/api/recipes', recipeController.retrieveRecipes);
+router.get('/recipes', recipeController.retrieveRecipes);
 
 // Retrieve single recipe
-router.get('/api/recipes/:recipeID', recipeController.retrieveRecipe);
+router.get('/recipes/:recipeID', recipeController.retrieveRecipe);
 
 // Add a recipe
-router.post('/api/recipes', recipeController.createRecipe);
+router.post('/recipes', recipeController.createRecipe);
 
 // Delete a recipe
-router.delete('/api/recipes/:recipeID', recipeController.deleteRecipe);
+router.delete('/recipes/:recipeID', recipeController.deleteRecipe);
 
 // Update a recipe
-router.put('/api/recipes/:recipeID', recipeController.updateRecipe);
+router.put('/recipes/:recipeID', recipeController.updateRecipe);
 
 // Post a review
-router.post('/api/recipes/:recipeID/reviews', reviewController.reviewRecipe);
+router.post('/recipes/:recipeID/reviews', reviewController.reviewRecipe);
 
 // Upvote a recipe
-router.put('/api/recipes/:recipeID/upvote', upvotesController.upvoteRecipe);
+router.put('/recipes/:recipeID/upvote', upvotesController.upvoteRecipe);
 
 // Get Recipe by Most Upvotes
-router.get('/api/recipe', upvotesController.mostRecipeUpvote);
+router.get('/recipe', upvotesController.mostRecipeUpvote);
 
 
 // A catch-all routes not define.
