@@ -1,5 +1,5 @@
 /* Dummy data */
-const recipes = [
+const recipeListings = [
   {
     id: 1,
     Title: 'Jollof Beans',
@@ -22,94 +22,73 @@ const recipes = [
 
 /* Get all recipes in catalog */
 const retrieveRecipes = (req, res) => res.status(200).json({
-  Recipes: recipes,
-  Error: false
+  recipeListings
 });
 
 /* Add new recipe */
 const createRecipe = (req, res) => {
   if (!req.body.Title) {
-    return res.status(404).json({
-      Message: 'Title Missing',
-      Error: true
+    return res.status(400).json({
+      Message: 'Title Field should not be Empty',
     });
   } else if (!req.body.Description) {
-    return res.status(404).json({
-      Message: 'Description Missing',
-      Error: true
+    return res.status(400).json({
+      Message: 'Description Field should not be Empty',
     });
   }
-  recipes.push({
-    id: recipes[recipes.length - 1].id + 1,
+  recipeListings.push({
+    id: recipeListings[recipeListings.length - 1].id + 1,
     Title: req.body.Title,
     Description: req.body.Description,
     Upvotes: 0
   });
   res.status(201).json({
-    Message: 'Recipe successfully added',
-    recipes,
-    Error: false
+    recipeListings,
   });
 };
 
 /* Delete a recipe */
 const deleteRecipe = (req, res) => {
-  for (let i = 0; i < recipes.length; i++) {
-    if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
-      recipes.splice(i, 1);
+  for (let i = 0; i < recipeListings.length; i++) {
+    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
+      recipeListings.splice(i, 1);
       return res.status(200).json({
-        Message: 'Recipe Successfully Deleted',
-        recipes,
-        Error: false
+        recipeListings
       });
     }
   }
-  return res.status(404).json({
-    Message: 'Recipe not found',
-    Error: true
-  });
+  return res.status(404).json({});
 };
 
 /* Update a recipe */
 const updateRecipe = (req, res) => {
   if (!req.body.Title && !req.body.Description) {
-    return res.status(404).json({
-      Message: 'No Changes Made',
-      Error: true
+    return res.status(400).json({
+      Message: 'Specify a field to update'
     });
   }
-  for (let i = 0; i < recipes.length; i++) {
-    if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
-      recipes[i].Title = req.body.Title;
-      recipes[i].Description = req.body.Description;
+  for (let i = 0; i < recipeListings.length; i++) {
+    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
+      recipeListings[i].Title = req.body.Title;
+      recipeListings[i].Description = req.body.Description;
       return res.status(201).json({
-        Message: 'Update Successful',
-        recipes,
-        Error: false
+        recipeListings
       });
     }
   }
-  return res.status(404).json({
-    Message: 'Recipe not found',
-    Error: true
-  });
+  return res.status(404).json({});
 };
 
 /* Get a recipe by ID */
 const retrieveRecipe = (req, res) => {
-  for (let i = 0; i < recipes.length; i++) {
-    if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
+  for (let i = 0; i < recipeListings.length; i++) {
+    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
       return res.status(200).json({
-        Recipe: recipes[i],
-        Message: 'Success',
-        Error: false
+        recipeListings: recipeListings[i]
       });
     }
   }
-  return res.status(404).json({
-    Message: 'Recipe not found',
-    Error: true
-  });
+  return res.status(404).json({});
 };
 
 /* Export all methods */

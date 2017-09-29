@@ -1,5 +1,5 @@
 /* Dummy data */
-const recipes = [
+const recipeListings = [
   {
     id: 1,
     Title: 'Jollof Beans',
@@ -20,38 +20,33 @@ const recipes = [
   }
 ];
 
-const reviews = [];
+const userReviews = [];
 
 /* Review a recipe */
 const reviewRecipe = (req, res) => {
   if (!req.body.Review) {
     return res.status(404).json({
-      Message: 'Review Missing',
-      Error: true
+      Message: 'Please enter a review'
     });
   } else if (!req.body.Username) {
     return res.status(404).json({
-      Message: 'Username Missing',
+      Message: 'Please enter your Username',
       Error: true
     });
   }
-  for (let i = 0; i < recipes.length; i++) {
-    if (recipes[i].id === parseInt(req.params.recipeID, 10)) {
-      reviews.push({
-        Title: recipes[i].Title,
+  for (let i = 0; i < recipeListings.length; i++) {
+    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
+      userReviews.push({
+        Title: recipeListings[i].Title,
         Username: req.body.Username,
         Review: req.body.Review
       });
       return res.status(201).json({
-        Message: 'Review added',
-        reviews,
-        Error: false
+        userReviews
       });
     }
   }
   return res.status(404).json({
-    Message: 'Recipe not found',
-    Error: true
   });
 };
 
