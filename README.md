@@ -1,2 +1,143 @@
-# More-Recipes
-A platform for users to share the awesome and exciting  recipe ideas they  have invented or learnt.
+[![Build Status](https://travis-ci.org/daddychukz/More-Recipes.svg?branch=feature_API_Badges_Dummy_Data)](https://travis-ci.org/daddychukz/More-Recipes)
+[![Coverage Status](https://coveralls.io/repos/github/daddychukz/More-Recipes/badge.svg?branch=feature_API_Badges_Dummy_Data)](https://coveralls.io/github/daddychukz/More-Recipes?branch=feature_API_Badges_Dummy_Data)
+[![Code Climate](https://codeclimate.com/github/daddychukz/More-Recipes.png)](https://codeclimate.com/github/daddychukz/More-Recipes)
+
+# MORE-RECIPES
+More-Recipes provides a platform for users to share the awesome and exciting  recipe ideas they 
+have invented or learnt.  Suppose a user comes up with a recipe,  he/she can post it on 
+More-Recipes and  get feedback in form of reviews and votes from other users who explore that 
+recipe. Users can also keep a list of their favorite recipes on the application. 
+
+<b>View App Here</b> https://chuks-recipes.herokuapp.com/
+
+<h3>TECHNOLOGIES USED</h3>
+<hr>
+<ul>
+  <li>Front-end: React/Redux + Bootstrap (To be Implemented)</li>
+  <li>Back-end: Node/Expressjs + Sequelize/Postgres</li>
+  <li>Libraries: jsonwebtoken, ES6, Babel-CLI, eslint, Mocha/Chai</li>
+  <li>Postman</li>
+</ul>
+
+<h3>API ENDPOINTS</h3>
+<hr>
+<table>
+  <tr>
+      <th>Request</th>
+      <th>End Point</th>
+      <th>Action</th>
+  </tr>
+  <tr>
+      <td>POST</td>
+      <td>/api/v1/recipes</td>
+      <td>Creates New Recipe</td>
+  </tr>
+  <tr>
+      <td>GET</td>
+      <td>/api/v1/recipes/:recipeID</td>
+      <td>Retieve a single recipe</td>
+  </tr>
+  
+  <tr>
+      <td>DELETE</td>
+      <td>/api/v1/recipes/:recipeID</td>
+      <td>Delete a recipe</td>
+  </tr>
+  
+  <tr>
+      <td>PUT</td>
+      <td>/api/v1/recipes/:recipeID<bookId></td>
+      <td>Modify Recipe information</td>
+  </tr>
+  
+  <tr>
+      <td>POST</td>
+      <td>/api/v1/recipes/:recipeID/upvote</td>
+      <td>Upvote a recipe</td>
+  </tr>
+</table>
+
+<h2>Recipe</h2
+<hr>
+
+<h3>Create</h3>
+<hr>
+To add a new Recipe, make a <b>POST</b> request to the end-point /api/recipes
+
+<h4>Request</h4>
+<b>POST:</b> /api/v1/recipes <br>
+<br>
+{<br>
+    'id': 1, <br>
+    'Title': 'Jollof Beans',<br>
+    'Description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.'<br>
+}<br>
+
+<h3>Mock Response</h3>
+<hr><br>
+{<br>
+    "Message": "Recipe successfully added",<br>
+    "recipes": [<br>
+        {<br>
+            "id": 1,<br>
+            "Title": "Jollof Beans",<br>
+            "Description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.",<br>
+            "Upvotes": 0<br>
+        }<br>
+    ]<br>
+}
+<hr>
+
+<h3>Review</h3>
+<hr>
+To add a review to a Recipe, make a <b>POST</b> request to the end-point /api/recipes/:recipeID/reviews
+
+<h4>Request</h4>
+<b>POST:</b> /api/v1/recipes/1/reviews <br>
+<br>
+{<br>
+    'Title': 'Jollof Beans',<br>
+    'Username': 'Chuks',<br>
+    'Review': 'Great Stuff'<br>
+}<br>
+
+<h3>Mock Response</h3>
+<hr><br>
+{<br>
+    "Message": "Review added",<br>
+    "reviews": [<br>
+        {<br>
+            "Title": "Jollof Beans",<br>
+            "Username": "Chuks",<br>
+            "Review": "Great Stuff"<br>
+        }<br>
+    ],<br>
+    "Error": false<br>
+}
+<hr>
+
+<h3>Upvote</h3>
+<hr>
+To Upvote a Recipe, make a <b>PUT</b> request to the end-point /api/recipes/:recipeID/upvote
+
+<h4>Request</h4>
+<b>PUT:</b> /api/v1/recipes/1/upvote <br>
+<br>
+{<br>
+    'Username': 'Chuks'<br>
+}<br>
+
+<h3>Mock Response</h3>
+<hr><br>
+{<br>
+    "Message": "Jollof Beans has received an upvote by Chuks",<br>
+    "recipes": [<br>
+        {<br>
+            "id": 1,<br>
+            "Title": "Jollof Beans",<br>
+            "Description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.",<br>
+            "Upvotes": 1<br>
+        },<br>
+    ],<br>
+    "Error": false<br>
+}

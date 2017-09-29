@@ -11,7 +11,7 @@ const expect = chai.expect;
 describe('More-Recipes', () => {
   it('loads the home page', (done) => {
     request(app)
-      .get('/')
+      .get('/api/v1')
       .expect(200)
       .end((err, res) => {
         if (err) {
@@ -23,7 +23,7 @@ describe('More-Recipes', () => {
 
   it('Fails to load the home page', (done) => {
     request(app)
-      .get('/home')
+      .get('/api/v1/home')
       .expect(404)
       .end((err, res) => {
         if (err) {
@@ -35,7 +35,7 @@ describe('More-Recipes', () => {
 
   it('Fails to post to undeclared route', (done) => {
     request(app)
-      .post('/home')
+      .post('/api/v1/home')
       .expect(404)
       .end((err, res) => {
         if (err) {
@@ -49,14 +49,13 @@ describe('More-Recipes', () => {
 describe('More-Recipes', () => {
   it('adds a recipe', (done) => {
     request(app)
-      .post('/api/recipes')
+      .post('/api/v1/recipes')
       .set('Content-Type', 'application/json')
       .send(fakeData.recipe)
       .expect(201)
       .end((err, res) => {
-        expect(res.body.recipes[0]).to.have.property('Title');
-        expect(res.body.Message).to.equal('Recipe successfully added');
-        expect(res.body.recipes.length).to.equal(4);
+        expect(res.body.recipeListings[0]).to.have.property('Title');
+        expect(res.body.recipeListings.length).to.equal(4);
         if (err) return done(err);
         done();
       });
@@ -64,12 +63,12 @@ describe('More-Recipes', () => {
 
   it('Fails to add a recipe', (done) => {
     request(app)
-      .post('/api/recipes')
+      .post('/api/v1/recipes')
       .set('Content-Type', 'application/json')
       .send(fakeData.recipe2)
-      .expect(404)
+      .expect(400)
       .end((err, res) => {
-        expect(res.body.Message).to.equal('Title Missing');
+        expect(res.body.Message).to.equal('Title Field should not be Empty');
         if (err) return done(err);
         done();
       });
@@ -77,7 +76,7 @@ describe('More-Recipes', () => {
 
   it('Fails upvote a recipe', (done) => {
     request(app)
-      .put('/api/recipes/10/upvote')
+      .put('/api/v1/recipes/10/upvote')
       .set('Content-Type', 'application/json')
       .send(fakeData.user)
       .expect(404)
@@ -90,12 +89,11 @@ describe('More-Recipes', () => {
 
   it('Fails to add a User review', (done) => {
     request(app)
-      .post('/api/recipes/10/reviews')
+      .post('/api/v1/recipes/10/reviews')
       .set('Content-Type', 'application/json')
       .send(fakeData.reviews)
       .expect(404)
       .end((err, res) => {
-        expect(res.body.Message).to.equal('Recipe not found');
         if (err) return done(err);
         done();
       });
@@ -103,12 +101,12 @@ describe('More-Recipes', () => {
 
   it('upvote a recipe', (done) => {
     request(app)
-      .put('/api/recipes/1/upvote')
+      .put('/api/v1/recipes/1/upvote')
       .set('Content-Type', 'application/json')
       .send(fakeData.user)
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
-        expect(res.body.recipes[0].Upvotes).to.equal(1);
+        expect(res.body.recipeListings[0].Upvotes).to.equal(1);
         expect(res.body.Message).to.equal('Jollof Beans has received an upvote by Chuks');
         if (err) return done(err);
         done();
@@ -117,13 +115,12 @@ describe('More-Recipes', () => {
 
   it('adds a User review', (done) => {
     request(app)
-      .post('/api/recipes/1/reviews')
+      .post('/api/v1/recipes/1/reviews')
       .set('Content-Type', 'application/json')
       .send(fakeData.reviews)
       .expect(201)
       .end((err, res) => {
-        expect(res.body.reviews[0]).to.have.property('Username');
-        expect(res.body.Message).to.equal('Review added');
+        expect(res.body.userReviews[0]).to.have.property('Username');
         if (err) return done(err);
         done();
       });
@@ -131,12 +128,11 @@ describe('More-Recipes', () => {
 
   it('Deletes a recipe', (done) => {
     request(app)
-      .delete('/api/recipes/4')
+      .delete('/api/v1/recipes/4')
       .set('Content-Type', 'application/json')
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
-        expect(res.body.Message).to.equal('Recipe Successfully Deleted');
-        expect(res.body.recipes.length).to.equal(3);
+        expect(res.body.recipeListings.length).to.equal(3);
         if (err) return done(err);
         done();
       });
@@ -144,11 +140,11 @@ describe('More-Recipes', () => {
 
   it('Retrieve all recipes', (done) => {
     request(app)
-      .get('/api/recipes')
+      .get('/api/v1/recipes')
       .set('Content-Type', 'application/json')
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
-        expect(res.body.Recipes.length).to.equal(3);
+        expect(res.body.recipeListings.length).to.equal(3);
         if (err) return done(err);
         done();
       });
@@ -156,11 +152,11 @@ describe('More-Recipes', () => {
 
   it('Get Recipe by Most Upvotes', (done) => {
     request(app)
-      .get('/api/recipe?sort=upvotes&order=des')
+      .get('/api/v1/recipe?sort=upvotes&order=des')
       .set('Content-Type', 'application/json')
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
-        expect(res.body.Message).to.equal('Most Upvotes');
+        expect(res.body.Message).to.equal('Recipe with the Most Upvotes');
         if (err) return done(err);
         done();
       });

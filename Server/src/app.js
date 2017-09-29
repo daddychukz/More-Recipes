@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // connect all routes to application
-app.use('/', routes);
+app.use('/api/v1/', routes);
 
 const port = +process.env.PORT || 5000;
 app.set('port', port);

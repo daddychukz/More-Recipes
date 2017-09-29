@@ -13,45 +13,45 @@ router.get('/', (req, res) => {
 /* All API Routes */
 
 // Retrieve all recipes
-router.get('/api/recipes', recipeController.retrieveAll);
+router.get('/recipes', recipeController.retrieveRecipes);
 
 // Retrieve single recipe
-router.get('/api/recipes/:recipeID', recipeController.retrieve);
+router.get('/recipes/:recipeID', recipeController.retrieveRecipe);
 
 // Add a recipe
-router.post('/api/recipes', recipeController.create);
+router.post('/recipes', recipeController.createRecipe);
 
 // Delete a recipe
-router.delete('/api/recipes/:recipeID', recipeController.Delete);
+router.delete('/recipes/:recipeID', recipeController.deleteRecipe);
 
 // Update a recipe
-router.put('/api/recipes/:recipeID', recipeController.Update);
+router.put('/recipes/:recipeID', recipeController.updateRecipe);
 
 // Post a review
-router.post('/api/recipes/:recipeID/reviews', reviewController.review);
+router.post('/recipes/:recipeID/reviews', reviewController.reviewRecipe);
 
 // Upvote a recipe
-router.put('/api/recipes/:recipeID/upvote', upvotesController.upvote);
+router.put('/recipes/:recipeID/upvote', upvotesController.upvoteRecipe);
 
 // Get Recipe by Most Upvotes
-router.get('/api/recipe', upvotesController.mostUpvote);
+router.get('/recipe', upvotesController.mostRecipeUpvote);
 
 
 // A catch-all routes not define.
-router.get('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.get('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
-router.delete('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.delete('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
-router.post('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.post('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
-router.put('*', (req, res) => res.status(404).send(
-  'Invalid Route...'
-));
+router.put('*', (req, res) => res.status(404).json({
+  Message: 'Invalid Route'
+}));
 
 export default router;
