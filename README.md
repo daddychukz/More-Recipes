@@ -29,30 +29,30 @@ recipe. Users can also keep a list of their favorite recipes on the application.
   </tr>
   <tr>
       <td>POST</td>
-      <td>/api/recipes</td>
+      <td>/api/v1/recipes</td>
       <td>Creates New Recipe</td>
   </tr>
   <tr>
       <td>GET</td>
-      <td>/api/recipes/:recipeID</td>
+      <td>/api/v1/recipes/:recipeID</td>
       <td>Retieve a single recipe</td>
   </tr>
   
   <tr>
       <td>DELETE</td>
-      <td>/api/recipes/:recipeID</td>
+      <td>/api/v1/recipes/:recipeID</td>
       <td>Delete a recipe</td>
   </tr>
   
   <tr>
       <td>PUT</td>
-      <td>/api/recipes/:recipeID<bookId></td>
+      <td>/api/v1/recipes/:recipeID<bookId></td>
       <td>Modify Recipe information</td>
   </tr>
   
   <tr>
       <td>POST</td>
-      <td>/api/recipes/:recipeID/upvote</td>
+      <td>/api/v1/recipes/:recipeID/upvote</td>
       <td>Upvote a recipe</td>
   </tr>
 </table>
@@ -65,7 +65,7 @@ recipe. Users can also keep a list of their favorite recipes on the application.
 To add a new Recipe, make a <b>POST</b> request to the end-point /api/recipes
 
 <h4>Request</h4>
-<b>POST:</b> /api/recipes <br>
+<b>POST:</b> /api/v1/recipes <br>
 <br>
 {<br>
     'id': 1, <br>
@@ -93,7 +93,7 @@ To add a new Recipe, make a <b>POST</b> request to the end-point /api/recipes
 To add a review to a Recipe, make a <b>POST</b> request to the end-point /api/recipes/:recipeID/reviews
 
 <h4>Request</h4>
-<b>POST:</b> /api/recipes/1/reviews <br>
+<b>POST:</b> /api/v1/recipes/1/reviews <br>
 <br>
 {<br>
     'Title': 'Jollof Beans',<br>
@@ -121,7 +121,7 @@ To add a review to a Recipe, make a <b>POST</b> request to the end-point /api/re
 To Upvote a Recipe, make a <b>PUT</b> request to the end-point /api/recipes/:recipeID/upvote
 
 <h4>Request</h4>
-<b>PUT:</b> /api/recipes/1/upvote <br>
+<b>PUT:</b> /api/v1/recipes/1/upvote <br>
 <br>
 {<br>
     'Username': 'Chuks'<br>
