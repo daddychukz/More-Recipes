@@ -1,7 +1,7 @@
 
 const faker = require('Faker');
 
-module.exports = {
+const fakeData = {
 
   recipe: {
     id: 4,
@@ -27,3 +27,5 @@ module.exports = {
     Review: faker.Lorem.sentence(8)
   },
 };
+
+export default fakeData;
