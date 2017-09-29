@@ -49,7 +49,7 @@ const mostUpvote = (req, res) => {
   const compareFunction = ((a, b) => b.Upvotes - a.Upvotes);
   if (req.query.sort === 'upvotes' && req.query.order === 'des') {
     recipes.sort(compareFunction);
-    res.status(200).send({
+    res.status(201).send({
       Message: 'Most Upvotes',
       recipes,
       Error: false
