@@ -71,7 +71,7 @@ const updateRecipe = (req, res) => {
     if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
       recipeListings[i].Title = req.body.Title;
       recipeListings[i].Description = req.body.Description;
-      return res.status(201).json({
+      return res.status(200).json({
         recipeListings
       });
     }

@@ -104,7 +104,7 @@ describe('More-Recipes', () => {
       .put('/api/v1/recipes/1/upvote')
       .set('Content-Type', 'application/json')
       .send(fakeData.user)
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
         expect(res.body.recipeListings[0].Upvotes).to.equal(1);
         expect(res.body.Message).to.equal('Jollof Beans has received an upvote by Chuks');
