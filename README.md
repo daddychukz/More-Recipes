@@ -68,23 +68,23 @@ To add a new Recipe, make a <b>POST</b> request to the end-point /api/recipes
 <b>POST:</b> /api/recipes <br>
 <br>
 {<br>
-    'id': 1,
-    'Title': 'Jollof Beans',
-    'Description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.'
+    'id': 1, <br>
+    'Title': 'Jollof Beans',<br>
+    'Description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.'<br>
 }<br>
 
 <h3>Mock Response</h3>
 <hr><br>
 {<br>
-    "Message": "Recipe successfully added",
-    "recipes": [
-        {
-            "id": 1,
-            "Title": "Jollof Beans",
-            "Description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.",
-            "Upvotes": 0
-        }
-    ]
+    "Message": "Recipe successfully added",<br>
+    "recipes": [<br>
+        {<br>
+            "id": 1,<br>
+            "Title": "Jollof Beans",<br>
+            "Description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.",<br>
+            "Upvotes": 0<br>
+        }<br>
+    ]<br>
 }
 <hr>
 
@@ -96,23 +96,23 @@ To add a review to a Recipe, make a <b>POST</b> request to the end-point /api/re
 <b>POST:</b> /api/recipes/1/reviews <br>
 <br>
 {<br>
-    'Title': 'Jollof Beans',
-    'Username': 'Chuks',
-    'Review': 'Great Stuff'
+    'Title': 'Jollof Beans',<br>
+    'Username': 'Chuks',<br>
+    'Review': 'Great Stuff'<br>
 }<br>
 
 <h3>Mock Response</h3>
 <hr><br>
 {<br>
-    "Message": "Review added",
-    "reviews": [
-        {
-            "Title": "Jollof Beans",
-            "Username": "Chuks",
-            "Review": "Great Stuff"
-        }
-    ],
-    "Error": false
+    "Message": "Review added",<br>
+    "reviews": [<br>
+        {<br>
+            "Title": "Jollof Beans",<br>
+            "Username": "Chuks",<br>
+            "Review": "Great Stuff"<br>
+        }<br>
+    ],<br>
+    "Error": false<br>
 }
 <hr>
 
@@ -124,20 +124,20 @@ To Upvote a Recipe, make a <b>PUT</b> request to the end-point /api/recipes/:rec
 <b>PUT:</b> /api/recipes/1/upvote <br>
 <br>
 {<br>
-    'Username': 'Chuks'
+    'Username': 'Chuks'<br>
 }<br>
 
 <h3>Mock Response</h3>
 <hr><br>
 {<br>
-    "Message": "Jollof Beans has received an upvote by Chuks",
-    "recipes": [
-        {
-            "id": 1,
-            "Title": "Jollof Beans",
-            "Description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.",
-            "Upvotes": 1
-        },
-    ],
-    "Error": false
+    "Message": "Jollof Beans has received an upvote by Chuks",<br>
+    "recipes": [<br>
+        {<br>
+            "id": 1,<br>
+            "Title": "Jollof Beans",<br>
+            "Description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.",<br>
+            "Upvotes": 1<br>
+        },<br>
+    ],<br>
+    "Error": false<br>
 }
