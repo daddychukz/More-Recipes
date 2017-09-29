@@ -42,7 +42,7 @@ const reviewRecipe = (req, res) => {
         Review: req.body.Review
       });
       return res.status(201).json({
-        userReviews
+        userReview: userReviews
       });
     }
   }

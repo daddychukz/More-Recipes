@@ -84,7 +84,7 @@ const retrieveRecipe = (req, res) => {
   for (let i = 0; i < recipeListings.length; i++) {
     if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
       return res.status(200).json({
-        recipeListings: recipeListings[i]
+        recipe: recipeListings[i]
       });
     }
   }
