@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/';
 
-const User = db.user;
+const User = db.User;
 
 const secret = 'andelabootcampcycle27';
 
@@ -10,10 +10,10 @@ const secret = 'andelabootcampcycle27';
 const signUp = (req, res) => User
   .create({
     // userId: req.body.userId,
-    fullName: req.body.fullName,
+    fullName: req.body.fullname,
     email: req.body.email,
     sex: req.body.sex,
-    userName: req.body.userName,
+    userName: req.body.username,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword
   })
@@ -24,12 +24,20 @@ const signUp = (req, res) => User
 
 /* sign into the App */
 const signIn = (req, res) => {
-  User
-    .findOne({
-      where: {
-        email: req.body.email
-      }
-    })
+  if (!req.body.email) {
+    return res.status(400).json({
+      Message: 'Email Field should not be Empty',
+    });
+  } else if (!req.body.password) {
+    return res.status(400).json({
+      Message: 'Password Field should not be Empty',
+    });
+  }
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  })
     .then((user) => {
       if (user) {
         bcrypt.compare(req.body.password, user.password, (err, response) => {
