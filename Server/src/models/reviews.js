@@ -1,14 +1,41 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var Reviews = sequelize.define('Reviews', {
-    userId: DataTypes.STRING,
-    recipeId: DataTypes.STRING,
-    fullName: DataTypes.STRING,
-    title: DataTypes.STRING,
-    review: DataTypes.STRING
+
+
+export default (sequelize, DataTypes) => {
+  const Reviews = sequelize.define('Reviews', {
+    userId: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    recipeId: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    fullName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    },
+    review: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    },
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         // associations can be defined here
       }
     }
