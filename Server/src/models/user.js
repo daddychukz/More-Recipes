@@ -36,18 +36,10 @@ export default (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      len: {
-        args: [4, 5],
-        msg: 'Password must be between 4 to 5 characters at length'
-      }
     },
     confirmPassword: {
       type: DataTypes.STRING,
       allowNull: false,
-      len: {
-        args: [4, 5],
-        msg: 'Password must be between 4 to 5 characters at length'
-      }
     },
   }, {
     classMethods: {
