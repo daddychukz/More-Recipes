@@ -28,6 +28,10 @@ export default (sequelize, DataTypes) => {
         isEmail: { msg: 'Enter a Valid Email' },
       }
     },
+    sex: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     userName: {
       type: DataTypes.STRING,
       unique: true,
