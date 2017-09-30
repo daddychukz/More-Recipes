@@ -4,6 +4,7 @@
 * relationships, datatypes and constraints.
 * 
 */
+import bcrypt from 'bcrypt';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -45,12 +46,15 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  }, {
-    classMethods: {
-      associate(models) {
-        // associations can be defined here
-      }
+  }, { hooks: {
+    beforeCreate: (newUser) => {
+      newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
+      newUser.confirmPassword = bcrypt.hashSync(newUser.confirmPassword, bcrypt.genSaltSync(8));
+    },
+    afterUpdate: (newUser) => {
+      newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
+      newUser.confirmPassword = bcrypt.hashSync(newUser.confirmPassword, bcrypt.genSaltSync(8));
     }
-  });
+  } });
   return User;
 };
