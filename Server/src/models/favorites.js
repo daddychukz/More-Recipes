@@ -1,10 +1,24 @@
 
 
-module.exports = function (sequelize, DataTypes) {
+export default (sequelize, DataTypes) => {
   const Favorites = sequelize.define('Favorites', {
-    userId: DataTypes.STRING,
-    recipeId: DataTypes.STRING,
-    category: DataTypes.STRING
+    userId: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    recipeId: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    }
   }, {
     classMethods: {
       associate(models) {
