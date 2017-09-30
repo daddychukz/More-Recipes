@@ -23,11 +23,11 @@ module.exports = {
         allowNull: false
       },
       upvotes: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         defaultValue: 0
       },
       views: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         defaultValue: 0
       },
       createdAt: {
