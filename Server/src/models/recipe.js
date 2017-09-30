@@ -28,14 +28,14 @@ export default (sequelize, DataTypes) => {
       }
     },
     upvotes: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       defaultValue: 0,
       validate: {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
     },
     views: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       defaultValue: 0,
       validate: {
         notEmpty: { msg: 'Empty strings not allowed' }
