@@ -2,6 +2,7 @@ import express from 'express';
 import recipeController from '../controller/recipe';
 import upvotesController from '../controller/upvotes';
 import reviewController from '../controller/reviews';
+import userController from '../controller/user';
 
 const router = express.Router();
 
@@ -11,6 +12,12 @@ router.get('/', (req, res) => {
 });
 
 /* All API Routes */
+
+// Register a new User
+router.post('/api/v1/users/signup', userController.signUp);
+
+// Login route
+router.post('/api/users/signin', userController.signIn);
 
 // Retrieve all recipes
 router.get('/recipes', recipeController.retrieveRecipes);
