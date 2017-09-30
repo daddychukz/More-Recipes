@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
 /* All API Routes */
 
 // Register a new User
-router.post('/api/v1/users/signup', userController.signUp);
+router.post('/users/signup', userController.signUp);
 
 // Login route
-router.post('/api/users/signin', userController.signIn);
+router.post('/users/signin', userController.signIn);
 
 // Retrieve all recipes
 router.get('/recipes', recipeController.retrieveRecipes);
