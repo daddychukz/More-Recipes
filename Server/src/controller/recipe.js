@@ -1,94 +1,89 @@
-/* Dummy data */
-const recipeListings = [
-  {
-    id: 1,
-    Title: 'Jollof Beans',
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.',
-    Upvotes: 0
-  },
-  {
-    id: 2,
-    Title: 'Onion Stew',
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.',
-    Upvotes: 3
-  },
-  {
-    id: 3,
-    Title: 'Egusi Soup',
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.',
-    Upvotes: 1
-  }
-];
+import db from '../models';
+
+const recipeListings = db.Recipe;
 
 /* Get all recipes in catalog */
-const retrieveRecipes = (req, res) => res.status(200).json({
-  recipeListings
-});
+const retrieveRecipes = (req, res) => recipeListings
+  .all()
+  .then(recipes => res.status(200).send(recipes))
+  .catch(err => res.status(400).send(err));
 
 /* Add new recipe */
 const createRecipe = (req, res) => {
-  if (!req.body.Title) {
+  if (!req.body.title) {
     return res.status(400).json({
       Message: 'Title Field should not be Empty',
     });
-  } else if (!req.body.Description) {
+  } else if (!req.body.description) {
     return res.status(400).json({
       Message: 'Description Field should not be Empty',
     });
   }
-  recipeListings.push({
-    id: recipeListings[recipeListings.length - 1].id + 1,
-    Title: req.body.Title,
-    Description: req.body.Description,
-    Upvotes: 0
-  });
-  res.status(201).json({
-    recipeListings,
-  });
+  recipeListings.create({
+    userId: req.body.user,
+    title: req.body.title,
+    description: req.body.description
+  }).then(recipe => res.status(201).json({
+    recipe }))
+    .catch(err => res.status(400).send(err));
 };
 
 /* Delete a recipe */
-const deleteRecipe = (req, res) => {
-  for (let i = 0; i < recipeListings.length; i++) {
-    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
-      recipeListings.splice(i, 1);
-      return res.status(200).json({
-        recipeListings
-      });
-    }
-  }
-  return res.status(404).json({});
-};
+const deleteRecipe = (req, res) => recipeListings
+  .findById(req.params.recipeID)
+  .then((recipe) => {
+    recipe
+      .destroy()
+      .then(res.status(200).send({
+
+      }))
+      .catch(err => res.status(400).send(err));
+  })
+  .catch(() => res.status(404).send({
+    message: 'Record Not Found!'
+  }));
 
 /* Update a recipe */
 const updateRecipe = (req, res) => {
-  if (!req.body.Title && !req.body.Description) {
-    return res.status(400).json({
-      Message: 'Specify a field to update'
-    });
-  }
-  for (let i = 0; i < recipeListings.length; i++) {
-    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
-      recipeListings[i].Title = req.body.Title;
-      recipeListings[i].Description = req.body.Description;
-      return res.status(200).json({
-        recipeListings
-      });
+  const updateRecord = {};
+  recipeListings.findOne({
+    where: {
+      recipeId: req.params.recipeID
+    },
+  }).then((recipe) => {
+    if (req.body.title) {
+      updateRecord.title = req.body.title;
+    } else if (req.body.description) {
+      updateRecord.description = req.body.description;
     }
-  }
-  return res.status(404).json({});
+    recipe.update(updateRecord)
+      .then(updatedRecipe => res.send({
+        updatedRecipe
+      }));
+  })
+    .catch(() => res.status(404).send({
+      message: 'Record Not Found'
+    }));
 };
 
 /* Get a recipe by ID */
 const retrieveRecipe = (req, res) => {
-  for (let i = 0; i < recipeListings.length; i++) {
-    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
-      return res.status(200).json({
-        recipe: recipeListings[i]
-      });
-    }
-  }
-  return res.status(404).json({});
+  recipeListings
+    .findById(req.params.recipeID)
+    .then((recipe) => {
+      if (recipe) {
+        res.status(200).send({
+          recipe
+        });
+      } else {
+        res.status(404).send({
+          message: 'Record not Found!'
+        });
+      }
+    })
+    .catch(() => res.status(400).send({
+      message: 'Recipe not Found'
+    }));
 };
 
 /* Export all methods */
