@@ -2,6 +2,12 @@
 
 export default (sequelize, DataTypes) => {
   const Reviews = sequelize.define('Reviews', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     userId: {
       allowNull: false,
       type: DataTypes.UUID,
