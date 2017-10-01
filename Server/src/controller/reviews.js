@@ -1,53 +1,31 @@
-/* Dummy data */
-const recipeListings = [
-  {
-    id: 1,
-    Title: 'Jollof Beans',
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.',
-    Upvotes: 0
-  },
-  {
-    id: 2,
-    Title: 'Onion Stew',
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.',
-    Upvotes: 3
-  },
-  {
-    id: 3,
-    Title: 'Onion Stew',
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, blanditiis voluptas. Culpa omnis amet sequi iste aperiam possimus impedit inventore.',
-    Upvotes: 1
-  }
-];
+import db from '../models';
 
-const userReviews = [];
+const userReview = db.Reviews;
 
 /* Review a recipe */
 const reviewRecipe = (req, res) => {
-  if (!req.body.Review) {
-    return res.status(404).json({
-      Message: 'Please enter a review'
+  if (!req.body.fullname) {
+    return res.status(400).json({
+      Message: 'Name Field should not be Empty',
     });
-  } else if (!req.body.Username) {
-    return res.status(404).json({
-      Message: 'Please enter your Username',
-      Error: true
+  } else if (!req.body.title) {
+    return res.status(400).json({
+      Message: 'Title Field should not be Empty',
+    });
+  } else if (!req.body.review) {
+    return res.status(400).json({
+      Message: 'Review Field should not be Empty',
     });
   }
-  for (let i = 0; i < recipeListings.length; i++) {
-    if (recipeListings[i].id === parseInt(req.params.recipeID, 10)) {
-      userReviews.push({
-        Title: recipeListings[i].Title,
-        Username: req.body.Username,
-        Review: req.body.Review
-      });
-      return res.status(201).json({
-        userReview: userReviews
-      });
-    }
-  }
-  return res.status(404).json({
-  });
+  userReview.create({
+    userId: req.body.userId,
+    recipeID: req.params.recipeID,
+    fullName: req.body.fullname,
+    title: req.body.title,
+    review: req.body.review
+  }).then(rev => res.status(201).json({
+    rev }))
+    .catch(err => res.status(400).send(err));
 };
 
 /* Export all methods */
