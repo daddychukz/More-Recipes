@@ -6,18 +6,27 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        primaryKey: true
       },
       userId: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'Users',
+          key: 'userId'
+        },
+        onDelete: 'CASCADE'
       },
       recipeId: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        references: {
+          model: 'Recipes',
+          key: 'recipeId'
+        },
+        onDelete: 'CASCADE'
       },
       fullName: {
         type: Sequelize.STRING,

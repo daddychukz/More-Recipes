@@ -10,6 +10,10 @@ export default (sequelize, DataTypes) => {
     },
     userId: {
       allowNull: false,
+      references: {
+        model: 'User',
+        key: 'userId'
+      },
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
@@ -41,12 +45,6 @@ export default (sequelize, DataTypes) => {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
     },
-  }, {
-    classMethods: {
-      associate(models) {
-        // associations can be defined here
-      }
-    }
   });
   return Recipe;
 };
