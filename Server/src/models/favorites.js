@@ -10,13 +10,11 @@ export default (sequelize, DataTypes) => {
     },
     userId: {
       allowNull: false,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: DataTypes.UUID
     },
     recipeId: {
       allowNull: false,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: DataTypes.UUID
     },
     category: {
       type: DataTypes.STRING,

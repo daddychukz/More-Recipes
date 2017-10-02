@@ -11,13 +11,11 @@ module.exports = {
       },
       userId: {
         allowNull: false,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       recipeId: {
         allowNull: false,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.UUID
       },
       category: {
         type: Sequelize.STRING,
