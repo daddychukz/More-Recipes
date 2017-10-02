@@ -19,8 +19,8 @@ router.post('/users/signup', userController.signUp);
 // Login route
 router.post('/users/signin', userController.signIn);
 
-// Get Recipe by Most Upvotes
-router.get('/recipe', userController.favorites);
+// Get Favorite recipes
+router.get('/users/:userID/recipes', userController.retrieveFavorites);
 
 // Retrieve all recipes
 router.get('/recipes', recipeController.retrieveRecipes);
@@ -30,6 +30,9 @@ router.get('/recipes/:recipeID', recipeController.retrieveRecipe);
 
 // Add a recipe
 router.post('/recipes', recipeController.createRecipe);
+
+// Add Favorite recipes
+router.post('/recipes/:recipeID', userController.addFavorites);
 
 // Delete a recipe
 router.delete('/recipes/:recipeID', recipeController.deleteRecipe);
@@ -43,8 +46,8 @@ router.post('/recipes/:recipeID/reviews', reviewController.reviewRecipe);
 // Upvote a recipe
 router.put('/recipes/:recipeID/upvote', upvotesController.upvoteRecipe);
 
-// Get all Favorite recipes
-router.get('/users/:userID/recipes', upvotesController.mostRecipeUpvote);
+// Get Recipe by Most Upvotes
+router.get('/recipe', upvotesController.mostRecipeUpvote);
 
 
 // A catch-all routes not define.
