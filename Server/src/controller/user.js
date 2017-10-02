@@ -2,10 +2,13 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/';
 
+require('dotenv').config();
+
 const User = db.User;
 const Favorites = db.Favorites;
 
-const secret = 'andelabootcampcycle27';
+
+const secret = process.env.SECRET;
 
 /* Register a User */
 const signUp = (req, res) => User
@@ -44,7 +47,7 @@ const signIn = (req, res) => {
           if (response) {
             const token = jwt.sign({
               username: user.userName,
-              isAdmin: user.isAdmin
+              userId: user.userId
             }, secret, { expiresIn: '24h' });
             return res.status(200).send({
               message: `Welcome ${user.userName}`,
