@@ -3,6 +3,7 @@ import recipeController from '../controller/recipe';
 import upvotesController from '../controller/upvotes';
 import reviewController from '../controller/reviews';
 import userController from '../controller/user';
+import Auth from '../middleware/auth';
 
 const router = express.Router();
 
@@ -38,7 +39,7 @@ router.post('/recipes/:recipeID', userController.addFavorites);
 router.delete('/recipes/:recipeID', recipeController.deleteRecipe);
 
 // Update a recipe
-router.put('/recipes/:recipeID', recipeController.updateRecipe);
+router.put('/recipes/:recipeID', Auth.verify, recipeController.updateRecipe);
 
 // Post a review
 router.post('/recipes/:recipeID/reviews', reviewController.reviewRecipe);
