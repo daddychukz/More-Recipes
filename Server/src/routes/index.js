@@ -21,7 +21,7 @@ router.post('/users/signup', userController.signUp);
 router.post('/users/signin', userController.signIn);
 
 // Get Favorite recipes
-router.get('/users/:userID/recipes', userController.retrieveFavorites);
+router.get('/users/:userID/recipes', Auth.verify, userController.retrieveFavorites);
 
 // Retrieve all recipes
 router.get('/recipes', recipeController.retrieveRecipes);
@@ -30,22 +30,22 @@ router.get('/recipes', recipeController.retrieveRecipes);
 router.get('/recipes/:recipeID', recipeController.retrieveRecipe);
 
 // Add a recipe
-router.post('/recipes', recipeController.createRecipe);
+router.post('/recipes', Auth.verify, recipeController.createRecipe);
 
 // Add Favorite recipes
-router.post('/recipes/:recipeID', userController.addFavorites);
+router.post('/recipes/:recipeID', Auth.verify, userController.addFavorites);
 
 // Delete a recipe
-router.delete('/recipes/:recipeID', recipeController.deleteRecipe);
+router.delete('/recipes/:recipeID', Auth.verify, recipeController.deleteRecipe);
 
 // Update a recipe
 router.put('/recipes/:recipeID', Auth.verify, recipeController.updateRecipe);
 
 // Post a review
-router.post('/recipes/:recipeID/reviews', reviewController.reviewRecipe);
+router.post('/recipes/:recipeID/reviews', Auth.verify, reviewController.reviewRecipe);
 
 // Upvote a recipe
-router.put('/recipes/:recipeID/upvote', upvotesController.upvoteRecipe);
+router.put('/recipes/:recipeID/upvote', Auth.verify, upvotesController.upvoteRecipe);
 
 // Get Recipe by Most Upvotes
 router.get('/recipe', upvotesController.mostRecipeUpvote);
