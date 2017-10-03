@@ -1,5 +1,7 @@
+import jwt from 'jsonwebtoken';
 import db from '../models';
 
+const secret = 'andelabootcampcycle27';
 const recipeListings = db.Recipe;
 
 /* Get all recipes in catalog */
@@ -46,24 +48,34 @@ const deleteRecipe = (req, res) => recipeListings
 /* Update a recipe */
 const updateRecipe = (req, res) => {
   const updateRecord = {};
-  recipeListings.findOne({
-    where: {
-      recipeId: req.params.recipeID
-    },
-  }).then((recipe) => {
-    if (req.body.title) {
-      updateRecord.title = req.body.title;
-    } else if (req.body.description) {
-      updateRecord.description = req.body.description;
-    }
-    recipe.update(updateRecord)
-      .then(updatedRecipe => res.send({
-        updatedRecipe
-      }));
-  })
-    .catch(() => res.status(404).send({
-      message: 'Record Not Found'
-    }));
+  const token = req.headers.authorization;
+  if (token) {
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        res.status(401).send({ message: 'Invalid Token' });
+      } else {
+        recipeListings.findOne({
+          where: {
+            recipeId: req.params.recipeID,
+            userId: decoded.userId
+          },
+        }).then((recipe) => {
+          if (req.body.title) {
+            updateRecord.title = req.body.title;
+          } else if (req.body.description) {
+            updateRecord.description = req.body.description;
+          }
+          recipe.update(updateRecord)
+            .then(updatedRecipe => res.send({
+              updatedRecipe
+            }));
+        })
+          .catch(() => res.status(401).send({
+            message: 'You do not have permission to modify this Recipe'
+          }));
+      }
+    });
+  }
 };
 
 /* Get a recipe by ID */
