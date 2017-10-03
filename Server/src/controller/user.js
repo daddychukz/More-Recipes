@@ -66,7 +66,7 @@ const signIn = (req, res) => {
 /* Add favorites */
 const addFavorites = (req, res) => Favorites
   .create({
-    userId: req.body.userID,
+    userId: req.decoded.userId,
     recipeId: req.params.recipeID,
     category: req.body.category
   })

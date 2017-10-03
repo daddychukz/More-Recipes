@@ -18,7 +18,7 @@ const reviewRecipe = (req, res) => {
     });
   }
   userReview.create({
-    userId: req.body.userId,
+    userId: req.decoded.userId,
     recipeId: req.params.recipeID,
     fullName: req.body.fullname,
     title: req.body.title,

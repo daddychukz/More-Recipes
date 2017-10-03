@@ -13,7 +13,7 @@ const upvoteRecipe = (req, res) => {
       upvotes: recipeFound.upvotes + 1
     })
       .then(updatedRecipe => res.status(200).send({
-        Message: `${recipeFound.title} has received an upvote by ${req.body.Username}`,
+        Message: `${recipeFound.title} has received an upvote by ${req.decoded.username}`,
         updatedRecipe
       }));
   })
