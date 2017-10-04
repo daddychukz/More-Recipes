@@ -27,7 +27,7 @@ router.get('/users/:userID/recipes', Auth.verify, userController.retrieveFavorit
 router.get('/recipes', recipeController.retrieveRecipes);
 
 // Retrieve single recipe
-router.get('/recipes/:recipeID', recipeController.retrieveRecipe);
+router.get('/recipes/:recipeID', Auth.verify, recipeController.retrieveRecipe);
 
 // Add a recipe
 router.post('/recipes', Auth.verify, recipeController.createRecipe);
@@ -45,7 +45,7 @@ router.put('/recipes/:recipeID', Auth.verify, recipeController.updateRecipe);
 router.post('/recipes/:recipeID/reviews', Auth.verify, reviewController.reviewRecipe);
 
 // Upvote a recipe
-router.put('/recipes/:recipeID/upvote', Auth.verify, upvotesController.upvoteRecipe);
+router.post('/recipes/:recipeID/upvote', Auth.verify, upvotesController.upvoteRecipe);
 
 // Get Recipe by Most Upvotes
 router.get('/recipe', upvotesController.mostRecipeUpvote);
