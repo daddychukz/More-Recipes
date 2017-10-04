@@ -38,13 +38,10 @@ export default (sequelize, DataTypes) => {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
     },
-    views: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-      validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
-      }
-    },
   });
+  Recipe.associate = (models) => {
+    // associations can be defined here
+    Recipe.belongsTo(models.votes, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+  };
   return Recipe;
 };
