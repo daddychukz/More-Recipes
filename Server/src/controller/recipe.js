@@ -44,7 +44,15 @@ const createRecipe = (req, res) => {
     .catch(err => res.status(400).send(err));
 };
 
-/* Delete a recipe */
+/**
+   * deleteRecipe
+   * @desc deletes a recipe from catalog
+   * Route: DELETE: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const deleteRecipe = (req, res) => recipeListings
   .findById(req.params.recipeID)
   .then((recipe) => {
@@ -59,7 +67,15 @@ const deleteRecipe = (req, res) => recipeListings
     message: 'Record Not Found!'
   }));
 
-/* Update a recipe */
+/**
+   * updateRecipe
+   * @desc modifies a recipe in the catalog
+   * Route: PUT: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const updateRecipe = (req, res) => {
   const updateRecord = {};
 
@@ -84,7 +100,15 @@ const updateRecipe = (req, res) => {
     }));
 };
 
-/* Get a recipe by ID */
+/**
+   * retrieveRecipe
+   * @desc gets a single recipe in the catalog
+   * Route: GET: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const retrieveRecipe = (req, res) => {
   recipeListings
     .findById(req.params.recipeID)
