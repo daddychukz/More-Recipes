@@ -2,13 +2,29 @@ import db from '../models';
 
 const recipeListings = db.Recipe;
 
-/* Get all recipes in catalog */
+/**
+   * reviewRecipe
+   * @desc adds a review to a recipe
+   * Route: POST: '/recipes/:recipeID/reviews'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const retrieveRecipes = (req, res) => recipeListings
   .all()
   .then(recipes => res.status(200).send(recipes))
   .catch(err => res.status(400).send(err));
 
-/* Add new recipe */
+/**
+   * createRecipe
+   * @desc adds a review to a recipe
+   * Route: POST: '/recipes/:recipeID/reviews'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const createRecipe = (req, res) => {
   if (!req.body.title) {
     return res.status(400).json({

@@ -10,7 +10,15 @@ const Favorites = db.Favorites;
 
 const secret = process.env.SECRET;
 
-/* Register a User */
+/**
+   * signUp
+   * @desc Registers a user to the application
+   * Route: POST: '/users/signup'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const signUp = (req, res) => User
   .create({
     fullName: req.body.fullname,
@@ -25,7 +33,15 @@ const signUp = (req, res) => User
   }))
   .catch(err => res.status(400).send(err));
 
-/* sign into the App */
+/**
+   * signIn
+   * @desc Login a user to the application
+   * Route: POST: '/users/signin'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const signIn = (req, res) => {
   if (!req.body.email) {
     return res.status(400).json({
@@ -63,7 +79,15 @@ const signIn = (req, res) => {
     });
 };
 
-/* Add favorites */
+/**
+   * addFavorites
+   * @desc adds a recipe to users favorites
+   * Route: POST: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const addFavorites = (req, res) => {
   Favorites
     .findOrCreate({ where: {
@@ -78,7 +102,15 @@ const addFavorites = (req, res) => {
     .catch(err => res.status(400).send(err));
 };
 
-/* Retrieve favorites */
+/**
+   * retrieveFavorites
+   * @desc gets all favorites added by a user
+   * Route: GET: '/users/:userID/recipes
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const retrieveFavorites = (req, res) => {
   Favorites
     .findOne({
