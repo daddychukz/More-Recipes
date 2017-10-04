@@ -2,6 +2,7 @@ import express from 'express';
 import recipeController from '../controller/recipe';
 import upvotesController from '../controller/upvotes';
 import reviewController from '../controller/reviews';
+import userController from '../controller/user';
 
 const router = express.Router();
 
@@ -12,6 +13,15 @@ router.get('/', (req, res) => {
 
 /* All API Routes */
 
+// Register a new User
+router.post('/users/signup', userController.signUp);
+
+// Login route
+router.post('/users/signin', userController.signIn);
+
+// Get Favorite recipes
+router.get('/users/:userID/recipes', userController.retrieveFavorites);
+
 // Retrieve all recipes
 router.get('/recipes', recipeController.retrieveRecipes);
 
@@ -20,6 +30,9 @@ router.get('/recipes/:recipeID', recipeController.retrieveRecipe);
 
 // Add a recipe
 router.post('/recipes', recipeController.createRecipe);
+
+// Add Favorite recipes
+router.post('/recipes/:recipeID', userController.addFavorites);
 
 // Delete a recipe
 router.delete('/recipes/:recipeID', recipeController.deleteRecipe);
