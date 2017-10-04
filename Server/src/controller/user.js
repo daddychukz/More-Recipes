@@ -64,16 +64,19 @@ const signIn = (req, res) => {
 };
 
 /* Add favorites */
-const addFavorites = (req, res) => Favorites
-  .create({
-    userId: req.decoded.userId,
-    recipeId: req.params.recipeID,
-    category: req.body.category
-  })
-  .then(favorite => res.status(201).send({
-    favorite
-  }))
-  .catch(err => res.status(400).send(err));
+const addFavorites = (req, res) => {
+  Favorites
+    .findOrCreate({ where: {
+      userId: req.decoded.userId,
+      recipeId: req.params.recipeID },
+    defaults: { category: req.body.category } })
+    .spread((favorite) => {
+      res.status(201).send({
+        favorite
+      });
+    })
+    .catch(err => res.status(400).send(err));
+};
 
 /* Retrieve favorites */
 const retrieveFavorites = (req, res) => {
