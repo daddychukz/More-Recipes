@@ -64,7 +64,7 @@ const signIn = (req, res) => {
             const token = jwt.sign({
               username: user.userName,
               userId: user.userId
-            }, secret, { expiresIn: 86400 });
+            }, secret, { expiresIn: '24h' });
             return res.status(200).send({
               message: `Welcome ${user.userName}`,
               token });
@@ -99,7 +99,7 @@ const addFavorites = (req, res) => {
         favorite
       });
     })
-    .catch(err => res.status(404).send(err));
+    .catch(err => res.status(400).send(err));
 };
 
 /**
