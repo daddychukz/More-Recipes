@@ -99,7 +99,7 @@ const addFavorites = (req, res) => {
         favorite
       });
     })
-    .catch(err => res.status(400).send(err));
+    .catch(err => res.status(404).send(err));
 };
 
 /**
