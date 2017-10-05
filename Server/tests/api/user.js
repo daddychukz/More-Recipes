@@ -41,11 +41,11 @@ describe('User Signin/Signup', () => {
       .send(fakeData.userOne)
       .expect(201)
       .end((err, res) => {
+        if (err) return done(err);
         newUser = res.body.user;
         expect(newUser).to.have.property('fullName');
         expect(newUser).to.have.property('email');
-        if (err) return done(err);
-        done();
+        return done();
       });
   });
 
@@ -56,8 +56,8 @@ describe('User Signin/Signup', () => {
       .send(fakeData.userOne)
       .expect(400)
       .end((err, res) => {
-        expect(res.body.errors[0].message).to.equal('email must be unique');
         if (err) return done(err);
+        expect(res.body.errors[0].message).to.equal('email must be unique');
         done();
       });
   });
