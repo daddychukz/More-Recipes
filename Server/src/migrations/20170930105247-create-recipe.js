@@ -10,7 +10,12 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       userId: {
-        allowNull: false,
+        allowNull: true,
+        references: {
+          model: 'Users',
+          key: 'userId'
+        },
+        onDelete: 'CASCADE',
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },

@@ -2,21 +2,23 @@
 
 export default (sequelize, DataTypes) => {
   const Reviews = sequelize.define('Reviews', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
     userId: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      references: {
+        model: 'User',
+        key: 'userId'
+      }
     },
     recipeId: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      references: {
+        model: 'Recipe',
+        key: 'recipeId'
+      }
     },
     fullName: {
       type: DataTypes.STRING,
@@ -39,12 +41,10 @@ export default (sequelize, DataTypes) => {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
     },
-  }, {
-    classMethods: {
-      associate(models) {
-        // associations can be defined here
-      }
-    }
   });
+  Reviews.associate = (models) => {
+    // associations can be defined here
+    Reviews.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+  };
   return Reviews;
 };

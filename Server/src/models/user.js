@@ -56,5 +56,11 @@ export default (sequelize, DataTypes) => {
       newUser.confirmPassword = bcrypt.hashSync(newUser.confirmPassword, bcrypt.genSaltSync(8));
     }
   } });
+  User.associate = (models) => {
+    // associations can be defined here
+    User.hasMany(models.Recipe, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    User.hasMany(models.Reviews, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    User.hasMany(models.Favorites, { foreignKey: 'userId', onDelete: 'SET NULL' });
+  };
   return User;
 };

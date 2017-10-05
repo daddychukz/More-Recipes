@@ -10,10 +10,10 @@ const upvoteRecipe = (req, res) => {
     },
   }).then((recipeFound) => {
     recipeFound.updateAttributes({
-      upvotes: recipe.upvotes + 1
+      upvotes: recipeFound.upvotes + 1
     })
       .then(updatedRecipe => res.status(200).send({
-        Message: `${recipe.title} has received an upvote by ${req.body.Username}`,
+        Message: `${recipeFound.title} has received an upvote by ${req.body.Username}`,
         updatedRecipe
       }));
   })

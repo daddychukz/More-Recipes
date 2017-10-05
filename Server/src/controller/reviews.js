@@ -19,7 +19,7 @@ const reviewRecipe = (req, res) => {
   }
   userReview.create({
     userId: req.body.userId,
-    recipeID: req.params.recipeID,
+    recipeId: req.params.recipeID,
     fullName: req.body.fullname,
     title: req.body.title,
     review: req.body.review
