@@ -10,6 +10,8 @@ before_script:
   - sequelize db:migrate
 
 env:
+  global:
+    - export NODE_ENV=test
     
 script:
   - npm test
