@@ -64,7 +64,7 @@ const signIn = (req, res) => {
             const token = jwt.sign({
               username: user.userName,
               userId: user.userId
-            }, secret, { expiresIn: '24h' });
+            }, secret, { expiresIn: 86400 });
             return res.status(200).send({
               message: `Welcome ${user.userName}`,
               token });
