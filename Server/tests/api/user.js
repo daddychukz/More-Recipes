@@ -3,13 +3,14 @@
 //  */
 import request from 'supertest';
 import chai from 'chai';
+import faker from 'Faker';
 import app from '../../src/app';
 import models from '../../src/models';
 import fakeData from '../helpers/fakeData';
 
 const expect = chai.expect;
 
-let userToken, recipe;
+let userToken, newUser, recipe1, recipe2;
 
 describe('More-Recipes', () => {
   it('loads the home page', (done) => {
@@ -40,8 +41,9 @@ describe('User Signin/Signup', () => {
       .send(fakeData.userOne)
       .expect(201)
       .end((err, res) => {
-        expect(res.body.user).to.have.property('fullName');
-        expect(res.body.user).to.have.property('email');
+        newUser = res.body.user;
+        expect(newUser).to.have.property('fullName');
+        expect(newUser).to.have.property('email');
         if (err) return done(err);
         done();
       });
@@ -154,6 +156,7 @@ describe('Recipe Operations', () => {
       .send(fakeData.recipe)
       .expect(201)
       .end((err, res) => {
+        recipe1 = res.body.recipe;
         if (err) return done(err);
         done();
       });
@@ -166,7 +169,7 @@ describe('Recipe Operations', () => {
       .send(fakeData.recipe2)
       .expect(201)
       .end((err, res) => {
-        recipe = res.body.recipe;
+        recipe2 = res.body.recipe;
         if (err) return done(err);
         done();
       });
@@ -184,7 +187,7 @@ describe('Recipe Operations', () => {
 
   it('modifies a recipe in catalog', (done) => {
     request(app)
-      .put(`/api/v1/recipes/${recipe.recipeId}`)
+      .put(`/api/v1/recipes/${recipe2.recipeId}`)
       .set('authorization', userToken)
       .send({
         title: 'Egusi soup preparation',
@@ -199,7 +202,7 @@ describe('Recipe Operations', () => {
 
   it('deletes recipe from catalog', (done) => {
     request(app)
-      .delete(`/api/v1/recipes/${recipe.recipeId}`)
+      .delete(`/api/v1/recipes/${recipe2.recipeId}`)
       .set('authorization', userToken)
       .expect(200)
       .end((err, res) => {
@@ -211,15 +214,58 @@ describe('Recipe Operations', () => {
 
 describe('Reviews Operations', () => {
   models
-    .Recipe
+    .Reviews
     .destroy({
       cascade: true,
       truncate: true
     });
 
-  it('deletes recipe from catalog', (done) => {
+  it('adds a review to a recipe', (done) => {
     request(app)
-      .delete(`/api/v1/recipes/${recipe.recipeId}`)
+      .post(`/api/v1/recipes/${recipe1.recipeId}/reviews`)
+      .set('authorization', userToken)
+      .send({
+        userId: newUser.userId,
+        recipeId: recipe1.recipeId,
+        fullname: faker.Name.findName(),
+        title: 'Egusi',
+        review: 'Cool Stuff!!'
+      })
+      .expect(201)
+      .end((err, res) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+describe('User Operations', () => {
+  models
+    .Favorites
+    .destroy({
+      cascade: true,
+      truncate: true
+    });
+
+  it('adds a recipe to users favorites', (done) => {
+    request(app)
+      .post(`/api/v1/recipes/${recipe1.recipeId}`)
+      .set('authorization', userToken)
+      .send({
+        recipeId: recipe1.recipeId,
+        userId: newUser.userId,
+        category: 'Soups'
+      })
+      .expect(404)
+      .end((err, res) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('gets all favorites added by a user', (done) => {
+    request(app)
+      .get(`/api/v1/users/${newUser.userId}/recipes`)
       .set('authorization', userToken)
       .expect(200)
       .end((err, res) => {
