@@ -3,9 +3,9 @@ import db from '../models';
 const recipeListings = db.Recipe;
 
 /**
-   * retrieveRecipes
-   * @desc gets all recipes from catalog
-   * Route: GET: '/recipes'
+   * reviewRecipe
+   * @desc adds a review to a recipe
+   * Route: POST: '/recipes/:recipeID/reviews'
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void|Object}
@@ -18,8 +18,8 @@ const retrieveRecipes = (req, res) => recipeListings
 
 /**
    * createRecipe
-   * @desc adds a new recipe
-   * Route: POST: '/recipes'
+   * @desc adds a review to a recipe
+   * Route: POST: '/recipes/:recipeID/reviews'
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void|Object}
