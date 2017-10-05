@@ -29,6 +29,12 @@ const fakeData = {
     title: 'Egusi',
     description: 'This is how to prepare Egusi soup'
   },
+
+  review: {
+    fullname: faker.Name.findName(),
+    title: 'Egusi',
+    review: 'Cool Stuff!!'
+  },
 };
 
 export default fakeData;
