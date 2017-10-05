@@ -61,6 +61,7 @@ export default (sequelize, DataTypes) => {
     User.hasMany(models.Recipe, { foreignKey: 'userId', onDelete: 'SET NULL' });
     User.hasMany(models.Reviews, { foreignKey: 'userId', onDelete: 'SET NULL' });
     User.hasMany(models.Favorites, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    User.hasMany(models.votes, { foreignKey: 'userId', onDelete: 'SET NULL' });
   };
   return User;
 };

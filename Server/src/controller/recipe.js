@@ -2,13 +2,29 @@ import db from '../models';
 
 const recipeListings = db.Recipe;
 
-/* Get all recipes in catalog */
+/**
+   * reviewRecipe
+   * @desc adds a review to a recipe
+   * Route: POST: '/recipes/:recipeID/reviews'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const retrieveRecipes = (req, res) => recipeListings
   .all()
   .then(recipes => res.status(200).send(recipes))
   .catch(err => res.status(400).send(err));
 
-/* Add new recipe */
+/**
+   * createRecipe
+   * @desc adds a review to a recipe
+   * Route: POST: '/recipes/:recipeID/reviews'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const createRecipe = (req, res) => {
   if (!req.body.title) {
     return res.status(400).json({
@@ -20,7 +36,7 @@ const createRecipe = (req, res) => {
     });
   }
   recipeListings.create({
-    userId: req.body.user,
+    userId: req.decoded.userId,
     title: req.body.title,
     description: req.body.description
   }).then(recipe => res.status(201).json({
@@ -28,7 +44,15 @@ const createRecipe = (req, res) => {
     .catch(err => res.status(400).send(err));
 };
 
-/* Delete a recipe */
+/**
+   * deleteRecipe
+   * @desc deletes a recipe from catalog
+   * Route: DELETE: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const deleteRecipe = (req, res) => recipeListings
   .findById(req.params.recipeID)
   .then((recipe) => {
@@ -43,12 +67,22 @@ const deleteRecipe = (req, res) => recipeListings
     message: 'Record Not Found!'
   }));
 
-/* Update a recipe */
+/**
+   * updateRecipe
+   * @desc modifies a recipe in the catalog
+   * Route: PUT: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const updateRecipe = (req, res) => {
   const updateRecord = {};
+
   recipeListings.findOne({
     where: {
-      recipeId: req.params.recipeID
+      recipeId: req.params.recipeID,
+      userId: req.decoded.userId
     },
   }).then((recipe) => {
     if (req.body.title) {
@@ -61,12 +95,20 @@ const updateRecipe = (req, res) => {
         updatedRecipe
       }));
   })
-    .catch(() => res.status(404).send({
-      message: 'Record Not Found'
+    .catch(() => res.status(401).send({
+      message: 'You do not have permission to modify this Recipe'
     }));
 };
 
-/* Get a recipe by ID */
+/**
+   * retrieveRecipe
+   * @desc gets a single recipe in the catalog
+   * Route: GET: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const retrieveRecipe = (req, res) => {
   recipeListings
     .findById(req.params.recipeID)

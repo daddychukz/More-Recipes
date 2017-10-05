@@ -2,7 +2,15 @@ import db from '../models';
 
 const userReview = db.Reviews;
 
-/* Review a recipe */
+/**
+   * reviewRecipe
+   * @desc adds a review to a recipe
+   * Route: POST: '/recipes/:recipeID/reviews'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const reviewRecipe = (req, res) => {
   if (!req.body.fullname) {
     return res.status(400).json({
@@ -18,7 +26,7 @@ const reviewRecipe = (req, res) => {
     });
   }
   userReview.create({
-    userId: req.body.userId,
+    userId: req.decoded.userId,
     recipeId: req.params.recipeID,
     fullName: req.body.fullname,
     title: req.body.title,

@@ -2,12 +2,23 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/';
 
+require('dotenv').config();
+
 const User = db.User;
 const Favorites = db.Favorites;
 
-const secret = 'andelabootcampcycle27';
 
-/* Register a User */
+const secret = process.env.SECRET;
+
+/**
+   * signUp
+   * @desc Registers a user to the application
+   * Route: POST: '/users/signup'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const signUp = (req, res) => User
   .create({
     fullName: req.body.fullname,
@@ -22,7 +33,15 @@ const signUp = (req, res) => User
   }))
   .catch(err => res.status(400).send(err));
 
-/* sign into the App */
+/**
+   * signIn
+   * @desc Login a user to the application
+   * Route: POST: '/users/signin'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const signIn = (req, res) => {
   if (!req.body.email) {
     return res.status(400).json({
@@ -44,7 +63,7 @@ const signIn = (req, res) => {
           if (response) {
             const token = jwt.sign({
               username: user.userName,
-              isAdmin: user.isAdmin
+              userId: user.userId
             }, secret, { expiresIn: '24h' });
             return res.status(200).send({
               message: `Welcome ${user.userName}`,
@@ -60,19 +79,38 @@ const signIn = (req, res) => {
     });
 };
 
-/* Add favorites */
-const addFavorites = (req, res) => Favorites
-  .create({
-    userId: req.body.userID,
-    recipeId: req.params.recipeID,
-    category: req.body.category
-  })
-  .then(favorite => res.status(201).send({
-    favorite
-  }))
-  .catch(err => res.status(400).send(err));
+/**
+   * addFavorites
+   * @desc adds a recipe to users favorites
+   * Route: POST: '/recipes/:recipeID'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
 
-/* Retrieve favorites */
+const addFavorites = (req, res) => {
+  Favorites
+    .findOrCreate({ where: {
+      userId: req.decoded.userId,
+      recipeId: req.params.recipeID },
+    defaults: { category: req.body.category } })
+    .spread((favorite) => {
+      res.status(201).send({
+        favorite
+      });
+    })
+    .catch(err => res.status(400).send(err));
+};
+
+/**
+   * retrieveFavorites
+   * @desc gets all favorites added by a user
+   * Route: GET: '/users/:userID/recipes
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Object}
+   */
+
 const retrieveFavorites = (req, res) => {
   Favorites
     .findOne({
