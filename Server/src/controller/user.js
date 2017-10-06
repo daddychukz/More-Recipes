@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const User = db.User;
 const Favorites = db.Favorites;
-
+const error = {};
 
 const secret = process.env.SECRET;
 
@@ -19,19 +19,40 @@ const secret = process.env.SECRET;
    * @returns {void|Object}
    */
 
-const signUp = (req, res) => User
-  .create({
-    fullName: req.body.fullname,
-    email: req.body.email,
-    sex: req.body.sex,
-    userName: req.body.username,
-    password: req.body.password,
-    confirmPassword: req.body.confirmPassword
-  })
-  .then(user => res.status(201).send({
-    user
-  }))
-  .catch(err => res.status(400).send(err));
+const signUp = (req, res) => {
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.status(400).json({
+      Message: 'Password Mismatch!',
+    });
+  }
+  User
+    .create({
+      fullName: req.body.fullname,
+      email: req.body.email,
+      sex: req.body.sex,
+      userName: req.body.username,
+      password: req.body.password,
+      confirmPassword: req.body.confirmPassword
+    })
+    .then(user => res.status(201).json({
+      user
+    }))
+    .catch((err) => {
+      if (err.errors[0].message === 'userName must be unique') {
+        error.err = { message: 'username already exists' };
+      }
+      if (err.errors[0].message === 'email must be unique') {
+        error.err = { message: 'email already exists' };
+      }
+      if (err.errors[0].message === 'Enter a Valid Email') {
+        error.err = { message: 'not an email' };
+      }
+      if (!error.err) {
+        error.err = { message: err.errors[0].message };
+      }
+      res.status(400).json(error); // {error, data: req.body}
+    });
+};
 
 /**
    * signIn
@@ -43,7 +64,7 @@ const signUp = (req, res) => User
    */
 
 const signIn = (req, res) => {
-  if (!req.body.email) {
+  if (!req.body.email || req.body.email.trim().length === 0) {
     return res.status(400).json({
       Message: 'Email Field should not be Empty',
     });
@@ -55,7 +76,7 @@ const signIn = (req, res) => {
   User.findOne({
     where: {
       email: req.body.email
-    }
+    },
   })
     .then((user) => {
       if (user) {
