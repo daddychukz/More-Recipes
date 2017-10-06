@@ -120,7 +120,9 @@ const addFavorites = (req, res) => {
         favorite
       });
     })
-    .catch(err => res.status(400).send(err));
+    .catch(err => res.status(400).send({
+      message: err.parent.detail
+    }));
 };
 
 /**
