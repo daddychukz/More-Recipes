@@ -59,7 +59,7 @@ const deleteRecipe = (req, res) => recipeListings
     recipe
       .destroy()
       .then(res.status(200).send({
-
+        message: 'Recipe successfully deleted!'
       }))
       .catch(err => res.status(400).send(err));
   })
