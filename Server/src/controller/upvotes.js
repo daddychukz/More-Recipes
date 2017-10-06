@@ -23,7 +23,10 @@ const upvoteRecipe = (req, res) => {
         Message: `${req.decoded.username} upvoted this recipe`,
         userVote
       });
-    });
+    })
+    .catch(err => res.status(400).send({
+      message: err.parent.detail
+    }));
   vote
     .count({ where: {
       recipeId: req.params.recipeID,
