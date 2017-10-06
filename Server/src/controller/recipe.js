@@ -26,11 +26,11 @@ const retrieveRecipes = (req, res) => recipeListings
    */
 
 const createRecipe = (req, res) => {
-  if (!req.body.title) {
+  if (!req.body.title || req.body.title.trim().length === 0) {
     return res.status(400).json({
       Message: 'Title Field should not be Empty',
     });
-  } else if (!req.body.description) {
+  } else if (!req.body.description || req.body.description.trim().length === 0) {
     return res.status(400).json({
       Message: 'Description Field should not be Empty',
     });
