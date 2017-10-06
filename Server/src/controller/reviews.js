@@ -12,15 +12,15 @@ const userReview = db.Reviews;
    */
 
 const reviewRecipe = (req, res) => {
-  if (!req.body.fullname) {
+  if (!req.body.fullname || req.body.fullname.trim().length === 0) {
     return res.status(400).json({
       Message: 'Name Field should not be Empty',
     });
-  } else if (!req.body.title) {
+  } else if (!req.body.title || req.body.title.trim().length === 0) {
     return res.status(400).json({
       Message: 'Title Field should not be Empty',
     });
-  } else if (!req.body.review) {
+  } else if (!req.body.review || req.body.review.trim().length === 0) {
     return res.status(400).json({
       Message: 'Review Field should not be Empty',
     });
