@@ -28,5 +28,9 @@ export default (sequelize, DataTypes) => {
       }
     }
   });
+  Favorites.associate = (models) => {
+    // associations can be defined here
+    Favorites.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL' });
+  };
   return Favorites;
 };
