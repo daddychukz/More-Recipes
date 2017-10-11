@@ -50,7 +50,7 @@ const signUp = (req, res) => {
       if (!error.err) {
         error.err = { message: err.errors[0].message };
       }
-      res.status(400).json(error); // {error, data: req.body}
+      res.status(400).json(err); // {error, data: req.body}
     });
 };
 
@@ -121,7 +121,7 @@ const addFavorites = (req, res) => {
       });
     })
     .catch(err => res.status(400).send({
-      message: err.parent.detail
+      err
     }));
 };
 
@@ -136,7 +136,7 @@ const addFavorites = (req, res) => {
 
 const retrieveFavorites = (req, res) => {
   Favorites
-    .findOne({
+    .all({
       where: {
         userId: req.params.userID
       }
