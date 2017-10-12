@@ -9,7 +9,7 @@
     "setup:seed":"npm run migrations && sequelize db:seed:all",
     "seed:db": "npm run migrations && set NODE_ENV=test sequelize db:seed:all",
     "migrations": "set NODE_ENV=test sequelize db:migrate:undo:all && set NODE_ENV=test sequelize db:migrate",
-    "build": "babel ./Server/src --watch -d ./Server/dist",
+    "build": "babel ./Server/src -d ./Server/dist",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "postinstall": "npm run build"
