@@ -115,13 +115,13 @@ const addFavorites = (req, res) => {
       userId: req.decoded.userId,
       recipeId: req.params.recipeID },
     defaults: { category: req.body.category } })
-    .spread((favorite) => {
-      res.status(201).send({
-        favorite
+    .then(() => {
+      res.status(403).send({
+        message: 'Recipe already favorited'
       });
     })
-    .catch(err => res.status(400).send({
-      err
+    .catch(() => res.status(201).send({
+      message: 'Successfully Added To Favorites'
     }));
 };
 
