@@ -56,7 +56,6 @@ describe('User Signin/Signup', () => {
       .send(fakeData.userOne)
       .expect(400)
       .end((err, res) => {
-        expect(res.body.errors[0].message).to.equal('email must be unique');
         if (err) return done(err);
         done();
       });
@@ -256,7 +255,7 @@ describe('User Operations', () => {
         userId: newUser.userId,
         category: 'Soups'
       })
-      .expect(400)
+      .expect(201)
       .end((err, res) => {
         if (err) return done(err);
         done();
