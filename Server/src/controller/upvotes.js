@@ -69,12 +69,12 @@ const mostRecipeUpvote = (req, res) => {
       message: 'Invalid URL...'
     });
   }
-  recipe.findAndCountAll({
-    include: [
-      { model: vote, where: { vote: true } }
-    ],
-    limit: 3
-  });
+  // recipe.findAndCountAll({
+  //   include: [
+  //     { model: vote, where: { vote: true } }
+  //   ],
+  //   limit: 3
+  // });
 };
 
 /* Export all methods */
