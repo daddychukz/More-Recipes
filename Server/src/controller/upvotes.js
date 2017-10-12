@@ -18,32 +18,33 @@ const upvoteRecipe = (req, res) => {
       userId: req.decoded.userId,
       recipeId: req.params.recipeID },
     defaults: { vote: true } })
-    .spread((userVote) => {
-      res.status(201).send({
-        Message: `${req.decoded.username} upvoted this recipe`,
-        userVote
+    .spread(() => {
+      res.status(403).send({
+        Message: `${req.decoded.username} has already upvoted this recipe`,
       });
     })
-    .catch(err => res.status(400).send({
-      message: err.parent.detail
-    }));
-  vote
-    .count({ where: {
-      recipeId: req.params.recipeID,
-      vote: true
-    }
-    }).then((total) => {
-      if (total) {
-        recipe.findOne({
-          where: {
-            recipeId: req.params.recipeID
-          },
-        }).then((recipeFound) => {
-          recipeFound.updateAttributes({
-            upvotes: total
-          });
+    .catch(() => {
+      res.status(201).send({
+        Message: `${req.decoded.username} upvoted this recipe`,
+      });
+      vote
+        .count({ where: {
+          recipeId: req.params.recipeID,
+          vote: true
+        }
+        }).then((total) => {
+          if (total) {
+            recipe.findOne({
+              where: {
+                recipeId: req.params.recipeID
+              },
+            }).then((recipeFound) => {
+              recipeFound.updateAttributes({
+                upvotes: total
+              });
+            });
+          }
         });
-      }
     });
 };
 
