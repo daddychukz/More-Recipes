@@ -54,7 +54,12 @@ const createRecipe = (req, res) => {
    */
 
 const deleteRecipe = (req, res) => recipeListings
-  .findById(req.params.recipeID)
+  .findOne({
+    where: {
+      recipeId: req.params.recipeID,
+      userId: req.decoded.userId
+    },
+  })
   .then((recipe) => {
     recipe
       .destroy()
@@ -64,7 +69,7 @@ const deleteRecipe = (req, res) => recipeListings
       .catch(err => res.status(400).send(err));
   })
   .catch(() => res.status(404).send({
-    message: 'Record Not Found!'
+    message: 'Record not found for this User!'
   }));
 
 /**
