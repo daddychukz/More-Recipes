@@ -117,7 +117,7 @@ const addFavorites = (req, res) => {
     defaults: { category: req.body.category } })
     .then(() => {
       res.status(403).send({
-        message: 'Recipe already favorited'
+        message: 'Recipe already favorited by you'
       });
     })
     .catch(() => res.status(201).send({
