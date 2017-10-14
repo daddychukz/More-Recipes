@@ -1,6 +1,7 @@
 // bringing in dependencies
 import express from 'express';
 import logger from 'morgan';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import routes from './routes/index';
@@ -36,6 +37,7 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
