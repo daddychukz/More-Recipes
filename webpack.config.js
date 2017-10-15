@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 // resolve path of application
 const path = require('path');
 
@@ -9,7 +11,7 @@ const SRC_DIR = path.resolve(__dirname, 'Client/src');
 // webpack configuration
 const config = {
   // file to start transpiling from
-  entry: SRC_DIR + '/app.js',
+  entry: SRC_DIR + '/App.js',
   output: {
     path: DIST_DIR + '/app',
     filename: 'bundle.js',

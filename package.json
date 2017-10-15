@@ -66,11 +66,16 @@
     "webpack": "^3.5.5",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.7.1",
-    "webpack-hot-middleware": "^2.19.1"
+    "webpack-hot-middleware": "^2.19.1",
+    "validator": "^8.1.0",
+    "jwt-decode": "^2.2.0",
+    "redux-devtools-extension": "^2.13.2",
+    "react-scripts": "1.0.12"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "prettier": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "coveralls": "^2.13.1",
