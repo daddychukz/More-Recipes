@@ -1,79 +1,28 @@
 import React from 'react';
-import Validator from 'validator';
-import PropTypes from 'prop-types';
-import InlineError from '../messages/InlineError';
+import { Link } from 'react-router-dom';
 
-class LoginForm extends React.Component {
 
-    state = {
-        data: {
-            email: '',
-            password: ''
-        },
-        loading: false,
-        errors: {}
-    };
-
-    onChange = e => 
-    this.setState({ 
-        data: { ...this.state.data, [e.target.name]: e.target.value }
-    });
-
-    onSubmit = (e) => {
-        e.preventDefault();
-        const errors = this.validate(this.state.data);
-        this.setState({ errors });
-        if (Object.keys(errors).length === 0) {
-            this.props.submit(this.state.data);
-        }
-    };
-
-    validate = (data) => {
-        const errors = {};
-        if (!Validator.isEmail(data.email)) errors.email = 'Invalid Email';
-        if (!data.password) errors.password = 'Cannot be blank';
-        return errors;
-    }
-
-    render() {
-        const { data, errors } = this.state;
-
-        return (
-            <form className="col-4" onSubmit={this.onSubmit}>
+export const LoginForm = () => {
+    return (
+        <div>              
+                {/* SIGNIN CARD  */}
+            <form>
                 <div className="form-group">
-                    <label className='control-label'>Email</label>
-                    <input
-                        type='text'
-                        name='email'
-                        id='email'
-                        value={data.email}
-                        onChange={this.onChange}
-                        className='form-control' />
+                    <input type="email" className="form-control form-control-lg" placeholder="Email" required />
                 </div>
-                {errors.email && <InlineError text={errors.email}/>}
                 <div className="form-group">
-                    <label className='control-label'>Password</label>
-                    <input
-                        type='password'
-                        name='password'
-                        id='password'
-                        value={data.password}
-                        onChange={this.onChange}
-                        className='form-control' />
+                    <input type="password" className="form-control form-control-lg" placeholder="Password" required />
                 </div>
-                {errors.password && <InlineError text={errors.password}/>}
-                <div className='form-group'>
-                    <button className='btn btn-primary btn-md'>
-                        Login
-                    </button>
-                </div>
+                <button type="submit" className="btn btn-info btn-block">Login</button>
+                <br />
+                <Link to='#'><strong>forgot your password?</strong></Link>
+                <hr className="bg-white" />
+                <Link to='#'>or sign in with one of these services</Link>
+                <ul className="list-inline text-center">
+                    <li className="list-inline-item"><Link className="btn btn-lg" to="#" title="Google"><i className="fa fa-2x fa-google-plus"></i></Link>&nbsp; </li>
+                    <li className="list-inline-item"><Link className="btn btn-lg" to="#" title="Facebook"><i className="fa fa-2x fa-facebook"></i></Link></li>
+                </ul>
             </form>
-        );
-    }
-}
-
-LoginForm.propTypes = {
-    submit: PropTypes.func.isRequired
+        </div>
+    );
 };
-
-export default LoginForm;
