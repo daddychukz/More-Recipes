@@ -8,6 +8,7 @@ import routes from './routes/index';
 
 
 const app = express();
+app.use(cors());
 
 // swagger definition
 const swaggerDefinition = {
@@ -37,7 +38,6 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 app.use(logger('dev'));
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

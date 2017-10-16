@@ -24,7 +24,8 @@ class LoginForm2 extends React.Component {
         const errors = this.validate(this.state.data);
         this.setState({ errors });
         if (Object.keys(errors).length === 0) {
-            this.props.submit(this.state.data);
+            this.props.submit(this.state.data)
+                .catch(err => this.setState({ errors: err.response.data.errors }));
         }
     };
 
@@ -40,12 +41,17 @@ class LoginForm2 extends React.Component {
 
         return (
             <form className="col-4" onSubmit={this.onSubmit}>
+                {errors.global && (
+                    <div>
+                        <h5>Ooops!</h5>
+                        <InlineError text={errors.global}/>
+                    </div>
+                )}
                 <div className="form-group">
                     <label className='control-label'>Email</label>
                     <input
                         type='text'
                         name='email'
-                        id='email'
                         value={data.email}
                         onChange={this.onChange}
                         className='form-control' />
@@ -56,7 +62,6 @@ class LoginForm2 extends React.Component {
                     <input
                         type='password'
                         name='password'
-                        id='password'
                         value={data.password}
                         onChange={this.onChange}
                         className='form-control' />
