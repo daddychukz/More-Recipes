@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from './HeaderLogin';
 import { LoginForm } from '../forms/LoginForm';
-import { SignupForm } from '../forms/SignupForm';
+import SignupForm from '../forms/SignupForm';
 import { Footer } from './Footer';
 
 class Home extends React.Component {
