@@ -27,9 +27,7 @@ const signUp = (req, res) => {
   }
   User
     .create({
-      fullName: req.body.fullname,
       email: req.body.email,
-      sex: req.body.sex,
       userName: req.body.username,
       password: req.body.password,
       confirmPassword: req.body.confirmPassword
