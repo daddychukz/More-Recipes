@@ -6,6 +6,10 @@ const userReducer = (state = [], action) => {
       return [...state,
         Object.assign({}, action.user)
       ];
+    case types.USER_LOGGED_IN:
+      return [...state,
+        Object.assign({}, action.user)
+      ];
 
     default:
       return state;
