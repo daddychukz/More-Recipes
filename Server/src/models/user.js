@@ -16,7 +16,7 @@ export default (sequelize, DataTypes) => {
     },
     fullName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
@@ -31,7 +31,7 @@ export default (sequelize, DataTypes) => {
     },
     sex: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     userName: {
       type: DataTypes.STRING,
@@ -42,18 +42,12 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    confirmPassword: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   }, { hooks: {
     beforeCreate: (newUser) => {
       newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
-      newUser.confirmPassword = bcrypt.hashSync(newUser.confirmPassword, bcrypt.genSaltSync(8));
     },
     afterUpdate: (newUser) => {
       newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
-      newUser.confirmPassword = bcrypt.hashSync(newUser.confirmPassword, bcrypt.genSaltSync(8));
     }
   } });
   User.associate = (models) => {
