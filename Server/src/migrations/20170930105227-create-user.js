@@ -12,7 +12,7 @@ module.exports = {
         },
         fullName: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: true,
         },
         email: {
           type: Sequelize.STRING,
@@ -21,7 +21,7 @@ module.exports = {
         },
         sex: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: true
         },
         userName: {
           type: Sequelize.STRING,
@@ -29,10 +29,6 @@ module.exports = {
           allowNull: false
         },
         password: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-        confirmPassword: {
           type: Sequelize.STRING,
           allowNull: false,
         },
