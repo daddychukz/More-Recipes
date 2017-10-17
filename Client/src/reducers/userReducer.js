@@ -1,10 +1,15 @@
 import * as types from '../actions/types';
 
-export const user = (state = {}, action = {}) => {
+const userReducer = (state = [], action) => {
   switch (action.type) {
-    case types.USER_LOGGED_IN:
-      return action.user;
+    case types.CREATE_USER:
+      return [...state,
+        Object.assign({}, action.user)
+      ];
+
     default:
       return state;
   }
 };
+
+export default userReducer;
