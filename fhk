@@ -1,0 +1,281 @@
+[33mcommit 61a4d1a8c97394f44b2e63f743b1399094aaf387[m[33m ([m[1;36mHEAD -> [m[1;32mfeature_Frontend_Signin_API[m[33m)[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 22:26:11 2017 +0100
+
+    create user logged in reducer
+
+[33mcommit 6bd5c068a4e91f74c4ad19946c847dc991cca48b[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 22:25:53 2017 +0100
+
+    require loginform component
+
+[33mcommit ee5c472f6a35314a249f6bb5a9c9b93aa7c152b5[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 22:25:30 2017 +0100
+
+    connect login form to redux
+
+[33mcommit 5c8f30f70dbc2892b2aee1d57025e0cc0418055d[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 22:24:48 2017 +0100
+
+    create user sinin action
+
+[33mcommit 3f87b28dc410896073469fb58540fdc8c80c8d68[m[33m ([m[1;32mfeature_Frontend_Webpack[m[33m)[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:08:25 2017 +0100
+
+    change null variant
+
+[33mcommit 4b0286e334bee08def8ab3d003dc63fa33fcfcaa[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:08:13 2017 +0100
+
+    change null variant
+
+[33mcommit ae12cfa7d32f268a5025470b315b42ccfe088deb[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:07:56 2017 +0100
+
+    removed unused fields
+
+[33mcommit 64a290b905889b6de6f9545782aa1867f4c6ce68[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:07:35 2017 +0100
+
+    write sass styles
+
+[33mcommit 25b7167b6a1c98c7f0350f14cf8a6c1794c0bbd4[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:07:15 2017 +0100
+
+    configure redux store
+
+[33mcommit 145242817a8c6e2a222e927a41188b80a3a9b993[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:07:00 2017 +0100
+
+    add home route
+
+[33mcommit 8b35387f3e4a71a2b32834f6a183f606a3a17ceb[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:06:40 2017 +0100
+
+    setup root reducer file
+
+[33mcommit 157eb3c97e1854faf523639ab0738492a610b67a[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:06:19 2017 +0100
+
+    refactor signup import
+
+[33mcommit f86a37521179086c5ce6791c3cb48c87d2bad86c[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:05:51 2017 +0100
+
+    user signup form
+
+[33mcommit 0a99bcafe2155cd311adc1128c7bd5f5d2b494b8[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:05:26 2017 +0100
+
+    create userSignup Action
+
+[33mcommit f3d9da3058d1378264f145fb0831a5f7a6a2a6fe[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:05:00 2017 +0100
+
+    create action types
+
+[33mcommit ec9faaf8fafebaaeca067ccc6aae4e54aaccceb1[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:04:45 2017 +0100
+
+    setup reducer file for user signup
+
+[33mcommit 526f732db932734e33200ffe2d66a4a729be7a4a[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:03:50 2017 +0100
+
+    configure redux devtools
+
+[33mcommit 365726c0ecc3e5c21e464cc81a9dfe28b2713182[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Tue Oct 17 02:03:26 2017 +0100
+
+    install redux package
+
+[33mcommit 70f76df837ca6d7bac2963a3dc5687ccafcb1f16[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Mon Oct 16 17:57:15 2017 +0100
+
+    Redux thunk
+
+[33mcommit df6c5a8fd55f7fadb159938ed2349be2e7246b5a[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 23:35:36 2017 +0100
+
+    create more components for homepage
+
+[33mcommit a70d1f867fd1d7e1ca2043a21205c6b71d6d3b73[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 23:34:58 2017 +0100
+
+    add scss path
+
+[33mcommit 320d9cd212655c98eebda31c9a1dee781cbf4be4[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 23:34:46 2017 +0100
+
+    add scss module
+
+[33mcommit 569b6d65b2ea7088cef1eb571f852aceaffa60e0[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 23:34:28 2017 +0100
+
+    image
+
+[33mcommit bc053f19d57bdd38d031180ed78de8952d2c3ba5[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 23:34:09 2017 +0100
+
+    transpiled file
+
+[33mcommit d577918a604cd2d6402e991f575b53c2331a960d[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 23:33:42 2017 +0100
+
+    configure scss with webpack
+
+[33mcommit ba25b87a505c396d15c3e0a969da0ed1b98b7c8d[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 23:27:49 2017 +0100
+
+    install sass for transpiling scss
+
+[33mcommit 44d7d2f5f77692b9f0b95df1af13f263720eb93e[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 17:16:49 2017 +0100
+
+    setup react components
+
+[33mcommit 69aa9fe599da250e97938c2a819f59941297416a[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 17:16:27 2017 +0100
+
+    react setup
+
+[33mcommit fd221b8d3813e2bf8c73be04ae3aae8bebb79d25[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sun Oct 15 17:15:39 2017 +0100
+
+    webpack setup
+
+[33mcommit f1e67464b4c2990b8a7bf086412842512f4139ff[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:11:01 2017 +0100
+
+    bootstrap assets
+
+[33mcommit c0ce35d83558b4462451dd3abfa20da1323de0de[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:10:40 2017 +0100
+
+    add cors module
+
+[33mcommit 21e34a3b38f87cb2ffa1f3078139b1f2841c1092[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:09:59 2017 +0100
+
+    create html file for frontend
+
+[33mcommit 80aee4091b502dfba6c928d6db8a490df26c8078[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:09:39 2017 +0100
+
+    webpack server entry file
+
+[33mcommit 7568b7ecd46b2cac6e92af3887974551b280c8ef[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:09:12 2017 +0100
+
+    create webpack bundle.js file
+
+[33mcommit 1e96c8c8e59da44e24d427b3d667cd96e6ad0da0[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:08:29 2017 +0100
+
+    create html file for frontend
+
+[33mcommit e0dd200fda2eb144a8d788c6615f9064fb82ee6d[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:08:02 2017 +0100
+
+    create entry file
+
+[33mcommit c4b4c478d26a29ebd8909116fae64385587d54cb[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:07:23 2017 +0100
+
+    setup webpack server
+
+[33mcommit 2c950d7213422b270f89adf23e1f8583d5f5b53e[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:07:10 2017 +0100
+
+    setup webpack server script
+
+[33mcommit 45291464621ef015ae6a3a2d52158e913bd10000[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Sat Oct 14 19:06:21 2017 +0100
+
+    add react preset for transpiling
+
+[33mcommit 1c832f8fbc42f81f10a5bc3f3c989cc328ff3890[m[33m ([m[1;32mfeature_API_Doc[m[33m)[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Fri Oct 13 07:59:40 2017 +0100
+
+    edit status message
+
+[33mcommit d5678e8f3a9b00bd0a16cdc3c6b3817404ccb05d[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Thu Oct 12 19:37:38 2017 +0100
+
+    document all API Routes
+
+[33mcommit b0210fa9e05bf08956159fa5c52202d28368bd66[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Thu Oct 12 12:53:38 2017 +0100
+
+    add swagger-ui files
+
+[33mcommit 5e64e1bbd62bbc38a5852afe31e085a9125674e3[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Thu Oct 12 12:53:07 2017 +0100
+
+    configure swagger for api documentation
+
+[33mcommit e07f4647069502bcb443266a77d84275abcc10c5[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Thu Oct 12 12:52:32 2017 +0100
+
+    install swagger-jsdoc package
+
+[33mcommit de18fdbdfc47af98da7c50a885e37d106c31b71a[m[33m ([m[1;32mdevelop[m[33m)[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Thu Oct 12 12:03:54 2017 +0100
+
+    rename test db
+
+[33mcommit 43391b1ff6feef1d4dd7690fe7c439c5314d2c52[m[33m ([m[1;31morigin/feature_API_refactor[m[33m, [m[1;32mfeature_API_refactor[m[33m)[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Thu Oct 12 11:57:40 2017 +0100
+
+    remove error lines in test file
+
+[33mcommit a9d4acb3ded23d232d6aef9d87acb9820244f94d[m
+Author: daddychuks <durugo_chuks@yahoo.com>
+Date:   Thu Oct 12 11:57:15 2017 +0100
+
+    comment out un
