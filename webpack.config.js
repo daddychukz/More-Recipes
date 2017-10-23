@@ -17,6 +17,9 @@ const config = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   // modules for transpiling
   module: {
     rules: [
@@ -36,14 +39,12 @@ const config = {
       },
       {
         test: /\.css$/,
-        exclude: /node-modules/,
         loader: ['style-loader', 'css-loader']
       },
       {
         test: /\.js?/,
         include: SRC_DIR,
         loader: 'babel-loader',
-        exclude: /node_modules/,
         query: {
           presets: ['react', 'es2015', 'stage-2']
         }
