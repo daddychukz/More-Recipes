@@ -5,6 +5,7 @@ import LoginForm from '../forms/LoginForm';
 import SignupForm from '../forms/SignupForm';
 import { Footer } from './Footer';
 
+
 class Home extends React.Component {
     render() {
         return (
