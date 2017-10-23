@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import toastr from 'toastr';
 import PropTypes from 'prop-types';
 import * as userActions from '../../actions/userActions';
+import InlineError from '../messages/InlineError';
 
 class LoginForm extends React.Component {
     constructor(props, context) {
@@ -11,7 +13,9 @@ class LoginForm extends React.Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errors: {},
+            isLoading: false
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -23,11 +27,16 @@ class LoginForm extends React.Component {
 
     onSubmit(e){
         e.preventDefault();
-        this.props.actions.signIn(this.state);
-        console.log(this.props.users);
+        this.setState({ errors: {}, isLoading: true });
+        this.props.signIn(this.state)
+        .then(
+            () => {},
+            (err) => this.setState({ errors: err.response.data, isLoading: false })
+    );
     }
     
     render() {
+        const { errors } = this.state;
         return (
             <div>
                     {/* SIGNIN CARD  */}
@@ -51,10 +60,12 @@ class LoginForm extends React.Component {
                             className="form-control form-control-lg" 
                             placeholder="Password" 
                             required />
+                            {errors.message && <InlineError text={errors.message}/>}
                     </div>
                     <input 
                         type="submit" 
                         value="Login" 
+                        disabled={this.state.isLoading}
                         className="btn btn-info btn-block" />
                     <br />
                     <Link to='#'><strong>forgot your password?</strong></Link>
@@ -71,7 +82,8 @@ class LoginForm extends React.Component {
 }
 LoginForm.propTypes = {
     users: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    // actions: PropTypes.object.isRequired
+    signIn: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -82,7 +94,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(userActions, dispatch)
+        // actions: bindActionCreators(userActions, dispatch)
+        signIn: data => dispatch(userActions.signIn(data))
     };
 }
 
