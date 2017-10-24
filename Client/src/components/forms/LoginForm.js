@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import PropTypes from 'prop-types';
+import createBrowserHistory from 'history/createBrowserHistory';
 import * as userActions from '../../actions/userActions';
 import InlineError from '../messages/InlineError';
+
+const customHistory = createBrowserHistory({
+    forceRefresh: true
+});
 
 class LoginForm extends React.Component {
     constructor(props, context) {
@@ -30,7 +35,7 @@ class LoginForm extends React.Component {
         this.setState({ errors: {}, isLoading: true });
         this.props.signIn(this.state)
         .then(
-            () => {},
+            (res) => customHistory.push('/recipe-box'),
             (err) => this.setState({ errors: err.response.data, isLoading: false })
     );
     }
@@ -80,11 +85,8 @@ class LoginForm extends React.Component {
         );
     }
 }
-LoginForm.propTypes = {
-    users: PropTypes.array.isRequired,
-    // actions: PropTypes.object.isRequired
-    signIn: PropTypes.func.isRequired
-};
+
+
 
 function mapStateToProps(state, ownProps) {
     return {
