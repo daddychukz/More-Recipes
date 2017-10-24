@@ -20,6 +20,10 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
+  node: {
+    net: 'empty',
+    dns: 'empty'
+  },
   // modules for transpiling
   module: {
     rules: [

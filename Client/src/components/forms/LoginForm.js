@@ -65,7 +65,7 @@ class LoginForm extends React.Component {
                     <input 
                         type="submit" 
                         value="Login" 
-                        disabled={this.state.isLoading}
+                        
                         className="btn btn-info btn-block" />
                     <br />
                     <Link to='#'><strong>forgot your password?</strong></Link>
