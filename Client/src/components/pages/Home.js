@@ -5,11 +5,9 @@ import LoginForm from '../forms/LoginForm';
 import SignupForm from '../forms/SignupForm';
 import { Footer } from './Footer';
 
-
-class Home extends React.Component {
-    render() {
-        return (
-            <div>
+const Home = () => {
+    return (
+        <div>
                 <Header />
                 <header id="home-section">
                     <div className="dark-overlay">
@@ -74,8 +72,8 @@ class Home extends React.Component {
                 </header>
                 <Footer />
             </div>
-        );
-    }
-}
+    );
+};
 
 export default Home;
+

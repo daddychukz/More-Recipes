@@ -12,7 +12,7 @@ export const Footer = () => {
                             <div className="py-4">
                                 <h1 className="h3">More-Recipes</h1>
                                 <p>Copyright &copy; 2017</p>
-                                <button className="btn btn-primary" data-toggle="modal" data-target="#contactModal">Contact Us</button>
+                                {/* <button className="btn btn-primary" data-toggle="modal" data-target="#contactModal">Contact Us</button> */}
                             </div>
                         </div>
                     </div>
