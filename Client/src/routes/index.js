@@ -4,13 +4,15 @@ import Home from '../components/pages/Home';
 import NotFound from '../components/pages/NotFound';
 import RecipeBox from '../components/pages/RecipeBox';
 import AddRecipe from '../components/pages/AddRecipe';
+import requireAuth from '../utils/requireAuth';
+import noAuth from '../utils/noAuth';
 
 const myRoutes= () => (
   <Router>
     <Switch>
-      <Route path="/" exact component={Home} />
+      <Route path="/" exact component={noAuth(Home)} />
       <Route path="/recipe-box" exact component={RecipeBox} />
-      <Route path="/add-recipe" exact component={AddRecipe} />
+      <Route path="/add-recipe" exact component={requireAuth(AddRecipe)} />
       <Route component={NotFound}/>
     </Switch>
   </Router>

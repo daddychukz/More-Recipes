@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import * as userActions from '../../actions/userActions';
+import InlineError from '../messages/InlineError';
+import * as flashMessage from '../../actions/flashActions';
 
 class SignupForm extends React.Component {
     constructor(props, context) {
@@ -13,7 +15,9 @@ class SignupForm extends React.Component {
             email: '',
             username: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            errors: {},
+            isLoading: false
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -26,14 +30,20 @@ class SignupForm extends React.Component {
     onSubmit(e){
         e.preventDefault();
         this.props.actions.signUp(this.state).then(
-            () => {},
-            ({ data }) => this.setState({ errors: data })
+            () => {
+                this.props.flash.addFlashMessage({
+                    type: 'Success',
+                    text: 'You signed up successfully. Welcome!'
+                });
+            },
+            (err) => this.setState({ errors: err.response.data.errors[0], isLoading: false })
         );
         console.log(this.props.users);
     }
     
 
     render() {
+        const { errors } = this.state;
         return (
             <div>              
         {/* SIGNUP CARD  */}
@@ -77,6 +87,7 @@ class SignupForm extends React.Component {
                         className="form-control form-control-lg" 
                         placeholder="Confirm Password" 
                         required />
+                        {errors.message && <InlineError text={errors.message}/>}
                 </div>
                     <input 
                         type="submit" 
@@ -90,7 +101,7 @@ class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
     users: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -101,7 +112,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(userActions, dispatch)
+        actions: bindActionCreators(userActions, dispatch),
+        flash: bindActionCreators(flashMessage, dispatch)
     };
 }
 

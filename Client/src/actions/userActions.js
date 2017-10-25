@@ -6,13 +6,11 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 export const signUp = user => (dispatch) => {
   return axios.post('http://localhost:5000/api/v1/users/signup', user).then((response) => {
-    console.log(response);
+    console.log(response.data);
     dispatch({
       type: types.CREATE_USER,
       payload: user
     });
-  }).catch((err) => {
-    console.log(err);
   });
 };
 
