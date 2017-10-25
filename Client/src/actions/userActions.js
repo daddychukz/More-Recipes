@@ -35,6 +35,12 @@ export const signIn = user => (dispatch) => {
   });
 };
 
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('jwtToken');
+  setAuthorizationToken(false);
+  dispatch(setCurrentUser({}));
+};
+
 
 // export function signIn(loginData) {
 //   return dispatch => axios.post('http://localhost:5000/api/v1/users/signin', loginData)
