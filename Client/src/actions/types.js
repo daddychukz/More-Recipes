@@ -3,3 +3,4 @@ export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const CREATE_USER = 'CREATE_USER';
 export const CREATE_RECIPE = 'CREATE_RECIPE';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
