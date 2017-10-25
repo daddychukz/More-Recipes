@@ -1,9 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import{ logout } from '../../actions/userActions';
 
-//Stateless component
-export const Header = () => {
-        return(
+
+class Header extends React.Component {
+    logout(e) {
+        this.props.logout();
+    }
+    render() {
+          
+        const { isAuthenticated } = this.props.auth;
+
+        return (
             <div>
                 <nav className="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
                     <div className="container">
@@ -31,7 +41,7 @@ export const Header = () => {
                                         <ul className="dropdown-menu">
                                             <li><Link className="dropdown-item" to={'/profile'}>Profile</Link></li>
                                             <li className="divider"></li>
-                                            <li><Link className="dropdown-item" to={'/'}>Logout</Link></li>                        
+                                            <li><Link className="dropdown-item" to={'/'} onClick={this.logout.bind(this)}>Logout</Link></li>
                                         </ul>
                                     </div>                                                        
                                 </li>
@@ -73,3 +83,18 @@ export const Header = () => {
             </div>
         );
     }
+}
+
+
+Header.propTypes = {
+    auth: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired
+};
+    
+function mapStateToProps(state) {
+    return {
+        auth: state.auth
+    };
+}
+
+export default connect(mapStateToProps, { logout })(Header);
