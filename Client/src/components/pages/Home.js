@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import toastr from 'toastr';
 import { Header } from './HeaderLogin';
 import LoginForm from '../forms/LoginForm';
 import SignupForm from '../forms/SignupForm';

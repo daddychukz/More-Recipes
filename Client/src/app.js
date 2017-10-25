@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import App from './routes';
 import { setCurrentUser } from './actions/userActions';
 import './static/css/style.scss';
-import '../../node_modules/toastr/build/toastr.min.js';
+import '../../node_modules/toastr/build/toastr.min.css';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 
 import configStore from './store/configStore';

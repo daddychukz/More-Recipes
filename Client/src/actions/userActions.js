@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import toastr from 'toastr';
 import * as types from './types';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
@@ -24,6 +25,7 @@ export const signIn = user => (dispatch) => {
     const token = response.data.token;
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
+    toastr.success(response.data.message);
     console.log(response.data);
     dispatch(setCurrentUser(jwt.decode(token)));
     dispatch({

@@ -2,10 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import toastr from 'toastr';
 import PropTypes from 'prop-types';
+import createBrowserHistory from 'history/createBrowserHistory';
 import * as userActions from '../../actions/userActions';
 import InlineError from '../messages/InlineError';
-import * as flashMessage from '../../actions/flashActions';
+
+const customHistory = createBrowserHistory({
+    forceRefresh: true
+});
 
 class SignupForm extends React.Component {
     constructor(props, context) {
@@ -31,12 +36,13 @@ class SignupForm extends React.Component {
         e.preventDefault();
         this.props.actions.signUp(this.state).then(
             () => {
-                this.props.flash.addFlashMessage({
-                    type: 'Success',
-                    text: 'You signed up successfully. Welcome!'
-                });
+                toastr.success('Registration Successful');
+                customHistory.push('/');
             },
-            (err) => this.setState({ errors: err.response.data.errors[0], isLoading: false })
+            (err) => {
+                this.setState({ errors: err.response.data.errors[0], isLoading: false })
+                toastr.error(err.response.data.errors[0].message)
+            }
         );
         console.log(this.props.users);
     }
@@ -87,7 +93,7 @@ class SignupForm extends React.Component {
                         className="form-control form-control-lg" 
                         placeholder="Confirm Password" 
                         required />
-                        {errors.message && <InlineError text={errors.message}/>}
+                        {/* {errors.message && <InlineError text={errors.message}/>} */}
                 </div>
                     <input 
                         type="submit" 
@@ -113,7 +119,6 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(userActions, dispatch),
-        flash: bindActionCreators(flashMessage, dispatch)
     };
 }
 

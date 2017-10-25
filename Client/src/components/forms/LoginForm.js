@@ -36,7 +36,10 @@ class LoginForm extends React.Component {
         this.props.signIn(this.state)
         .then(
             (res) => customHistory.push('/recipe-box'),
-            (err) => this.setState({ errors: err.response.data, isLoading: false })
+            (err) => {
+                this.setState({ errors: err.response.data, isLoading: false })
+                toastr.error(err.response.data.message)
+            }
         );
     }
     
@@ -65,7 +68,7 @@ class LoginForm extends React.Component {
                             className="form-control form-control-lg" 
                             placeholder="Password" 
                             required />
-                            {errors.message && <InlineError text={errors.message}/>}
+                            {/* {errors.message && <InlineError text={errors.message}/>} */}
                     </div>
                     <input 
                         type="submit" 
