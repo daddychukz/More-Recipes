@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
         .then(
             (res) => customHistory.push('/recipe-box'),
             (err) => this.setState({ errors: err.response.data, isLoading: false })
-    );
+        );
     }
     
     render() {
