@@ -1,8 +1,6 @@
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import toastr from 'toastr';
 import * as types from './types';
-import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 
 export const addRecipe = recipe => (dispatch) => {
@@ -14,4 +12,12 @@ export const addRecipe = recipe => (dispatch) => {
       payload: recipe
     });
   });
+};
+
+export const viewAllRecipes = () => (dispatch) => {
+  return axios.get('http://localhost:5000/api/v1/recipes');
+};
+
+export const viewSingleRecipe = recipeId => (dispatch) => {
+  return axios.get(`http://localhost:5000/api/v1/recipes/${ recipeId}`);
 };
