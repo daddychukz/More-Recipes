@@ -19,6 +19,7 @@ class SignupForm extends React.Component {
         this.state = {
             email: '',
             username: '',
+            fullname: '',
             password: '',
             confirmPassword: '',
             errors: {},
@@ -54,6 +55,16 @@ class SignupForm extends React.Component {
             <div>              
         {/* SIGNUP CARD  */}
             <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                    <input 
+                        value={this.state.fullname}
+                        onChange={this.onChange}
+                        type="text" 
+                        name="fullname"
+                        className="form-control form-control-lg" 
+                        placeholder="Full Name" 
+                        required />
+                </div>
                 <div className="form-group">
                     <input 
                         value={this.state.username}
