@@ -2,11 +2,13 @@ const webpack = require('webpack');
 
 // resolve path of application
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 const DIST_DIR = path.resolve(__dirname, 'Client/dist');
 
 // directory to serve and transpile app from
 const SRC_DIR = path.resolve(__dirname, 'Client/src');
+const SRC_PATH = path.resolve(__dirname, '.env');
 
 // webpack configuration
 const config = {
@@ -58,7 +60,14 @@ const config = {
         loader: 'url-loader?limit=250000'
       }
     ]
-  }
+  },
+  plugins: [
+    new Dotenv({
+      path: './.env', // Path to .env file
+      safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe) 
+      systemvars: true
+    })
+  ],
 };
 
 module.exports = config;
