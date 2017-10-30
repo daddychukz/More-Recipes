@@ -6,6 +6,10 @@ const recipeReducer = (state = [], action) => {
       return [...state,
         Object.assign({}, action.recipe)
       ];
+    case types.GET_ALL_RECIPES:
+      return [...state,
+        Object.assign({}, action.payload)
+      ];
 
     default:
       return state;
