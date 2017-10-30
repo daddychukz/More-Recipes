@@ -12,8 +12,12 @@ const recipeListings = db.Recipe;
    */
 
 const retrieveRecipes = (req, res) => recipeListings
-  .all()
-  .then(recipes => res.status(200).send(recipes))
+  .all({
+    include: [{
+      model: db.Reviews
+    }]
+  })
+  .then(recipes => res.status(200).json({ recipes }))
   .catch(err => res.status(400).send(err));
 
 /**
@@ -37,8 +41,11 @@ const createRecipe = (req, res) => {
   }
   recipeListings.create({
     userId: req.decoded.userId,
+    fullName: req.decoded.fullname,
     title: req.body.title,
-    description: req.body.description
+    description: req.body.description,
+    imageUrl: req.body.imageUrl,
+    publicId: req.body.publicId
   }).then(recipe => res.status(201).json({
     recipe }))
     .catch(err => res.status(400).send(err));
@@ -114,12 +121,12 @@ const updateRecipe = (req, res) => {
    * @returns {void|Object}
    */
 
-const retrieveRecipe = (req, res) => {
+const retrieveRecipe = (req, res) =>
   recipeListings
     .findById(req.params.recipeID)
     .then((recipe) => {
       if (recipe) {
-        res.status(200).send({
+        res.status(200).json({
           recipe
         });
       } else {
@@ -131,7 +138,6 @@ const retrieveRecipe = (req, res) => {
     .catch(() => res.status(400).send({
       message: 'Recipe not Found'
     }));
-};
 
 /* Export all methods */
 export default {
