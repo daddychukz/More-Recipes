@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import{ logout } from '../../actions/userActions';
+import { logout } from '../../actions/userActions';
 
 
 class Header extends React.Component {
