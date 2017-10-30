@@ -27,13 +27,6 @@ export default (sequelize, DataTypes) => {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
     },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
-      }
-    },
     review: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -17,6 +17,13 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
+    fullName: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -25,6 +32,20 @@ export default (sequelize, DataTypes) => {
       }
     },
     description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    },
+    publicId: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -42,6 +63,8 @@ export default (sequelize, DataTypes) => {
   Recipe.associate = (models) => {
     // associations can be defined here
     Recipe.belongsTo(models.votes, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Recipe.belongsTo(models.User, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Recipe.hasMany(models.Reviews, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
   };
   return Recipe;
 };
