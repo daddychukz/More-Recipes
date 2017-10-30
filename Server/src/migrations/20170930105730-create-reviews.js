@@ -32,10 +32,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       review: {
         type: Sequelize.STRING,
         allowNull: false

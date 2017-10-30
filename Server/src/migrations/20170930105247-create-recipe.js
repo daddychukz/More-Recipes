@@ -19,11 +19,23 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
+      fullName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       title: {
         type: Sequelize.STRING,
         allowNull: false
       },
       description: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      publicId: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -33,11 +45,11 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       }
     });
   },
