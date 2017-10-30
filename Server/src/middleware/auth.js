@@ -6,8 +6,8 @@ const secret = process.env.SECRET;
 const Auth = {
   // function to authenticate access to users with a token
   verify(req, res, next) {
-    // const token = req.headers.authorization;
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization;
+    // const token = req.headers.authorization.split(' ')[1];
     if (token) {
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
