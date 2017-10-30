@@ -1,12 +1,32 @@
 import React from 'react';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
+import { viewAllRecipes } from '../../actions/recipeActions';
 import Header from './Header';
 import { Footer } from './Footer';
 
 
-const RecipeBox = () => {
-    return (
-        <div>
+class RecipeBox extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            recipes: []
+        }
+    }
+
+    componentDidMount() {       
+        this.props.viewAllRecipes().then( 
+            (res) => {
+            this.setState({ recipes: res.data.recipes })
+          })
+    }
+
+    render() {
+        return (
+            <div>
                 <Header />
                 
                 <header id="header">
@@ -17,7 +37,7 @@ const RecipeBox = () => {
                 <div className="container">
                     <nav className="breadcrumb">            
                         <Link className="breadcrumb-item" to="#">Home</Link>
-                        <span className="breadcrumb-item active">Recipe</span>            
+                        <span className="breadcrumb-item active">Recipe Box</span>            
                     </nav>  
                 </div>
         
@@ -60,66 +80,7 @@ const RecipeBox = () => {
                                 </ul>                        
                             </div>
         
-                            {/* RECIPE CATALOG 
-                            <div className="col-md-8" id="display">
-                                <h1 className="text-center obj-color">Onion Stew</h1><h6 className="text-muted text-center">by: Emeka Onyeka</h6>                        
-                                                           
-                                <br />
-                                
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni officia quasi deserunt impedit, vitae totam consequatur a nemo. Amet, unde! Suscipit placeat commodi iusto totam similique animi, doloribus adipisci modi harum obcaecati, magnam deserunt rerum distinctio ea praesentium quia blanditiis dolore voluptas fugit accusamus laboriosam iure? Eaque totam placeat, delectus, voluptatem atque voluptatibus ullam ab sapiente sint in ipsam doloribus qui. </p>
-                                <img src="../../static/img/rec6.jpeg" alt="recipe 1" className="float-right" width="300" height="200" />
-                                <p>Corporis libero dignissimos incidunt voluptates non assumenda, nihil natus quam ex itaque quae earum, consequatur ducimus atque id ipsam aliquid, asperiores esse. Adipisci sunt, voluptatibus fugit sequi neque vitae dignissimos recusandae nostrum porro eveniet corporis, suscipit quaerat dolorem laboriosam tempora? Numquam nesciunt temporibus vitae, id nulla blanditiis labore harum praesentium exercitationem asperiores nam, aut veritatis soluta aperiam debitis mollitia ipsum eaque sit dolor a architecto, accusantium vel facilis libero! Libero tempora fuga cum magnam error aperiam optio, ex veritatis, impedit quo porro nobis asperiores distinctio iusto voluptates officiis temporibus vitae, tenetur minus quia adipisci deleniti maiores commodi. Vero nihil ab, ipsam odio perferendis dicta, fuga ex reprehenderit beatae esse, adipisci quos earum aspernatur? Minima earum porro quia recusandae voluptates voluptatem consequuntur consectetur illum labore eaque fugit ut maiores, sunt voluptas consequatur vitae, nihil cumque modi perferendis natus dolorum aspernatur.</p>     
-
-                                <hr />  
-
-                                <ul className="list-inline">
-                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Upvote"><i className="fa fa-2x fa-thumbs-o-up"></i></Link><span className="badge badge-info" title="Upvotes">12</span>&nbsp; </li>
-                                    |
-                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Downvote"><i className="fa fa-2x fa-thumbs-o-down"></i></Link><span className="badge badge-info" title="Downvotes">2</span>&nbsp; </li>
-                                    |
-                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Views"><i className="fa fa-2x fa-eye obj-color"></i></Link><span className="badge badge-info" title="Views">30</span></li>
-        
-                                    <li className="list-inline-item float-right"><Link className="btn btn-sm" to="#" title="Favorite" data-toggle="modal" data-target="#favorite"><i className="fa fa-2x fa-star-o"></i></Link></li>
-                                </ul>
-                                
-                                <br />
-
-                                <h3>Reviews</h3>
-                                <div className="mb-3" style={{ border: '#E9ECEF 1px solid' }}>
-                                    <div className="d-flex flex-row">
-                                        <div className="p-2 align-self-start">
-                                            <img src="../../static/img/user-female.png" alt="user" className="img-fluid rounded-circle" width="50" height="50" />
-                                        </div>
-                                        <div className="p-2 align-self-end">                                    
-                                            <h3><a to="#">Janet John</a></h3>                
-                                            <small className="text-muted">September 18, 2017</small>                    
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                        </div>
-                                    </div>
-                                    <div className="d-flex flex-row">
-                                        <div className="p-2 align-self-start">
-                                            <img src="../../static/img/user-male.jpg" alt="user" className="img-fluid rounded-circle" width="50" height="50" />
-                                        </div>
-                                        <div className="p-2 align-self-end">                                    
-                                            <h3><a to="#">Fred Mat</a></h3> 
-                                            <small className="text-muted">September 19, 2017</small>                                  
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <form className="mb-3">
-                                    <h3>Post a Review</h3>
-                                    <div className="form-group">
-                                        <textarea className="form-control"></textarea>
-                                    </div>
-                                    <button type="button" className="btn btn-primary">Post Review</button>
-                                </form>
-                             </div> */}
-                             {/* RECIPE CATALOG  */}
-                            
+                             {/* RECIPE CATALOG  */}                            
                             <div className="col-md-8" id="display">
                                 <form className="form-inline float-right">
                                     <input type="text" className="form-control col-5" placeholder="Recipe..." />&nbsp;
@@ -127,50 +88,34 @@ const RecipeBox = () => {
                                 </form>
                                 <br />
                                 <br />
-                                <div className="d-flex flex-row">
-                                    <div className="p-2 align-self-start">
-                                        <img src="../../static/img/rec6.jpeg" alt="recipe 1" width="100" height="100" />
-                                    </div>
-                                    <div className="p-2 align-self-end">
-                                        <small className="text-muted float-right">7 days ago</small>
-                                        <h3><Link to="#">Onion Stew</Link></h3>
-                                        <small>by: Emeka Onyeka</small>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row">
-                                    <div className="p-2 align-self-start">
-                                        <img src="../../static/img/rec5.jpeg" alt="recipe 1" width="100" height="100" />
-                                    </div>
-                                    <div className="p-2 align-self-end">
-                                        <small className="text-muted float-right">6 days ago</small>
-                                        <h3><Link to="#">Sweetened Rice Meal</Link></h3>
-                                        <small>by: Durugo Chuks</small>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row">
-                                    <div className="p-2 align-self-start">
-                                        <img src="../../static/img/rec1.jpg" alt="recipe 1" width="100" height="100" />
-                                    </div>
-                                    <div className="p-2 align-self-end">
-                                        <small className="text-muted float-right">5 days ago</small>
-                                        <h3><Link to="#">Paprika Sausages</Link></h3>
-                                        <small>by: Rita Femi</small>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row">
-                                    <div className="p-2 align-self-start">
-                                        <img src="../../static/img/home.jpg" alt="recipe 1" width="100" height="100" />
-                                    </div>
-                                    <div className="p-2 align-self-end">
-                                        <small className="text-muted float-right">2 days ago</small>
-                                        <h3><Link to="#">Sweetened African Egusi Meal</Link></h3>
-                                        <small>by: Jennifer James</small>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                    </div>
-                                </div>
+                                <CloudinaryContext cloudName={`${process.env.CloudName}`}>
+                                    {
+                                        this.state.recipes.map(data => {
+                                            console.log(data);
+                                            return (
+                                                <div key={data.recipeId}>
+                                                    <div className="p-2 float-left">
+                                                        <Image publicId={data.publicId}>
+                                                            <Transformation
+                                                                crop="scale"
+                                                                width="100"
+                                                                height="100"
+                                                                dpr="auto"
+                                                                responsive_placeholder="blank"
+                                                            />
+                                                        </Image>
+                                                    </div>
+                                                    <div className="p-2 align-self-end">
+                                                        <small className="text-muted float-right">{data.createdAt}</small>
+                                                        <h3><Link to={`/recipe/${data.recipeId}`}>{data.title}</Link></h3>
+                                                        <small>by: {data.fullName}</small>
+                                                        <p> {data.description} </p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </CloudinaryContext>
                             </div>
                         </div>
                     </div>
@@ -232,8 +177,12 @@ const RecipeBox = () => {
                             </div>
                         </div>
             </div>
-    );
-};
+        );
+    }
+}
 
+RecipeBox.propTypes = {
+    viewAllRecipes: PropTypes.func.isRequired
+  }
 
-export default RecipeBox;
+export default connect(null, { viewAllRecipes })(RecipeBox);
