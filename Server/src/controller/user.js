@@ -28,6 +28,7 @@ const signUp = (req, res) => {
   User
     .create({
       email: req.body.email,
+      fullName: req.body.fullname,
       userName: req.body.username,
       password: req.body.password,
       confirmPassword: req.body.confirmPassword
@@ -82,7 +83,8 @@ const signIn = (req, res) => {
           if (response) {
             const token = jwt.sign({
               username: user.userName,
-              userId: user.userId
+              userId: user.userId,
+              fullname: user.fullName
             }, secret, { expiresIn: '24h' });
             return res.status(200).send({
               message: `Welcome ${user.userName}`,
