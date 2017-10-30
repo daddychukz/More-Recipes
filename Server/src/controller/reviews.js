@@ -12,15 +12,7 @@ const userReview = db.Reviews;
    */
 
 const reviewRecipe = (req, res) => {
-  if (!req.body.fullname || req.body.fullname.trim().length === 0) {
-    return res.status(400).json({
-      Message: 'Name Field should not be Empty',
-    });
-  } else if (!req.body.title || req.body.title.trim().length === 0) {
-    return res.status(400).json({
-      Message: 'Title Field should not be Empty',
-    });
-  } else if (!req.body.review || req.body.review.trim().length === 0) {
+  if (!req.body.review || req.body.review.trim().length === 0) {
     return res.status(400).json({
       Message: 'Review Field should not be Empty',
     });
@@ -28,8 +20,7 @@ const reviewRecipe = (req, res) => {
   userReview.create({
     userId: req.decoded.userId,
     recipeId: req.params.recipeID,
-    fullName: req.body.fullname,
-    title: req.body.title,
+    fullName: req.decoded.fullname,
     review: req.body.review
   }).then(rev => res.status(201).json({
     rev }))
