@@ -32,6 +32,7 @@ export const signIn = user => (dispatch) => {
       type: types.USER_LOGGED_IN,
       payload: user
     });
+    localStorage.setItem('user', jwt.decode(token).userId);
   });
 };
 

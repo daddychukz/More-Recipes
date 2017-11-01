@@ -19,5 +19,9 @@ export const viewAllRecipes = () => (dispatch) => {
 };
 
 export const viewSingleRecipe = recipeId => (dispatch) => {
-  return axios.get(`http://localhost:5000/api/v1/recipes/${ recipeId}`);
+  return axios.get(`http://localhost:5000/api/v1/recipes/${recipeId}`);
+};
+
+export const upvoteRecipe = recipeId => (dispatch) => {
+  return axios.post(`http://localhost:5000/api/v1/recipes/${recipeId}/upvote`);
 };

@@ -10,7 +10,11 @@ const recipeReducer = (state = [], action) => {
       return [...state,
         Object.assign({}, action.payload)
       ];
-
+    case types.UPVOTE_RECIPE:
+      return [...state,
+        Object.assign({}, action.payload)
+      ];
+    
     default:
       return state;
   }

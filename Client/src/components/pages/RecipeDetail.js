@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import toastr from 'toastr';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import { viewSingleRecipe } from '../../actions/recipeActions';
+import { viewSingleRecipe, upvoteRecipe } from '../../actions/recipeActions';
 import Header from './Header';
 import { Footer } from './Footer';
 
@@ -13,17 +15,49 @@ class RecipeDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipeDetail: []
+            recipeDetail: [],
+            votes: [],
+            upvote: 'fa fa-2x fa-thumbs-o-up'
         }
+        this.upvote = this.upvote.bind(this);
     }
 
     componentDidMount() {
         const recipeId = this.props.match.params.recipeId;
         this.props.viewSingleRecipe(recipeId).then( 
             (res) => {
-                console.log(res)
-            this.setState({ recipeDetail: res.data.recipe })
+                console.log(res.data.recipe[0])
+            this.setState({ recipeDetail: res.data.recipe[0] })
+            if (!isEmpty(this.state.recipeDetail.votes)) {
+                if (this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].userId === localStorage.user && 
+                    this.state.recipeDetail.recipeId === this.props.match.params.recipeId) {
+                        this.setState({ upvote: 'fa fa-2x fa-thumbs-up' })
+                    }
+            }
           })
+        
+    }
+
+    upvote(){
+        this.props.upvoteRecipe(this.state.recipeDetail.recipeId).then( 
+            (res) => {
+            this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
+                (res) => {
+                this.setState({ recipeDetail: res.data.recipe[0] })
+                this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
+                if (!isEmpty(this.state.votes)) {
+                    if (this.state.votes.userId === localStorage.user && 
+                        this.state.votes.recipeId === this.props.match.params.recipeId) {
+                        this.setState({ upvote: 'fa fa-2x fa-thumbs-up' })
+                    }
+                }
+            })
+                toastr.success(res.data.Message);
+                console.log(res.data.Message)
+            },
+            (err) => {
+                toastr.error(err.response.data.Message);
+            })
     }
 
     render() {
@@ -108,7 +142,7 @@ class RecipeDetail extends React.Component {
                                     </CloudinaryContext>
                                     <div className="clearfix"></div>
                                 <ul className="list-inline">
-                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Upvote"><i className="fa fa-2x fa-thumbs-o-up"></i></Link><span className="badge badge-info" title="Upvotes">12</span>&nbsp; </li>
+                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" onClick={this.upvote} title="Upvote"><i className={this.state.upvote}></i></Link><span className="badge badge-info" title="Upvotes">{this.state.recipeDetail.upvotes}</span>&nbsp; </li>
                                     |
                                     <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Downvote"><i className="fa fa-2x fa-thumbs-o-down"></i></Link><span className="badge badge-info" title="Downvotes">2</span>&nbsp; </li>
                                     |
@@ -218,7 +252,8 @@ class RecipeDetail extends React.Component {
 }
 
 RecipeDetail.propTypes = {
-    viewSingleRecipe: PropTypes.func.isRequired
+    viewSingleRecipe: PropTypes.func.isRequired,
+    upvoteRecipe: PropTypes.func.isRequired
   }
 
-export default connect(null, { viewSingleRecipe })(RecipeDetail);
+export default connect(null, { viewSingleRecipe, upvoteRecipe })(RecipeDetail);

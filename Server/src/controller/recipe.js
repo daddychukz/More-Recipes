@@ -123,7 +123,14 @@ const updateRecipe = (req, res) => {
 
 const retrieveRecipe = (req, res) =>
   recipeListings
-    .findById(req.params.recipeID)
+    .findAll({
+      where: {
+        recipeId: req.params.recipeID
+      },
+      include: [{
+        model: db.votes
+      }]
+    })
     .then((recipe) => {
       if (recipe) {
         res.status(200).json({

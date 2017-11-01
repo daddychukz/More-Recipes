@@ -62,7 +62,7 @@ export default (sequelize, DataTypes) => {
   });
   Recipe.associate = (models) => {
     // associations can be defined here
-    Recipe.belongsTo(models.votes, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Recipe.hasMany(models.votes, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
     Recipe.belongsTo(models.User, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
     Recipe.hasMany(models.Reviews, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
   };
