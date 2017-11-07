@@ -43,13 +43,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
+      downvotes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATEONLY,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       }
     });
   },
