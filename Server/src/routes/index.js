@@ -1,8 +1,10 @@
 import express from 'express';
 import recipeController from '../controller/recipe';
 import upvotesController from '../controller/upvotes';
+import downvotesController from '../controller/downvotes';
 import reviewController from '../controller/reviews';
 import userController from '../controller/user';
+import votesController from '../controller/CountVotes';
 import Auth from '../middleware/auth';
 
 const router = express.Router();
@@ -26,6 +28,9 @@ router.get('/users/:userID/recipes', Auth.verify, userController.retrieveFavorit
 // Retrieve all recipes
 router.get('/recipes', recipeController.retrieveRecipes);
 
+// Retrieve all reviews
+router.get('/reviews', Auth.verify, reviewController.retrieveReviews);
+
 // Retrieve single recipe
 router.get('/recipes/:recipeID', Auth.verify, recipeController.retrieveRecipe);
 
@@ -46,6 +51,12 @@ router.post('/recipes/:recipeID/reviews', Auth.verify, reviewController.reviewRe
 
 // Upvote a recipe
 router.post('/recipes/:recipeID/upvote', Auth.verify, upvotesController.upvoteRecipe);
+
+// Downvote a recipe
+router.post('/recipes/:recipeID/downvote', Auth.verify, downvotesController.downvoteRecipe);
+
+// Update a recipe vote count
+router.put('/recipes/:recipeID/votecount', Auth.verify, votesController.countVotes);
 
 // Get Recipe by Most Upvotes
 router.get('/recipe', upvotesController.mostRecipeUpvote);
