@@ -59,6 +59,13 @@ export default (sequelize, DataTypes) => {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
     },
+    downvotes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      validate: {
+        notEmpty: { msg: 'Empty strings not allowed' }
+      }
+    }
   });
   Recipe.associate = (models) => {
     // associations can be defined here
