@@ -27,7 +27,17 @@ const reviewRecipe = (req, res) => {
     .catch(err => res.status(400).send(err));
 };
 
+const retrieveReviews = (req, res) => userReview
+  .all({
+    include: [{
+      model: db.User
+    }]
+  })
+  .then(reviews => res.status(200).json({ reviews }))
+  .catch(err => res.status(400).send(err));
+
 /* Export all methods */
 export default {
-  reviewRecipe
+  reviewRecipe,
+  retrieveReviews
 };
