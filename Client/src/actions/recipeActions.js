@@ -14,6 +14,7 @@ export const addRecipe = recipe => (dispatch) => {
   });
 };
 
+
 export const viewAllRecipes = () => (dispatch) => {
   return axios.get('http://localhost:5000/api/v1/recipes');
 };
@@ -25,3 +26,8 @@ export const viewSingleRecipe = recipeId => (dispatch) => {
 export const upvoteRecipe = recipeId => (dispatch) => {
   return axios.post(`http://localhost:5000/api/v1/recipes/${recipeId}/upvote`);
 };
+
+export const downvoteRecipe = recipeId => (dispatch) => {
+  return axios.post(`http://localhost:5000/api/v1/recipes/${recipeId}/downvote`);
+};
+
