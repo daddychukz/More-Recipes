@@ -2,11 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import toastr from 'toastr';
+import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import { viewSingleRecipe, upvoteRecipe } from '../../actions/recipeActions';
+import { viewSingleRecipe, upvoteRecipe, downvoteRecipe } from '../../actions/recipeActions';
+import { reviewRecipe, viewAllReviews } from '../../actions/reviewActions';
 import Header from './Header';
 import { Footer } from './Footer';
 
@@ -17,47 +19,112 @@ class RecipeDetail extends React.Component {
         this.state = {
             recipeDetail: [],
             votes: [],
-            upvote: 'fa fa-2x fa-thumbs-o-up'
+            upvote: 'fa fa-2x fa-thumbs-o-up',
+            downvote: 'fa fa-2x fa-thumbs-o-down',
+            review: '',
+            allReviews: []
         }
         this.upvote = this.upvote.bind(this);
+        this.downVote = this.downVote.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const recipeId = this.props.match.params.recipeId;
         this.props.viewSingleRecipe(recipeId).then( 
             (res) => {
                 console.log(res.data.recipe[0])
             this.setState({ recipeDetail: res.data.recipe[0] })
             if (!isEmpty(this.state.recipeDetail.votes)) {
-                if (this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].userId === localStorage.user && 
-                    this.state.recipeDetail.recipeId === this.props.match.params.recipeId) {
+                if (this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId && 
+                    this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
+                    this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].vote === true) {
                         this.setState({ upvote: 'fa fa-2x fa-thumbs-up' })
-                    }
+                    } else if (this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId && 
+                        this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
+                        this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].vote === false) {
+                            this.setState({ downvote: 'fa fa-2x fa-thumbs-down' })
+                        }
             }
           })
+          this.props.viewAllReviews().then(
+              (res) => {
+                  this.setState({ allReviews: res.data.reviews })
+                  })
         
+    }
+
+    onChange(e){
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     upvote(){
         this.props.upvoteRecipe(this.state.recipeDetail.recipeId).then( 
             (res) => {
-            this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
-                (res) => {
-                this.setState({ recipeDetail: res.data.recipe[0] })
-                this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
-                if (!isEmpty(this.state.votes)) {
-                    if (this.state.votes.userId === localStorage.user && 
-                        this.state.votes.recipeId === this.props.match.params.recipeId) {
-                        this.setState({ upvote: 'fa fa-2x fa-thumbs-up' })
-                    }
-                }
-            })
+                    setTimeout(() => { this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
+                        (res) => {
+                        this.setState({ recipeDetail: res.data.recipe[0] })
+                        console.log(res.data.recipe[0]);
+                        this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
+                        if (!isEmpty(this.state.votes)) {
+                            if (this.state.votes.userId === jwt.decode(localStorage.jwtToken).userId && 
+                                this.state.votes.recipeId === this.props.match.params.recipeId) {
+                                this.setState({ upvote: 'fa fa-2x fa-thumbs-up' })
+                                this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down' })
+                            }
+                            
+                        }
+                    })}, 1000)
                 toastr.success(res.data.Message);
                 console.log(res.data.Message)
             },
             (err) => {
                 toastr.error(err.response.data.Message);
             })
+    }
+
+    downVote(){
+        this.props.downvoteRecipe(this.state.recipeDetail.recipeId).then( 
+            (res) => {
+                    setTimeout(() => {
+                        this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
+                        (res) => {
+                        this.setState({ recipeDetail: res.data.recipe[0] })
+                        this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
+                        if (!isEmpty(this.state.votes)) {
+                            if (this.state.votes.userId === jwt.decode(localStorage.jwtToken).userId && 
+                                this.state.votes.recipeId === this.props.match.params.recipeId) {
+                                this.setState({ downvote: 'fa fa-2x fa-thumbs-down' })
+                                this.setState({ upvote: 'fa fa-2x fa-thumbs-o-up' })
+                            }
+                        }
+                    })}, 1000)
+                    toastr.success(res.data.Message);
+                    console.log(res.data.Message)
+                },
+                (err) => {
+                    toastr.error(err.response.data.Message);
+                })
+        }
+
+    onSubmit(e){
+        e.preventDefault();
+        const recipeId = this.props.match.params.recipeId;
+        const data = {
+            review: this.state.review
+        }
+        this.props.reviewRecipe(recipeId, data)
+        .then(
+            () => this.setState({ review: '' }),
+            (err) => this.setState({ errors: err.response.data})
+        )
+        this.props.viewAllReviews().then(
+            (res) => {
+                console.log(res.data.reviews)
+                this.setState({ allReviews: res.data.reviews })
+            }
+        )
     }
 
     render() {
@@ -139,51 +206,57 @@ class RecipeDetail extends React.Component {
                                             </div>
                                         }
                                         <hr />
+                                        <div className="clearfix"></div>
+                                        <ul className="list-inline">
+                                            <li className="list-inline-item"><Link className="btn btn-sm" to="#" onClick={this.upvote} title="Upvote"><i className={this.state.upvote}></i></Link><span className="badge badge-info" title="Upvotes">{this.state.recipeDetail.upvotes}</span>&nbsp; </li>
+                                            |
+                                            <li className="list-inline-item"><Link className="btn btn-sm" to="#" onClick={this.downVote} title="Downvote"><i className={this.state.downvote}></i></Link><span className="badge badge-info" title="Downvotes">{this.state.recipeDetail.downvotes}</span>&nbsp; </li>
+                                            |
+                                            <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Views"><i className="fa fa-2x fa-eye obj-color"></i></Link><span className="badge badge-info" title="Views">30</span></li>
+                
+                                            <li className="list-inline-item float-right"><Link className="btn btn-sm" to="#" title="Favorite" data-toggle="modal" data-target="#favorite"><i className="fa fa-2x fa-star-o"></i></Link></li>
+                                        </ul>
+                                        <br />
+                                        <form className="mb-3" onSubmit={this.onSubmit}>
+                                            <h3>Post a Review</h3>
+                                            <div className="form-group">
+                                                <textarea
+                                                    value={this.state.review}
+                                                    onChange={this.onChange}
+                                                    name="review"
+                                                    className="form-control"
+                                                    rows='6'
+                                                    required ></textarea>
+                                            </div>
+                                            <button type="submit" className="btn btn-primary">Post Review</button>
+                                        </form>
+                                        <h3>Reviews</h3>
+                                        {
+                                            this.state.allReviews.map(data => {
+                                            return (
+                                                <div key={data.id}>
+                                                    <div className="d-flex flex-row">
+                                                        <div className="p-2 align-self-start">
+                                                            <Image publicId={data.User.publicUrl}>
+                                                                <Transformation
+                                                                    crop="scale"
+                                                                    width="30"
+                                                                    height="30"
+                                                                    dpr="auto"
+                                                                    responsive_placeholder="blank"
+                                                                />
+                                                            </Image>
+                                                        </div>
+                                                        <div className="p-2 align-self-end">                                    
+                                                            <h3><a to="#">{data.User.fullName}</a></h3>                
+                                                            <small className="text-muted">{data.createdAt}</small>                    
+                                                            <p>{data.review}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        )}
                                     </CloudinaryContext>
-                                    <div className="clearfix"></div>
-                                <ul className="list-inline">
-                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" onClick={this.upvote} title="Upvote"><i className={this.state.upvote}></i></Link><span className="badge badge-info" title="Upvotes">{this.state.recipeDetail.upvotes}</span>&nbsp; </li>
-                                    |
-                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Downvote"><i className="fa fa-2x fa-thumbs-o-down"></i></Link><span className="badge badge-info" title="Downvotes">2</span>&nbsp; </li>
-                                    |
-                                    <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Views"><i className="fa fa-2x fa-eye obj-color"></i></Link><span className="badge badge-info" title="Views">30</span></li>
-        
-                                    <li className="list-inline-item float-right"><Link className="btn btn-sm" to="#" title="Favorite" data-toggle="modal" data-target="#favorite"><i className="fa fa-2x fa-star-o"></i></Link></li>
-                                </ul>
-                                
-                                <br />
-
-                                <form className="mb-3">
-                                    <h3>Post a Review</h3>
-                                    <div className="form-group">
-                                        <textarea className="form-control" rows='6'></textarea>
-                                    </div>
-                                    <button type="button" className="btn btn-primary">Post Review</button>
-                                </form>
-                                <h3>Reviews</h3>
-                                <div className="mb-3" style={{ border: '#E9ECEF 1px solid' }}>
-                                    <div className="d-flex flex-row">
-                                        <div className="p-2 align-self-start">
-                                            <img src="../../static/img/user-female.png" alt="user" className="img-fluid rounded-circle" width="50" height="50" />
-                                        </div>
-                                        <div className="p-2 align-self-end">                                    
-                                            <h3><a to="#">Janet John</a></h3>                
-                                            <small className="text-muted">September 18, 2017</small>                    
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                        </div>
-                                    </div>
-                                    <div className="d-flex flex-row">
-                                        <div className="p-2 align-self-start">
-                                            <img src="../../static/img/user-male.jpg" alt="user" className="img-fluid rounded-circle" width="50" height="50" />
-                                        </div>
-                                        <div className="p-2 align-self-end">                                    
-                                            <h3><a to="#">Fred Mat</a></h3> 
-                                            <small className="text-muted">September 19, 2017</small>                                  
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit veritatis consequatur, perspiciatis, est quo cumque, ratione accusantium ipsum consequuntur illum inventore nihil distinctio magni. </p>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <br />
 
                              </div>
@@ -253,7 +326,15 @@ class RecipeDetail extends React.Component {
 
 RecipeDetail.propTypes = {
     viewSingleRecipe: PropTypes.func.isRequired,
-    upvoteRecipe: PropTypes.func.isRequired
+    upvoteRecipe: PropTypes.func.isRequired,
+    downvoteRecipe: PropTypes.func.isRequired,
+    reviewRecipe: PropTypes.func.isRequired,
+    viewAllReviews: PropTypes.func.isRequired
   }
 
-export default connect(null, { viewSingleRecipe, upvoteRecipe })(RecipeDetail);
+export default connect(null, { 
+    viewSingleRecipe,
+    upvoteRecipe,
+    downvoteRecipe,
+    reviewRecipe,
+    viewAllReviews })(RecipeDetail);
