@@ -16,7 +16,9 @@ const upvoteRecipe = (req, res) => {
   vote
     .findOrCreate({ where: {
       userId: req.decoded.userId,
-      recipeId: req.params.recipeID },
+      recipeId: req.params.recipeID,
+      vote: true
+    },
     defaults: { vote: true } })
     .spread(() => {
       res.status(403).send({
@@ -27,6 +29,19 @@ const upvoteRecipe = (req, res) => {
       res.status(201).send({
         Message: `${req.decoded.username} upvoted this recipe`,
       });
+      vote.findOne({
+        where: {
+          recipeId: req.params.recipeID,
+          userId: req.decoded.userId,
+          vote: false
+        },
+      })
+        .then((prevUpvote) => {
+          if (prevUpvote) {
+            prevUpvote
+              .destroy();
+          }
+        });
       vote
         .count({ where: {
           recipeId: req.params.recipeID,
@@ -41,6 +56,24 @@ const upvoteRecipe = (req, res) => {
             }).then((recipeFound) => {
               recipeFound.updateAttributes({
                 upvotes: total
+              });
+            });
+          }
+        });
+      vote
+        .count({ where: {
+          recipeId: req.params.recipeID,
+          vote: false
+        }
+        }).then((total) => {
+          if (total) {
+            recipe.findOne({
+              where: {
+                recipeId: req.params.recipeID
+              },
+            }).then((recipeFound) => {
+              recipeFound.updateAttributes({
+                downvotes: total
               });
             });
           }
