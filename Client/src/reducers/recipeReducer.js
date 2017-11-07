@@ -14,6 +14,10 @@ const recipeReducer = (state = [], action) => {
       return [...state,
         Object.assign({}, action.payload)
       ];
+    case types.REVIEW_RECIPE:
+      return [...state,
+        Object.assign({}, action.payload)
+      ];
     
     default:
       return state;
