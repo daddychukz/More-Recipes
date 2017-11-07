@@ -42,6 +42,14 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    imageUrl: {
+      type: DataTypes.STRING,
+      defaultValue: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1510027347/user-male_jvc8hn.jpg'
+    },
+    publicUrl: {
+      type: DataTypes.STRING,
+      defaultValue: 'user-male_jvc8hn.jpg'
+    },
   }, { hooks: {
     beforeCreate: (newUser) => {
       newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));

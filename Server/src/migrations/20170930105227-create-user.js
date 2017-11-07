@@ -32,13 +32,21 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        imageUrl: {
+          type: Sequelize.STRING,
+          defaultValue: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1510027347/user-male_jvc8hn.jpg'
+        },
+        publicUrl: {
+          type: Sequelize.STRING,
+          defaultValue: 'user-male_jvc8hn.jpg'
+        },
         createdAt: {
           allowNull: false,
-          type: Sequelize.DATE
+          type: Sequelize.DATEONLY
         },
         updatedAt: {
           allowNull: false,
-          type: Sequelize.DATE
+          type: Sequelize.DATEONLY
         }
       }));
   },
