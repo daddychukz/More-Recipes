@@ -4,7 +4,6 @@ import upvotesController from '../controller/upvotes';
 import downvotesController from '../controller/downvotes';
 import reviewController from '../controller/reviews';
 import userController from '../controller/user';
-import votesController from '../controller/CountVotes';
 import Auth from '../middleware/auth';
 
 const router = express.Router();
@@ -54,9 +53,6 @@ router.post('/recipes/:recipeID/upvote', Auth.verify, upvotesController.upvoteRe
 
 // Downvote a recipe
 router.post('/recipes/:recipeID/downvote', Auth.verify, downvotesController.downvoteRecipe);
-
-// Update a recipe vote count
-router.put('/recipes/:recipeID/votecount', Auth.verify, votesController.countVotes);
 
 // Get Recipe by Most Upvotes
 router.get('/recipe', upvotesController.mostRecipeUpvote);
