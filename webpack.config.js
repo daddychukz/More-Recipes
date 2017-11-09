@@ -62,7 +62,7 @@ const config = {
   },
   plugins: [
     new Dotenv({
-      path: './.env', // Path to .env file
+      path: path.resolve('./.env'), // Path to .env file
       safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe) 
       systemvars: true
     })
