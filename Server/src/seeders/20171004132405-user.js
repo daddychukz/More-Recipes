@@ -10,7 +10,6 @@ module.exports = {
       sex: process.env.chuksSex,
       userName: process.env.chuksUserName,
       password: bcrypt.hashSync(process.env.chuksPassword, bcrypt.genSaltSync(8)),
-      confirmPassword: bcrypt.hashSync(process.env.chuksPasswordConf, bcrypt.genSaltSync(8)),
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -19,7 +18,6 @@ module.exports = {
       sex: process.env.userSex,
       userName: process.env.userUserName,
       password: bcrypt.hashSync(process.env.userPassword, bcrypt.genSaltSync(8)),
-      confirmPassword: bcrypt.hashSync(process.env.userPasswordConf, bcrypt.genSaltSync(8)),
       createdAt: new Date(),
       updatedAt: new Date()
     }], { returning: true });
