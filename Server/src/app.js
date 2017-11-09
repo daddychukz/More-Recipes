@@ -2,6 +2,7 @@
 import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
+import path from 'path';
 import bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import routes from './routes/index';
@@ -47,6 +48,10 @@ app.get('/swagger.json', (req, res) => {
   res.send(swaggerSpec);
 });
 app.use(express.static('Server/public'));
+
+// app.get('/', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../../Client/src/index.html'));
+// });
 
 // connect all routes to application
 app.use('/api/v1/', routes);
