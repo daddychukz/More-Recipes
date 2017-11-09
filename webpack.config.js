@@ -12,9 +12,9 @@ const SRC_DIR = path.resolve(__dirname, 'Client/src');
 // webpack configuration
 const config = {
   // file to start transpiling from
-  entry: path.resolve(__dirname, '../../Client/src/app.js'),
+  entry: path.resolve('./Client/src/app.js'),
   output: {
-    path: path.resolve(__dirname, '../../Client/dist/app'),
+    path: path.resolve('./Client/dist/app.js'),
     filename: 'bundle.js',
     publicPath: '/'
   },
