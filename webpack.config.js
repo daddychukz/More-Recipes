@@ -8,14 +8,13 @@ const DIST_DIR = path.resolve(__dirname, 'Client/dist');
 
 // directory to serve and transpile app from
 const SRC_DIR = path.resolve(__dirname, 'Client/src');
-const SRC_PATH = path.resolve(__dirname, '.env');
 
 // webpack configuration
 const config = {
   // file to start transpiling from
-  entry: SRC_DIR + '/App.js',
+  entry: path.resolve(__dirname, '../../Client/src/app.js'),
   output: {
-    path: DIST_DIR + '/app',
+    path: path.resolve(__dirname, '../../Client/dist/app'),
     filename: 'bundle.js',
     publicPath: '/'
   },
