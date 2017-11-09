@@ -7,6 +7,7 @@ services:
 
 before_script:
   - psql -c 'create database chuksrecipes;' -U postgres
+  - psql -c 'create database recipetest;' -U postgres
   - sequelize db:migrate
 
 env:
