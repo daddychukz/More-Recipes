@@ -14,7 +14,7 @@ const config = {
   // file to start transpiling from
   entry: path.resolve('./Client/src/app.js'),
   output: {
-    path: path.resolve('./Client/dist/app.js'),
+    path: path.resolve('./Client/dist/app'),
     filename: 'bundle.js',
     publicPath: '/'
   },

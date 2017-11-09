@@ -47,14 +47,16 @@ app.get('/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
+app.use(express.static('Client/dist/app'));
+app.use(express.static('Client/src'));
 app.use(express.static('Server/public'));
 
+// connect all routes to application
+app.use('/api/v1/', routes);
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../Client/dist/index.html'));
 });
 
-// connect all routes to application
-app.use('/api/v1/', routes);
 
 const port = +process.env.PORT || 5000;
 app.set('port', port);
