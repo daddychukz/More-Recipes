@@ -49,9 +49,9 @@ app.get('/swagger.json', (req, res) => {
 });
 app.use(express.static('Server/public'));
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../../Client/src/index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../Client/dist/index.html'));
+});
 
 // connect all routes to application
 app.use('/api/v1/', routes);
