@@ -21,6 +21,15 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
+  devServer: {
+    proxy: {
+      '/api': 'http://localhost:5000'
+    },
+    contentBase: path.resolve(__dirname, 'Client/src'),
+    inline: true,
+    historyApiFallback: true,
+    hot: true
+  },
   node: {
     net: 'empty',
     dns: 'empty'

@@ -6,7 +6,7 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 
 export const signUp = user => (dispatch) => {
-  return axios.post('http://localhost:5000/api/v1/users/signup', user).then((response) => {
+  return axios.post('/api/v1/users/signup', user).then((response) => {
     console.log(response.data);
     dispatch({
       type: types.CREATE_USER,
@@ -21,7 +21,7 @@ export const setCurrentUser = user => ({
 });
 
 export const signIn = user => (dispatch) => {
-  return axios.post('http://localhost:5000/api/v1/users/signin', user).then((response) => {
+  return axios.post('/api/v1/users/signin', user).then((response) => {
     const token = response.data.token;
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
