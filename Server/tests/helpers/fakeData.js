@@ -22,12 +22,16 @@ const fakeData = {
 
   recipe: {
     title: 'Beans',
-    description: 'This is how to prepare beans'
+    description: 'This is how to prepare beans',
+    imageUrl: 'nothing',
+    publicId: 'nothing'
   },
 
   recipe2: {
     title: 'Egusi',
-    description: 'This is how to prepare Egusi soup'
+    description: 'This is how to prepare Egusi soup',
+    imageUrl: 'nothing',
+    publicId: 'nothing'
   },
 
   review: {
