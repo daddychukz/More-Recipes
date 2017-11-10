@@ -15,5 +15,5 @@ export const reviewRecipe = (recipeId, reviews) => (dispatch) => {
 };
 
 export const viewAllReviews = () => (dispatch) => {
-  return axios.get('http://localhost:5000/api/v1/reviews');
+  return axios.get('/api/v1/reviews');
 };
