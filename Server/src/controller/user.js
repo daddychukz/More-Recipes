@@ -110,18 +110,34 @@ const signIn = (req, res) => {
    */
 
 const addFavorites = (req, res) => {
+  if (!req.body.category || req.body.category.trim().length === 0) {
+    return res.status(400).json({
+      Message: 'Category Field should not be Empty',
+    });
+  }
   Favorites
     .findOrCreate({ where: {
       userId: req.decoded.userId,
       recipeId: req.params.recipeID },
     defaults: { category: req.body.category } })
-    .then(() => {
-      res.status(403).send({
-        message: 'Recipe already favorited by you'
+    .spread(() => {
+      Favorites.findOne({
+        where: {
+          userId: req.decoded.userId,
+          recipeId: req.params.recipeID
+        }
+      })
+        .then((prevFavorite) => {
+          if (prevFavorite) {
+            prevFavorite.destroy();
+          }
+        });
+      res.send({
+        message: 'Recipe removed from your favorites'
       });
     })
-    .catch(() => res.status(201).send({
-      message: 'Successfully Added To Favorites'
+    .catch(() => res.send({
+      message: 'Successfully Added To your Favorites'
     }));
 };
 

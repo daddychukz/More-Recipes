@@ -1,7 +1,9 @@
+import isEmpty from 'lodash/isEmpty';
 import db from '../models';
 
 const recipe = db.Recipe;
 const vote = db.votes;
+const error = [];
 
 /**
    * upvoteRecipe
@@ -13,71 +15,115 @@ const vote = db.votes;
    */
 
 const upvoteRecipe = (req, res) => {
-  vote
-    .findOrCreate({ where: {
-      userId: req.decoded.userId,
-      recipeId: req.params.recipeID,
-      vote: true
+  recipe.findOne({
+    where: {
+      recipeId: req.params.recipeID
     },
-    defaults: { vote: true } })
-    .spread(() => {
-      res.status(403).send({
-        Message: `${req.decoded.username} has already upvoted this recipe`,
-      });
-    })
-    .catch(() => {
-      res.status(201).send({
-        Message: `${req.decoded.username} upvoted this recipe`,
-      });
-      vote.findOne({
-        where: {
-          recipeId: req.params.recipeID,
-          userId: req.decoded.userId,
-          vote: false
-        },
-      })
-        .then((prevUpvote) => {
-          if (prevUpvote) {
-            prevUpvote
-              .destroy();
-          }
-        });
+  }).then((recipes) => {
+    if (recipes) {
+      // finds if vote by a user for a recipe exists else creates it
       vote
-        .count({ where: {
+        .findOrCreate({ where: {
+          userId: req.decoded.userId,
           recipeId: req.params.recipeID,
           vote: true
-        }
-        }).then((total) => {
-          if (total) {
-            recipe.findOne({
-              where: {
-                recipeId: req.params.recipeID
-              },
-            }).then((recipeFound) => {
-              recipeFound.updateAttributes({
-                upvotes: total
+        },
+        defaults: { vote: true } })
+        .spread(() => {
+          vote.destroy({
+            where: {
+              userId: req.decoded.userId,
+              recipeId: req.params.recipeID,
+              vote: true
+            }
+          }).then(() => {
+            // counts total number of upvotes immediately after removing own upvote
+            vote
+              .count({
+                where: {
+                  recipeId: req.params.recipeID,
+                  vote: true
+                }
+              }).then((total) => {
+                recipe.findOne({
+                  where: {
+                    recipeId: req.params.recipeID
+                  },
+                }).then((recipeFound) => {
+                  recipeFound.updateAttributes({
+                    upvotes: total
+                  });
+                });
               });
-            });
-          }
-        });
-      vote
-        .count({ where: {
-          recipeId: req.params.recipeID,
-          vote: false
-        }
-        }).then((total) => {
-          if (total) {
-            recipe.findOne({
-              where: {
-                recipeId: req.params.recipeID
-              },
-            }).then((recipeFound) => {
-              recipeFound.updateAttributes({
-                downvotes: total
+          });
+          res.send({
+            Message: `${req.decoded.username} removed his Upvote`,
+          });
+        })
+        .catch(() => {
+          res.send({
+            Message: `${req.decoded.username} upvoted this recipe`,
+          });
+
+          // deletes downvote created by same user for same recipe
+          vote.destroy({
+            where: {
+              recipeId: req.params.recipeID,
+              userId: req.decoded.userId,
+              vote: false
+            },
+          }).then(() => {
+            // counts total number of upvotes immediately after upvoting
+            vote
+              .count({ where: {
+                recipeId: req.params.recipeID,
+                vote: true
+              }
+              }).then((total) => {
+                recipe.findOne({
+                  where: {
+                    recipeId: req.params.recipeID
+                  },
+                }).then((recipeFound) => {
+                  recipeFound.updateAttributes({
+                    upvotes: total
+                  });
+                });
               });
-            });
-          }
+
+            // counts total number of downvotes after deleting previous downvote 
+            vote
+              .count({ where: {
+                recipeId: req.params.recipeID,
+                vote: false
+              }
+              }).then((total) => {
+                recipe.findOne({
+                  where: {
+                    recipeId: req.params.recipeID
+                  },
+                }).then((recipeFound) => {
+                  recipeFound.updateAttributes({
+                    downvotes: total
+                  });
+                });
+              });
+          });
         });
+    } else {
+      res.status(404).send({
+        message: 'This recipe record does not exists!'
+      });
+    }
+  })
+    .catch((err) => {
+      if (err.parent.routine === 'string_to_uuid') {
+        error[0] = { message: 'Invalid Recipe ID' };
+      }
+      if (!error[0]) {
+        error[0] = { message: 'Something Went Wrong' };
+      }
+      res.status(400).json(error); // {error, data: req.body}
     });
 };
 
