@@ -47,13 +47,18 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
-      createdAt: {
+      date: {
         allowNull: false,
         type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
       }
     });
   },

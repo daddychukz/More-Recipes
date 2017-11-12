@@ -1,4 +1,5 @@
 import db from '../models';
+import paginate from '../services/paginate';
 
 const recipeListings = db.Recipe;
 
@@ -11,14 +12,30 @@ const recipeListings = db.Recipe;
    * @returns {void|Object}
    */
 
-const retrieveRecipes = (req, res) => recipeListings
-  .all({
-    include: [{
-      model: db.Reviews
-    }]
-  })
-  .then(recipes => res.status(200).json({ recipes }))
-  .catch(err => res.status(400).send(err));
+const retrieveRecipes = (req, res) =>
+  recipeListings
+    .findAndCountAll({
+      include: [{
+        model: db.Reviews
+      }],
+      order: [['createdAt', 'DESC']],
+      limit: req.query.limit,
+      offset: req.query.offset
+    })
+    .then((recipes) => {
+      const { limit, offset } = req.query;
+      const pagination = paginate({
+        limit,
+        offset,
+        totalCount: recipes.count,
+        pageSize: recipes.rows.length
+      });
+      res.status(200).json({
+        pagination,
+        recipes: recipes.rows
+      });
+    })
+    .catch(err => res.status(400).send(err));
 
 /**
    * createRecipe
