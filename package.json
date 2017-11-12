@@ -16,7 +16,8 @@
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "postinstall": "npm run build",
     "client:build": "webpack -p && cp Client/src/index.html Client/dist/index.html",
-    "prod": "sequelize db:migrate && npm run client:build && nodemon Server/dist/app.js"
+    "prod": "sequelize db:migrate && npm run client:build && nodemon Server/dist/app.js",
+    "undo:migrations": "sequelize db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
