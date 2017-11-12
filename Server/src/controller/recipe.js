@@ -30,7 +30,7 @@ const retrieveRecipes = (req, res) =>
         totalCount: recipes.count,
         pageSize: recipes.rows.length
       });
-      res.status(200).json({
+      res.status(201).json({
         pagination,
         recipes: recipes.rows
       });
