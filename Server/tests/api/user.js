@@ -255,7 +255,7 @@ describe('User Operations', () => {
         userId: newUser.userId,
         category: 'Soups'
       })
-      .expect(201)
+      .expect(200)
       .end((err, res) => {
         if (err) return done(err);
         done();
