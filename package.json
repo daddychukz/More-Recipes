@@ -7,7 +7,6 @@
     "server": "webpack -d && cp Client/src/index.html Client/dist/index.html && webpack-dev-server",
     "test": "npm run seed:db && nyc --reporter=html --reporter=text mocha ./Server/tests/api/user --compilers js:babel-register",
     "start": "sequelize db:migrate && nodemon ./Server/dist/app.js",
-    "all": "npm run start & npm run server", 
     "setup:seed": "npm run migrations && sequelize db:seed:all",
     "seed:db": "npm run migrations && NODE_ENV=test sequelize db:seed:all",
     "migrations": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
@@ -16,7 +15,7 @@
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "postinstall": "npm run build",
     "client:build": "webpack -p && cp Client/src/index.html Client/dist/index.html",
-    "prod": "sequelize db:migrate && npm run client:build && nodemon Server/dist/app.js",
+    "prod": "sequelize db:migrate && npm run client:build && node Server/dist/app.js",
     "undo:migrations": "sequelize db:migrate:undo:all"
   },
   "repository": {
