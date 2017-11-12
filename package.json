@@ -4,7 +4,7 @@
   "description": "A platform to share exciting recipe ideas",
   "main": "index.js",
   "scripts": {
-    "server": "webpack -d && cp Client/src/index.html Client/dist/index.html && webpack-dev-server",
+    "client": "webpack -d && cp Client/src/index.html Client/dist/index.html && webpack-dev-server",
     "test": "npm run seed:db && nyc --reporter=html --reporter=text mocha ./Server/tests/api/user --compilers js:babel-register",
     "start": "sequelize db:migrate && nodemon ./Server/dist/app.js",
     "setup:seed": "npm run migrations && sequelize db:seed:all",
