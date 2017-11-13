@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import { viewAllRecipes } from '../../actions/recipeActions';
+import * as recipesActions from '../../actions/recipeActions';
 import Header from './Header';
 import { Footer } from './Footer';
 
@@ -13,15 +13,18 @@ class RecipeBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipes: []
+            recipes: [],
+            isLoading: true
         }
     }
 
-    componentDidMount() {       
-        this.props.viewAllRecipes().then( 
-            (res) => {
-            this.setState({ recipes: res.data.recipes })
-          })
+    componentDidMount() {
+            this.props.viewAllRecipes().then(() => {
+                this.setState({ recipes: this.props.recipes, isLoading: false })
+            })
+            .catch((error) => {
+                console.log(error);
+        });
     }
 
     render() {
@@ -88,6 +91,10 @@ class RecipeBox extends React.Component {
                                 </form>
                                 <br />
                                 <br />
+                                { this.state.isLoading 
+                                ? 
+                                <h1>Loading data...</h1>
+                                :
                                 <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                                     {
                                         this.state.recipes.map(data => {
@@ -116,6 +123,7 @@ class RecipeBox extends React.Component {
                                         })
                                     }
                                 </CloudinaryContext>
+                                }
                             </div>
                         </div>
                     </div>
@@ -185,4 +193,16 @@ RecipeBox.propTypes = {
     viewAllRecipes: PropTypes.func.isRequired
   }
 
-export default connect(null, { viewAllRecipes })(RecipeBox);
+  function mapStateToProps(state, ownProps) {
+      return {
+          recipes: state.recipe
+      }
+  }
+
+  function mapDispatchToProps(dispatch) {
+      return {
+        viewAllRecipes: () => dispatch(recipesActions.viewAllRecipes())
+      }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeBox);

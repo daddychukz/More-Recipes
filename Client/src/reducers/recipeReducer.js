@@ -7,18 +7,17 @@ const recipeReducer = (state = [], action) => {
         Object.assign({}, action.recipe)
       ];
     case types.GET_ALL_RECIPES:
-      return [...state,
-        Object.assign({}, action.payload)
-      ];
+      return action.payload;
+    case types.GET_SINGLE_RECIPE:
+      return action.payload;
     case types.UPVOTE_RECIPE:
-      return [...state,
-        Object.assign({}, action.payload)
-      ];
+      return action.payload;
+    case types.DOWNVOTE_RECIPE:
+      return action.payload;
     case types.REVIEW_RECIPE:
-      return [...state,
-        Object.assign({}, action.payload)
-      ];
-    
+      return action.payload;
+    case types.SHOW_REVIEWS:
+      return action.payload;
     default:
       return state;
   }

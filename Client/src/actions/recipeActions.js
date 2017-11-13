@@ -14,20 +14,81 @@ export const addRecipe = recipe => (dispatch) => {
   });
 };
 
+//  Create action wrappers
 
-export const viewAllRecipes = () => (dispatch) => {
-  return axios.get('/api/v1/recipes');
+export const viewAllRecipesAction = serverRes => ({
+  type: types.GET_ALL_RECIPES,
+  payload: serverRes
+});
+
+export const viewSingleRecipeAction = serverRes => ({
+  type: types.GET_SINGLE_RECIPE,
+  payload: serverRes
+});
+
+export const upvoteRecipeAction = serverRes => ({
+  type: types.UPVOTE_RECIPE,
+  payload: serverRes
+});
+
+export const downvoteRecipeAction = serverRes => ({
+  type: types.UPVOTE_RECIPE,
+  payload: serverRes
+});
+
+/**
+ * @export { function } viewRecipes
+ * @returns { object } action type and server response
+ */
+export const viewAllRecipes = () => {
+  return (dispatch) => {
+    return axios.get('/api/v1/recipes')
+      .then((response) => {
+        dispatch(viewAllRecipesAction(response.data.recipes));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+/**
+ * @export { function } viewRecipes
+ * @returns { object } action type and server response
+ */
+
+export const viewSingleRecipe = (recipeId) => {
+  return (dispatch) => {
+    return axios.get(`/api/v1/recipes/${recipeId}`)
+      .then((response) => {
+        dispatch(viewSingleRecipeAction(response.data.recipe));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 };
 
-export const viewSingleRecipe = recipeId => (dispatch) => {
-  return axios.get(`/api/v1/recipes/${recipeId}`);
+export const upvoteRecipe = (recipeId) => {
+  return (dispatch) => {
+    return axios.post(`/api/v1/recipes/${recipeId}/upvote`)
+      .then((response) => {
+        dispatch(upvoteRecipeAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 };
 
-export const upvoteRecipe = recipeId => (dispatch) => {
-  return axios.post(`/api/v1/recipes/${recipeId}/upvote`);
-};
-
-export const downvoteRecipe = recipeId => (dispatch) => {
-  return axios.post(`/api/v1/recipes/${recipeId}/downvote`);
+export const downvoteRecipe = (recipeId) => {
+  return (dispatch) => {
+    return axios.post(`/api/v1/recipes/${recipeId}/downvote`)
+      .then((response) => {
+        dispatch(downvoteRecipeAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 };
 

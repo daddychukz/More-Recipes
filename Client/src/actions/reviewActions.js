@@ -14,6 +14,19 @@ export const reviewRecipe = (recipeId, reviews) => (dispatch) => {
   });
 };
 
-export const viewAllReviews = () => (dispatch) => {
-  return axios.get('/api/v1/reviews');
+export const viewAllReviewsAction = serverRes => ({
+  type: types.SHOW_REVIEWS,
+  payload: serverRes
+});
+
+export const viewAllReviews = () => {
+  return (dispatch) => {
+    return axios.get('/api/v1/reviews')
+      .then((response) => {
+        dispatch(viewAllReviewsAction(response.data.reviews));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 };

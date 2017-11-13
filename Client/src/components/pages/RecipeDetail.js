@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import { viewSingleRecipe, upvoteRecipe, downvoteRecipe } from '../../actions/recipeActions';
-import { reviewRecipe, viewAllReviews } from '../../actions/reviewActions';
+import * as recipesActions from '../../actions/recipeActions';
+import * as reviewActions from '../../actions/reviewActions';
 import Header from './Header';
 import { Footer } from './Footer';
 
@@ -33,9 +33,9 @@ class RecipeDetail extends React.Component {
     componentWillMount() {
         const recipeId = this.props.match.params.recipeId;
         this.props.viewSingleRecipe(recipeId).then( 
-            (res) => {
-                console.log(res.data.recipe[0])
-            this.setState({ recipeDetail: res.data.recipe[0] })
+            () => {
+             //   console.log(this.props.viewRecipe[0])
+            this.setState({ recipeDetail: this.props.viewRecipe[0] })
             if (!isEmpty(this.state.recipeDetail.votes)) {
                 if (this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId && 
                     this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
@@ -49,8 +49,8 @@ class RecipeDetail extends React.Component {
             }
           })
           this.props.viewAllReviews().then(
-              (res) => {
-                  this.setState({ allReviews: res.data.reviews })
+              () => {
+                  this.setState({ allReviews: this.props.showReview })
                   })
         
     }
@@ -61,11 +61,10 @@ class RecipeDetail extends React.Component {
 
     upvote(){
         this.props.upvoteRecipe(this.state.recipeDetail.recipeId).then( 
-            (res) => {
+            () => {
                     setTimeout(() => { this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
-                        (res) => {
-                        this.setState({ recipeDetail: res.data.recipe[0] })
-                        console.log(res.data.recipe[0]);
+                        () => {
+                        this.setState({ recipeDetail: this.props.viewRecipe[0] })
                         this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
                         if (!isEmpty(this.state.votes)) {
                             if (this.state.votes.userId === jwt.decode(localStorage.jwtToken).userId && 
@@ -76,8 +75,7 @@ class RecipeDetail extends React.Component {
                             
                         }
                     })}, 1000)
-                toastr.success(res.data.Message);
-                console.log(res.data.Message)
+                toastr.success(this.props.viewRecipe.Message);
             },
             (err) => {
                 toastr.error(err.response.data.Message);
@@ -86,11 +84,11 @@ class RecipeDetail extends React.Component {
 
     downVote(){
         this.props.downvoteRecipe(this.state.recipeDetail.recipeId).then( 
-            (res) => {
+            () => {
                     setTimeout(() => {
                         this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
                         (res) => {
-                        this.setState({ recipeDetail: res.data.recipe[0] })
+                        this.setState({ recipeDetail: this.props.viewRecipe[0] })
                         this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
                         if (!isEmpty(this.state.votes)) {
                             if (this.state.votes.userId === jwt.decode(localStorage.jwtToken).userId && 
@@ -100,8 +98,8 @@ class RecipeDetail extends React.Component {
                             }
                         }
                     })}, 1000)
-                    toastr.success(res.data.Message);
-                    console.log(res.data.Message)
+                    toastr.success(this.props.viewRecipe.Message);
+                    console.log(this.props.viewRecipe.Message)
                 },
                 (err) => {
                     toastr.error(err.response.data.Message);
@@ -120,9 +118,9 @@ class RecipeDetail extends React.Component {
             (err) => this.setState({ errors: err.response.data})
         )
         this.props.viewAllReviews().then(
-            (res) => {
-                console.log(res.data.reviews)
-                this.setState({ allReviews: res.data.reviews })
+            () => {
+                console.log(this.props.showReview)
+                this.setState({ allReviews: this.props.showReview })
             }
         )
     }
@@ -332,9 +330,20 @@ RecipeDetail.propTypes = {
     viewAllReviews: PropTypes.func.isRequired
   }
 
-export default connect(null, { 
-    viewSingleRecipe,
-    upvoteRecipe,
-    downvoteRecipe,
-    reviewRecipe,
-    viewAllReviews })(RecipeDetail);
+  function mapStateToProps(state, ownProps) {
+      return {
+          viewRecipe: state.recipe,
+          showReview: state.review
+      }
+  }
+
+  function mapDispatchToProps(dispatch) {
+      return {
+        viewSingleRecipe: Id => dispatch(recipesActions.viewSingleRecipe(Id)),
+        upvoteRecipe: id => dispatch(recipesActions.upvoteRecipe(id)),
+        downvoteRecipe: id => dispatch(recipesActions.downvoteRecipe(id)),
+        reviewRecipe: (Id, reviews) => dispatch(reviewActions.reviewRecipe(Id, reviews)),
+        viewAllReviews: () => dispatch(reviewActions.viewAllReviews())
+      }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetail);
