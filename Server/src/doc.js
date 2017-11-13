@@ -399,3 +399,57 @@
 *       200:
 *         description: Successful
 */
+
+/**
+* @swagger
+*  securityDefinitions: 
+*    ApiKeyAuth: 
+*      type: apiKey
+*      in: header
+*      name: authorization
+* /api/v1/recipes/{recipeID}/upvote:
+*   post:
+*     tags:
+*       - Upvote
+*     description: Upvote a Recipe
+*     produces:
+*       - application/json
+*     security:
+*       - ApiKeyAuth: []
+*     parameters:
+*       - name: recipeID
+*         description: Enter Recipe ID
+*         in: path
+*         required: true
+*         type: string
+*     responses:
+*       200:
+*         description: Successful
+*/
+
+/**
+* @swagger
+*  securityDefinitions: 
+*    ApiKeyAuth: 
+*      type: apiKey
+*      in: header
+*      name: authorization
+* /api/v1/recipes/{recipeID}/downvote:
+*   post:
+*     tags:
+*       - Downvote
+*     description: Downvote a Recipe
+*     produces:
+*       - application/json
+*     security:
+*       - ApiKeyAuth: []
+*     parameters:
+*       - name: recipeID
+*         description: Enter Recipe ID
+*         in: path
+*         required: true
+*         type: string
+*     responses:
+*       200:
+*         description: Successful
+*/
