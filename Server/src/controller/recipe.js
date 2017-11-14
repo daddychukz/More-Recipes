@@ -15,9 +15,6 @@ const recipeListings = db.Recipe;
 const retrieveRecipes = (req, res) =>
   recipeListings
     .findAndCountAll({
-      include: [{
-        model: db.Reviews
-      }],
       order: [['createdAt', 'DESC']],
       limit: req.query.limit,
       offset: req.query.offset

@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as recipesActions from '../../actions/recipeActions';
 import * as reviewActions from '../../actions/reviewActions';
+import * as favoriteActions from '../../actions/favoriteActions';
 import Header from './Header';
 import { Footer } from './Footer';
 
@@ -21,13 +22,16 @@ class RecipeDetail extends React.Component {
             votes: [],
             upvote: 'fa fa-2x fa-thumbs-o-up',
             downvote: 'fa fa-2x fa-thumbs-o-down',
+            favorite: 'fa fa-2x fa-star-o',
             review: '',
-            allReviews: []
+            allReviews: [],
+            category: 'Soup'
         }
         this.upvote = this.upvote.bind(this);
         this.downVote = this.downVote.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.favoriteRecipe = this.favoriteRecipe.bind(this);
     }
 
     componentWillMount() {
@@ -57,6 +61,23 @@ class RecipeDetail extends React.Component {
 
     onChange(e){
         this.setState({ [e.target.name]: e.target.value })
+    }
+
+    favoriteRecipe(){
+        const recipeId = this.state.recipeDetail.recipeId
+        const data = {
+            category: this.state.category
+        }
+        this.props.addFavorite(recipeId, data).then(
+            () => {
+                this.setState({ favorite: 'fa fa-2x fa-star' })
+                toastr.success(this.props.favoriteData.message)
+                console.log(this.props.favoriteData)
+            },
+            (err) => {
+                toastr.error(err.response.data.Message);
+            }
+        )
     }
 
     upvote(){
@@ -212,7 +233,7 @@ class RecipeDetail extends React.Component {
                                             |
                                             <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Views"><i className="fa fa-2x fa-eye obj-color"></i></Link><span className="badge badge-info" title="Views">30</span></li>
                 
-                                            <li className="list-inline-item float-right"><Link className="btn btn-sm" to="#" title="Favorite" data-toggle="modal" data-target="#favorite"><i className="fa fa-2x fa-star-o"></i></Link></li>
+                                            <li className="list-inline-item float-right"><Link className="btn btn-sm" onClick={this.favoriteRecipe} to="#" title="Favorite"><i className={this.state.favorite}></i></Link></li>
                                         </ul>
                                         <br />
                                         <form className="mb-3" onSubmit={this.onSubmit}>
@@ -296,27 +317,6 @@ class RecipeDetail extends React.Component {
                                 </div>
                             </div>
                         </div>
-        
-                         {/* FAVORITE MODAL  */}
-                        <div className="modal fade text-dark" id="favorite" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div className="modal-dialog" role="document">
-                                <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Message</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    Successfully Added to Your Favorites
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" className="btn btn-primary">Save</button>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
             </div>
         );
     }
@@ -333,7 +333,8 @@ RecipeDetail.propTypes = {
   function mapStateToProps(state, ownProps) {
       return {
           viewRecipe: state.recipe,
-          showReview: state.review
+          showReview: state.review,
+          favoriteData: state.favorite
       }
   }
 
@@ -343,7 +344,8 @@ RecipeDetail.propTypes = {
         upvoteRecipe: id => dispatch(recipesActions.upvoteRecipe(id)),
         downvoteRecipe: id => dispatch(recipesActions.downvoteRecipe(id)),
         reviewRecipe: (Id, reviews) => dispatch(reviewActions.reviewRecipe(Id, reviews)),
-        viewAllReviews: () => dispatch(reviewActions.viewAllReviews())
+        viewAllReviews: () => dispatch(reviewActions.viewAllReviews()),
+        addFavorite: (Id, category) => dispatch(favoriteActions.favoriteRecipe(Id, category))
       }
   }
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetail);

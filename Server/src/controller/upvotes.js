@@ -1,4 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
 import db from '../models';
 
 const recipe = db.Recipe;
