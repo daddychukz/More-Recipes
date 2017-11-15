@@ -20,8 +20,24 @@ const secret = process.env.SECRET;
    */
 
 const signUp = (req, res) => {
-  if (req.body.password !== req.body.confirmPassword) {
-    return res.status(400).json({
+  if (!req.body.email || req.body.email.trim().length === 0) {
+    return res.status(406).json({
+      Message: 'Email Field should not be Empty',
+    });
+  } else if (!req.body.username || req.body.username.trim().length === 0) {
+    return res.status(406).json({
+      Message: 'Username Field should not be Empty',
+    });
+  } else if (!req.body.fullname || req.body.fullname.trim().length === 0) {
+    return res.status(406).json({
+      Message: 'Username Field should not be Empty',
+    });
+  } else if (!req.body.password) {
+    return res.status(406).json({
+      Message: 'Password Field should not be Empty',
+    });
+  } else if (req.body.password !== req.body.confirmPassword) {
+    return res.status(406).json({
       Message: 'Password Mismatch!',
     });
   }
@@ -33,8 +49,13 @@ const signUp = (req, res) => {
       password: req.body.password,
       confirmPassword: req.body.confirmPassword
     })
-    .then(user => res.status(201).json({
-      user
+    .then(user => res.status(201).send({
+      Message: 'User created successfully',
+      user: {
+        Fullname: user.fullName,
+        Username: user.userName,
+        Email: user.email
+      }
     }))
     .catch((err) => {
       if (err.errors[0].message === 'userName must be unique') {
@@ -49,7 +70,7 @@ const signUp = (req, res) => {
       if (!error.err) {
         error.err = { message: err.errors[0].message };
       }
-      res.status(400).json(err); // {error, data: req.body}
+      res.status(409).json(err); // {error, data: req.body}
     });
 };
 
@@ -64,11 +85,11 @@ const signUp = (req, res) => {
 
 const signIn = (req, res) => {
   if (!req.body.email || req.body.email.trim().length === 0) {
-    return res.status(400).json({
+    return res.status(406).json({
       Message: 'Email Field should not be Empty',
     });
   } else if (!req.body.password) {
-    return res.status(400).json({
+    return res.status(406).json({
       Message: 'Password Field should not be Empty',
     });
   }
@@ -90,7 +111,7 @@ const signIn = (req, res) => {
               message: `Welcome ${user.userName}`,
               token });
           }
-          return res.status(400).send({ message: 'Username or password incorrect' });
+          return res.status(409).send({ message: 'Username or password incorrect' });
         });
       } else {
         res.status(404).send({
@@ -111,7 +132,7 @@ const signIn = (req, res) => {
 
 const addFavorites = (req, res) => {
   if (!req.body.category || req.body.category.trim().length === 0) {
-    return res.status(400).json({
+    return res.status(406).json({
       Message: 'Category Field should not be Empty',
     });
   }
@@ -154,7 +175,10 @@ const retrieveFavorites = (req, res) => {
   Favorites
     .all({
       where: {
-        userId: req.params.userID
+        userId: req.decoded.userId
+      },
+      attributes: {
+        exclude: ['id', 'updatedAt']
       }
     })
     .then((recipe) => {
@@ -169,7 +193,7 @@ const retrieveFavorites = (req, res) => {
       }
     })
     .catch(() => res.status(400).send({
-      message: 'User not Found'
+      message: 'Record not found for this User!'
     }));
 };
 

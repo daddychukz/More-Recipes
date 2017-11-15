@@ -122,7 +122,7 @@ const upvoteRecipe = (req, res) => {
       if (!error[0]) {
         error[0] = { message: 'Something Went Wrong' };
       }
-      res.status(400).json(error); // {error, data: req.body}
+      res.status(406).json(error); // {error, data: req.body}
     });
 };
 

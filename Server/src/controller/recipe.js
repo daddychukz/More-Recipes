@@ -1,7 +1,9 @@
+import isEmpty from 'lodash/isEmpty';
 import db from '../models';
 import paginate from '../services/paginate';
 
 const recipeListings = db.Recipe;
+const error = {};
 
 /**
    * reviewRecipe
@@ -53,16 +55,55 @@ const createRecipe = (req, res) => {
       Message: 'Description Field should not be Empty',
     });
   }
-  recipeListings.create({
-    userId: req.decoded.userId,
-    fullName: req.decoded.fullname,
-    title: req.body.title,
-    description: req.body.description,
-    imageUrl: req.body.imageUrl,
-    publicId: req.body.publicId
-  }).then(recipe => res.status(201).json({
-    recipe }))
-    .catch(err => res.status(400).send(err));
+  // recipeListings.create({
+  //   userId: req.decoded.userId,
+  //   fullName: req.decoded.fullname,
+  //   title: req.body.title,
+  //   description: req.body.description,
+  //   imageUrl: req.body.imageUrl,
+  //   publicId: req.body.publicId
+  // }).then(recipe => res.status(201).json({
+  //   recipe }))
+  //   .catch(err => res.status(400).send(err));
+  recipeListings
+    .findOrCreate({ where: {
+      userId: req.decoded.userId,
+      title: req.body.title
+    },
+    defaults: {
+      fullName: req.decoded.fullname,
+      title: req.body.title,
+      description: req.body.description,
+      imageUrl: req.body.imageUrl,
+      publicId: req.body.publicId
+    } })
+    .spread((recipe, created) => {
+      if (created === false) {
+        res.status(409).json({
+          message: 'You already have a recipe with this Title'
+        });
+      } else if (created === true) {
+        res.status(201).json({
+          recipe
+        });
+      }
+    })
+    .catch(() => {
+      recipeListings.findOne({
+        where: {
+          userId: req.decoded.userId,
+          title: req.body.title
+        },
+        attributes: {
+          exclude: ['imageUrl', 'publicId', 'fullName', 'updatedAt']
+        }
+      })
+        .then((recipe) => {
+          res.status(200).json({
+            recipe
+          });
+        });
+    });
 };
 
 /**
@@ -121,8 +162,8 @@ const updateRecipe = (req, res) => {
         updatedRecipe
       }));
   })
-    .catch(() => res.status(401).send({
-      message: 'You do not have permission to modify this Recipe'
+    .catch(() => res.status(404).send({
+      message: 'Record not found for this User'
     }));
 };
 
@@ -146,8 +187,12 @@ const retrieveRecipe = (req, res) =>
       }]
     })
     .then((recipe) => {
-      if (recipe) {
-        res.status(200).json({
+      if (isEmpty(recipe)) {
+        res.status(406).json({
+          message: 'Record not Found!'
+        });
+      } else if (recipe) {
+        res.status(200).send({
           recipe
         });
       } else {

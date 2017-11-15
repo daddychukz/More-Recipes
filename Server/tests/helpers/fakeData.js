@@ -23,15 +23,15 @@ const fakeData = {
   recipe: {
     title: 'Beans',
     description: 'This is how to prepare beans',
-    imageUrl: 'nothing',
-    publicId: 'nothing'
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    publicId: 'home_gipmmy.jpg'
   },
 
   recipe2: {
     title: 'Egusi',
     description: 'This is how to prepare Egusi soup',
-    imageUrl: 'nothing',
-    publicId: 'nothing'
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    publicId: 'home_gipmmy.jpg'
   },
 
   review: {

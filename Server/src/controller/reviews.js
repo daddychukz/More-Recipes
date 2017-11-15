@@ -1,6 +1,7 @@
 import db from '../models';
 
 const userReview = db.Reviews;
+const error = {};
 
 /**
    * reviewRecipe
@@ -13,7 +14,7 @@ const userReview = db.Reviews;
 
 const reviewRecipe = (req, res) => {
   if (!req.body.review || req.body.review.trim().length === 0) {
-    return res.status(400).json({
+    return res.status(406).json({
       Message: 'Review Field should not be Empty',
     });
   }
@@ -24,7 +25,15 @@ const reviewRecipe = (req, res) => {
     review: req.body.review
   }).then(rev => res.status(201).json({
     rev }))
-    .catch(err => res.status(400).send(err));
+    .catch((err) => {
+      if (err.parent.routine === 'string_to_uuid') {
+        error[0] = { message: 'Invalid Recipe ID' };
+      }
+      if (!error[0]) {
+        error[0] = { message: 'Something Went Wrong' };
+      }
+      res.status(406).send(error);
+    });
 };
 
 const retrieveReviews = (req, res) => userReview
