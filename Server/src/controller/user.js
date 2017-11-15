@@ -70,7 +70,7 @@ const signUp = (req, res) => {
       if (!error.err) {
         error.err = { message: err.errors[0].message };
       }
-      res.status(409).json(err); // {error, data: req.body}
+      res.status(409).json(error); // {error, data: req.body}
     });
 };
 
