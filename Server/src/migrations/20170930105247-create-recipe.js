@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      fullName: {
+      fullname: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -28,7 +28,7 @@ module.exports = {
         allowNull: false
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       imageUrl: {

@@ -23,9 +23,9 @@ class RecipeDetail extends React.Component {
             upvote: 'fa fa-2x fa-thumbs-o-up',
             downvote: 'fa fa-2x fa-thumbs-o-down',
             favorite: 'fa fa-2x fa-star-o',
-            review: '',
+            Review: '',
             allReviews: [],
-            category: 'Soup'
+            Category: 'Soup'
         }
         this.upvote = this.upvote.bind(this);
         this.downVote = this.downVote.bind(this);

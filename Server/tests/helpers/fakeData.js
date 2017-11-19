@@ -3,41 +3,61 @@ import faker from 'Faker';
 const fakeData = {
 
   userOne: {
-    fullname: 'Daddychuks',
-    email: 'chuks@yahoo.com',
-    sex: 'male',
-    username: 'chuks',
-    password: 'chuks',
-    confirmPassword: 'chuks'
+    FullName: 'Daddychuks',
+    Email: 'chuks@yahoo.com',
+    Sex: 'Male',
+    UserName: 'chuks',
+    Password: 'chuks',
+    ConfirmPassword: 'chuks'
   },
 
   userTwo: {
-    fullname: faker.Name.findName(),
-    email: 'user@yahoo.com',
-    sex: 'male',
-    username: 'user',
-    password: 'user',
-    confirmPassword: 'user'
+    FullName: faker.Name.findName(),
+    Email: 'user@yahoo.com',
+    Sex: 'Male',
+    UserName: 'user',
+    Password: 'user',
+    ConfirmPassword: 'user'
   },
-
   recipe: {
-    title: 'Beans',
-    description: 'This is how to prepare beans',
+    Title: 'Beans',
+    FullName: 'Daddychuks',
+    Description: 'This is how to prepare beans',
     imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 
   recipe2: {
-    title: 'Egusi',
-    description: 'This is how to prepare Egusi soup',
+    Title: 'Egusi',
+    FullName: 'Daddychuks',
+    Description: 'This is how to prepare Egusi soup',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    publicId: 'home_gipmmy.jpg'
+  },
+
+  recipe3: {
+    userId: '0c29ce9f-0dab-4a68-a776-ca1338577cda',
+    Title: 'Yam',
+    FullName: 'Emeka Oka',
+    Description: 'This is how to prepare Yam',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    publicId: 'home_gipmmy.jpg'
+  },
+
+  recipe4: {
+    userId: '0c29ce2f-0dab-4a68-a776-ca1338577cda',
+    Title: 'Yam',
+    FullName: 'Emeka Oka',
+    Description: 'This is how to prepare Yam',
     imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 
   review: {
-    fullname: faker.Name.findName(),
-    title: 'Egusi',
-    review: 'Cool Stuff!!'
+    userId: '',
+    recipeId: '',
+    FullName: faker.Name.findName(),
+    Review: 'Cool Stuff!!'
   },
 };
 

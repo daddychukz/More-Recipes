@@ -1,8 +1,8 @@
 import express from 'express';
 import recipeController from '../controller/recipe';
-import upvotesController from '../controller/upvotes';
-import downvotesController from '../controller/downvotes';
-import reviewController from '../controller/reviews';
+import upvotesController from '../controller/upvote';
+import downvotesController from '../controller/downvote';
+import reviewController from '../controller/review';
 import userController from '../controller/user';
 import Auth from '../middleware/auth';
 

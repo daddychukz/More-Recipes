@@ -1,7 +1,7 @@
 
 
 export default (sequelize, DataTypes) => {
-  const Reviews = sequelize.define('Reviews', {
+  const Review = sequelize.define('Review', {
     userId: {
       allowNull: true,
       type: DataTypes.UUID,
@@ -20,25 +20,33 @@ export default (sequelize, DataTypes) => {
         key: 'recipeId'
       }
     },
-    fullName: {
+    fullname: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
+        notEmpty: { msg: 'Empty strings not allowed' },
+        is: {
+          args: /([A-Za-z])+/,
+          msg: 'Firstname can only contain strings'
+        }
       }
     },
     review: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: { msg: 'Empty strings not allowed' }
+      },
+      is: {
+        args: /([A-Za-z])+/,
+        msg: 'Firstname can only contain strings'
       }
     },
   });
-  Reviews.associate = (models) => {
+  Review.associate = (models) => {
     // associations can be defined here
-    Reviews.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
-    Reviews.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    Review.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Review.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL' });
   };
-  return Reviews;
+  return Review;
 };

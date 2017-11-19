@@ -10,7 +10,7 @@ module.exports = {
           type: Sequelize.UUID,
           defaultValue: Sequelize.literal('uuid_generate_v4()')
         },
-        fullName: {
+        fullname: {
           type: Sequelize.STRING,
           allowNull: true,
         },
@@ -20,10 +20,11 @@ module.exports = {
           unique: true
         },
         sex: {
-          type: Sequelize.STRING,
+          type: Sequelize.ENUM,
+          values: ['Male', 'Female'],
           allowNull: true
         },
-        userName: {
+        username: {
           type: Sequelize.STRING,
           unique: true,
           allowNull: false

@@ -1,7 +1,7 @@
 
 
 export default (sequelize, DataTypes) => {
-  const votes = sequelize.define('votes', {
+  const Vote = sequelize.define('Vote', {
     userId: {
       type: DataTypes.UUID,
       references: {
@@ -20,9 +20,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN
     },
   });
-  votes.associate = (models) => {
+  Vote.associate = (models) => {
     // associations can be defined here
-    votes.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Vote.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
   };
-  return votes;
+  return Vote;
 };

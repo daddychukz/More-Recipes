@@ -19,8 +19,8 @@ class RecipeForm extends React.Component {
         super(props, context);
 
         this.state = {
-            title: '',
-            description: '',
+            Title: '',
+            Description: '',
             imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
             publicId: 'home_gipmmy.jpg',
             errors: {},

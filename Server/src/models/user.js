@@ -1,9 +1,3 @@
-/**
-* This function creates the model of
-* Users table in the database, specifying
-* relationships, datatypes and constraints.
-* 
-*/
 import bcrypt from 'bcrypt';
 
 export default (sequelize, DataTypes) => {
@@ -14,12 +8,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    fullName: {
+    fullname: {
       type: DataTypes.STRING,
       allowNull: true,
-      validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
-      }
     },
     email: {
       type: DataTypes.STRING,
@@ -30,10 +21,11 @@ export default (sequelize, DataTypes) => {
       }
     },
     sex: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM,
+      values: ['Male', 'Female'],
       allowNull: true
     },
-    userName: {
+    username: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false
@@ -41,6 +33,12 @@ export default (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Password cannot be empty'
+        }
+      }
     },
     imageUrl: {
       type: DataTypes.STRING,
@@ -61,9 +59,9 @@ export default (sequelize, DataTypes) => {
   User.associate = (models) => {
     // associations can be defined here
     User.hasMany(models.Recipe, { foreignKey: 'userId', onDelete: 'SET NULL' });
-    User.hasMany(models.Reviews, { foreignKey: 'userId', onDelete: 'SET NULL' });
-    User.hasMany(models.Favorites, { foreignKey: 'userId', onDelete: 'SET NULL' });
-    User.hasMany(models.votes, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    User.hasMany(models.Review, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    User.hasMany(models.Favorite, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    User.hasMany(models.Vote, { foreignKey: 'userId', onDelete: 'SET NULL' });
   };
   return User;
 };

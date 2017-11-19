@@ -28,12 +28,12 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      fullName: {
+      fullname: {
         type: Sequelize.STRING,
         allowNull: false
       },
       review: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       createdAt: {

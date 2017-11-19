@@ -17,11 +17,11 @@ class SignupForm extends React.Component {
         super(props, context);
 
         this.state = {
-            email: '',
-            username: '',
-            fullname: '',
-            password: '',
-            confirmPassword: '',
+            Email: '',
+            UserName: '',
+            Fullame: '',
+            Password: '',
+            ConfirmPassword: '',
             errors: {},
             isLoading: false
         };

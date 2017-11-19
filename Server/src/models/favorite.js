@@ -1,7 +1,7 @@
 
 
 export default (sequelize, DataTypes) => {
-  const Favorites = sequelize.define('Favorites', {
+  const Favorite = sequelize.define('Favorite', {
     userId: {
       allowNull: false,
       type: DataTypes.UUID,
@@ -24,13 +24,17 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
+        notEmpty: { msg: 'Empty strings not allowed' },
+        is: {
+          args: /([A-Za-z])+/,
+          msg: 'Category can only contain strings'
+        }
       }
     }
   });
-  Favorites.associate = (models) => {
+  Favorite.associate = (models) => {
     // associations can be defined here
-    Favorites.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    Favorite.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL' });
   };
-  return Favorites;
+  return Favorite;
 };

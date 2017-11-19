@@ -17,22 +17,30 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    fullName: {
+    fullname: {
       allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
+        notEmpty: { msg: 'Empty strings not allowed' },
+        is: {
+          args: /([A-Za-z])+/,
+          msg: 'Fullname can only contain strings'
+        }
       }
     },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
+        notEmpty: { msg: 'Empty strings not allowed' },
+        is: {
+          args: /([A-Za-z])+/,
+          msg: 'Firstname can only contain strings'
+        }
       }
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: { msg: 'Empty strings not allowed' }
@@ -69,9 +77,9 @@ export default (sequelize, DataTypes) => {
   });
   Recipe.associate = (models) => {
     // associations can be defined here
-    Recipe.hasMany(models.votes, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Recipe.hasMany(models.Vote, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
     Recipe.belongsTo(models.User, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
-    Recipe.hasMany(models.Reviews, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Recipe.hasMany(models.Review, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
   };
   return Recipe;
 };
