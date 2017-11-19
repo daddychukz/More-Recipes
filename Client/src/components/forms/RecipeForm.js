@@ -64,19 +64,19 @@ class RecipeForm extends React.Component {
                     <div className="form-group">
                         <label className="text-dark">Recipe Title</label>
                         <input 
-                            value={this.state.title}
+                            value={this.state.Title}
                             onChange={this.onChange}
                             type="text" 
-                            name="title"
+                            name="Title"
                             className="form-control" 
                             required />
                     </div>
                     <div className="form-group">
                         <label className="text-dark">Recipe Description</label>
                         <textarea 
-                            value={this.state.description}
+                            value={this.state.Description}
                             onChange={this.onChange}
-                            name="description"
+                            name="Description"
                             rows='6'
                             className="form-control" 
                             required ></textarea>

@@ -98,6 +98,7 @@ class RecipeBox extends React.Component {
                                 <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                                     {
                                         this.state.recipes.map(data => {
+                                            const newDate = new Date(data.createdAt).toDateString();
                                             console.log(data);
                                             return (
                                                 <div key={data.recipeId}>
@@ -113,9 +114,9 @@ class RecipeBox extends React.Component {
                                                         </Image>
                                                     </div>
                                                     <div className="p-2 align-self-end">
-                                                        <small className="text-muted float-right">{data.createdAt}</small>
+                                                        <small className="text-muted float-right">{newDate}</small>
                                                         <h3><Link to={`/recipe/${data.recipeId}`}>{data.title}</Link></h3>
-                                                        <small>by: {data.fullName}</small>
+                                                        <small>by: {data.fullname}</small>
                                                         <p> {data.description} </p>
                                                     </div>
                                                 </div>

@@ -19,7 +19,7 @@ class SignupForm extends React.Component {
         this.state = {
             Email: '',
             UserName: '',
-            Fullame: '',
+            FullName: '',
             Password: '',
             ConfirmPassword: '',
             errors: {},
@@ -57,50 +57,50 @@ class SignupForm extends React.Component {
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                     <input 
-                        value={this.state.fullname}
+                        value={this.state.FullName}
                         onChange={this.onChange}
                         type="text" 
-                        name="fullname"
+                        name="FullName"
                         className="form-control form-control-lg" 
                         placeholder="Full Name" 
                         required />
                 </div>
                 <div className="form-group">
                     <input 
-                        value={this.state.username}
+                        value={this.state.UserName}
                         onChange={this.onChange}
                         type="text" 
-                        name="username"
+                        name="UserName"
                         className="form-control form-control-lg" 
                         placeholder="Username" 
                         required />
                 </div>
                 <div className="form-group">
                     <input 
-                        value={this.state.email}
+                        value={this.state.Email}
                         onChange={this.onChange}
                         type="email" 
-                        name="email"
+                        name="Email"
                         className="form-control form-control-lg" 
                         placeholder="Email" 
                         required />
                 </div>
                 <div className="form-group">
                     <input 
-                        value={this.state.password}
+                        value={this.state.Password}
                         onChange={this.onChange}
                         type="password" 
-                        name="password"
+                        name="Password"
                         className="form-control form-control-lg" 
                         placeholder="Password" 
                         required />
                 </div>
                 <div className="form-group">
                     <input 
-                        value={this.state.confirmPassword}
+                        value={this.state.ConfirmPassword}
                         onChange={this.onChange}
                         type="password"
-                        name="confirmPassword" 
+                        name="ConfirmPassword" 
                         className="form-control form-control-lg" 
                         placeholder="Confirm Password" 
                         required />

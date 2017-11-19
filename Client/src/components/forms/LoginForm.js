@@ -51,20 +51,20 @@ class LoginForm extends React.Component {
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <input 
-                            value={this.state.email}
+                            value={this.state.Email}
                             onChange={this.onChange}
                             type="email" 
-                            name="email"
+                            name="Email"
                             className="form-control form-control-lg" 
                             placeholder="Email" 
                             required />
                     </div>
                     <div className="form-group">
                         <input 
-                            value={this.state.password}
+                            value={this.state.Password}
                             onChange={this.onChange}
                             type="password" 
-                            name="password"
+                            name="Password"
                             className="form-control form-control-lg" 
                             placeholder="Password" 
                             required />

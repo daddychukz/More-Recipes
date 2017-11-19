@@ -1,4 +1,4 @@
-import db from '../models';
+import db from '../models/';
 
 const recipeModel = db.Recipe;
 const voteModel = db.Vote;
@@ -31,7 +31,7 @@ class Upvote {
             recipeId: req.params.recipeID,
             vote: true
           },
-          defaults: {} })
+          defaults: { vote: true } })
           .spread(() => {
             voteModel.destroy({
               where: {

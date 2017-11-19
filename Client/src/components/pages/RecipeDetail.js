@@ -38,16 +38,16 @@ class RecipeDetail extends React.Component {
         const recipeId = this.props.match.params.recipeId;
         this.props.viewSingleRecipe(recipeId).then( 
             () => {
-             //   console.log(this.props.viewRecipe[0])
-            this.setState({ recipeDetail: this.props.viewRecipe[0] })
-            if (!isEmpty(this.state.recipeDetail.votes)) {
-                if (this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId && 
+                console.log(this.props.viewRecipe)
+            this.setState({ recipeDetail: this.props.viewRecipe })
+            if (!isEmpty(this.state.recipeDetail.Votes)) {
+                if (this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId && 
                     this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
-                    this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].vote === true) {
+                    this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].vote === true) {
                         this.setState({ upvote: 'fa fa-2x fa-thumbs-up' })
-                    } else if (this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId && 
+                    } else if (this.state.recipeDetail.votes[this.state.recipeDetail.Votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId && 
                         this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
-                        this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1].vote === false) {
+                        this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].vote === false) {
                             this.setState({ downvote: 'fa fa-2x fa-thumbs-down' })
                         }
             }
@@ -66,7 +66,7 @@ class RecipeDetail extends React.Component {
     favoriteRecipe(){
         const recipeId = this.state.recipeDetail.recipeId
         const data = {
-            category: this.state.category
+            Category: this.state.Category
         }
         this.props.addFavorite(recipeId, data).then(
             () => {
@@ -85,8 +85,8 @@ class RecipeDetail extends React.Component {
             () => {
                     setTimeout(() => { this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
                         () => {
-                        this.setState({ recipeDetail: this.props.viewRecipe[0] })
-                        this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
+                        this.setState({ recipeDetail: this.props.viewRecipe })
+                        this.setState({ votes: this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1] })
                         if (!isEmpty(this.state.votes)) {
                             if (this.state.votes.userId === jwt.decode(localStorage.jwtToken).userId && 
                                 this.state.votes.recipeId === this.props.match.params.recipeId) {
@@ -96,10 +96,10 @@ class RecipeDetail extends React.Component {
                             
                         }
                     })}, 1000)
-                toastr.success(this.props.viewRecipe.Message);
+                toastr.success(this.props.viewRecipe.message);
             },
             (err) => {
-                toastr.error(err.response.data.Message);
+                toastr.error(err.response.data.message);
             })
     }
 
@@ -109,8 +109,8 @@ class RecipeDetail extends React.Component {
                     setTimeout(() => {
                         this.props.viewSingleRecipe(this.state.recipeDetail.recipeId).then( 
                         (res) => {
-                        this.setState({ recipeDetail: this.props.viewRecipe[0] })
-                        this.setState({ votes: this.state.recipeDetail.votes[this.state.recipeDetail.votes.length - 1] })
+                        this.setState({ recipeDetail: this.props.viewRecipe })
+                        this.setState({ votes: this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1] })
                         if (!isEmpty(this.state.votes)) {
                             if (this.state.votes.userId === jwt.decode(localStorage.jwtToken).userId && 
                                 this.state.votes.recipeId === this.props.match.params.recipeId) {
@@ -119,11 +119,11 @@ class RecipeDetail extends React.Component {
                             }
                         }
                     })}, 1000)
-                    toastr.success(this.props.viewRecipe.Message);
-                    console.log(this.props.viewRecipe.Message)
+                    toastr.success(this.props.viewRecipe.message);
+                    console.log(this.props.viewRecipe.message)
                 },
                 (err) => {
-                    toastr.error(err.response.data.Message);
+                    toastr.error(err.response.data.message);
                 })
         }
 
@@ -131,11 +131,11 @@ class RecipeDetail extends React.Component {
         e.preventDefault();
         const recipeId = this.props.match.params.recipeId;
         const data = {
-            review: this.state.review
+            Review: this.state.Review
         }
         this.props.reviewRecipe(recipeId, data)
         .then(
-            () => this.setState({ review: '' }),
+            () => this.setState({ Review: '' }),
             (err) => this.setState({ errors: err.response.data})
         )
         this.props.viewAllReviews().then(
@@ -240,16 +240,16 @@ class RecipeDetail extends React.Component {
                                             <h3>Post a Review</h3>
                                             <div className="form-group">
                                                 <textarea
-                                                    value={this.state.review}
+                                                    value={this.state.Review}
                                                     onChange={this.onChange}
-                                                    name="review"
+                                                    name="Review"
                                                     className="form-control"
                                                     rows='6'
                                                     required ></textarea>
                                             </div>
                                             <button type="submit" className="btn btn-primary">Post Review</button>
                                         </form>
-                                        <h3>Reviews</h3>
+                                        <h3>REVIEWS</h3>
                                         {
                                             this.state.allReviews.map(data => {
                                             return (
@@ -267,7 +267,7 @@ class RecipeDetail extends React.Component {
                                                             </Image>
                                                         </div>
                                                         <div className="p-2 align-self-end">                                    
-                                                            <h3><a to="#">{data.User.fullName}</a></h3>                
+                                                            <h4><a to="#">{data.User.fullname}</a></h4>                
                                                             <small className="text-muted">{data.createdAt}</small>                    
                                                             <p>{data.review}</p>
                                                         </div>
