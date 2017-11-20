@@ -5,6 +5,8 @@ import NotFound from '../components/pages/NotFound';
 import RecipeBox from '../components/pages/RecipeBox';
 import AddRecipe from '../components/pages/AddRecipe';
 import RecipeDetail from '../components/pages/RecipeDetail';
+import MyRecipe from '../components/pages/MyRecipe';
+import MyFavorite from '../components/pages/MyFavorite';
 import requireAuth from '../utils/requireAuth';
 import noAuth from '../utils/noAuth';
 
@@ -15,6 +17,8 @@ const myRoutes= () => (
       <Route path="/recipe-box" exact component={RecipeBox} />
       <Route path="/add-recipe" exact component={requireAuth(AddRecipe)} />
       <Route path="/recipe/:recipeId" exact component={requireAuth(RecipeDetail)} />
+      <Route path="/my-recipe" exact component={requireAuth(MyRecipe)} />
+      <Route path="/my-favorite" exact component={requireAuth(MyFavorite)} />
       <Route component={NotFound}/>
     </Switch>
   </Router>
