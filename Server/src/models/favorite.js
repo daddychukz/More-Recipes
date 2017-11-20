@@ -35,6 +35,7 @@ export default (sequelize, DataTypes) => {
   Favorite.associate = (models) => {
     // associations can be defined here
     Favorite.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    Favorite.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
   };
   return Favorite;
 };

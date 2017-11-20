@@ -160,9 +160,18 @@ class User {
           message: 'Recipe removed from your favorites'
         });
       })
-      .catch(() => res.send({
-        message: 'Successfully Added To your Favorites'
-      }));
+      .catch(() => favoriteModel.findOne({
+        where: {
+          userId: req.decoded.userId,
+          recipeId: req.params.recipeID
+        }
+      }).then((favorite) => {
+        res.send({
+          message: 'Recipe added to your favorites',
+          favorite
+        });
+      })
+      );
   }
 
   /**
@@ -179,6 +188,9 @@ class User {
         where: {
           userId: req.decoded.userId
         },
+        include: [{
+          model: db.Recipe
+        }],
         attributes: {
           exclude: ['id', 'updatedAt']
         }
@@ -187,6 +199,41 @@ class User {
         if (recipe) {
           res.status(200).send({
             favoriteRecipe: recipe
+          });
+        } else {
+          res.status(404).send({
+            message: 'Record not Found!'
+          });
+        }
+      })
+      .catch(() => res.status(400).send({
+        message: 'Record not found for this User!'
+      }));
+  }
+
+  /**
+   * getSingleFavorite
+   * @desc gets one favorited recipe
+   * Route: GET: '/user/:recipeId/recipes
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void}
+   */
+  static getSingleFavorite(req, res) {
+    favoriteModel
+      .findOne({
+        where: {
+          userId: req.decoded.userId,
+          recipeId: req.params.recipeID
+        },
+        attributes: {
+          exclude: ['id', 'updatedAt']
+        }
+      })
+      .then((recipe) => {
+        if (recipe) {
+          res.status(200).send({
+            favorite: recipe
           });
         } else {
           res.status(404).send({
