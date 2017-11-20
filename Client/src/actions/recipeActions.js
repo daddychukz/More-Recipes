@@ -21,6 +21,11 @@ export const viewAllRecipesAction = serverRes => ({
   payload: serverRes
 });
 
+export const getUserRecipesAction = serverRes => ({
+  type: types.GET_USER_RECIPES,
+  payload: serverRes
+});
+
 export const viewSingleRecipeAction = serverRes => ({
   type: types.GET_SINGLE_RECIPE,
   payload: serverRes
@@ -51,11 +56,12 @@ export const viewAllRecipes = () => {
       });
   };
 };
+
 /**
  * @export { function } viewRecipes
  * @returns { object } action type and server response
+ * @param { object } recipeId
  */
-
 export const viewSingleRecipe = (recipeId) => {
   return (dispatch) => {
     return axios.get(`/api/v1/recipes/${recipeId}`)
@@ -68,6 +74,11 @@ export const viewSingleRecipe = (recipeId) => {
   };
 };
 
+/**
+ * @export { function } viewRecipes
+ * @returns { object } action type and server response
+ * @param { object } recipeId
+ */
 export const upvoteRecipe = (recipeId) => {
   return (dispatch) => {
     return axios.post(`/api/v1/recipes/${recipeId}/upvote`)
@@ -80,6 +91,11 @@ export const upvoteRecipe = (recipeId) => {
   };
 };
 
+/**
+ * @export { function } viewRecipes
+ * @returns { object } action type and server response
+ * @param { object } recipeId
+ */
 export const downvoteRecipe = (recipeId) => {
   return (dispatch) => {
     return axios.post(`/api/v1/recipes/${recipeId}/downvote`)
@@ -92,3 +108,18 @@ export const downvoteRecipe = (recipeId) => {
   };
 };
 
+/**
+ * @export { function } viewRecipes
+ * @returns { object } action type and server response
+ */
+export const getUserRecipes = () => {
+  return (dispatch) => {
+    return axios.get('/api/v1/recipes/myrecipes')
+      .then((response) => {
+        dispatch(getUserRecipesAction(response.data.recipes));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};

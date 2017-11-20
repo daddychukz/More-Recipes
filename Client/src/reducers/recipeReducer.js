@@ -18,6 +18,8 @@ const recipeReducer = (state = [], action) => {
       return action.payload;
     case types.SHOW_REVIEWS:
       return action.payload;
+    case types.GET_USER_RECIPES:
+      return action.payload;
     default:
       return state;
   }
