@@ -6,8 +6,18 @@ export const upvoteRecipeAction = serverRes => ({
   payload: serverRes
 });
 
-export const favoriteRecipeAction = serverRes => ({
+export const addToFavoriteAction = serverRes => ({
   type: types.ADD_TO_FAVORITES,
+  payload: serverRes
+});
+
+export const getSingleFavoriteAction = serverRes => ({
+  type: types.GET_SINGLE_FAVORITE,
+  payload: serverRes
+});
+
+export const getUserFavoriteAction = serverRes => ({
+  type: types.GET_SINGLE_FAVORITE,
   payload: serverRes
 });
 
@@ -28,11 +38,35 @@ export const upvoteRecipe = (recipeId) => {
   };
 };
 
-export const favoriteRecipe = (recipeId, category) => {
+export const addToFavorites = (recipeId, category) => {
   return (dispatch) => {
     return axios.post(`/api/v1/recipes/${recipeId}`, category)
       .then((response) => {
-        dispatch(favoriteRecipeAction(response.data));
+        dispatch(addToFavoriteAction(response.data));
+      });
+  };
+};
+
+export const getSingleFavorite = (recipeId) => {
+  return (dispatch) => {
+    return axios.get(`/api/v1/users/${recipeId}`)
+      .then((response) => {
+        dispatch(getSingleFavoriteAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const getUserFavorite = (userId) => {
+  return (dispatch) => {
+    return axios.get(`/api/v1/users/${userId}/recipes`)
+      .then((response) => {
+        dispatch(getUserFavoriteAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 };
