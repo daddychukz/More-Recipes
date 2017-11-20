@@ -22,10 +22,10 @@ class RecipeDetail extends React.Component {
             votes: [],
             upvote: 'fa fa-2x fa-thumbs-o-up',
             downvote: 'fa fa-2x fa-thumbs-o-down',
-            favorite: 'fa fa-2x fa-star-o',
+            favoriteIcon: 'fa fa-2x fa-star-o',
             Review: '',
             allReviews: [],
-            Category: 'Soup'
+            Category: 'Soup',
         }
         this.upvote = this.upvote.bind(this);
         this.downVote = this.downVote.bind(this);
@@ -50,13 +50,27 @@ class RecipeDetail extends React.Component {
                         this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].vote === false) {
                             this.setState({ downvote: 'fa fa-2x fa-thumbs-down' })
                         }
-            }
+                    }
           })
+
           this.props.viewAllReviews().then(
               () => {
                   this.setState({ allReviews: this.props.showReview })
                   })
-        
+
+          this.props.getFavorite(recipeId).then(
+              () => {
+                  console.log(this.props.favoriteData);
+                this.setState({ favorite: this.props.favoriteData.favorite })
+                if (!isEmpty(this.state.favorite)) {
+                    if (this.state.favorite.userId === jwt.decode(localStorage.jwtToken).userId && 
+                        this.state.favorite.recipeId === this.props.match.params.recipeId) {
+                            this.setState({ favoriteIcon: 'fa fa-2x fa-star' })
+                        } else {
+                            this.setState({ favoriteIcon: 'fa fa-2x fa-star-o' })
+                        }
+                        }
+              })
     }
 
     onChange(e){
@@ -70,12 +84,21 @@ class RecipeDetail extends React.Component {
         }
         this.props.addFavorite(recipeId, data).then(
             () => {
-                this.setState({ favorite: 'fa fa-2x fa-star' })
-                toastr.success(this.props.favoriteData.message)
-                console.log(this.props.favoriteData)
+                this.props.getFavorite(recipeId).then(
+                    () => {
+                    if (!isEmpty(this.props.favoriteData.favorite)) {
+                        if (this.props.favoriteData.favorite.userId === jwt.decode(localStorage.jwtToken).userId && 
+                            this.props.favoriteData.favorite.recipeId === this.props.match.params.recipeId) {
+                                this.setState({ favoriteIcon: 'fa fa-2x fa-star' })
+                            }
+                        } else {
+                            this.setState({ favoriteIcon: 'fa fa-2x fa-star-o' })
+                        }
+                    })
+                    toastr.success(this.props.favoriteData.message);
             },
             (err) => {
-                toastr.error(err.response.data.Message);
+                toastr.error(err.response.data.message);
             }
         )
     }
@@ -94,6 +117,9 @@ class RecipeDetail extends React.Component {
                                 this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down' })
                             }
                             
+                        } else if (isEmpty(this.state.votes)){
+                            this.setState({ upvote: 'fa fa-2x fa-thumbs-o-up' })
+                            this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down' })
                         }
                     })}, 1000)
                 toastr.success(this.props.viewRecipe.message);
@@ -117,6 +143,9 @@ class RecipeDetail extends React.Component {
                                 this.setState({ downvote: 'fa fa-2x fa-thumbs-down' })
                                 this.setState({ upvote: 'fa fa-2x fa-thumbs-o-up' })
                             }
+                        } else if (isEmpty(this.state.votes)){
+                            this.setState({ upvote: 'fa fa-2x fa-thumbs-o-up' })
+                            this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down' })
                         }
                     })}, 1000)
                     toastr.success(this.props.viewRecipe.message);
@@ -219,7 +248,7 @@ class RecipeDetail extends React.Component {
                                                         />
                                                     </Image>
                                                 </div>
-                                                <h6 className="text-muted text-center">by: {this.state.recipeDetail.fullName}</h6>
+                                                <h6 className="text-muted text-center">by: {this.state.recipeDetail.fullname}</h6>
                                                 <br />
                                                 <p>{this.state.recipeDetail.description}</p>
                                             </div>
@@ -233,7 +262,7 @@ class RecipeDetail extends React.Component {
                                             |
                                             <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Views"><i className="fa fa-2x fa-eye obj-color"></i></Link><span className="badge badge-info" title="Views">30</span></li>
                 
-                                            <li className="list-inline-item float-right"><Link className="btn btn-sm" onClick={this.favoriteRecipe} to="#" title="Favorite"><i className={this.state.favorite}></i></Link></li>
+                                            <li className="list-inline-item float-right"><Link className="btn btn-sm" onClick={this.favoriteRecipe} to="#" title="Favorite"><i className={this.state.favoriteIcon}></i></Link></li>
                                         </ul>
                                         <br />
                                         <form className="mb-3" onSubmit={this.onSubmit}>
@@ -284,39 +313,6 @@ class RecipeDetail extends React.Component {
                 </section>
 
                 <Footer />
-        
-                     {/* Recipe MODAL  */}
-                    <div className="modal fade text-dark" id="addRecipe">
-                            <div className="modal-dialog">
-                                <div className="modal-content">
-                                    <div className="modal-header bg-primary">
-                                        <h5 className="modal-title" style={{ color:'rgb(255, 255, 255)' }} id="contactModalTitle">
-                                            Add Recipe
-                                        </h5>
-                                    </div>
-                                    <div className="modal-body">
-                                        <form>
-                                            <div className="form-group">
-                                                <label htmlFor="name">Recipe Title</label>
-                                                <input type="text" className="form-control" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="messager">Recipe Description</label>
-                                                <textarea className="form-control" rows="6"></textarea>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="imgFile">Upload Image</label>
-                                                <input type="file" className="form-control-file" id="imgFile" aria-describedby="fileHelp" />
-                                                <small id="fileHelp" className="form-text text-muted">Please upload an example image of recipe for better reviews.</small>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button className="btn btn-primary btn-block" data-dismiss="modal">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
             </div>
         );
     }
@@ -327,7 +323,9 @@ RecipeDetail.propTypes = {
     upvoteRecipe: PropTypes.func.isRequired,
     downvoteRecipe: PropTypes.func.isRequired,
     reviewRecipe: PropTypes.func.isRequired,
-    viewAllReviews: PropTypes.func.isRequired
+    viewAllReviews: PropTypes.func.isRequired,
+    addFavorite: PropTypes.func.isRequired,
+    getFavorite: PropTypes.func.isRequired
   }
 
   function mapStateToProps(state, ownProps) {
@@ -345,7 +343,8 @@ RecipeDetail.propTypes = {
         downvoteRecipe: id => dispatch(recipesActions.downvoteRecipe(id)),
         reviewRecipe: (Id, reviews) => dispatch(reviewActions.reviewRecipe(Id, reviews)),
         viewAllReviews: () => dispatch(reviewActions.viewAllReviews()),
-        addFavorite: (Id, category) => dispatch(favoriteActions.favoriteRecipe(Id, category))
+        addFavorite: (Id, category) => dispatch(favoriteActions.addToFavorites(Id, category)),
+        getFavorite: (Id) => dispatch(favoriteActions.getSingleFavorite(Id))
       }
   }
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetail);
