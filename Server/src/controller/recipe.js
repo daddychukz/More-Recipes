@@ -11,9 +11,9 @@ const error = {};
  */
 class Recipe {
 /**
-   * reviewRecipe
-   * @desc adds a review to a recipe
-   * Route: POST: '/recipes/:recipeID/reviews'
+   * retrieveRecipe
+   * @desc Gets all recipe from catalog
+   * Route: GET: '/recipes'
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void}
@@ -21,6 +21,40 @@ class Recipe {
   static retrieveRecipes(req, res) {
     recipeModel
       .findAndCountAll({
+        order: [['createdAt', 'DESC']],
+        limit: req.query.limit,
+        offset: req.query.offset
+      })
+      .then((recipes) => {
+        const { limit, offset } = req.query;
+        const pagination = paginate({
+          limit,
+          offset,
+          totalCount: recipes.count,
+          pageSize: recipes.rows.length
+        });
+        res.status(200).json({
+          pagination,
+          recipes: recipes.rows
+        });
+      })
+      .catch(err => res.status(400).send(err));
+  }
+
+  /**
+   * myRecipe
+   * @desc Gets all recipe created by a user
+   * Route: GET: '/recipes/myrecipes'
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void}
+   */
+  static myRecipes(req, res) {
+    recipeModel
+      .findAndCountAll({
+        where: {
+          userId: req.decoded.userId,
+        },
         order: [['createdAt', 'DESC']],
         limit: req.query.limit,
         offset: req.query.offset
