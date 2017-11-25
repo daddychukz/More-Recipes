@@ -20,6 +20,11 @@ export const setCurrentUser = user => ({
   user
 });
 
+export const getUserProfileAction = serverRes => ({
+  type: types.GET_USER_PROFILE,
+  payload: serverRes
+});
+
 export const signIn = user => (dispatch) => {
   return axios.post('/api/v1/users/signin', user).then((response) => {
     const token = response.data.token;
@@ -42,6 +47,22 @@ export const logout = () => (dispatch) => {
   dispatch(setCurrentUser({}));
 };
 
+/**
+ * @export { function } viewRecipes
+ * @returns { object } action type and server response
+ * @param { object } userId
+ */
+export const getUserProfile = (userId) => {
+  return (dispatch) => {
+    return axios.get('/api/v1/user/profile/')
+      .then((response) => {
+        dispatch(getUserProfileAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 // export function signIn(loginData) {
 //   return dispatch => axios.post('http://localhost:5000/api/v1/users/signin', loginData)
