@@ -39,7 +39,7 @@ class Header extends React.Component {
                                     <div className="btn-group open">
                                         <i className="fa fa-user-circle fa-2x pull-right" data-toggle="dropdown" aria-hidden="true"></i>
                                         <ul className="dropdown-menu">
-                                            <li><Link className="dropdown-item" to={'/profile'}>Profile</Link></li>
+                                            <li><Link className="dropdown-item" to={'/my-profile'}>Profile</Link></li>
                                             <li className="divider"></li>
                                             <li><Link className="dropdown-item" to={'/'} onClick={this.logout.bind(this)}>Logout</Link></li>
                                         </ul>
