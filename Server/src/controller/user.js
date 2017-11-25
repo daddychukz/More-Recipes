@@ -245,6 +245,85 @@ class User {
         message: 'Record not found for this User!'
       }));
   }
+
+  /**
+   * getUserProfile
+   * @desc gets the info of a registered user
+   * Route: GET: '/user/:recipeId/recipes
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void}
+   */
+  static getUserProfile(req, res) {
+    userModel.findOne({
+      where: {
+        userId: req.decoded.userId
+      },
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'password']
+      }
+    })
+      .then((userInfo) => {
+        if (userInfo) {
+          res.status(200).send(
+            userInfo
+          );
+        } else {
+          res.status(404).send({
+            message: 'User not found!'
+          });
+        }
+      });
+  }
+
+
+  /**
+   * updateUserProfile
+   * @desc updates the profile of a registered user
+   * Route: POST: '/user/profile/edit
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void}
+   */
+  static updateUserProfile(req, res) {
+    const updateRecord = {};
+    userModel.findOne({
+      where: {
+        userId: req.decoded.userId
+      },
+    }).then((userInfo) => {
+      if (req.body.FullName) {
+        updateRecord.fullname = req.body.FullName;
+      }
+      if (req.body.Email) {
+        updateRecord.email = req.body.Email;
+      }
+      if (req.body.UserName) {
+        updateRecord.username = req.body.UserName;
+      }
+      if (req.body.Address) {
+        updateRecord.address = req.body.Address;
+      }
+      if (req.body.Phone) {
+        updateRecord.phone = req.body.Phone;
+      }
+      if (req.body.Sex) {
+        updateRecord.sex = req.body.Sex;
+      }
+      userInfo.update(updateRecord)
+        .then(updatedRecord => res.send({
+          fullname: updatedRecord.fullname,
+          email: updatedRecord.email,
+          username: updatedRecord.username,
+          address: updatedRecord.address,
+          sex: updatedRecord.sex,
+          phone: updatedRecord.phone
+        }));
+    })
+      .catch(() => res.status(404).send({
+        message: 'User not found'
+      }));
+  }
 }
 
 export default User;

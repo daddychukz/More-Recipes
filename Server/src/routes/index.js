@@ -24,6 +24,12 @@ router.post('/users/signin', userController.signIn);
 // Get Favorite recipes
 router.get('/users/:userID/recipes', Auth.verify, userController.retrieveFavorites);
 
+// Get User Info
+router.get('/user/profile', Auth.verify, userController.getUserProfile);
+
+// Edit User Info
+router.post('/user/profile/edit', Auth.verify, userController.updateUserProfile);
+
 // Get one favorite
 router.get('/users/:recipeID', Auth.verify, userController.getSingleFavorite);
 

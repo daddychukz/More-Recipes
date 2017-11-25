@@ -33,6 +33,14 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        address: {
+          type: Sequelize.TEXT,
+          allowNull: true
+        },
+        phone: {
+          type: Sequelize.BIGINT,
+          allowNull: true
+        },
         imageUrl: {
           type: Sequelize.STRING,
           defaultValue: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1510027347/user-male_jvc8hn.jpg'

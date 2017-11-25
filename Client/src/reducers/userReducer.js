@@ -8,8 +8,10 @@ const userReducer = (state = [], action) => {
       ];
     case types.USER_LOGGED_IN:
       return [...state,
-        Object.assign({}, action.user)
+        Object.assign({}, action.payload)
       ];
+    case types.GET_USER_PROFILE:
+      return action.payload;
 
     default:
       return state;

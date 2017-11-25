@@ -40,6 +40,19 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    phone: {
+      type: DataTypes.BIGINT,
+      validate: {
+        len: {
+          args: [11, 12],
+          msg: 'Phone number must not exceed 12 values'
+        }
+      }
+    },
     imageUrl: {
       type: DataTypes.STRING,
       defaultValue: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1510027347/user-male_jvc8hn.jpg'
