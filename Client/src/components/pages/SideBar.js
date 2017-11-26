@@ -77,5 +77,3 @@ SideBar.propTypes = {
       }
   }
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
-
-// export default SideBar;
