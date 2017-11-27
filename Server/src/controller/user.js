@@ -310,6 +310,12 @@ class User {
       if (req.body.Sex) {
         updateRecord.sex = req.body.Sex;
       }
+      if (req.body.imageUrl) {
+        updateRecord.imageUrl = req.body.imageUrl;
+      }
+      if (req.body.publicId) {
+        updateRecord.publicUrl = req.body.publicId;
+      }
       userInfo.update(updateRecord)
         .then(updatedRecord => res.send({
           fullname: updatedRecord.fullname,
@@ -317,7 +323,9 @@ class User {
           username: updatedRecord.username,
           address: updatedRecord.address,
           sex: updatedRecord.sex,
-          phone: updatedRecord.phone
+          phone: updatedRecord.phone,
+          imageUrl: updatedRecord.imageUrl,
+          publicUrl: updatedRecord.publicUrl
         }));
     })
       .catch(() => res.status(404).send({

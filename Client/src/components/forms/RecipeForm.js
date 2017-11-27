@@ -46,7 +46,7 @@ class RecipeForm extends React.Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    onSubmit(e){
+    onSubmit(e){ 
         e.preventDefault();
         this.setState({ errors: {}, isLoading: true });
         this.props.addRecipe(this.state)

@@ -12,6 +12,8 @@ const userReducer = (state = [], action) => {
       ];
     case types.GET_USER_PROFILE:
       return action.payload;
+    case types.EDIT_USER_PROFILE:
+      return action.payload;
 
     default:
       return state;

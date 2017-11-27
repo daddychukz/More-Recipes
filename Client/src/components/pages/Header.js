@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import createBrowserHistory from 'history/createBrowserHistory';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/userActions';
 
+const customHistory = createBrowserHistory({
+    forceRefresh: true
+});
 
 class Header extends React.Component {
     logout(e) {
         this.props.logout();
+        customHistory.push('/')
     }
     render() {
           
@@ -17,7 +22,7 @@ class Header extends React.Component {
             <div>
                 <nav className="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
                     <div className="container">
-                        <Link to={'/'} className="navbar-brand"><h1 id="logo">More-Recipes</h1></Link>
+                        <Link to={'/recipe-box'} className="navbar-brand"><h1 id="logo">More-Recipes</h1></Link>
                         <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                             <span className="navbar-toggler-icon"></span>
                         </button>

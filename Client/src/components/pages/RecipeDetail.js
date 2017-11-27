@@ -188,7 +188,7 @@ class RecipeDetail extends React.Component {
                  {/* BREADCRUMB  */}
                 <div className="container">
                     <nav className="breadcrumb">            
-                        <Link className="breadcrumb-item" to="#">Home</Link>
+                        <Link className="breadcrumb-item" to={'/recipe-box'}>Home</Link>
                         <span className="breadcrumb-item active">Recipe</span>            
                     </nav>  
                 </div>

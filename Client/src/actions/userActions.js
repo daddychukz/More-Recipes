@@ -25,6 +25,11 @@ export const getUserProfileAction = serverRes => ({
   payload: serverRes
 });
 
+export const updateUserProfileAction = serverRes => ({
+  type: types.EDIT_USER_PROFILE,
+  payload: serverRes
+});
+
 export const signIn = user => (dispatch) => {
   return axios.post('/api/v1/users/signin', user).then((response) => {
     const token = response.data.token;
@@ -57,6 +62,24 @@ export const getUserProfile = (userId) => {
     return axios.get('/api/v1/user/profile/')
       .then((response) => {
         dispatch(getUserProfileAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+/**
+ * @export { function } viewRecipes
+ * @returns { object } action type and server response
+ * @param { object } userId
+ * @param { object } data
+ */
+export const updateUserProfile = (userId, data) => {
+  return (dispatch) => {
+    return axios.post('/api/v1/user/profile/edit', data)
+      .then((response) => {
+        dispatch(updateUserProfileAction(response.data));
       })
       .catch((error) => {
         console.log(error);
