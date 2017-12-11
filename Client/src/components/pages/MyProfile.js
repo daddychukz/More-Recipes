@@ -241,7 +241,7 @@ class MyProfile extends React.Component {
                                         </textarea>
                                     </div>
                                     <div className="form-group">
-                                        <CloudinaryContext cloudName="chuks-andela32">
+                                        <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                                             <Image publicId={this.state.publicId}>
                                                 <Transformation
                                                     crop="scale"

@@ -53,10 +53,7 @@ class RecipeBox extends React.Component {
         
                              {/* RECIPE CATALOG  */}                            
                             <div className="col-md-8" id="display">
-                                <form className="form-inline float-right">
-                                    <input type="text" className="form-control col-5" placeholder="Recipe..." />&nbsp;
-                                    <button type="submit" className="btn btn-info col-5">Search</button>
-                                </form>
+                                <input className="form-control" type="text" placeholder="Filter Recipes..."/>                                    
                                 <br />
                                 <br />
                                 { this.state.isLoading 

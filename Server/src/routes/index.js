@@ -55,7 +55,7 @@ router.post('/recipes/:recipeID', Auth.verify, userController.addFavorites);
 router.delete('/recipes/:recipeID', Auth.verify, recipeController.deleteRecipe);
 
 // Update a recipe
-router.put('/recipes/:recipeID', Auth.verify, recipeController.updateRecipe);
+router.post('/recipe/:recipeID', Auth.verify, recipeController.updateRecipe);
 
 // Post a review
 router.post('/recipes/:recipeID/reviews', Auth.verify, reviewController.reviewRecipe);

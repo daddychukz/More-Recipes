@@ -41,6 +41,16 @@ export const downvoteRecipeAction = serverRes => ({
   payload: serverRes
 });
 
+export const updateUserRecipeAction = serverRes => ({
+  type: types.UPDATE_USER_RECIPE,
+  payload: serverRes
+});
+
+export const deleteUserRecipeAction = serverRes => ({
+  type: types.DELETE_USER_RECIPE,
+  payload: serverRes
+});
+
 /**
  * @export { function } viewRecipes
  * @returns { object } action type and server response
@@ -117,6 +127,42 @@ export const getUserRecipes = () => {
     return axios.get('/api/v1/recipes/myrecipes')
       .then((response) => {
         dispatch(getUserRecipesAction(response.data.recipes));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+/**
+ * @export { function } updateUserRecipe
+ * @returns { object } action type and server response
+ * @param { object } recipeID
+ * @param { object } data
+ */
+export const updateUserRecipe = (recipeID, data) => {
+  return (dispatch) => {
+    return axios.post(`/api/v1/recipe/${recipeID}`, data)
+      .then((response) => {
+        dispatch(updateUserRecipeAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+/**
+ * @export { function } deleteUserRecipe
+ * @returns { object } action type and server response
+ * @param { object } recipeID
+ * @param { object } data
+ */
+export const deleteUserRecipe = (recipeID) => {
+  return (dispatch) => {
+    return axios.delete(`/api/v1/recipes/${recipeID}`)
+      .then((response) => {
+        dispatch(deleteUserRecipeAction(response.data));
       })
       .catch((error) => {
         console.log(error);
