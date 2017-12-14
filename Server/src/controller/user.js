@@ -295,8 +295,8 @@ class User {
       if (req.body.FullName) {
         updateRecord.fullname = req.body.FullName;
       }
-      if (req.body.Email) {
-        updateRecord.email = req.body.Email;
+      if (req.body.About) {
+        updateRecord.about = req.body.About;
       }
       if (req.body.UserName) {
         updateRecord.username = req.body.UserName;
@@ -307,8 +307,8 @@ class User {
       if (req.body.Phone) {
         updateRecord.phone = req.body.Phone;
       }
-      if (req.body.Sex) {
-        updateRecord.sex = req.body.Sex;
+      if (req.body.Hobbies) {
+        updateRecord.hobbies = req.body.Hobbies;
       }
       if (req.body.imageUrl) {
         updateRecord.imageUrl = req.body.imageUrl;
@@ -319,10 +319,10 @@ class User {
       userInfo.update(updateRecord)
         .then(updatedRecord => res.send({
           fullname: updatedRecord.fullname,
-          email: updatedRecord.email,
+          about: updatedRecord.about,
           username: updatedRecord.username,
           address: updatedRecord.address,
-          sex: updatedRecord.sex,
+          hobbies: updatedRecord.hobbies,
           phone: updatedRecord.phone,
           imageUrl: updatedRecord.imageUrl,
           publicUrl: updatedRecord.publicUrl

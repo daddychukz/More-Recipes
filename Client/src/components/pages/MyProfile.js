@@ -25,9 +25,9 @@ class MyProfile extends React.Component {
             imageUrl: '',
             publicId: '',
             UserName: '',
-            Email: '',
-            Sex: '',
-            Number: '',
+            About: '',
+            Hobbies: '',
+            Phone: '',
             Address: ''
         }
         this.uploadWidget = this.uploadWidget.bind(this);
@@ -41,7 +41,14 @@ class MyProfile extends React.Component {
             () => {
                 this.setState({ profile: this.props.profile })
                 console.log(this.state.profile)
-                this.setState({ imageUrl: this.state.profile.imageUrl, publicId: this.state.profile.publicUrl })
+                this.setState({ 
+                    imageUrl: this.state.profile.imageUrl,
+                    publicId: this.state.profile.publicUrl,
+                    UserName: this.state.profile.username,
+                    About: this.state.profile.about,
+                    Hobbies: this.state.profile.hobbies,
+                    Phone: this.state.profile.phone,
+                    Address: this.state.profile.address })
             })
             .catch((error) => {
                 console.log(error);
@@ -75,9 +82,9 @@ class MyProfile extends React.Component {
                 imageUrl: this.state.imageUrl,
                 publicId: this.state.publicId,
                 UserName: this.state.UserName,
-                Email: this.state.Email,
-                Sex: this.state.Sex,
-                Number: this.state.Number,
+                About: this.state.About,
+                Hobbies: this.state.Hobbies,
+                Phone: this.state.Phone,
                 Address: this.state.Address
             }
             this.props.updateUserProfile(decodedUserId, data).then(
@@ -162,11 +169,11 @@ class MyProfile extends React.Component {
                                                     </Image>
                                                 </div>
                                                 <div className="p-2 align-self-end">                             
-                                                    <p><span className="obj-color">About:</span>&nbsp; Software Developer</p>
-                                                    <p><span className="obj-color">Hobbies:</span>&nbsp; Programming, Singing</p>
+                                                    <p><span className="obj-color">About:</span>&nbsp; {this.state.profile.about}</p>
+                                                    <p><span className="obj-color">Hobbies:</span>&nbsp; {this.state.profile.hobbies}</p>
                                                     <p><i className="fa fa-envelope-o obj-color" aria-hidden="true"></i>&nbsp; {this.state.profile.email}</p>                                   
                                                     <address><i className="fa fa-map-marker obj-color" aria-hidden="true"></i>&nbsp; {this.state.profile.address}</address>                          
-                                                    <p><i className="fa fa-phone obj-color" aria-hidden="true"></i>&nbsp; 0{this.state.profile.phone}</p>
+                                                    <p><i className="fa fa-phone obj-color" aria-hidden="true"></i>&nbsp;{this.state.profile.phone}</p>
                                                     <p><i className="fa fa-user obj-color" aria-hidden="true"></i>&nbsp; {this.state.profile.username}</p>
                                                     <Link className="btn btn-info" to="#" role="button" data-toggle="modal" data-target="#changePassword">Change Password</Link>
                                                 </div>
@@ -201,32 +208,32 @@ class MyProfile extends React.Component {
                                             required/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <input
-                                            value={this.state.Email}
-                                            onChange={this.onChange}
-                                            type="email"
-                                            name="Email"
-                                            className="form-control"
-                                            required/>
-                                    </div>
-                                    <div className="form-group">
                                         <label htmlFor="name">Phone Number</label>
                                         <input 
-                                            value={this.state.Number}
+                                            value={this.state.Phone}
                                             onChange={this.onChange}
                                             type="number"
-                                            name="Number"
+                                            name="Phone"
                                             className="form-control"
                                             required/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="name">Sex</label>
+                                        <label htmlFor="email">Hobbies</label>
                                         <input
-                                            value={this.state.Sex}
+                                            value={this.state.Hobbies}
                                             onChange={this.onChange}
                                             type="text"
-                                            name="Sex"
+                                            name="Hobbies"
+                                            className="form-control"
+                                            required/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="name">About</label>
+                                        <input
+                                            value={this.state.About}
+                                            onChange={this.onChange}
+                                            type="text"
+                                            name="About"
                                             className="form-control"
                                             required/>
                                     </div>

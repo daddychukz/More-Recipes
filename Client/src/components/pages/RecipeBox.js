@@ -58,7 +58,8 @@ class RecipeBox extends React.Component {
                                 <br />
                                 { this.state.isLoading 
                                 ? 
-                                <h1>Loading data...</h1>
+                                // <h1>Loading data...</h1>
+                                <div className="loader"></div>
                                 :
                                 <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                                     {

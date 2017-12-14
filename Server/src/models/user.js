@@ -44,14 +44,16 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true
     },
+    about: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    hobbies: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     phone: {
-      type: DataTypes.BIGINT,
-      validate: {
-        len: {
-          args: [11, 12],
-          msg: 'Phone number must not exceed 12 values'
-        }
-      }
+      type: DataTypes.STRING
     },
     imageUrl: {
       type: DataTypes.STRING,

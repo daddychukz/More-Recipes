@@ -186,6 +186,12 @@ class Recipe {
       if (req.body.Description) {
         updateRecord.description = req.body.Description;
       }
+      if (req.body.imageUrl) {
+        updateRecord.imageUrl = req.body.imageUrl;
+      }
+      if (req.body.publicId) {
+        updateRecord.publicId = req.body.publicId;
+      }
       recipe.update(updateRecord)
         .then(updatedRecipe => res.send({
           updatedRecipe

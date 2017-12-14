@@ -141,7 +141,11 @@ class Upvote {
   static mostRecipeUpvote(req, res) {
     if (req.query.sort === 'upvotes' && req.query.order === 'des') {
       recipeModel.all({
-        order: [['upvotes', 'DESC']]
+        order: [['upvotes', 'DESC']],
+        attributes: {
+          exclude: ['id', 'updatedAt']
+        },
+        limit: 3
       })
         .then(recipes => res.status(200).send(recipes))
         .catch(err => res.status(400).send(err));

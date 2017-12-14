@@ -51,6 +51,11 @@ export const deleteUserRecipeAction = serverRes => ({
   payload: serverRes
 });
 
+export const getPopularRecipesAction = serverRes => ({
+  type: types.GET_POPULAR_RECIPE,
+  payload: serverRes
+});
+
 /**
  * @export { function } viewRecipes
  * @returns { object } action type and server response
@@ -163,6 +168,22 @@ export const deleteUserRecipe = (recipeID) => {
     return axios.delete(`/api/v1/recipes/${recipeID}`)
       .then((response) => {
         dispatch(deleteUserRecipeAction(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+/**
+ * @export { function } getPopularRecipes
+ * @returns { object } action type and server response
+ */
+export const getPopularRecipes = () => {
+  return (dispatch) => {
+    return axios.get('/api/v1/recipe?sort=upvotes&order=des')
+      .then((response) => {
+        dispatch(getPopularRecipesAction(response.data));
       })
       .catch((error) => {
         console.log(error);

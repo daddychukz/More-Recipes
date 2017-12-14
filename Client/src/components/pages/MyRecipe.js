@@ -150,6 +150,8 @@ class MyRecipe extends React.Component {
                 </section>
 
                 <Footer />
+
+                {/* Modals */}
                 <div className="modal fade text-dark" id="editRecipe">
                     <div className="modal-dialog">
                         <div className="modal-content">

@@ -20,6 +20,12 @@ const recipeReducer = (state = [], action) => {
       return action.payload;
     case types.GET_USER_RECIPES:
       return action.payload;
+    case types.UPDATE_USER_RECIPE:
+      return action.payload;
+    case types.DELETE_USER_RECIPE:
+      return action.payload;
+    case types.GET_POPULAR_RECIPE:
+      return action.payload;
     default:
       return state;
   }

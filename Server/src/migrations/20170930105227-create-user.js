@@ -35,10 +35,21 @@ module.exports = {
         },
         address: {
           type: Sequelize.TEXT,
-          allowNull: true
+          allowNull: true,
+          defaultValue: 'Nil'
+        },
+        about: {
+          type: Sequelize.STRING,
+          allowNull: true,
+          defaultValue: 'Nil'
+        },
+        hobbies: {
+          type: Sequelize.TEXT,
+          allowNull: true,
+          defaultValue: 'Nil'
         },
         phone: {
-          type: Sequelize.BIGINT,
+          type: Sequelize.STRING,
           allowNull: true
         },
         imageUrl: {

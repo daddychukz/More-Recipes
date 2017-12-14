@@ -4,20 +4,26 @@ import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as userActions from '../../actions/userActions';
+import * as recipeActions from '../../actions/recipeActions';
 
 class SideBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            profile: []
+            profile: [],
+            recipes: []
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const userId = jwt.decode(localStorage.jwtToken).userId
         this.props.getUserProfile(userId).then(
             () => {
                 this.setState({ profile: this.props.profile })
+            })
+        this.props.popularRecipes().then(
+            () => {
+                this.setState({ recipes: this.props.viewRecipes })
             })
         }
 
@@ -34,27 +40,26 @@ class SideBar extends React.Component {
                     {/* TOP RECIPE  */}
                 <ul className="list-group mb-3">
                     <li className="list-group-item active text-center"><h5>Top 3 Favorite Recipes</h5></li>
-                    <div className="list-group-item list-group-item-action flex-column align-items-start">
-                        <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1"><Link to="#" className="mb-1"><strong>Egusi Recipe</strong></Link></h5>
-                            <small className="text-muted">7 days ago</small>
-                        </div>
-                        <p className="mb-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, maxime!</p>
-                    </div>
-                    <div className="list-group-item list-group-item-action flex-column align-items-start">
-                        <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1"><Link to="#"><strong>Roasted Plantain</strong></Link></h5>
-                            <small className="text-muted">5 days ago</small>
-                        </div>
-                        <p className="mb-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, maxime!</p>
-                    </div>
-                    <div className="list-group-item list-group-item-action flex-column align-items-start">
-                        <div className="d-flex w-100 justify-content-between">
-                            <h5 className="mb-1"><Link to="#"><strong>Sweetened Bean Cake</strong></Link></h5>
-                            <small className="text-muted">2 days ago</small>
-                        </div>
-                        <p className="mb-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem, maxime!</p>
-                    </div>
+                    {
+                        this.state.recipes.map(popular => {
+                            const newDate = new Date(popular.createdAt).toLocaleDateString();
+                            return (
+                                <div key={popular.recipeId} className="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1"><Link to={`/recipe/${popular.recipeId}`} className="mb-1"><strong>{popular.title}</strong></Link></h5>
+                                        <small className="text-muted">{newDate}</small>
+                                    </div>
+                                    <p className="mb-1"> {
+                                        popular.description.split(" ")
+                                        .splice(0, 15)
+                                        .join(' ')
+                                        .concat(' ...')
+                                        }
+                                    </p>
+                                </div>
+                            )
+                        })
+                    }
                 </ul>                        
             </div>
         );
@@ -62,18 +67,21 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
-    getUserProfile: PropTypes.func.isRequired
+    getUserProfile: PropTypes.func.isRequired,
+    popularRecipes: PropTypes.func.isRequired
   }
 
   function mapStateToProps(state, ownProps) {
       return {
-          profile: state.user
+          profile: state.user,
+          viewRecipes: state.recipe
       }
   }
 
   function mapDispatchToProps(dispatch) {
       return {
-          getUserProfile: (Id) => dispatch(userActions.getUserProfile(Id))
+          getUserProfile: (Id) => dispatch(userActions.getUserProfile(Id)),
+          popularRecipes: () => dispatch(recipeActions.getPopularRecipes())
       }
   }
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

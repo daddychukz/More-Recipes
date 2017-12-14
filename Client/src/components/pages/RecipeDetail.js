@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
+import createBrowserHistory from 'history/createBrowserHistory';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as recipesActions from '../../actions/recipeActions';
 import * as reviewActions from '../../actions/reviewActions';
@@ -14,6 +15,9 @@ import Header from './Header';
 import SideBar from './SideBar';
 import { Footer } from './Footer';
 
+const customHistory = createBrowserHistory({
+    forceRefresh: true
+});
 
 class RecipeDetail extends React.Component {
     constructor(props) {
