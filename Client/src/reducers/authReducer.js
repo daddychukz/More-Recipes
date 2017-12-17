@@ -6,13 +6,13 @@ const authReducer = (state = {
   user: {}
 }, action) => {
   switch (action.type) {
-    case types.SET_CURRENT_USER:
-      return {
-        isAuthenticated: !isEmpty(action.user),
-        user: action.user
-      };
-    default:
-      return state;
+  case types.SET_CURRENT_USER:
+    return {
+      isAuthenticated: !isEmpty(action.user),
+      user: action.user
+    };
+  default:
+    return state;
   }
 };
 

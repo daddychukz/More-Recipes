@@ -11,7 +11,7 @@ import MyProfile from '../components/pages/MyProfile';
 import requireAuth from '../utils/requireAuth';
 import noAuth from '../utils/noAuth';
 
-const myRoutes= () => (
+const myRoutes = () => (
   <Router>
     <Switch>
       <Route path="/" exact component={noAuth(Home)} />
