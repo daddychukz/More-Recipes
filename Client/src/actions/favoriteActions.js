@@ -17,7 +17,7 @@ export const getSingleFavoriteAction = serverRes => ({
 });
 
 export const getUserFavoriteAction = serverRes => ({
-  type: types.GET_SINGLE_FAVORITE,
+  type: types.GET_ALL_FAVORITE,
   payload: serverRes
 });
 

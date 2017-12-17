@@ -1,22 +1,22 @@
 import * as types from '../actions/types';
 
-const userReducer = (state = [], action) => {
+const userReducer = (state = {}, action) => {
   switch (action.type) {
-    case types.CREATE_USER:
-      return [...state,
-        Object.assign({}, action.user)
-      ];
-    case types.USER_LOGGED_IN:
-      return [...state,
-        Object.assign({}, action.payload)
-      ];
-    case types.GET_USER_PROFILE:
-      return action.payload;
-    case types.EDIT_USER_PROFILE:
-      return action.payload;
+  case types.CREATE_USER:
+    return [...state,
+      Object.assign({}, action.user)
+    ];
+  case types.USER_LOGGED_IN:
+    return [...state,
+      Object.assign({}, action.payload)
+    ];
+  case types.GET_USER_PROFILE:
+    return action.payload;
+  case types.EDIT_USER_PROFILE:
+    return action.payload;
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };
 

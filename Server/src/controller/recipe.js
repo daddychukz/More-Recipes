@@ -226,16 +226,16 @@ class Recipe {
             message: 'Record not Found!'
           });
         } else if (recipe) {
-          res.status(200).send({
+          res.status(200).json({
             recipe
           });
         } else {
-          res.status(404).send({
+          res.status(404).json({
             message: 'Record not Found!'
           });
         }
       })
-      .catch(err => res.status(400).send({
+      .catch(err => res.status(400).json({
         message: 'Recipe not Found',
         err
       }));

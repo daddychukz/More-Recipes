@@ -183,7 +183,7 @@ export const getPopularRecipes = () => {
   return (dispatch) => {
     return axios.get('/api/v1/recipe?sort=upvotes&order=des')
       .then((response) => {
-        dispatch(getPopularRecipesAction(response.data));
+        dispatch(getPopularRecipesAction(response.data.recipes));
       })
       .catch((error) => {
         console.log(error);

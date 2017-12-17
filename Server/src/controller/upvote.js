@@ -147,7 +147,7 @@ class Upvote {
         },
         limit: 3
       })
-        .then(recipes => res.status(200).send(recipes))
+        .then(recipes => res.status(200).json({ recipes }))
         .catch(err => res.status(400).send(err));
     } else {
       res.status(404).send({

@@ -1,12 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
+import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types';
 import createBrowserHistory from 'history/createBrowserHistory';
 import * as userActions from '../../actions/userActions';
 import InlineError from '../messages/InlineError';
+
+// const responseGoogle = (response) => {
+//   console.log(response.profileObj);
+//   const { email, name, givenName } = response.profileObj;
+//   this.props.signIn({ Email: email, Password: name });
+// };
 
 const customHistory = createBrowserHistory({
   forceRefresh: true
@@ -34,6 +40,7 @@ class LoginForm extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.responseGoogle = this.responseGoogle.bind(this);
   }
 
   /**
@@ -43,6 +50,35 @@ class LoginForm extends React.Component {
    */
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+
+  /**
+   * 
+   * 
+   * @param {any} response 
+   * @memberof LoginForm
+   * @returns {object} user details
+   */
+  responseGoogle(response) {
+    console.log(response.profileObj);
+    const { email, name, givenName, googleId } = response.profileObj;
+    this.props.signUp({
+      FullName: name,
+      UserName: givenName,
+      Email: email,
+      Password: googleId,
+      ConfirmPassword: googleId }).then(
+      () => {},
+      (err) => {}
+    );
+    this.props.signIn({ Email: email, Password: googleId }).then(
+      (res) => customHistory.push('/recipe-box'),
+      (err) => {
+        this.setState({ errors: err.response.data, isLoading: false });
+        toastr.error(err.response.data.message);
+      }
+    );
   }
 
   /**
@@ -77,6 +113,7 @@ class LoginForm extends React.Component {
       <div>
         {/* SIGNIN CARD  */}
         <form onSubmit={this.onSubmit}>
+          
           <div className="form-group">
             <input
               value={this.state.Email}
@@ -107,7 +144,14 @@ class LoginForm extends React.Component {
           <hr className="bg-white" />
           <Link to="#">or sign in with one of these services</Link>
           <ul className="list-inline text-center">
-            <li className="list-inline-item"><Link className="btn btn-lg" to="#" title="Google"><i className="fa fa-2x fa-google-plus" /></Link>&nbsp; </li>
+            <li className="list-inline-item"><Link className="btn btn-lg" to="#" title="Google"><GoogleLogin
+              style={{ width: '', backgroundColor: 'transparent', borderColor: 'transparent' }}
+              clientId="1020610939165-pgmi2vuh8broeahhfo1v6vfqueb92sak.apps.googleusercontent.com"
+              buttonText= {<i className="fa fa-2x fa-google-plus" />}
+              onSuccess={this.responseGoogle}
+              onFailure={this.responseGoogle}
+              disabledStyle
+            /></Link>&nbsp; </li>
             <li className="list-inline-item"><Link className="btn btn-lg" to="#" title="Facebook"><i className="fa fa-2x fa-facebook" /></Link></li>
           </ul>
         </form>
@@ -117,20 +161,17 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-  signIn: PropTypes.func.isRequired
+  signIn: PropTypes.func.isRequired,
+  signUp: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    users: state.user
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  users: state.user
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // actions: bindActionCreators(userActions, dispatch)
-    signIn: data => dispatch(userActions.signIn(data))
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  signUp: data => dispatch(userActions.signUp(data)),
+  signIn: data => dispatch(userActions.signIn(data))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
