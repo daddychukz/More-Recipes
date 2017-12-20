@@ -300,6 +300,7 @@ class MyProfile extends React.Component {
                         />
                       </Image>
                     </CloudinaryContext>
+                    
                     <input className="form-control-file" onClick={this.uploadWidget} type="button" value="Upload Image" />
                     <small id="fileHelp" className="form-text text-muted">Upload profile picture</small>
                     {/* {errors.message && <InlineError text={errors.message}/>} */}

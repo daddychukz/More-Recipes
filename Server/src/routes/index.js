@@ -69,6 +69,15 @@ router.post('/recipes/:recipeID/downvote', Auth.verify, downvotesController.down
 // Get Recipe by Most Upvotes
 router.get('/recipe', upvotesController.mostRecipeUpvote);
 
+// Reset Password Request
+router.post('/user/reset_password_request', userController.resetPasswordRequest);
+
+// Validate Email Token
+router.post('/validate-token', Auth.checkMailToken);
+
+// reset password
+router.post('/user/reset-password', userController.resetPassword);
+
 
 // A catch-all routes not define.
 router.use('*', (req, res) => res.status(404).json({

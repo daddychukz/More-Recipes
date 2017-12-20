@@ -20,6 +20,16 @@ export const setCurrentUser = user => ({
   user
 });
 
+export const resetPasswordRequestAction = serverRes => ({
+  type: types.RESET_USER_PASSWORD_REQUEST,
+  payload: serverRes
+});
+
+export const resetPasswordAction = serverRes => ({
+  type: types.RESET_USER_PASSWORD,
+  payload: serverRes
+});
+
 export const getUserProfileAction = serverRes => ({
   type: types.GET_USER_PROFILE,
   payload: serverRes
@@ -87,12 +97,30 @@ export const updateUserProfile = (userId, data) => {
   };
 };
 
-// export function signIn(loginData) {
-//   return dispatch => axios.post('http://localhost:5000/api/v1/users/signin', loginData)
-//     .then((response) => {
-//       dispatch({
-//         type: types.USER_LOGGED_IN,
-//         payload: loginData
-//       });
-//     });
-// }
+/**
+ * @export { function } resetPasswordRequest
+ * @param { object } email
+ * @returns { object } action type and server response
+ */
+export const resetPasswordRequest = (email) => {
+  return (dispatch) => {
+    return axios.post('/api/v1/user/reset_password_request', email)
+      .then((response) => {
+        dispatch(resetPasswordRequestAction(response.data));
+      });
+  };
+};
+
+/**
+ * @export { function } resetPassword
+ * @param { object } data
+ * @returns { object } action type and server response
+ */
+export const resetPassword = (data) => {
+  return (dispatch) => {
+    return axios.post('/api/v1/user/reset-password', data)
+      .then((response) => {
+        dispatch(resetPasswordAction(response.data));
+      });
+  };
+};

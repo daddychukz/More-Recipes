@@ -14,6 +14,12 @@ const userReducer = (state = {}, action) => {
     return action.payload;
   case types.EDIT_USER_PROFILE:
     return action.payload;
+  case types.VALIDATE_USER_TOKEN:
+    return action.payload;
+  case types.RESET_USER_PASSWORD:
+    return action.payload;
+  case types.RESET_USER_PASSWORD_REQUEST:
+    return action.payload;
 
   default:
     return state;

@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/';
+import { sendResetPasswordEmail } from './mailer';
 
 require('dotenv').config();
 
@@ -274,6 +275,74 @@ class User {
           });
         }
       });
+  }
+
+
+  /**
+   * resetPassword
+   * @desc resets the password of a registered user
+   * Route: POST: '/user/reset_password_request
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {object} userInfo
+   */
+  static resetPasswordRequest(req, res) {
+    userModel.findOne({
+      where: {
+        email: req.body.Email
+      },
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'password']
+      }
+    })
+      .then((userInfo) => {
+        if (userInfo) {
+          sendResetPasswordEmail(userInfo);
+          res.status(200).json(
+            {}
+          );
+        } else {
+          res.status(404).json({
+            message: 'User not found!'
+          });
+        }
+      });
+  }
+
+  /**
+   * resetPassword
+   * @desc resets the password of a registered user
+   * Route: POST: '/user/reset_password_request
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {object} userInfo
+   */
+  static resetPassword(req, res) {
+    const { Password, Token } = req.body;
+    const updateRecord = {};
+    jwt.verify(Token, process.env.SECRET, (err, decoded) => {
+      if (err) {
+        res.status(401).json({ message: 'Invalid Token' });
+      } else {
+        userModel.findOne({
+          where: {
+            userId: decoded.userId
+          }
+        }).then((userInfo) => {
+          if (userInfo) {
+            if (Password) {
+              updateRecord.password = bcrypt.hashSync(Password, bcrypt.genSaltSync(8));
+            }
+            userInfo.update(updateRecord)
+              .then(() => res.json({
+                message: 'update successful'
+              }));
+          } else {
+            res.status(404).json({ message: 'Invalid Token' });
+          }
+        });
+      }
+    });
   }
 
 

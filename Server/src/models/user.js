@@ -1,4 +1,7 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+require('dotenv').config();
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -78,5 +81,17 @@ export default (sequelize, DataTypes) => {
     User.hasMany(models.Favorite, { foreignKey: 'userId', onDelete: 'SET NULL' });
     User.hasMany(models.Vote, { foreignKey: 'userId', onDelete: 'SET NULL' });
   };
+
+  User.prototype.generateResetPasswordLink = function generateResetPasswordLink() {
+    return `${process.env.HOST}/reset-password/${this.generateResetPasswordToken().replace(/\./g, '-io')}`;
+  };
+
+  User.prototype.generateResetPasswordToken = function generateResetPasswordToken() {
+    return jwt.sign({
+      userId: this.userId
+    }, process.env.SECRET, { expiresIn: '1h' }
+    );
+  };
+
   return User;
 };

@@ -36,11 +36,13 @@ class LoginForm extends React.Component {
       Email: '',
       Password: '',
       errors: {},
-      isLoading: false
+      isLoading: false,
+      resetEmail: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.responseGoogle = this.responseGoogle.bind(this);
+    this.sendResetLink = this.sendResetLink.bind(this);
   }
 
   /**
@@ -82,6 +84,27 @@ class LoginForm extends React.Component {
   }
 
   /**
+   * 
+   * @method sendResetLink
+   * @param {any} e
+   * @memberof LoginForm
+   * @returns {void}
+   */
+  sendResetLink(e) {
+    e.preventDefault();
+    const data = {
+      Email: this.state.resetEmail
+    };
+    this.props.resetPasswordRequest(data)
+      .then((res) => {
+        toastr.success('Email has been sent');
+        console.log('Link sent');
+      },
+      (err) => toastr.error(err.response.data.message));
+    $('#sendEmailModal').modal('toggle');
+  }
+
+  /**
      * 
      * 
      * @param {any} e 
@@ -113,7 +136,7 @@ class LoginForm extends React.Component {
       <div>
         {/* SIGNIN CARD  */}
         <form onSubmit={this.onSubmit}>
-          
+
           <div className="form-group">
             <input
               value={this.state.Email}
@@ -140,7 +163,7 @@ class LoginForm extends React.Component {
             value="Login"
             className="btn btn-info btn-block" />
           <br />
-          <Link to="#"><strong>forgot your password?</strong></Link>
+          <Link to="#" data-toggle="modal" data-target="#sendEmailModal"><strong>forgot your password?</strong></Link>
           <hr className="bg-white" />
           <Link to="#">or sign in with one of these services</Link>
           <ul className="list-inline text-center">
@@ -155,6 +178,36 @@ class LoginForm extends React.Component {
             <li className="list-inline-item"><Link className="btn btn-lg" to="#" title="Facebook"><i className="fa fa-2x fa-facebook" /></Link></li>
           </ul>
         </form>
+
+        <div className="modal fade text-dark" id="sendEmailModal">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header bg-info">
+                <h5 className="modal-title" style={{ color: 'white' }} id="contactModalTitle">
+                  Forgot Password
+                </h5>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={this.sendResetLink}>
+                  <div className="form-group">
+                    <input
+                      value={this.state.resetEmail}
+                      onChange={this.onChange}
+                      type="email"
+                      name="resetEmail"
+                      className="form-control form-control-lg"
+                      placeholder="Email"
+                      required />
+                  </div>
+                  <input
+                    type="submit"
+                    value="Send Reset Link"
+                    className="btn btn-info btn-block" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -171,7 +224,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   signUp: data => dispatch(userActions.signUp(data)),
-  signIn: data => dispatch(userActions.signIn(data))
+  signIn: data => dispatch(userActions.signIn(data)),
+  resetPasswordRequest: data => dispatch(userActions.resetPasswordRequest(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
