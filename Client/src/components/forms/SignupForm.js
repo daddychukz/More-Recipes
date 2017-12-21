@@ -56,16 +56,20 @@ class SignupForm extends React.Component {
    */
   onSubmit(e) {
     e.preventDefault();
-    this.props.actions.signUp(this.state).then(
-      () => {
-        toastr.success('Registration Successful');
-        customHistory.push('/');
-      },
-      (err) => {
-        this.setState({ errors: err.response.data.errors[0], isLoading: false });
-        toastr.error(err.response.data.errors[0].message);
-      }
-    );
+    if (this.state.Password !== this.state.ConfirmPassword) {
+      toastr.error('Passwords do not match');
+    } else {
+      this.props.actions.signUp(this.state).then(
+        () => {
+          toastr.success('Registration Successful');
+          customHistory.push('/');
+        },
+        (err) => {
+          this.setState({ errors: err.response.data.error, isLoading: false });
+          toastr.error(err.response.data.error.message);
+        }
+      );
+    }
     console.log(this.props.users);
   }
 

@@ -50,7 +50,8 @@ module.exports = {
         },
         phone: {
           type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
+          defaultValue: 0
         },
         imageUrl: {
           type: Sequelize.STRING,

@@ -52,7 +52,8 @@ class User {
         fullname: req.body.FullName,
         username: req.body.UserName,
         password: req.body.Password,
-        confirmPassword: req.body.ConfirmPassword
+        confirmPassword: req.body.ConfirmPassword,
+        imageUrl: req.body.imageUrl
       })
       .then(user => res.status(201).send({
         Message: 'User created successfully',

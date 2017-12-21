@@ -64,22 +64,24 @@ class LoginForm extends React.Component {
    */
   responseGoogle(response) {
     console.log(response.profileObj);
-    const { email, name, givenName, googleId } = response.profileObj;
+    const { email, name, givenName, googleId, imageUrl } = response.profileObj;
     this.props.signUp({
       FullName: name,
       UserName: givenName,
       Email: email,
       Password: googleId,
-      ConfirmPassword: googleId }).then(
-      () => {},
+      ConfirmPassword: googleId,
+      imageUrl: imageUrl }).then(
+      () => {
+        this.props.signIn({ Email: email, Password: googleId }).then(
+          (res) => customHistory.push('/recipe-box'),
+          (err) => {
+            this.setState({ errors: err.response.data, isLoading: false });
+            toastr.error(err.response.data.message);
+          }
+        );
+      },
       (err) => {}
-    );
-    this.props.signIn({ Email: email, Password: googleId }).then(
-      (res) => customHistory.push('/recipe-box'),
-      (err) => {
-        this.setState({ errors: err.response.data, isLoading: false });
-        toastr.error(err.response.data.message);
-      }
     );
   }
 

@@ -200,15 +200,20 @@ class MyProfile extends React.Component {
                     <div key={this.state.profile.userId}>
                       <div className="d-flex flex-row">
                         <div className="p-2 align-self-start">
-                          <Image publicId={this.state.profile.publicUrl}>
-                            <Transformation
-                              crop="scale"
-                              width="250"
-                              height="300"
-                              dpr="auto"
-                              responsive_placeholder="blank"
-                            />
-                          </Image>
+                          {
+                            this.state.profile.publicUrl === "user-male_jvc8hn.jpg" ?
+                              <img src={this.state.profile.imageUrl} alt="myPix" width="250" height="300" /> :
+                              <Image publicId={this.state.profile.publicUrl}>
+                                <Transformation
+                                  crop="scale"
+                                  width="250"
+                                  height="300"
+                                  dpr="auto"
+                                  responsive_placeholder="blank"
+                                />
+                              </Image> 
+                              // <img src={this.state.imageUrl} alt="myPix" width="250" height="300" />
+                          }
                         </div>
                         <div className="p-2 align-self-end">
                           <p><span className="obj-color">About:</span>&nbsp; {this.state.profile.about}</p>
