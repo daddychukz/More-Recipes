@@ -37,3 +37,4 @@ server/dist/
 .env
 .nyc_output/
 .coveralls.yml
+package-lock.json
