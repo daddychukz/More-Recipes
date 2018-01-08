@@ -42,11 +42,10 @@ export const updateUserProfileAction = serverRes => ({
 
 export const signIn = user => (dispatch) => {
   return axios.post('/api/v1/users/signin', user).then((response) => {
+    toastr.success(response.data.message);
     const token = response.data.token;
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
-    toastr.success(response.data.message);
-    console.log(response.data);
     dispatch(setCurrentUser(jwt.decode(token)));
     dispatch({
       type: types.USER_LOGGED_IN,

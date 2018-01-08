@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as userActions from '../../actions/userActions';
 import * as recipeActions from '../../actions/recipeActions';
+import { getUserFavorite } from '../../actions/favoriteActions';
 
 /**
  * 
@@ -44,6 +45,12 @@ class SideBar extends React.Component {
       () => {
         this.setState({ recipes: this.props.viewRecipes });
       });
+    this.props.getUserRecipes().then(
+      () => this.setState({ totalRecipeCount: this.props.viewRecipes.length })
+    );
+    this.props.getFavorite(userId).then(
+      () => this.setState({ totalFavoriteCount: this.props.favorites.favoriteRecipe.length })
+    );
   }
 
   /**
@@ -57,14 +64,14 @@ class SideBar extends React.Component {
       <div className="col-md-4">
         <div className="list-group mb-3">
           <li className="list-group-item active text-center"><h5>{this.state.profile.fullname}</h5></li>
-          <Link to={'/my-recipe'} className="list-group-item"><i className="fa fa-cutlery" aria-hidden="true" /> My Recipes <span className="badge badge-pill badge-info float-right">12</span></Link>
-          <Link to={'/my-favorite'} className="list-group-item"><i className="fa fa-star" aria-hidden="true" /> My Favourites <span className="badge badge-pill badge-info float-right">20</span></Link>
+          <Link to={'/my-recipe'} className="list-group-item"><i className="fa fa-cutlery" aria-hidden="true" /> My Recipes <span className="badge badge-pill badge-info float-right">{this.state.totalRecipeCount}</span></Link>
+          <Link to={'/my-favorite'} className="list-group-item"><i className="fa fa-star" aria-hidden="true" /> My Favourites <span className="badge badge-pill badge-info float-right">{this.state.totalFavoriteCount}</span></Link>
           <Link to={'/my-profile'} className="list-group-item"><i className="fa fa-user" aria-hidden="true" /> My Profile</Link>
         </div>
 
         {/* TOP RECIPE  */}
         <ul className="list-group mb-3">
-          <li className="list-group-item active text-center"><h5>Top 3 Favorite Recipes</h5></li>
+          <li className="list-group-item active text-center"><h5>Popular Recipes</h5></li>
           {
             this.state.recipes.map(popular => {
               const newDate = new Date(popular.createdAt).toLocaleDateString();
@@ -94,21 +101,27 @@ class SideBar extends React.Component {
 SideBar.propTypes = {
   getUserProfile: PropTypes.func.isRequired,
   popularRecipes: PropTypes.func.isRequired,
+  getUserRecipes: PropTypes.func.isRequired,
+  getFavorite: PropTypes.func.isRequired,
+  favorites: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
 
 SideBar.defaultProps = {
-  viewRecipes: PropTypes.array.isRequired
+  viewRecipes: PropTypes.array
 };
 
 const mapStateToProps = (state, ownProps) => ({
   profile: state.user,
-  viewRecipes: state.recipe
+  viewRecipes: state.recipe,
+  favorites: state.favorite
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getUserProfile: (Id) => dispatch(userActions.getUserProfile(Id)),
-  popularRecipes: () => dispatch(recipeActions.getPopularRecipes())
+  popularRecipes: () => dispatch(recipeActions.getPopularRecipes()),
+  getUserRecipes: () => dispatch(recipeActions.getUserRecipes()),
+  getFavorite: (Id) => dispatch(getUserFavorite(Id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
