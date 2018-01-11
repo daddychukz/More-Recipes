@@ -53,6 +53,9 @@ class Review {
   static retrieveReviews(req, res) {
     userReview
       .all({
+        where: {
+          recipeId: req.params.recipeID,
+        },
         include: [{
           model: db.User
         }]

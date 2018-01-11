@@ -40,7 +40,7 @@ router.get('/recipes/myrecipes', Auth.verify, recipeController.myRecipes);
 router.get('/recipes', recipeController.retrieveRecipes);
 
 // Retrieve all reviews
-router.get('/reviews', Auth.verify, reviewController.retrieveReviews);
+router.get('/reviews/:recipeID', Auth.verify, reviewController.retrieveReviews);
 
 // Retrieve single recipe
 router.get('/recipes/:recipeID', Auth.verify, recipeController.retrieveRecipe);
@@ -78,6 +78,8 @@ router.post('/validate-token', Auth.checkMailToken);
 // reset password
 router.post('/user/reset-password', userController.resetPassword);
 
+// Search Recipes
+router.get('/search/recipes', recipeController.searchRecipes);
 
 // A catch-all routes not define.
 router.use('*', (req, res) => res.status(404).json({

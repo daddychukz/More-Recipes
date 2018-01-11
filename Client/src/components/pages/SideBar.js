@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import createBrowserHistory from 'history/createBrowserHistory';
 import * as userActions from '../../actions/userActions';
 import * as recipeActions from '../../actions/recipeActions';
 import { getUserFavorite } from '../../actions/favoriteActions';
@@ -31,11 +32,14 @@ class SideBar extends React.Component {
    * 
    * dispatches actions that makes request to get user profile info
    * dispatches actions that makes request to get popular/most upvoted recipes
+   * 
    * @method componentDidMount
+   * 
    * @memberof SideBar
+   * 
    * @returns {object} component
    */
-  componentDidMount() {
+  componentWillMount() {
     const userId = jwt.decode(localStorage.jwtToken).userId;
     this.props.getUserProfile(userId).then(
       () => {
@@ -108,7 +112,6 @@ SideBar.propTypes = {
 };
 
 SideBar.defaultProps = {
-  viewRecipes: PropTypes.array
 };
 
 const mapStateToProps = (state, ownProps) => ({

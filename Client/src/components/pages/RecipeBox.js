@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import toastr from 'toastr';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import Pagination from '../services/UltimatePagination';
-import * as recipesActions from '../../actions/recipeActions';
+import { viewAllRecipes, searchRecipes } from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
 import Footer from './Footer';
@@ -25,6 +26,7 @@ class RecipeBox extends React.Component {
     super(props);
     this.state = {
       recipes: [],
+      isSearching: false,
       isLoading: true,
       currentPage: 1,
       pagination: {
@@ -34,8 +36,11 @@ class RecipeBox extends React.Component {
         limit: 4,
         offset: 0,
       },
+      searchString: ''
     };
-    this.onChange = this.onChange.bind(this);
+    this.onPageChange = this.onPageChange.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onSearchPageChange = this.onSearchPageChange.bind(this);
   }
 
   /**
@@ -67,7 +72,7 @@ class RecipeBox extends React.Component {
    * @memberof RecipeBox
    * @returns {object} recipes
    */
-  onChange(number) {
+  onPageChange(number) {
     this.setState({
       currentPage: number,
       pagination: {
@@ -86,6 +91,66 @@ class RecipeBox extends React.Component {
         .catch((error) => {
           console.log(error);
         });
+    });
+  }
+
+  /**
+   * @param {any} number
+   * @memberof RecipeBox
+   * @returns {object} recipes
+   */
+  onSearchPageChange(number) {
+    console.log('>>>>>>>', this.props.data);
+    this.setState({
+      currentPage: number,
+      pagination: {
+        totalCount: this.props.data.totalCount,
+        totalPages: this.props.data.pagination.pageCount,
+        limit: 4,
+        offset: this.state.pagination.limit * (number - 1)
+      }
+    }, () => {
+      const limit = this.state.pagination.limit;
+      const offset = this.state.pagination.offset;
+      const searchString = this.state.searchString;
+
+      this.props.searchAllRecipes(limit, offset, searchString).then(() => {
+        this.setState({ recipes: this.props.data.searchResult, isLoading: false });
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  }
+
+  /**
+   * 
+   * 
+   * @param {any} event 
+   * @memberof RecipeBox
+   * @returns {object} recipes
+   */
+  onInputChange(event) {
+    const limit = 4;
+    const offset = 0;
+    this.setState({
+      isSearching: true,
+      searchString: event.target.value
+    }, () => {
+      this.props.searchAllRecipes(limit, offset, this.state.searchString).then(() => {
+        this.setState({
+          recipes: this.props.data.searchResult,
+          pagination: {
+            totalCount: this.props.data.totalCount,
+            totalPages: this.props.data.pagination.pageCount,
+            limit,
+            offset,
+          },
+          isLoading: false });
+      },
+      (err) => {
+        toastr.error(err.response.data.message);
+      });
     });
   }
 
@@ -118,7 +183,12 @@ class RecipeBox extends React.Component {
 
               {/* RECIPE CATALOG  */}                            
               <div className="col-md-8" id="display">
-                <input className="form-control" type="text" placeholder="Filter Recipes..."/>
+                <input
+                  value={this.state.searchString}
+                  onInput={this.onInputChange}
+                  className="form-control"
+                  type="text"
+                  placeholder="Filter Recipes..."/>
                 <br />
                 <br />
                 { this.state.isLoading ?
@@ -153,11 +223,19 @@ class RecipeBox extends React.Component {
                     }
                   </CloudinaryContext>
                 }
-                <Pagination
-                  pagination={{ ...this.state.pagination }}
-                  currentPage={this.state.currentPage}
-                  onChange={this.onChange}
-                />
+                {
+                  this.state.isSearching ?
+                    <Pagination
+                      pagination={{ ...this.state.pagination }}
+                      currentPage={this.state.currentPage}
+                      onChange={this.onSearchPageChange}
+                    /> :
+                    <Pagination
+                      pagination={{ ...this.state.pagination }}
+                      currentPage={this.state.currentPage}
+                      onChange={this.onPageChange}
+                    />
+                }
               </div>
             </div>
           </div>
@@ -182,7 +260,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  viewAllRecipes: (limit, offset) => dispatch(recipesActions.viewAllRecipes(limit, offset))
+  viewAllRecipes: (limit, offset) => dispatch(viewAllRecipes(limit, offset)),
+  searchAllRecipes: (limit, offset, searchString) => dispatch(searchRecipes(limit, offset, searchString))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeBox);

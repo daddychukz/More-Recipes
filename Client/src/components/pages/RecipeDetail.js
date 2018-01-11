@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import createBrowserHistory from 'history/createBrowserHistory';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as recipesActions from '../../actions/recipeActions';
 import * as reviewActions from '../../actions/reviewActions';
@@ -13,10 +12,6 @@ import * as favoriteActions from '../../actions/favoriteActions';
 import Header from './Header';
 import SideBar from './SideBar';
 import Footer from './Footer';
-
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
 
 /**
  * 
@@ -57,7 +52,7 @@ class RecipeDetail extends React.Component {
    * @memberof RecipeDetail
    * @returns {object} component
    */
-  componentWillMount() {
+  componentDidMount() {
     const recipeId = this.props.match.params.recipeId;
     this.props.viewSingleRecipe(recipeId).then(
       () => {
@@ -65,25 +60,24 @@ class RecipeDetail extends React.Component {
         this.setState({ recipeDetail: this.props.viewRecipe });
         if (!isEmpty(this.state.recipeDetail.Votes)) {
           if (this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId &&
-                    this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
-                    this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].vote === true) {
+          this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
+          this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].vote === true) {
             this.setState({ upvote: 'fa fa-2x fa-thumbs-up' });
-          } else if (this.state.recipeDetail.votes[this.state.recipeDetail.Votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId &&
-                        this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
-                        this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].vote === false) {
+          } else if (this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].userId === jwt.decode(localStorage.jwtToken).userId &&
+          this.state.recipeDetail.recipeId === this.props.match.params.recipeId &&
+          this.state.recipeDetail.Votes[this.state.recipeDetail.Votes.length - 1].vote === false) {
             this.setState({ downvote: 'fa fa-2x fa-thumbs-down' });
           }
         }
       });
 
-    this.props.viewAllReviews().then(
+    this.props.viewAllReviews(recipeId).then(
       () => {
         this.setState({ allReviews: this.props.showReview });
       });
 
     this.props.getFavorite(recipeId).then(
       () => {
-        console.log(this.props.favoriteData);
         this.setState({ favorite: this.props.favoriteData.favorite });
         if (!isEmpty(this.state.favorite)) {
           if (this.state.favorite.userId === jwt.decode(localStorage.jwtToken).userId &&
@@ -225,7 +219,7 @@ class RecipeDetail extends React.Component {
         () => this.setState({ Review: '' }),
         (err) => this.setState({ errors: err.response.data })
       );
-    this.props.viewAllReviews().then(
+    this.props.viewAllReviews(recipeId).then(
       () => {
         console.log(this.props.showReview);
         this.setState({ allReviews: this.props.showReview });
@@ -375,7 +369,7 @@ const mapDispatchToProps = (dispatch) => ({
   upvoteRecipe: id => dispatch(recipesActions.upvoteRecipe(id)),
   downvoteRecipe: id => dispatch(recipesActions.downvoteRecipe(id)),
   reviewRecipe: (Id, reviews) => dispatch(reviewActions.reviewRecipe(Id, reviews)),
-  viewAllReviews: () => dispatch(reviewActions.viewAllReviews()),
+  viewAllReviews: (Id) => dispatch(reviewActions.viewAllReviews(Id)),
   addFavorite: (Id, category) => dispatch(favoriteActions.addToFavorites(Id, category)),
   getFavorite: (Id) => dispatch(favoriteActions.getSingleFavorite(Id))
 });

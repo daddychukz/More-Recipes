@@ -222,7 +222,7 @@ class Recipe {
       })
       .then((recipe) => {
         if (isEmpty(recipe)) {
-          res.status(406).json({
+          res.status(404).json({
             message: 'Record not Found!'
           });
         } else if (recipe) {
@@ -232,6 +232,66 @@ class Recipe {
         } else {
           res.status(404).json({
             message: 'Record not Found!'
+          });
+        }
+      })
+      .catch(err => res.status(404).json({
+        message: 'Recipe not Found',
+        err
+      }));
+  }
+
+  /**
+   * Search users in the application
+   * @method
+   * @memberof Recipe
+   * @static
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @param {Object} searchString response object
+   * @returns {function} Express middleware function that search
+   * users and sends response to client
+   */
+  static searchRecipes(req, res) {
+    const { limit, offset, searchString } = req.query;
+    return recipeModel.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.query.offset,
+      order: [['createdAt', 'DESC']],
+      where: {
+        $or: [
+          {
+            title: {
+              $iLike: `%${searchString || ''}%`
+            }
+          },
+          {
+            description: {
+              $iLike: `%${searchString || ''}%`
+            }
+          }
+        ]
+      },
+      attributes: {
+        exclude: ['updatedAt']
+      }
+    })
+      .then((recipeSearchResult) => {
+        if (recipeSearchResult.count === 0) {
+          res.status(404).json({
+            message: 'Recipe not Found!'
+          });
+        } else {
+          const pagination = paginate({
+            limit,
+            offset,
+            totalCount: recipeSearchResult.count,
+            pageSize: recipeSearchResult.rows.length
+          });
+          res.status(200).json({
+            pagination,
+            totalCount: recipeSearchResult.count,
+            searchResult: recipeSearchResult.rows
           });
         }
       })

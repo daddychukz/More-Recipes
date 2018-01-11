@@ -56,6 +56,11 @@ export const getPopularRecipesAction = serverRes => ({
   payload: serverRes
 });
 
+export const searchRecipesAction = serverRes => ({
+  type: types.SEARCH_ALL_RECIPES,
+  payload: serverRes
+});
+
 /**
  * @export { function } viewRecipes
  * @param {any} limit
@@ -189,6 +194,22 @@ export const getPopularRecipes = () => {
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+};
+
+/**
+ * @export { function } viewRecipes
+ * @param {any} limit
+ * @param {any} offset
+ * @param {any} searchString
+ * @returns { object } action type and server response
+ */
+export const searchRecipes = (limit, offset, searchString) => {
+  return (dispatch) => {
+    return axios.get(`/api/v1/search/recipes?limit=${limit}&offset=${offset}&searchString=${searchString}`)
+      .then((response) => {
+        dispatch(searchRecipesAction(response.data));
       });
   };
 };
