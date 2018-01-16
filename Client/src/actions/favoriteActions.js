@@ -42,31 +42,27 @@ export const addToFavorites = (recipeId, category) => {
   return (dispatch) => {
     return axios.post(`/api/v1/recipes/${recipeId}`, category)
       .then((response) => {
-        dispatch(addToFavoriteAction(response.data));
+        dispatch(addToFavoriteAction(response.data.favorite));
       });
   };
 };
 
-export const getSingleFavorite = (recipeId) => {
-  return (dispatch) => {
-    return axios.get(`/api/v1/users/${recipeId}`)
-      .then((response) => {
-        dispatch(getSingleFavoriteAction(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
+// export const getSingleFavorite = (recipeId) => {
+//   return (dispatch) => {
+//     return axios.get(`/api/v1/users/${recipeId}`)
+//       .then((response) => {
+//         dispatch(getSingleFavoriteAction(response.data));
+//       })
+//       .catch((error) => error.response.data.message);
+//   };
+// };
 
 export const getUserFavorite = (userId) => {
   return (dispatch) => {
     return axios.get(`/api/v1/users/${userId}/recipes`)
       .then((response) => {
-        dispatch(getUserFavoriteAction(response.data));
+        dispatch(getUserFavoriteAction(response.data.favoriteRecipe));
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => error);
   };
 };

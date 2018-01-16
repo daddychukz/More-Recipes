@@ -1,18 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import sha1 from 'sha1';
-import axios from 'axios';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import createBrowserHistory from 'history/createBrowserHistory';
 import * as recipeActions from '../../actions/recipeActions';
-import InlineError from '../messages/InlineError';
 
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
 /**
  * 
  * 
@@ -34,8 +25,6 @@ class RecipeForm extends React.Component {
       Description: '',
       imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
       publicId: 'home_gipmmy.jpg',
-      errors: {},
-      isLoading: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -53,7 +42,6 @@ class RecipeForm extends React.Component {
       upload_preset: process.env.UploadPreset,
       tags: ['daddy'] },
     (error, result) => {
-      console.log(result[0]),
       this.setState({
         imageUrl: result[0].secure_url,
         publicId: result[0].public_id
@@ -84,8 +72,8 @@ class RecipeForm extends React.Component {
     this.setState({ errors: {}, isLoading: true });
     this.props.addRecipe(this.state)
       .then(
-        () => customHistory.push('/add-recipe'),
-        (err) => this.setState({ errors: err.response.data, isLoading: false })
+        () => this.setState({ Title: '', Description: '' }),
+        (err) => {}
       );
   }
 
@@ -96,7 +84,6 @@ class RecipeForm extends React.Component {
    * @returns {object} component
    */
   render() {
-    const { errors } = this.state;
     return (
       <div>
         <form onSubmit={this.onSubmit}>
@@ -144,12 +131,12 @@ class RecipeForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  Recipes: state.recipe
-});
+RecipeForm.propTypes = {
+  addRecipe: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = (dispatch) => ({
   addRecipe: recipe => dispatch(recipeActions.addRecipe(recipe))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipeForm);
+export default connect(null, mapDispatchToProps)(RecipeForm);

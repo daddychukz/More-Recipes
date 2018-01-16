@@ -54,11 +54,11 @@ class RecipeBox extends React.Component {
     const offset = this.state.pagination.offset;
     this.props.viewAllRecipes(limit, offset).then(() => {
       this.setState({
-        recipes: this.props.data.recipes,
+        recipes: this.props.allRecipe.recipes,
         isLoading: false,
         pagination: {
           ...this.state.pagination,
-          totalPages: this.props.data.pagination.pageCount,
+          totalPages: this.props.allRecipe.pagination.pageCount,
         }
       });
     })
@@ -76,8 +76,8 @@ class RecipeBox extends React.Component {
     this.setState({
       currentPage: number,
       pagination: {
-        totalCount: this.props.data.pagination.totalCount,
-        totalPages: this.props.data.pagination.pageCount,
+        totalCount: this.props.allRecipe.pagination.totalCount,
+        totalPages: this.props.allRecipe.pagination.pageCount,
         limit: 4,
         offset: this.state.pagination.limit * (number - 1)
       }
@@ -86,7 +86,7 @@ class RecipeBox extends React.Component {
       const offset = this.state.pagination.offset;
 
       this.props.viewAllRecipes(limit, offset).then(() => {
-        this.setState({ recipes: this.props.data.recipes, isLoading: false });
+        this.setState({ recipes: this.props.allRecipe.recipes, isLoading: false });
       })
         .catch((error) => {
           console.log(error);
@@ -100,12 +100,11 @@ class RecipeBox extends React.Component {
    * @returns {object} recipes
    */
   onSearchPageChange(number) {
-    console.log('>>>>>>>', this.props.data);
     this.setState({
       currentPage: number,
       pagination: {
-        totalCount: this.props.data.totalCount,
-        totalPages: this.props.data.pagination.pageCount,
+        totalCount: this.props.search.totalCount,
+        totalPages: this.props.search.pagination.pageCount,
         limit: 4,
         offset: this.state.pagination.limit * (number - 1)
       }
@@ -115,7 +114,7 @@ class RecipeBox extends React.Component {
       const searchString = this.state.searchString;
 
       this.props.searchAllRecipes(limit, offset, searchString).then(() => {
-        this.setState({ recipes: this.props.data.searchResult, isLoading: false });
+        this.setState({ recipes: this.props.search.searchResult, isLoading: false });
       })
         .catch((error) => {
           console.log(error);
@@ -139,17 +138,17 @@ class RecipeBox extends React.Component {
     }, () => {
       this.props.searchAllRecipes(limit, offset, this.state.searchString).then(() => {
         this.setState({
-          recipes: this.props.data.searchResult,
+          recipes: this.props.search.searchResult,
           pagination: {
-            totalCount: this.props.data.totalCount,
-            totalPages: this.props.data.pagination.pageCount,
+            totalCount: this.props.search.totalCount,
+            totalPages: this.props.search.pagination.pageCount,
             limit,
             offset,
           },
           isLoading: false });
       },
       (err) => {
-        toastr.error(err.response.data.message);
+        toastr.error(err.response.search.message);
       });
     });
   }
@@ -195,13 +194,12 @@ class RecipeBox extends React.Component {
                   <div className="loader" /> :
                   <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                     {
-                      this.state.recipes.map(data => {
-                        const newDate = new Date(data.createdAt).toDateString();
-                        console.log(data);
+                      this.state.recipes.map(allRecipes => {
+                        const newDate = new Date(allRecipes.createdAt).toDateString();
                         return (
-                          <div key={data.recipeId}>
+                          <div key={allRecipes.recipeId}>
                             <div className="p-2 float-left">
-                              <Image publicId={data.publicId}>
+                              <Image publicId={allRecipes.publicId}>
                                 <Transformation
                                   crop="scale"
                                   width="100"
@@ -213,9 +211,9 @@ class RecipeBox extends React.Component {
                             </div>
                             <div className="p-2 align-self-end">
                               <small className="text-muted float-right">{newDate}</small>
-                              <h3><Link to={`/recipe/${data.recipeId}`}>{data.title}</Link></h3>
-                              <small>by: {data.fullname}</small>
-                              <p> {data.description} </p>
+                              <h3><Link to={`/recipe/${allRecipes.recipeId}`}>{allRecipes.title}</Link></h3>
+                              <small>by: {allRecipes.fullname}</small>
+                              <p> {allRecipes.description} </p>
                             </div>
                           </div>
                         );
@@ -249,14 +247,15 @@ class RecipeBox extends React.Component {
 
 RecipeBox.propTypes = {
   viewAllRecipes: PropTypes.func.isRequired,
-};
-
-RecipeBox.defaultProps = {
-  data: PropTypes.array.isRequired
+  searchAllRecipes: PropTypes.func.isRequired,
+  search: PropTypes.array.isRequired,
+  allRecipe: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  data: state.recipe
+  data: state.getRecipes,
+  search: state.search,
+  allRecipe: state.allRecipe
 });
 
 const mapDispatchToProps = (dispatch) => ({

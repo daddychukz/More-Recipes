@@ -23,7 +23,8 @@ class MyFavoriteRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorite: []
+      favorite: [],
+      isLoading: true
     };
   }
 
@@ -34,11 +35,12 @@ class MyFavoriteRecipe extends React.Component {
    * @returns {void}
    */
   componentWillMount() {
-    const userId = jwt.decode(localStorage.jwtToken).userId;
+    const userId = this.props.user.userId;
     this.props.getFavorite(userId).then(
       () => {
-        this.setState({ favorite: this.props.favoriteData.favoriteRecipe });
-        console.log(this.state.favorite);
+        this.setState({
+          isLoading: false
+        });
       });
   }
 
@@ -73,28 +75,32 @@ class MyFavoriteRecipe extends React.Component {
               <div className="col-md-8" id="display">
                 <input className="form-control" type="text" placeholder="Filter Recipes..."/>
                 <br/>
-                <table className="table table-hover">
-                  <tbody>
-                    <tr>
-                      <th>Title</th>
-                      <th>Created</th>
-                      <th />
-                    </tr>
-                    {
-                      this.state.favorite.map(data => {
-                        const newDate = new Date(data.createdAt).toDateString();
-                        return (
-                          <tr key={data.recipeId}>
-                            <td><Link to={`/recipe/${data.recipeId}`}>{data.Recipe.title}</Link></td>
-                            <td>{newDate}</td>
-                            <td><Link to="#" data-toggle="modal" title="Edit" data-target="#editRecipe"><i className="fa fa-pencil" aria-hidden="true" />&nbsp;</Link> <Link to="#" title="Delete" data-toggle="modal" data-target="#delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
-                          </tr>
-                        );
-                      })
-                    }
+                {
+                  this.state.isLoading ?
+                    <div className="loader" /> :
+                    <table className="table table-hover">
+                      <tbody>
+                        <tr>
+                          <th>Title</th>
+                          <th>Created</th>
+                          <th />
+                        </tr>
+                        {
+                          this.props.favoriteData.map(data => {
+                            const newDate = new Date(data.createdAt).toDateString();
+                            return (
+                              <tr key={data.recipeId}>
+                                <td><Link to={`/recipe/${data.recipeId}`}>{data.Recipe.title}</Link></td>
+                                <td>{newDate}</td>
+                                <td><Link to="#" data-toggle="modal" title="Edit" data-target="#editRecipe"><i className="fa fa-pencil" aria-hidden="true" />&nbsp;</Link> <Link to="#" title="Delete" data-toggle="modal" data-target="#delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
+                              </tr>
+                            );
+                          })
+                        }
 
-                  </tbody>
-                </table>
+                      </tbody>
+                    </table>
+                }
               </div>
             </div>
           </div>
@@ -108,11 +114,12 @@ class MyFavoriteRecipe extends React.Component {
 
 MyFavoriteRecipe.propTypes = {
   getFavorite: PropTypes.func.isRequired,
-  favoriteData: PropTypes.object.isRequired
+  favoriteData: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  favoriteData: state.favorite
+  favoriteData: state.favorite,
+  user: state.user
 });
 
 const mapDispatchToProps = (dispatch) => ({

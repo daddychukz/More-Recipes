@@ -153,9 +153,20 @@ class Recipe {
       .then((recipe) => {
         recipe
           .destroy()
-          .then(res.status(200).send({
-            message: 'Recipe successfully deleted!'
-          }))
+          .then(
+            setTimeout(() => {
+              recipeModel.all({
+                where: {
+                  userId: req.decoded.userId
+                },
+                order: [['createdAt', 'DESC']],
+              }).then(
+                myRecipes => res.status(200).send({
+                  message: 'Recipe successfully deleted!',
+                  myRecipes
+                })
+              );
+            }, 500))
           .catch(err => res.status(400).send(err));
       })
       .catch(() => res.status(404).send({
@@ -193,9 +204,19 @@ class Recipe {
         updateRecord.publicId = req.body.publicId;
       }
       recipe.update(updateRecord)
-        .then(updatedRecipe => res.send({
-          updatedRecipe
-        }));
+        .then(
+          setTimeout(() => {
+            recipeModel.all({
+              where: {
+                userId: req.decoded.userId
+              },
+              order: [['createdAt', 'DESC']],
+            }).then(
+              updatedRecipe => res.send({
+                updatedRecipe
+              }));
+          }, 500)
+        );
     })
       .catch(() => res.status(404).send({
         message: 'Record not found for this User'

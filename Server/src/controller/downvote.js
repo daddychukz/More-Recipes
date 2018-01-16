@@ -60,11 +60,13 @@ class Downvote {
             });
             res.send({
               message: `${req.decoded.username} removed his Downvote`,
+              value: 0
             });
           })
           .catch(() => {
             res.send({
               message: `${req.decoded.username} downvoted this recipe`,
+              value: 1
             });
 
             // deletes upvote created by same user for same recipe
