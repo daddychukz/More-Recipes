@@ -5,7 +5,7 @@ const Header = () => (
   <div>
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
       <div className="container">
-        <Link to={'/'} className="navbar-brand">More-Recipes</Link>
+        <Link to={'/'} className="navbar-brand"><h1 id="logo">More-Recipes</h1></Link>
         <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
           <span className="navbar-toggler-icon" />
         </button>

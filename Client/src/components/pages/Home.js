@@ -20,7 +20,7 @@ const Home = () => (
                     <i className="fa fa-check btn-info" />
                   </div>
                   <div className="p-4 align-self-end">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat earum quam cupiditate unde saepe nam?
+                  Find and share everyday cooking inspiration on More-Recipes.
                   </div>
                 </div>
                 <div className="d-flex flex-row">
@@ -28,7 +28,7 @@ const Home = () => (
                     <i className="fa fa-check btn-info" />
                   </div>
                   <div className="p-4 align-self-end">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat earum quam cupiditate unde saepe nam?
+                  Discover recipes, cooks, and how-tos based on the food you love and the friends you follow.
                   </div>
                 </div>
                 <div className="d-flex flex-row">
@@ -36,7 +36,7 @@ const Home = () => (
                     <i className="fa fa-check btn-info" />
                   </div>
                   <div className="p-4 align-self-end">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat earum quam cupiditate unde saepe nam?
+                  Find all the newest recipes published on More-Recipes.com
                   </div>
                 </div>
               </div>
@@ -48,7 +48,7 @@ const Home = () => (
                   <div className="card main-color-bg text-center card-form">
                     <div className="card-body">
                       <h3>Log Into Your Account</h3>
-                      <p>Please enter your Login details</p>    
+                      <p>Please enter your Login details</p>
                       <LoginForm />
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import jwt from 'jsonwebtoken';
+import toastr from 'toastr';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as favoriteActions from '../../actions/favoriteActions';
@@ -24,8 +24,10 @@ class MyFavoriteRecipe extends React.Component {
     super(props);
     this.state = {
       favorite: [],
+      Category: 'Soup',
       isLoading: true
     };
+    this.deleteRecipe = this.deleteRecipe.bind(this);
   }
 
   /**
@@ -42,6 +44,26 @@ class MyFavoriteRecipe extends React.Component {
           isLoading: false
         });
       });
+  }
+
+  /**
+   * 
+   * 
+   * @param {any} recipe 
+   * @returns {void}
+   * @memberof MyRecipe
+   */
+  deleteRecipe(recipe) {
+    const recipeId = recipe.recipeId;
+    const category = {
+      Category: this.state.Category
+    };
+    return () => {
+      this.props.deleteFavorite(recipeId, category).then(
+        () => {
+          toastr.success(`Recipe successfully removed from Favorites`);
+        });
+    };
   }
 
   /**
@@ -92,7 +114,7 @@ class MyFavoriteRecipe extends React.Component {
                               <tr key={data.recipeId}>
                                 <td><Link to={`/recipe/${data.recipeId}`}>{data.Recipe.title}</Link></td>
                                 <td>{newDate}</td>
-                                <td><Link to="#" data-toggle="modal" title="Edit" data-target="#editRecipe"><i className="fa fa-pencil" aria-hidden="true" />&nbsp;</Link> <Link to="#" title="Delete" data-toggle="modal" data-target="#delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
+                                <td><Link onClick={this.deleteRecipe(data)} to="#" title="Delete" data-toggle="modal" data-target="#delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
                               </tr>
                             );
                           })
@@ -114,7 +136,9 @@ class MyFavoriteRecipe extends React.Component {
 
 MyFavoriteRecipe.propTypes = {
   getFavorite: PropTypes.func.isRequired,
-  favoriteData: PropTypes.array.isRequired
+  favoriteData: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  deleteFavorite: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -123,7 +147,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getFavorite: (Id) => dispatch(favoriteActions.getUserFavorite(Id))
+  getFavorite: (Id) => dispatch(favoriteActions.getUserFavorite(Id)),
+  deleteFavorite: (recipeId, category) => dispatch(favoriteActions.addToFavorites(recipeId, category))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyFavoriteRecipe);

@@ -38,6 +38,7 @@ class MyRecipe extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
   }
 
   /**
@@ -181,7 +182,6 @@ class MyRecipe extends React.Component {
                         {
                           this.props.recipes.map(data => {
                             const newDate = new Date(data.createdAt).toDateString();
-                            console.log(data);
                             return (
                               <tr key={data.recipeId}>
                                 <td><Link to={`/recipe/${data.recipeId}`}>{data.title}</Link></td>
