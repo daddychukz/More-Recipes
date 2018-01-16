@@ -58,13 +58,15 @@ export const getPopularRecipesAction = serverRes => ({
 
 /**
  * @export { function } viewRecipes
+ * @param {any} limit
+ * @param {any} offset
  * @returns { object } action type and server response
  */
-export const viewAllRecipes = () => {
+export const viewAllRecipes = (limit, offset) => {
   return (dispatch) => {
-    return axios.get('/api/v1/recipes')
+    return axios.get(`/api/v1/recipes?limit=${limit}&offset=${offset}`)
       .then((response) => {
-        dispatch(viewAllRecipesAction(response.data.recipes));
+        dispatch(viewAllRecipesAction(response.data));
       })
       .catch((error) => {
         console.log(error);

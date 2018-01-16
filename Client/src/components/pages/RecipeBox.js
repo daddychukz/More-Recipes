@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
+import Pagination from '../services/UltimatePagination';
 import * as recipesActions from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
@@ -24,8 +25,17 @@ class RecipeBox extends React.Component {
     super(props);
     this.state = {
       recipes: [],
-      isLoading: true
+      isLoading: true,
+      currentPage: 1,
+      pagination: {
+        totalPages: 2,
+        boundaryPagesRange: 1,
+        siblingPagesRange: 2,
+        limit: 4,
+        offset: 0,
+      },
     };
+    this.onChange = this.onChange.bind(this);
   }
 
   /**
@@ -35,12 +45,48 @@ class RecipeBox extends React.Component {
    * @returns {void}
    */
   componentDidMount() {
-    this.props.viewAllRecipes().then(() => {
-      this.setState({ recipes: this.props.recipes, isLoading: false });
+    const limit = this.state.pagination.limit;
+    const offset = this.state.pagination.offset;
+    this.props.viewAllRecipes(limit, offset).then(() => {
+      this.setState({
+        recipes: this.props.data.recipes,
+        isLoading: false,
+        pagination: {
+          ...this.state.pagination,
+          totalPages: this.props.data.pagination.pageCount,
+        }
+      });
     })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  /**
+   * @param {any} number
+   * @memberof RecipeBox
+   * @returns {object} recipes
+   */
+  onChange(number) {
+    this.setState({
+      currentPage: number,
+      pagination: {
+        totalCount: this.props.data.pagination.totalCount,
+        totalPages: this.props.data.pagination.pageCount,
+        limit: 4,
+        offset: this.state.pagination.limit * (number - 1)
+      }
+    }, () => {
+      const limit = this.state.pagination.limit;
+      const offset = this.state.pagination.offset;
+
+      this.props.viewAllRecipes(limit, offset).then(() => {
+        this.setState({ recipes: this.props.data.recipes, isLoading: false });
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   /**
@@ -107,6 +153,11 @@ class RecipeBox extends React.Component {
                     }
                   </CloudinaryContext>
                 }
+                <Pagination
+                  pagination={{ ...this.state.pagination }}
+                  currentPage={this.state.currentPage}
+                  onChange={this.onChange}
+                />
               </div>
             </div>
           </div>
@@ -120,15 +171,18 @@ class RecipeBox extends React.Component {
 
 RecipeBox.propTypes = {
   viewAllRecipes: PropTypes.func.isRequired,
-  recipes: PropTypes.array.isRequired
+};
+
+RecipeBox.defaultProps = {
+  data: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  recipes: state.recipe
+  data: state.recipe
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  viewAllRecipes: () => dispatch(recipesActions.viewAllRecipes())
+  viewAllRecipes: (limit, offset) => dispatch(recipesActions.viewAllRecipes(limit, offset))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeBox);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import jwt from 'jsonwebtoken';
 
 export default ComposedComponent => {
   /**
@@ -20,6 +21,12 @@ export default ComposedComponent => {
       if (!this.props.isAuthenticated) {
         this.props.history.push('/');
       }
+      const token = localStorage.getItem('jwtToken');
+      jwt.verify(token, process.env.SECRET, (err, decoded) => {
+        if (err.message === 'jwt expired') {
+          localStorage.removeItem('jwtToken');
+        }
+      });
     }
     /**
      * 

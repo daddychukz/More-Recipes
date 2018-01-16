@@ -6,7 +6,6 @@ import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types';
 import createBrowserHistory from 'history/createBrowserHistory';
 import * as userActions from '../../actions/userActions';
-import InlineError from '../messages/InlineError';
 
 // const responseGoogle = (response) => {
 //   console.log(response.profileObj);
@@ -217,7 +216,8 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   signIn: PropTypes.func.isRequired,
-  signUp: PropTypes.func.isRequired
+  signUp: PropTypes.func.isRequired,
+  // resetPasswordRequest: PropTypes.func.resetPasswordRequest.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({

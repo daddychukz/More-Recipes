@@ -94,11 +94,11 @@ class SideBar extends React.Component {
 SideBar.propTypes = {
   getUserProfile: PropTypes.func.isRequired,
   popularRecipes: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-  viewRecipes: PropTypes.array.isRequired
+  profile: PropTypes.object.isRequired
 };
 
 SideBar.defaultProps = {
+  viewRecipes: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
