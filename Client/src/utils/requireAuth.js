@@ -2,6 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
+import createBrowserHistory from 'history/createBrowserHistory';
+
+const customHistory = createBrowserHistory({
+  forceRefresh: true
+});
+
 
 export default ComposedComponent => {
   /**
@@ -23,8 +29,11 @@ export default ComposedComponent => {
       }
       const token = localStorage.getItem('jwtToken');
       jwt.verify(token, process.env.SECRET, (err, decoded) => {
-        if (err.message === 'jwt expired') {
-          localStorage.removeItem('jwtToken');
+        if (err) {
+          if (err.message === 'jwt expired') {
+            localStorage.removeItem('jwtToken');
+            customHistory.push('/');
+          }
         }
       });
     }

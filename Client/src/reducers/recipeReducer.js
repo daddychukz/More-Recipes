@@ -24,6 +24,8 @@ const recipeReducer = (state = [], action) => {
     return action.payload;
   case types.GET_POPULAR_RECIPE:
     return action.payload;
+  case types.SEARCH_ALL_RECIPES:
+    return action.payload;
   default:
     return state;
   }

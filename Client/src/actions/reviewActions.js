@@ -19,9 +19,9 @@ export const viewAllReviewsAction = serverRes => ({
   payload: serverRes
 });
 
-export const viewAllReviews = () => {
+export const viewAllReviews = (recipeId) => {
   return (dispatch) => {
-    return axios.get('/api/v1/reviews')
+    return axios.get(`/api/v1/reviews/${recipeId}`)
       .then((response) => {
         dispatch(viewAllReviewsAction(response.data.reviews));
       })
