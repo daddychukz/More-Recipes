@@ -8,6 +8,7 @@ import * as recipesActions from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
 import Footer from './Footer';
+import DeleteRecipeModal from '../modals/DeleteRecipeModal';
 
 /**
  * 
@@ -30,12 +31,14 @@ class MyRecipe extends React.Component {
       Description: '',
       imageUrl: '',
       publicId: '',
-      Category: 'Soup'
+      Category: 'Soup',
+      isLoading: true
     };
     this.uploadWidget = this.uploadWidget.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
   }
 
   /**
@@ -48,7 +51,7 @@ class MyRecipe extends React.Component {
     this.props.getUserRecipes()
       .then(
         () => {
-          this.setState({ recipes: this.props.recipes });
+          this.setState({ recipes: this.props.recipes, isLoading: false });
         })
       .catch((error) => {
         console.log(error);
@@ -166,29 +169,32 @@ class MyRecipe extends React.Component {
               <div className="col-md-8" id="display">
                 <input className="form-control" type="text" placeholder="Filter Recipes..."/>
                 <br/>
-                <table className="table table-hover">
-                  <tbody>
-                    <tr>
-                      <th>Title</th>
-                      <th>Created</th>
-                      <th />
-                    </tr>
-                    {
-                      this.state.recipes.map(data => {
-                        const newDate = new Date(data.createdAt).toDateString();
-                        console.log(data);
-                        return (
-                          <tr key={data.recipeId}>
-                            <td><Link to={`/recipe/${data.recipeId}`}>{data.title}</Link></td>
-                            <td>{newDate}</td>
-                            <td><Link onClick={this.editRecipe(data)} to="#" data-toggle="modal" title="Edit" data-target="#editRecipe"><i className="fa fa-pencil" aria-hidden="true" />&nbsp;</Link> <Link to="#" onClick={this.deleteRecipe(data)} title="Delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
-                          </tr>
-                        );
-                      })
-                    }
+                {
+                  this.state.isLoading ?
+                    <div className="loader" /> :
+                    <table className="table table-hover">
+                      <tbody>
+                        <tr>
+                          <th>Title</th>
+                          <th>Created</th>
+                          <th />
+                        </tr>
+                        {
+                          this.props.recipes.map(data => {
+                            const newDate = new Date(data.createdAt).toDateString();
+                            return (
+                              <tr key={data.recipeId}>
+                                <td><Link to={`/recipe/${data.recipeId}`}>{data.title}</Link></td>
+                                <td>{newDate}</td>
+                                <td><Link onClick={this.editRecipe(data)} to="#" data-toggle="modal" title="Edit" data-target="#editRecipe"><i className="fa fa-pencil" aria-hidden="true" />&nbsp;</Link> <Link to="#" onClick={this.deleteRecipe(data)} title="Delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
+                              </tr>
+                            );
+                          })
+                        }
 
-                  </tbody>
-                </table>
+                      </tbody>
+                    </table>
+                }
               </div>
 
             </div>
@@ -255,24 +261,7 @@ class MyRecipe extends React.Component {
           </div>
         </div>
 
-        <div className="modal fade text-dark" id="delete-recipe" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Message</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                            Recipe Successfully Deleted
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <DeleteRecipeModal />
       </div>
     );
   }
@@ -286,7 +275,7 @@ MyRecipe.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  recipes: state.recipe,
+  recipes: state.getRecipe,
 });
 
 const mapDispatchToProps = (dispatch) => ({

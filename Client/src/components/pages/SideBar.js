@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import createBrowserHistory from 'history/createBrowserHistory';
 import * as userActions from '../../actions/userActions';
 import * as recipeActions from '../../actions/recipeActions';
 import { getUserFavorite } from '../../actions/favoriteActions';
@@ -39,22 +37,12 @@ class SideBar extends React.Component {
    * 
    * @returns {object} component
    */
-  componentWillMount() {
-    const userId = jwt.decode(localStorage.jwtToken).userId;
-    this.props.getUserProfile(userId).then(
-      () => {
-        this.setState({ profile: this.props.profile });
-      });
-    this.props.popularRecipes().then(
-      () => {
-        this.setState({ recipes: this.props.viewRecipes });
-      });
-    this.props.getUserRecipes().then(
-      () => this.setState({ totalRecipeCount: this.props.viewRecipes.length })
-    );
-    this.props.getFavorite(userId).then(
-      () => this.setState({ totalFavoriteCount: this.props.favorites.favoriteRecipe.length })
-    );
+  componentDidMount() {
+    const userId = this.props.profile.userId;
+    this.props.getUserProfile(userId);
+    this.props.popularRecipes();
+    this.props.getUserRecipes();
+    this.props.getFavorite(userId);
   }
 
   /**
@@ -67,9 +55,9 @@ class SideBar extends React.Component {
     return (
       <div className="col-md-4">
         <div className="list-group mb-3">
-          <li className="list-group-item active text-center"><h5>{this.state.profile.fullname}</h5></li>
-          <Link to={'/my-recipe'} className="list-group-item"><i className="fa fa-cutlery" aria-hidden="true" /> My Recipes <span className="badge badge-pill badge-info float-right">{this.state.totalRecipeCount}</span></Link>
-          <Link to={'/my-favorite'} className="list-group-item"><i className="fa fa-star" aria-hidden="true" /> My Favourites <span className="badge badge-pill badge-info float-right">{this.state.totalFavoriteCount}</span></Link>
+          <li className="list-group-item active text-center"><h5>{this.props.profile.fullname}</h5></li>
+          <Link to={'/my-recipe'} className="list-group-item"><i className="fa fa-cutlery" aria-hidden="true" /> My Recipes <span className="badge badge-pill badge-info float-right">{this.props.myRecipes.length}</span></Link>
+          <Link to={'/my-favorite'} className="list-group-item"><i className="fa fa-star" aria-hidden="true" /> My Favourites <span className="badge badge-pill badge-info float-right">{this.props.favorites.length}</span></Link>
           <Link to={'/my-profile'} className="list-group-item"><i className="fa fa-user" aria-hidden="true" /> My Profile</Link>
         </div>
 
@@ -77,7 +65,7 @@ class SideBar extends React.Component {
         <ul className="list-group mb-3">
           <li className="list-group-item active text-center"><h5>Popular Recipes</h5></li>
           {
-            this.state.recipes.map(popular => {
+            this.props.viewRecipes.map(popular => {
               const newDate = new Date(popular.createdAt).toLocaleDateString();
               return (
                 <div key={popular.recipeId} className="list-group-item list-group-item-action flex-column align-items-start">
@@ -107,16 +95,17 @@ SideBar.propTypes = {
   popularRecipes: PropTypes.func.isRequired,
   getUserRecipes: PropTypes.func.isRequired,
   getFavorite: PropTypes.func.isRequired,
-  favorites: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  favorites: PropTypes.array.isRequired,
+  profile: PropTypes.object.isRequired,
+  viewRecipes: PropTypes.array.isRequired,
+  myRecipes: PropTypes.array.isRequired
 };
 
-SideBar.defaultProps = {
-};
 
 const mapStateToProps = (state, ownProps) => ({
   profile: state.user,
-  viewRecipes: state.recipe,
+  viewRecipes: state.popularRecipes,
+  myRecipes: state.getRecipe,
   favorites: state.favorite
 });
 

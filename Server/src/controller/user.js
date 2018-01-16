@@ -166,6 +166,9 @@ class User {
         where: {
           userId: req.decoded.userId,
           recipeId: req.params.recipeID
+        },
+        attributes: {
+          exclude: ['id']
         }
       }).then((favorite) => {
         res.send({

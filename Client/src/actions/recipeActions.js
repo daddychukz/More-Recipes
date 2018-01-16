@@ -6,15 +6,12 @@ import * as types from './types';
 export const addRecipe = recipe => (dispatch) => {
   return axios.post('/api/v1/recipes', recipe).then((response) => {
     toastr.success('Recipe Successfully Created');
-    console.log(response.data);
     dispatch({
       type: types.CREATE_RECIPE,
       payload: recipe
     });
   });
 };
-
-//  Create action wrappers
 
 export const viewAllRecipesAction = serverRes => ({
   type: types.GET_ALL_RECIPES,
@@ -156,7 +153,7 @@ export const updateUserRecipe = (recipeID, data) => {
   return (dispatch) => {
     return axios.post(`/api/v1/recipe/${recipeID}`, data)
       .then((response) => {
-        dispatch(updateUserRecipeAction(response.data));
+        dispatch(updateUserRecipeAction(response.data.updatedRecipe));
       })
       .catch((error) => {
         console.log(error);
@@ -174,7 +171,7 @@ export const deleteUserRecipe = (recipeID) => {
   return (dispatch) => {
     return axios.delete(`/api/v1/recipes/${recipeID}`)
       .then((response) => {
-        dispatch(deleteUserRecipeAction(response.data));
+        dispatch(deleteUserRecipeAction(response.data.myRecipes));
       })
       .catch((error) => {
         console.log(error);

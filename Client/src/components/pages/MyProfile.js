@@ -8,6 +8,7 @@ import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as userActions from '../../actions/userActions';
 import SideBar from './SideBar';
 import Footer from './Footer';
+import HeaderProfile from './HeaderProfile';
 
 const customHistory = createBrowserHistory({
   forceRefresh: true
@@ -35,7 +36,8 @@ class MyProfile extends React.Component {
       About: '',
       Hobbies: '',
       Phone: '',
-      Address: ''
+      Address: '',
+      isLoading: true
     };
     this.uploadWidget = this.uploadWidget.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -61,7 +63,9 @@ class MyProfile extends React.Component {
           About: this.state.profile.about,
           Hobbies: this.state.profile.hobbies,
           Phone: this.state.profile.phone,
-          Address: this.state.profile.address });
+          Address: this.state.profile.address,
+          isLoading: false
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -141,41 +145,7 @@ class MyProfile extends React.Component {
     const { isAuthenticated } = this.props.auth;
     return (
       <div>
-        <nav className="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
-          <div className="container">
-            <Link to={'/recipe-box'} className="navbar-brand"><h1 id="logo">More-Recipes</h1></Link>
-            <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarCollapse">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={'/recipe-box'} className="nav-link">Home</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/add-recipe'} className="nav-link">Add Recipe</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/my-recipe'} className="nav-link">My Recipes</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/my-favorite'} className="nav-link">Favorites</Link>
-                </li>
-                <li className="nav-item">
-                  <div className="btn-group open">
-                    <i className="fa fa-user-circle fa-2x pull-right" data-toggle="dropdown" aria-hidden="true" />
-                    <ul className="dropdown-menu">
-                      <li><Link className="dropdown-item" to={'/my-profile'}>Profile</Link></li>
-                      <li className="divider" />
-                      <li><Link className="dropdown-item" to="#" data-toggle="modal" data-target="#profileModal">Edit Profile</Link></li>
-                      <li><Link className="dropdown-item" to={'/'} onClick={this.logout.bind(this)}>Logout</Link></li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <HeaderProfile />
 
         <header id="header" />
 
@@ -194,41 +164,45 @@ class MyProfile extends React.Component {
               <SideBar />
 
               {/* PROFILE */}
-              <div className="col-md-8" id="display">
-                <CloudinaryContext cloudName={`${process.env.CloudName}`}>
-                  {
-                    <div key={this.state.profile.userId}>
-                      <div className="d-flex flex-row">
-                        <div className="p-2 align-self-start">
-                          {
-                            this.state.profile.publicUrl === "user-male_jvc8hn.jpg" ?
-                              <img src={this.state.profile.imageUrl} alt="myPix" width="250" height="300" /> :
-                              <Image publicId={this.state.profile.publicUrl}>
-                                <Transformation
-                                  crop="scale"
-                                  width="250"
-                                  height="300"
-                                  dpr="auto"
-                                  responsive_placeholder="blank"
-                                />
-                              </Image> 
+              {
+                this.state.isLoading ?
+                  <div className="loader" /> :
+                  <div className="col-md-8" id="display">
+                    <CloudinaryContext cloudName={`${process.env.CloudName}`}>
+                      {
+                        <div key={this.state.profile.userId}>
+                          <div className="d-flex flex-row">
+                            <div className="p-2 align-self-start">
+                              {
+                                this.state.profile.publicUrl === "user-male_jvc8hn.jpg" ?
+                                  <img src={this.state.profile.imageUrl} alt="myPix" width="250" height="300" /> :
+                                  <Image publicId={this.state.profile.publicUrl}>
+                                    <Transformation
+                                      crop="scale"
+                                      width="250"
+                                      height="300"
+                                      dpr="auto"
+                                      responsive_placeholder="blank"
+                                    />
+                                  </Image>
                               // <img src={this.state.imageUrl} alt="myPix" width="250" height="300" />
-                          }
+                              }
+                            </div>
+                            <div className="p-2 align-self-end">
+                              <p><span className="obj-color">About:</span>&nbsp; {this.state.profile.about}</p>
+                              <p><span className="obj-color">Hobbies:</span>&nbsp; {this.state.profile.hobbies}</p>
+                              <p><i className="fa fa-envelope-o obj-color" aria-hidden="true" />&nbsp; {this.state.profile.email}</p>
+                              <address><i className="fa fa-map-marker obj-color" aria-hidden="true" />&nbsp; {this.state.profile.address}</address>
+                              <p><i className="fa fa-phone obj-color" aria-hidden="true" />&nbsp;{this.state.profile.phone}</p>
+                              <p><i className="fa fa-user obj-color" aria-hidden="true" />&nbsp; {this.state.profile.username}</p>
+                              <Link className="btn btn-info" to="#" role="button" data-toggle="modal" data-target="#changePassword">Change Password</Link>
+                            </div>
+                          </div>
                         </div>
-                        <div className="p-2 align-self-end">
-                          <p><span className="obj-color">About:</span>&nbsp; {this.state.profile.about}</p>
-                          <p><span className="obj-color">Hobbies:</span>&nbsp; {this.state.profile.hobbies}</p>
-                          <p><i className="fa fa-envelope-o obj-color" aria-hidden="true" />&nbsp; {this.state.profile.email}</p>
-                          <address><i className="fa fa-map-marker obj-color" aria-hidden="true" />&nbsp; {this.state.profile.address}</address>
-                          <p><i className="fa fa-phone obj-color" aria-hidden="true" />&nbsp;{this.state.profile.phone}</p>
-                          <p><i className="fa fa-user obj-color" aria-hidden="true" />&nbsp; {this.state.profile.username}</p>
-                          <Link className="btn btn-info" to="#" role="button" data-toggle="modal" data-target="#changePassword">Change Password</Link>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                </CloudinaryContext>
-              </div>
+                      }
+                    </CloudinaryContext>
+                  </div>
+              }
             </div>
           </div>
         </section>
