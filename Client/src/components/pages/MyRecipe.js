@@ -4,6 +4,7 @@ import toastr from 'toastr';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
+import Pagination from '../services/UltimatePagination';
 import * as recipesActions from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
@@ -32,6 +33,14 @@ class MyRecipe extends React.Component {
       imageUrl: '',
       publicId: '',
       Category: 'Soup',
+      currentPage: 1,
+      pagination: {
+        totalPages: 1,
+        boundaryPagesRange: 1,
+        siblingPagesRange: 2,
+        limit: 5,
+        offset: 0,
+      },
       isLoading: true
     };
     this.uploadWidget = this.uploadWidget.bind(this);
@@ -39,6 +48,7 @@ class MyRecipe extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
+    this.onPageChange = this.onPageChange.bind(this);
   }
 
   /**
@@ -47,15 +57,51 @@ class MyRecipe extends React.Component {
    * @method componentWillMount
    * @memberof MyRecipe
    */
-  componentWillMount() {
-    this.props.getUserRecipes()
+  componentDidMount() {
+    const limit = this.state.pagination.limit;
+    const offset = this.state.pagination.offset;
+    this.props.getUserRecipes(limit, offset)
       .then(
         () => {
-          this.setState({ recipes: this.props.recipes, isLoading: false });
+          this.setState({
+            recipes: this.props.recipes,
+            isLoading: false,
+            pagination: {
+              ...this.state.pagination,
+              totalPages: this.props.recipes.pagination.pageCount,
+            }
+          });
         })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  /**
+   * @param {any} number
+   * @memberof RecipeBox
+   * @returns {object} recipes
+   */
+  onPageChange(number) {
+    this.setState({
+      currentPage: number,
+      pagination: {
+        totalCount: this.props.recipes.pagination.totalCount,
+        totalPages: this.props.recipes.pagination.pageCount,
+        limit: 5,
+        offset: this.state.pagination.limit * (number - 1)
+      }
+    }, () => {
+      const limit = this.state.pagination.limit;
+      const offset = this.state.pagination.offset;
+
+      this.props.getUserRecipes(limit, offset).then(() => {
+        this.setState({ isLoading: false });
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   /**
@@ -134,6 +180,11 @@ class MyRecipe extends React.Component {
       this.props.deleteUserRecipe(recipeId).then(
         () => {
           toastr.success(`Recipe (${recipe.title}) deleted successfully`);
+          this.setState({ pagination: {
+            ...this.state.pagination,
+            totalPages: this.props.recipes.pagination.pageCount,
+          }
+          });
         });
     };
   }
@@ -180,7 +231,7 @@ class MyRecipe extends React.Component {
                           <th />
                         </tr>
                         {
-                          this.props.recipes.map(data => {
+                          this.props.recipes.recipes.map(data => {
                             const newDate = new Date(data.createdAt).toDateString();
                             return (
                               <tr key={data.recipeId}>
@@ -194,6 +245,20 @@ class MyRecipe extends React.Component {
 
                       </tbody>
                     </table>
+                }
+                <br />
+                {
+                  this.state.isSearching ?
+                    <Pagination
+                      pagination={{ ...this.state.pagination }}
+                      currentPage={this.state.currentPage}
+                      onChange={this.onSearchPageChange}
+                    /> :
+                    <Pagination
+                      pagination={{ ...this.state.pagination }}
+                      currentPage={this.state.currentPage}
+                      onChange={this.onPageChange}
+                    />
                 }
               </div>
 
@@ -268,7 +333,7 @@ class MyRecipe extends React.Component {
 }
 
 MyRecipe.propTypes = {
-  recipes: PropTypes.array.isRequired,
+  recipes: PropTypes.object.isRequired,
   getUserRecipes: PropTypes.func.isRequired,
   deleteUserRecipe: PropTypes.func.isRequired,
   updateRecipe: PropTypes.func.isRequired
@@ -279,7 +344,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserRecipes: () => dispatch(recipesActions.getUserRecipes()),
+  getUserRecipes: (limit, offset) => dispatch(recipesActions.getUserRecipes(limit, offset)),
   updateRecipe: (recipeID, data) => dispatch(recipesActions.updateUserRecipe(recipeID, data)),
   deleteUserRecipe: (recipeId) => dispatch(recipesActions.deleteUserRecipe(recipeId))
 });

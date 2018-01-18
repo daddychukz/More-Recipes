@@ -8,7 +8,7 @@ export const addRecipe = recipe => (dispatch) => {
     toastr.success('Recipe Successfully Created');
     dispatch({
       type: types.CREATE_RECIPE,
-      payload: recipe
+      payload: response.data.recipe
     });
   });
 };
@@ -128,14 +128,17 @@ export const downvoteRecipe = (recipeId) => {
 };
 
 /**
+ * @param {any} limit
+ * @param {any} offset
+ * 
  * @export { function } viewRecipes
  * @returns { object } action type and server response
  */
-export const getUserRecipes = () => {
+export const getUserRecipes = (limit, offset) => {
   return (dispatch) => {
-    return axios.get('/api/v1/recipes/myrecipes')
+    return axios.get(`/api/v1/recipes/myrecipes?limit=${limit}&offset=${offset}`)
       .then((response) => {
-        dispatch(getUserRecipesAction(response.data.recipes));
+        dispatch(getUserRecipesAction(response.data));
       })
       .catch((error) => {
         console.log(error);
@@ -171,7 +174,8 @@ export const deleteUserRecipe = (recipeID) => {
   return (dispatch) => {
     return axios.delete(`/api/v1/recipes/${recipeID}`)
       .then((response) => {
-        dispatch(deleteUserRecipeAction(response.data.myRecipes));
+        console.log('>>>>>>>>>>>', response.data.recipes);
+        dispatch(deleteUserRecipeAction(response.data));
       })
       .catch((error) => {
         console.log(error);

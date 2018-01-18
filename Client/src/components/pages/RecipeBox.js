@@ -248,7 +248,7 @@ class RecipeBox extends React.Component {
 RecipeBox.propTypes = {
   viewAllRecipes: PropTypes.func.isRequired,
   searchAllRecipes: PropTypes.func.isRequired,
-  search: PropTypes.array.isRequired,
+  search: PropTypes.object.isRequired,
   allRecipe: PropTypes.object.isRequired
 };
 

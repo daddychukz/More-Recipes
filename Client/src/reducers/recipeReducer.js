@@ -1,17 +1,30 @@
 import * as types from '../actions/types';
 
-const recipeReducer = (state = [], action) => {
+const initialState = {
+  pagination: {},
+  recipes: []
+};
+
+const recipeReducer = (state = initialState, action) => {
   switch (action.type) {
+  case types.CREATE_RECIPE:
+    return Object.assign({}, state, {
+      recipes: state.recipes.concat(action.payload),
+      pagination: Object.assign({}, state.pagination, {
+        totalCount: state.pagination.totalCount + 1
+      })
+    });
   case types.GET_USER_RECIPES:
     return action.payload;
-  case types.CREATE_RECIPE:
-    return [...state,
-      Object.assign({}, action.payload)
-    ];
   case types.UPDATE_USER_RECIPE:
-    return action.payload;
+    return Object.assign({}, state, {
+      recipes: action.payload
+    });
   case types.DELETE_USER_RECIPE:
-    return action.payload;
+    return Object.assign({}, state, {
+      pagination: action.payload.pagination,
+      recipes: action.payload.recipes.rows
+    });
   default:
     return state;
   }

@@ -143,31 +143,33 @@ class Recipe {
    * @returns {void}
    */
   static deleteRecipe(req, res) {
-    recipeModel
-      .findOne({
-        where: {
-          recipeId: req.params.recipeID,
-          userId: req.decoded.userId
-        },
-      })
-      .then((recipe) => {
-        recipe
-          .destroy()
-          .then(
-            setTimeout(() => {
-              recipeModel.all({
-                where: {
-                  userId: req.decoded.userId
-                },
-                order: [['createdAt', 'DESC']],
-              }).then(
-                myRecipes => res.status(200).send({
-                  message: 'Recipe successfully deleted!',
-                  myRecipes
-                })
-              );
-            }, 500))
-          .catch(err => res.status(400).send(err));
+    recipeModel.destroy({ where: {
+      recipeId: req.params.recipeID,
+      userId: req.decoded.userId
+    } })
+      .then(() => {
+        recipeModel
+          .findAndCountAll({
+            where: {
+              userId: req.decoded.userId,
+            },
+            order: [['createdAt', 'DESC']],
+            limit: 5,
+            offset: 0
+          })
+          .then((recipes) => {
+            const pagination = paginate({
+              limit: 5,
+              offset: 0,
+              totalCount: recipes.count,
+              pageSize: recipes.rows.length
+            });
+            res.status(200).send({
+              message: 'Recipe successfully deleted!',
+              pagination,
+              recipes
+            });
+          });
       })
       .catch(() => res.status(404).send({
         message: 'Record not found for this User!'
@@ -204,19 +206,17 @@ class Recipe {
         updateRecord.publicId = req.body.publicId;
       }
       recipe.update(updateRecord)
-        .then(
-          setTimeout(() => {
-            recipeModel.all({
-              where: {
-                userId: req.decoded.userId
-              },
-              order: [['createdAt', 'DESC']],
-            }).then(
-              updatedRecipe => res.send({
-                updatedRecipe
-              }));
-          }, 500)
-        );
+        .then(() => {
+          recipeModel.all({
+            where: {
+              userId: req.decoded.userId
+            },
+            order: [['createdAt', 'DESC']],
+          })
+            .then(updatedRecipe => res.send({
+              updatedRecipe,
+            }));
+        });
     })
       .catch(() => res.status(404).send({
         message: 'Record not found for this User'
