@@ -33,18 +33,23 @@ class RecipeDetail extends React.Component {
       downvote: 'fa fa-2x fa-thumbs-o-down',
       favoriteIcon: 'fa fa-2x fa-star-o',
       Review: '',
-      Category: 'Soup',
+      Category: '',
+      selectCategory: '',
       upvoteCount: 0,
       downvoteCount: 0,
-      isLoading: true
+      isLoading: true,
+      favorited: false,
+      isDisabled: false
     };
     this.upvote = this.upvote.bind(this);
     this.downVote = this.downVote.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onInput = this.onInput.bind(this);
     this.favoriteRecipe = this.favoriteRecipe.bind(this);
+    this.getUniqueCategories = this.getUniqueCategories.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
-
   /**
    * dispatches actions that makes request to get a single recipe
    * dispatches actions that makes request to get all reviews for a particular recipe
@@ -69,28 +74,26 @@ class RecipeDetail extends React.Component {
             if (recipeVotes[recipeVotes.length - 1].userId === this.props.user.userId &&
           this.props.singleRecipe.recipeId === this.props.match.params.recipeId &&
           recipeVotes[recipeVotes.length - 1].vote === true) {
-              this.setState({ upvote: 'fa fa-2x fa-thumbs-up' });
+              this.setState({ upvote: 'fa fa-2x fa-thumbs-up', upvoted: true });
             } else if (recipeVotes[recipeVotes.length - 1].userId === this.props.user.userId &&
           this.props.singleRecipe.recipeId === this.props.match.params.recipeId &&
           recipeVotes[recipeVotes.length - 1].vote === false) {
-              this.setState({ downvote: 'fa fa-2x fa-thumbs-down' });
+              this.setState({ downvote: 'fa fa-2x fa-thumbs-down', downvoted: true });
             }
           }
         });
 
     this.props.viewAllReviews(recipeId);
 
-    const isFavorited = (recipe) => {
-      return recipe.recipeId === this.props.match.params.recipeId &&
+    const isFavorited = (recipe) => recipe.recipeId === this.props.match.params.recipeId &&
       recipe.userId === this.props.user.userId;
-    };
 
     this.props.getFavorite(userId).then(
       () => {
         if (this.props.favoriteData.find(isFavorited)) {
-          this.setState({ favoriteIcon: 'fa fa-2x fa-star' });
+          this.setState({ favoriteIcon: 'fa fa-2x fa-star', favorited: true });
         } else {
-          this.setState({ favoriteIcon: 'fa fa-2x fa-star-o' });
+          this.setState({ favoriteIcon: 'fa fa-2x fa-star-o', favorited: false });
         }
       }
     );
@@ -115,38 +118,75 @@ class RecipeDetail extends React.Component {
             downvoteCount: this.props.singleRecipe.downvotes
           });
           if (!isEmpty(recipeVotes)) {
-            if (recipeVotes[recipeVotes.length - 1].userId === this.props.user.userId &&
-          this.props.singleRecipe.recipeId === this.props.match.params.recipeId &&
-          recipeVotes[recipeVotes.length - 1].vote === true) {
+            if (recipeVotes[recipeVotes.length - 1].userId ===
+              this.props.user.userId && this.props.singleRecipe.recipeId ===
+              this.props.match.params.recipeId &&
+              recipeVotes[recipeVotes.length - 1].vote === true) {
               this.setState({ upvote: 'fa fa-2x fa-thumbs-up' });
-            } else if (recipeVotes[recipeVotes.length - 1].userId === this.props.user.userId &&
-          this.props.singleRecipe.recipeId === this.props.match.params.recipeId &&
-          recipeVotes[recipeVotes.length - 1].vote === false) {
+            } else if (recipeVotes[recipeVotes.length - 1].userId ===
+              this.props.user.userId &&
+              this.props.singleRecipe.recipeId ===
+              this.props.match.params.recipeId &&
+              recipeVotes[recipeVotes.length - 1].vote === false) {
               this.setState({ downvote: 'fa fa-2x fa-thumbs-down' });
             } else {
-              this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down', upvote: 'fa fa-2x fa-thumbs-o-up' });
+              this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down',
+                upvote: 'fa fa-2x fa-thumbs-o-up' });
             }
           } else {
-            this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down', upvote: 'fa fa-2x fa-thumbs-o-up' });
+            this.setState({ downvote: 'fa fa-2x fa-thumbs-o-down',
+              upvote: 'fa fa-2x fa-thumbs-o-up' });
           }
         });
       this.props.viewAllReviews(recipeId);
 
-      const isFavorited = (recipe) => {
-        return recipe.recipeId === this.props.match.params.recipeId &&
-        recipe.userId === this.props.user.userId;
-      };
+      const isFavorited = (recipe) => recipe.recipeId ===
+        this.props.match.params.recipeId && recipe.userId ===
+        this.props.user.userId;
 
       this.props.getFavorite(userId).then(
         () => {
           if (this.props.favoriteData.find(isFavorited)) {
-            this.setState({ favoriteIcon: 'fa fa-2x fa-star' });
+            this.setState({ favoriteIcon: 'fa fa-2x fa-star',
+              favorited: true });
           } else {
-            this.setState({ favoriteIcon: 'fa fa-2x fa-star-o' });
+            this.setState({ favoriteIcon: 'fa fa-2x fa-star-o',
+              favorited: false });
           }
         }
       );
     }
+  }
+
+  /**
+   * @method openModal
+   * 
+   * @memberof RecipeDetail
+   * @returns {void}
+   */
+  openModal() {
+    if (!this.state.favorited) {
+      const uniqueCategories = [...new Set(this.props.favoriteData.map(
+        fav => fav.category))];
+      this.setState({
+        selectCategory: uniqueCategories[0],
+        isDisabled: false,
+        Category: '' });
+
+      $('#category').modal('show');
+    }
+  }
+
+  /**
+   * @method getUniqueCategories
+   * 
+   * @memberof RecipeDetail
+   * @returns {array} uniqueCategories
+   */
+  getUniqueCategories() {
+    const uniqueCategories = [...new Set(this.props.favoriteData.map(
+      fav => fav.category))];
+    return uniqueCategories;
   }
 
   /**
@@ -162,6 +202,23 @@ class RecipeDetail extends React.Component {
 
   /**
    * 
+   * 
+   * @param {any} e 
+   * @memberof RecipeDetail
+   * 
+   * @returns {void}
+   */
+  onInput(e) {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value,
+      isDisabled: true,
+      selectCategory: ''
+    });
+  }
+
+  /**
+   * 
    * @method favoriteRecipe
    * @memberof RecipeDetail
    * @returns {object} favoriteRecipe
@@ -173,15 +230,17 @@ class RecipeDetail extends React.Component {
       recipe.userId === this.props.user.userId;
 
     const data = {
-      Category: this.state.Category
+      Category: this.state.Category ?
+        this.state.Category : this.state.selectCategory
     };
     this.props.addFavorite(recipeId, data).then(
       () => {
         if (this.props.favoriteData.find(isFavorited)) {
-          this.setState({ favoriteIcon: 'fa fa-2x fa-star' });
+          this.setState({ favoriteIcon: 'fa fa-2x fa-star', favorited: true });
           toastr.success('You favorited this recipe');
         } else {
-          this.setState({ favoriteIcon: 'fa fa-2x fa-star-o' });
+          this.setState({ favoriteIcon: 'fa fa-2x fa-star-o',
+            favorited: false });
         }
       }
     );
@@ -320,7 +379,8 @@ class RecipeDetail extends React.Component {
                     <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                       {
                         <div key={this.props.singleRecipe.recipeId}>
-                          <h1 className="text-center obj-color">{this.props.singleRecipe.title}</h1>
+                          <h1 className="text-center obj-color">
+                            {this.props.singleRecipe.title}</h1>
                           <div className="text-center p-2">
                             <Image publicId={this.props.singleRecipe.publicId}>
                               <Transformation
@@ -332,7 +392,8 @@ class RecipeDetail extends React.Component {
                               />
                             </Image>
                           </div>
-                          <h6 className="text-muted text-center">by: {this.props.singleRecipe.fullname}</h6>
+                          <h6 className="text-muted text-center">by:
+                            {this.props.singleRecipe.fullname}</h6>
                           <br />
                           <p>{this.props.singleRecipe.description}</p>
                         </div>
@@ -340,13 +401,31 @@ class RecipeDetail extends React.Component {
                       <hr />
                       <div className="clearfix" />
                       <ul className="list-inline">
-                        <li className="list-inline-item"><Link className="btn btn-sm" to="#" onClick={this.upvote} title="Upvote"><i className={this.state.upvote} /></Link><span className="badge badge-info" title="Upvotes">{this.state.upvoteCount}</span>&nbsp; </li>
+                        <li className="list-inline-item">
+                          <Link className="btn btn-sm" to="#"
+                            onClick={this.upvote} title="Upvote">
+                            <i className={this.state.upvote} /></Link>
+                          <span className="badge badge-info" title="Upvotes">{
+                            this.state.upvoteCount}</span>&nbsp; </li>
                                             |
-                        <li className="list-inline-item"><Link className="btn btn-sm" to="#" onClick={this.downVote} title="Downvote"><i className={this.state.downvote} /></Link><span className="badge badge-info" title="Downvotes">{this.state.downvoteCount}</span>&nbsp; </li>
+                        <li className="list-inline-item">
+                          <Link className="btn btn-sm" to="#"
+                            onClick={this.downVote} title="Downvote">
+                            <i className={this.state.downvote} /></Link>
+                          <span className="badge badge-info" title="Downvotes">
+                            {this.state.downvoteCount}
+                          </span>&nbsp; </li>
                                             |
-                        <li className="list-inline-item"><Link className="btn btn-sm" to="#" title="Views"><i className="fa fa-2x fa-eye obj-color" /></Link><span className="badge badge-info" title="Views">30</span></li>
+                        <li className="list-inline-item">
+                          <Link className="btn btn-sm" to="#" title="Views">
+                            <i className="fa fa-2x fa-eye obj-color" /></Link>
+                          <span className="badge badge-info" title="Views">30
+                          </span></li>
 
-                        <li className="list-inline-item float-right"><Link className="btn btn-sm" onClick={this.favoriteRecipe} to="#" title="Favorite"><i className={this.state.favoriteIcon} /></Link></li>
+                        <li className="list-inline-item float-right">
+                          <Link onClick={this.openModal} className="btn btn-sm"
+                            to="#" title="Favorite">
+                            <i className={this.state.favoriteIcon} /></Link></li>
                       </ul>
                       <br />
                       <form className="mb-3" onSubmit={this.onSubmit}>
@@ -360,7 +439,8 @@ class RecipeDetail extends React.Component {
                             rows="6"
                             required />
                         </div>
-                        <button type="submit" className="btn btn-primary">Post Review</button>
+                        <button type="submit"
+                          className="btn btn-primary">Post Review</button>
                       </form>
                       <h3>REVIEWS</h3>
                       {
@@ -379,8 +459,10 @@ class RecipeDetail extends React.Component {
                                 </Image>
                               </div>
                               <div className="p-2 align-self-end">
-                                <h4><a to="#">{this.props.user.fullname}</a></h4>
-                                <small className="text-muted">{data.createdAt}</small>
+                                <h4><a to="#">{this.props.user.fullname}</a>
+                                </h4>
+                                <small className="text-muted">{data.createdAt}
+                                </small>
                                 <p>{data.review}</p>
                               </div>
                             </div>
@@ -397,6 +479,53 @@ class RecipeDetail extends React.Component {
         </section>
 
         <Footer />
+
+        <div className="modal fade text-dark" id="category">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header bg-info">
+                <h5 className="modal-title" style={{ color: 'white' }}
+                  id="contactModalTitle">
+                  Select a Category
+                </h5>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div className="form-group">
+                    <select
+                      disabled={this.state.isDisabled}
+                      onChange={this.onChange}
+                      value={this.state.selectCategory}
+                      name="selectCategory"
+                      className="form-control form-control-lg">
+                      {
+                        this.getUniqueCategories().map((item, index) =>
+                          <option key={index}>{item}</option>
+                        )
+                      }
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <input
+                      onInput={this.onInput}
+                      value={this.state.Category}
+                      type="text"
+                      name="Category"
+                      className="form-control form-control-lg"
+                      placeholder="or enter new category"
+                      required />
+                  </div>
+                  <input
+                    type="button"
+                    value="Add To Favorites"
+                    className="btn btn-info btn-block"
+                    data-dismiss="modal"
+                    onClick={this.favoriteRecipe}/>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

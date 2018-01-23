@@ -8,7 +8,7 @@ export const addRecipe = recipe => (dispatch) => {
     toastr.success('Recipe Successfully Created');
     dispatch({
       type: types.CREATE_RECIPE,
-      payload: recipe
+      payload: response.data.recipe
     });
   });
 };
@@ -53,25 +53,23 @@ export const getPopularRecipesAction = serverRes => ({
   payload: serverRes
 });
 
-export const searchRecipesAction = serverRes => ({
-  type: types.SEARCH_ALL_RECIPES,
-  payload: serverRes
-});
+// export const searchRecipesAction = serverRes => ({
+//   type: types.SEARCH_ALL_RECIPES,
+//   payload: serverRes
+// });
 
 /**
  * @export { function } viewRecipes
  * @param {any} limit
  * @param {any} offset
+ * @param {any} searchString
  * @returns { object } action type and server response
  */
-export const viewAllRecipes = (limit, offset) => {
+export const viewAllRecipes = (limit, offset, searchString) => {
   return (dispatch) => {
-    return axios.get(`/api/v1/recipes?limit=${limit}&offset=${offset}`)
+    return axios.get(`/api/v1/recipes?limit=${limit}&offset=${offset}&searchString=${searchString}`)
       .then((response) => {
         dispatch(viewAllRecipesAction(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
       });
   };
 };
@@ -128,14 +126,17 @@ export const downvoteRecipe = (recipeId) => {
 };
 
 /**
+ * @param {any} limit
+ * @param {any} offset
+ * 
  * @export { function } viewRecipes
  * @returns { object } action type and server response
  */
-export const getUserRecipes = () => {
+export const getUserRecipes = (limit, offset) => {
   return (dispatch) => {
-    return axios.get('/api/v1/recipes/myrecipes')
+    return axios.get(`/api/v1/recipes/myrecipes?limit=${limit}&offset=${offset}`)
       .then((response) => {
-        dispatch(getUserRecipesAction(response.data.recipes));
+        dispatch(getUserRecipesAction(response.data));
       })
       .catch((error) => {
         console.log(error);
@@ -171,7 +172,8 @@ export const deleteUserRecipe = (recipeID) => {
   return (dispatch) => {
     return axios.delete(`/api/v1/recipes/${recipeID}`)
       .then((response) => {
-        dispatch(deleteUserRecipeAction(response.data.myRecipes));
+        console.log('>>>>>>>>>>>', response.data.recipes);
+        dispatch(deleteUserRecipeAction(response.data));
       })
       .catch((error) => {
         console.log(error);
@@ -195,18 +197,18 @@ export const getPopularRecipes = () => {
   };
 };
 
-/**
- * @export { function } viewRecipes
- * @param {any} limit
- * @param {any} offset
- * @param {any} searchString
- * @returns { object } action type and server response
- */
-export const searchRecipes = (limit, offset, searchString) => {
-  return (dispatch) => {
-    return axios.get(`/api/v1/search/recipes?limit=${limit}&offset=${offset}&searchString=${searchString}`)
-      .then((response) => {
-        dispatch(searchRecipesAction(response.data));
-      });
-  };
-};
+// /**
+//  * @export { function } viewRecipes
+//  * @param {any} limit
+//  * @param {any} offset
+//  * @param {any} searchString
+//  * @returns { object } action type and server response
+//  */
+// export const searchRecipes = (limit, offset, searchString) => {
+//   return (dispatch) => {
+//     return axios.get(`/api/v1/search/recipes?limit=${limit}&offset=${offset}&searchString=${searchString}`)
+//       .then((response) => {
+//         dispatch(searchRecipesAction(response.data));
+//       });
+//   };
+// };

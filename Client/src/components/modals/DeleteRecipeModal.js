@@ -1,28 +1,53 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-//Stateless component
-const FavoriteModal = () => (
-
-  <div className="modal fade text-dark" id="delete-recipe" tabIndex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div className="modal-dialog" role="document">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title" id="exampleModalLabel">Message</h5>
-          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div className="modal-body">
-                            Recipe Successfully Deleted
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+/**
+ * 
+ * 
+ * @class DeleteRecipeModal
+ * @extends {React.Component}
+ */
+class DeleteRecipeModal extends React.Component {
+  /**
+   * 
+   * 
+   * @memberof DeleteRecipeModal
+   * @returns {void}
+   */
+  render() {
+    return (
+      <div className="modal fade text-dark" id="delete-recipe">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Message</h5>
+              <button type="button" className="close"
+                data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <p> Do you realy want to delete this Recipe?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" onClick={this.props.onClick}
+                className="btn btn-primary" data-dismiss="modal">
+                Yes Delete!
+              </button>
+              <button type="button" className="btn btn-secondary"
+                data-dismiss="modal">
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    );
+  }
+}
 
-);
+DeleteRecipeModal.propTypes = {
+  onClick: PropTypes.func.isRequired
+};
 
-export default FavoriteModal;
+export default DeleteRecipeModal;

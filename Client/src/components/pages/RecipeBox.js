@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import Pagination from '../services/UltimatePagination';
-import { viewAllRecipes, searchRecipes } from '../../actions/recipeActions';
+import { viewAllRecipes } from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
 import Footer from './Footer';
@@ -25,8 +25,6 @@ class RecipeBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: [],
-      isSearching: false,
       isLoading: true,
       currentPage: 1,
       pagination: {
@@ -40,7 +38,6 @@ class RecipeBox extends React.Component {
     };
     this.onPageChange = this.onPageChange.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.onSearchPageChange = this.onSearchPageChange.bind(this);
   }
 
   /**
@@ -49,10 +46,11 @@ class RecipeBox extends React.Component {
    * @memberof RecipeBox
    * @returns {void}
    */
-  componentDidMount() {
+  componentWillMount() {
     const limit = this.state.pagination.limit;
     const offset = this.state.pagination.offset;
-    this.props.viewAllRecipes(limit, offset).then(() => {
+    const searchString = this.state.searchString;
+    this.props.viewAllRecipes(limit, offset, searchString).then(() => {
       this.setState({
         recipes: this.props.allRecipe.recipes,
         isLoading: false,
@@ -61,10 +59,7 @@ class RecipeBox extends React.Component {
           totalPages: this.props.allRecipe.pagination.pageCount,
         }
       });
-    })
-      .catch((error) => {
-        console.log(error);
-      });
+    });
   }
 
   /**
@@ -84,41 +79,11 @@ class RecipeBox extends React.Component {
     }, () => {
       const limit = this.state.pagination.limit;
       const offset = this.state.pagination.offset;
-
-      this.props.viewAllRecipes(limit, offset).then(() => {
-        this.setState({ recipes: this.props.allRecipe.recipes, isLoading: false });
-      })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  }
-
-  /**
-   * @param {any} number
-   * @memberof RecipeBox
-   * @returns {object} recipes
-   */
-  onSearchPageChange(number) {
-    this.setState({
-      currentPage: number,
-      pagination: {
-        totalCount: this.props.search.totalCount,
-        totalPages: this.props.search.pagination.pageCount,
-        limit: 4,
-        offset: this.state.pagination.limit * (number - 1)
-      }
-    }, () => {
-      const limit = this.state.pagination.limit;
-      const offset = this.state.pagination.offset;
       const searchString = this.state.searchString;
 
-      this.props.searchAllRecipes(limit, offset, searchString).then(() => {
-        this.setState({ recipes: this.props.search.searchResult, isLoading: false });
-      })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.props.viewAllRecipes(limit, offset, searchString).then(() => {
+        this.setState({ isLoading: false });
+      });
     });
   }
 
@@ -130,26 +95,23 @@ class RecipeBox extends React.Component {
    * @returns {object} recipes
    */
   onInputChange(event) {
-    const limit = 4;
-    const offset = 0;
+    const { limit, offset } = this.state.pagination;
     this.setState({
-      isSearching: true,
       searchString: event.target.value
     }, () => {
-      this.props.searchAllRecipes(limit, offset, this.state.searchString).then(() => {
-        this.setState({
-          recipes: this.props.search.searchResult,
-          pagination: {
-            totalCount: this.props.search.totalCount,
-            totalPages: this.props.search.pagination.pageCount,
-            limit,
-            offset,
-          },
-          isLoading: false });
-      },
-      (err) => {
-        toastr.error(err.response.search.message);
-      });
+      this.props.viewAllRecipes(limit, offset, this.state.searchString).then(
+        () => {
+          this.setState({
+            isLoading: false,
+            pagination: {
+              ...this.state.pagination,
+              totalPages: this.props.allRecipe.pagination.pageCount,
+            }
+          });
+        },
+        (err) => {
+          toastr.error(err.response.data.message);
+        });
     });
   }
 
@@ -194,8 +156,9 @@ class RecipeBox extends React.Component {
                   <div className="loader" /> :
                   <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                     {
-                      this.state.recipes.map(allRecipes => {
-                        const newDate = new Date(allRecipes.createdAt).toDateString();
+                      this.props.allRecipe.recipes.map(allRecipes => {
+                        const newDate = new Date(allRecipes.createdAt)
+                          .toDateString();
                         return (
                           <div key={allRecipes.recipeId}>
                             <div className="p-2 float-left">
@@ -210,10 +173,20 @@ class RecipeBox extends React.Component {
                               </Image>
                             </div>
                             <div className="p-2 align-self-end">
-                              <small className="text-muted float-right">{newDate}</small>
-                              <h3><Link to={`/recipe/${allRecipes.recipeId}`}>{allRecipes.title}</Link></h3>
+                              <small className="text-muted float-right">
+                                {newDate}
+                              </small>
+                              <h3>
+                                <Link to={`/recipe/${allRecipes.recipeId}`}>
+                                  {allRecipes.title}
+                                </Link>
+                              </h3>
                               <small>by: {allRecipes.fullname}</small>
-                              <p> {allRecipes.description} </p>
+                              <p> {
+                                allRecipes.description.split(" ")
+                                  .splice(0, 80)
+                                  .join(' ')
+                                  .concat(' ...')} </p>
                             </div>
                           </div>
                         );
@@ -222,17 +195,13 @@ class RecipeBox extends React.Component {
                   </CloudinaryContext>
                 }
                 {
-                  this.state.isSearching ?
-                    <Pagination
-                      pagination={{ ...this.state.pagination }}
-                      currentPage={this.state.currentPage}
-                      onChange={this.onSearchPageChange}
-                    /> :
+                  this.props.allRecipe.pagination.totalCount > 4 ?
                     <Pagination
                       pagination={{ ...this.state.pagination }}
                       currentPage={this.state.currentPage}
                       onChange={this.onPageChange}
-                    />
+                    /> :
+                    <div />
                 }
               </div>
             </div>
@@ -247,20 +216,17 @@ class RecipeBox extends React.Component {
 
 RecipeBox.propTypes = {
   viewAllRecipes: PropTypes.func.isRequired,
-  searchAllRecipes: PropTypes.func.isRequired,
-  search: PropTypes.array.isRequired,
   allRecipe: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  data: state.getRecipes,
-  search: state.search,
   allRecipe: state.allRecipe
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  viewAllRecipes: (limit, offset) => dispatch(viewAllRecipes(limit, offset)),
-  searchAllRecipes: (limit, offset, searchString) => dispatch(searchRecipes(limit, offset, searchString))
+  viewAllRecipes: (limit, offset, searchString) => dispatch(
+    viewAllRecipes(limit, offset, searchString)
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeBox);

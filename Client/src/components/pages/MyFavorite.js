@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import toastr from 'toastr';
+import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as favoriteActions from '../../actions/favoriteActions';
@@ -23,11 +24,14 @@ class MyFavoriteRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorite: [],
       Category: 'Soup',
-      isLoading: true
+      isLoading: true,
+      isSearching: false,
+      searchString: ''
     };
     this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onKeyPressEnter = this.onKeyPressEnter.bind(this);
   }
 
   /**
@@ -49,6 +53,42 @@ class MyFavoriteRecipe extends React.Component {
   /**
    * 
    * 
+   * @param {any} event 
+   * @memberof RecipeBox
+   * @returns {object} recipes
+   */
+  onInputChange(event) {
+    this.setState({
+      isSearching: true,
+      searchString: event.target.value
+    });
+  }
+
+  /**
+   * 
+   * 
+   * @param {any} event 
+   * @memberof MyFavoriteRecipe
+   * 
+   * @returns {object} recipes
+   */
+  onKeyPressEnter(event) {
+    if (event.key === 'Enter') {
+      const limit = 5;
+      const offset = 0;
+      this.props.searchFavorites(limit, offset, this.state.searchString).then(() => {
+        this.setState({
+          isLoading: false });
+      },
+      (err) => {
+        toastr.error(err.response.data.message);
+      });
+    }
+  }
+
+  /**
+   * 
+   * 
    * @param {any} recipe 
    * @returns {void}
    * @memberof MyRecipe
@@ -62,7 +102,9 @@ class MyFavoriteRecipe extends React.Component {
       this.props.deleteFavorite(recipeId, category).then(
         () => {
           toastr.success(`Recipe successfully removed from Favorites`);
-        });
+        },
+        (error) => toastr.error(error.response.data.message
+        ));
     };
   }
 
@@ -95,7 +137,13 @@ class MyFavoriteRecipe extends React.Component {
 
               {/* RECIPE CATALOG  */}
               <div className="col-md-8" id="display">
-                <input className="form-control" type="text" placeholder="Filter Recipes..."/>
+                <input
+                  value={this.state.searchString}
+                  onInput={this.onInputChange}
+                  onKeyPress={this.onKeyPressEnter}
+                  className="form-control"
+                  type="text"
+                  placeholder="Filter By Category..."/>
                 <br/>
                 {
                   this.state.isLoading ?
@@ -104,20 +152,34 @@ class MyFavoriteRecipe extends React.Component {
                       <tbody>
                         <tr>
                           <th>Title</th>
+                          <th> Category</th>
                           <th>Created</th>
                           <th />
                         </tr>
                         {
-                          this.props.favoriteData.map(data => {
-                            const newDate = new Date(data.createdAt).toDateString();
-                            return (
-                              <tr key={data.recipeId}>
-                                <td><Link to={`/recipe/${data.recipeId}`}>{data.Recipe.title}</Link></td>
-                                <td>{newDate}</td>
-                                <td><Link onClick={this.deleteRecipe(data)} to="#" title="Delete" data-toggle="modal" data-target="#delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
-                              </tr>
-                            );
-                          })
+                          !isEmpty(this.props.favoriteData) ?
+                            this.props.favoriteData.map(data => {
+                              const newDate = new Date(data.createdAt).toDateString();
+                              return (
+                                <tr key={data.recipeId}>
+                                  <td><Link to={`/recipe/${data.recipeId}`}>
+                                    {data.Recipe.title}
+                                  </Link></td>
+                                  <td>{data.category}</td>
+                                  <td>{newDate}</td>
+                                  <td><Link onClick={this.deleteRecipe(data)}
+                                    to="#" title="Delete" data-toggle="modal"
+                                    data-target="#delete">
+                                    <i className="fa fa-trash text-danger"
+                                      aria-hidden="true" /></Link></td>
+                                </tr>
+                              );
+                            }) :
+                            <tr>
+                              <td>None</td>
+                              <td>None</td>
+                              <td>None</td>
+                            </tr>
                         }
 
                       </tbody>
@@ -137,18 +199,20 @@ class MyFavoriteRecipe extends React.Component {
 MyFavoriteRecipe.propTypes = {
   getFavorite: PropTypes.func.isRequired,
   favoriteData: PropTypes.array.isRequired,
+  searchFavorites: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   deleteFavorite: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
   favoriteData: state.favorite,
-  user: state.user
+  user: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getFavorite: (Id) => dispatch(favoriteActions.getUserFavorite(Id)),
-  deleteFavorite: (recipeId, category) => dispatch(favoriteActions.addToFavorites(recipeId, category))
+  deleteFavorite: (recipeId, category) => dispatch(favoriteActions.addToFavorites(recipeId, category)),
+  searchFavorites: (limit, offset, searchString) => dispatch(favoriteActions.searchUserFavorite(limit, offset, searchString))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyFavoriteRecipe);

@@ -78,8 +78,11 @@ router.post('/validate-token', Auth.checkMailToken);
 // reset password
 router.post('/user/reset-password', userController.resetPassword);
 
-// Search Recipes
-router.get('/search/recipes', recipeController.searchRecipes);
+// Search All Recipes
+// router.get('/search/recipes', recipeController.searchAllRecipes);
+
+// Search recipes created by a user
+router.get('/search/favorites', Auth.verify, userController.searchUserFavorites);
 
 // A catch-all routes not define.
 router.use('*', (req, res) => res.status(404).json({

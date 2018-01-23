@@ -16,6 +16,8 @@ const favoriteReducer = (state = [], action) => {
     return action.payload;
   case types.GET_ALL_FAVORITE:
     return action.payload;
+  case types.SEARCH_USER_FAVORITES:
+    return action.payload.searchResult;
 
   default:
     return state;

@@ -19,26 +19,49 @@ class Recipe {
    * @returns {void}
    */
   static retrieveRecipes(req, res) {
+    const { limit, offset, searchString } = req.query;
     recipeModel
       .findAndCountAll({
         order: [['createdAt', 'DESC']],
-        limit: req.query.limit,
-        offset: req.query.offset
+        limit,
+        offset,
+        where: {
+          $or: [
+            {
+              title: {
+                $iLike: `%${searchString}%`
+              }
+            },
+            {
+              description: {
+                $iLike: `%${searchString}%`
+              }
+            }
+          ]
+        },
       })
       .then((recipes) => {
-        const { limit, offset } = req.query;
-        const pagination = paginate({
-          limit,
-          offset,
-          totalCount: recipes.count,
-          pageSize: recipes.rows.length
-        });
-        res.status(200).json({
-          pagination,
-          recipes: recipes.rows
-        });
+        if (recipes.count === 0) {
+          res.status(404).json({
+            message: 'Recipe not Found!'
+          });
+        } else {
+          const pagination = paginate({
+            limit,
+            offset,
+            totalCount: recipes.count,
+            pageSize: recipes.rows.length
+          });
+          res.status(200).json({
+            pagination,
+            recipes: recipes.rows
+          });
+        }
       })
-      .catch(err => res.status(400).send(err));
+      .catch(err => res.status(400).json({
+        message: 'Recipe not Found',
+        err
+      }));
   }
 
   /**
@@ -143,31 +166,33 @@ class Recipe {
    * @returns {void}
    */
   static deleteRecipe(req, res) {
-    recipeModel
-      .findOne({
-        where: {
-          recipeId: req.params.recipeID,
-          userId: req.decoded.userId
-        },
-      })
-      .then((recipe) => {
-        recipe
-          .destroy()
-          .then(
-            setTimeout(() => {
-              recipeModel.all({
-                where: {
-                  userId: req.decoded.userId
-                },
-                order: [['createdAt', 'DESC']],
-              }).then(
-                myRecipes => res.status(200).send({
-                  message: 'Recipe successfully deleted!',
-                  myRecipes
-                })
-              );
-            }, 500))
-          .catch(err => res.status(400).send(err));
+    recipeModel.destroy({ where: {
+      recipeId: req.params.recipeID,
+      userId: req.decoded.userId
+    } })
+      .then(() => {
+        recipeModel
+          .findAndCountAll({
+            where: {
+              userId: req.decoded.userId,
+            },
+            order: [['createdAt', 'DESC']],
+            limit: 5,
+            offset: 0
+          })
+          .then((recipes) => {
+            const pagination = paginate({
+              limit: 5,
+              offset: 0,
+              totalCount: recipes.count,
+              pageSize: recipes.rows.length
+            });
+            res.status(200).send({
+              message: 'Recipe successfully deleted!',
+              pagination,
+              recipes
+            });
+          });
       })
       .catch(() => res.status(404).send({
         message: 'Record not found for this User!'
@@ -204,19 +229,17 @@ class Recipe {
         updateRecord.publicId = req.body.publicId;
       }
       recipe.update(updateRecord)
-        .then(
-          setTimeout(() => {
-            recipeModel.all({
-              where: {
-                userId: req.decoded.userId
-              },
-              order: [['createdAt', 'DESC']],
-            }).then(
-              updatedRecipe => res.send({
-                updatedRecipe
-              }));
-          }, 500)
-        );
+        .then(() => {
+          recipeModel.all({
+            where: {
+              userId: req.decoded.userId
+            },
+            order: [['createdAt', 'DESC']],
+          })
+            .then(updatedRecipe => res.send({
+              updatedRecipe,
+            }));
+        });
     })
       .catch(() => res.status(404).send({
         message: 'Record not found for this User'
@@ -262,65 +285,65 @@ class Recipe {
       }));
   }
 
-  /**
-   * Search users in the application
-   * @method
-   * @memberof Recipe
-   * @static
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @param {Object} searchString response object
-   * @returns {function} Express middleware function that search
-   * users and sends response to client
-   */
-  static searchRecipes(req, res) {
-    const { limit, offset, searchString } = req.query;
-    return recipeModel.findAndCountAll({
-      limit: req.query.limit,
-      offset: req.query.offset,
-      order: [['createdAt', 'DESC']],
-      where: {
-        $or: [
-          {
-            title: {
-              $iLike: `%${searchString || ''}%`
-            }
-          },
-          {
-            description: {
-              $iLike: `%${searchString || ''}%`
-            }
-          }
-        ]
-      },
-      attributes: {
-        exclude: ['updatedAt']
-      }
-    })
-      .then((recipeSearchResult) => {
-        if (recipeSearchResult.count === 0) {
-          res.status(404).json({
-            message: 'Recipe not Found!'
-          });
-        } else {
-          const pagination = paginate({
-            limit,
-            offset,
-            totalCount: recipeSearchResult.count,
-            pageSize: recipeSearchResult.rows.length
-          });
-          res.status(200).json({
-            pagination,
-            totalCount: recipeSearchResult.count,
-            searchResult: recipeSearchResult.rows
-          });
-        }
-      })
-      .catch(err => res.status(400).json({
-        message: 'Recipe not Found',
-        err
-      }));
-  }
+  // /**
+  //  * Search users in the application
+  //  * @method
+  //  * @memberof Recipe
+  //  * @static
+  //  * @param {Object} req request object
+  //  * @param {Object} res response object
+  //  * @param {Object} searchString response object
+  //  * @returns {function} Express middleware function that search
+  //  * users and sends response to client
+  //  */
+  // static searchAllRecipes(req, res) {
+  //   const { limit, offset, searchString } = req.query;
+  //   return recipeModel.findAndCountAll({
+  //     limit,
+  //     offset,
+  //     order: [['createdAt', 'DESC']],
+  //     where: {
+  //       $or: [
+  //         {
+  //           title: {
+  //             $iLike: `%${searchString}%`
+  //           }
+  //         },
+  //         {
+  //           description: {
+  //             $iLike: `%${searchString}%`
+  //           }
+  //         }
+  //       ]
+  //     },
+  //     attributes: {
+  //       exclude: ['updatedAt']
+  //     }
+  //   })
+  //     .then((recipeSearchResult) => {
+  //       if (recipeSearchResult.count === 0) {
+  //         res.status(404).json({
+  //           message: 'Recipe not Found!'
+  //         });
+  //       } else {
+  //         const pagination = paginate({
+  //           limit,
+  //           offset,
+  //           totalCount: recipeSearchResult.count,
+  //           pageSize: recipeSearchResult.rows.length
+  //         });
+  //         res.status(200).json({
+  //           pagination,
+  //           totalCount: recipeSearchResult.count,
+  //           searchResult: recipeSearchResult.rows
+  //         });
+  //       }
+  //     })
+  //     .catch(err => res.status(400).json({
+  //       message: 'Recipe not Found',
+  //       err
+  //     }));
+  // }
 }
 
 export default Recipe;

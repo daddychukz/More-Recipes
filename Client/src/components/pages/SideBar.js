@@ -22,7 +22,7 @@ class SideBar extends React.Component {
     super(props);
     this.state = {
       profile: [],
-      recipes: []
+      recipes: {}
     };
   }
 
@@ -41,8 +41,14 @@ class SideBar extends React.Component {
     const userId = this.props.profile.userId;
     this.props.getUserProfile(userId);
     this.props.popularRecipes();
-    this.props.getUserRecipes();
     this.props.getFavorite(userId);
+    this.props.getUserRecipes(5, 0)
+      .then(
+        () => {
+          this.setState({
+            recipes: this.props.myRecipes.pagination
+          });
+        });
   }
 
   /**
@@ -56,8 +62,12 @@ class SideBar extends React.Component {
       <div className="col-md-4">
         <div className="list-group mb-3">
           <li className="list-group-item active text-center"><h5>{this.props.profile.fullname}</h5></li>
-          <Link to={'/my-recipe'} className="list-group-item"><i className="fa fa-cutlery" aria-hidden="true" /> My Recipes <span className="badge badge-pill badge-info float-right">{this.props.myRecipes.length}</span></Link>
-          <Link to={'/my-favorite'} className="list-group-item"><i className="fa fa-star" aria-hidden="true" /> My Favourites <span className="badge badge-pill badge-info float-right">{this.props.favorites.length}</span></Link>
+          <Link to={'/my-recipe'} className="list-group-item"><i className="fa fa-cutlery" aria-hidden="true" /> My Recipes
+            <span className="badge badge-pill badge-info float-right">{this.props.myRecipes.pagination.totalCount}</span></Link>
+
+          <Link to={'/my-favorite'} className="list-group-item"><i className="fa fa-star" aria-hidden="true" /> My Favourites
+            <span className="badge badge-pill badge-info float-right">{this.props.favorites.length}</span></Link>
+
           <Link to={'/my-profile'} className="list-group-item"><i className="fa fa-user" aria-hidden="true" /> My Profile</Link>
         </div>
 
@@ -93,12 +103,12 @@ class SideBar extends React.Component {
 SideBar.propTypes = {
   getUserProfile: PropTypes.func.isRequired,
   popularRecipes: PropTypes.func.isRequired,
-  getUserRecipes: PropTypes.func.isRequired,
   getFavorite: PropTypes.func.isRequired,
   favorites: PropTypes.array.isRequired,
   profile: PropTypes.object.isRequired,
   viewRecipes: PropTypes.array.isRequired,
-  myRecipes: PropTypes.array.isRequired
+  getUserRecipes: PropTypes.func.isRequired,
+  myRecipes: PropTypes.object.isRequired
 };
 
 
@@ -112,7 +122,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => ({
   getUserProfile: (Id) => dispatch(userActions.getUserProfile(Id)),
   popularRecipes: () => dispatch(recipeActions.getPopularRecipes()),
-  getUserRecipes: () => dispatch(recipeActions.getUserRecipes()),
+  getUserRecipes: (limit, offset) => dispatch(recipeActions.getUserRecipes(limit, offset)),
   getFavorite: (Id) => dispatch(getUserFavorite(Id))
 });
 
