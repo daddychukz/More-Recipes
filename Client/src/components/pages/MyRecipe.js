@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import toastr from 'toastr';
+import isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import Pagination from '../services/UltimatePagination';
 import * as recipesActions from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
 import Footer from './Footer';
 import DeleteRecipeModal from '../modals/DeleteRecipeModal';
+import EditRecipeModal from '../modals/EditRecipeModal';
 
 /**
  * 
@@ -26,7 +27,6 @@ class MyRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: [],
       recipeDetail: {},
       Title: '',
       Description: '',
@@ -64,7 +64,6 @@ class MyRecipe extends React.Component {
       .then(
         () => {
           this.setState({
-            recipes: this.props.recipes,
             isLoading: false,
             pagination: {
               ...this.state.pagination,
@@ -124,6 +123,7 @@ class MyRecipe extends React.Component {
   editRecipe(recipe) {
     return () => this.setState({
       recipeDetail: recipe,
+      publicId: recipe.publicId,
       Title: recipe.title,
       Description: recipe.description,
       recipeId: recipe.recipeId
@@ -141,7 +141,6 @@ class MyRecipe extends React.Component {
       upload_preset: process.env.UploadPreset,
       tags: ['daddy'] },
     (error, result) => {
-      console.log(result[0]);
       this.setState({ imageUrl: result[0].secure_url, publicId: result[0].public_id });
     });
   }
@@ -218,7 +217,10 @@ class MyRecipe extends React.Component {
 
               {/* RECIPE CATALOG  */}
               <div className="col-md-8" id="display">
-                <input className="form-control" type="text" placeholder="Filter Recipes..."/>
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder="Filter Recipes..."/>
                 <br/>
                 {
                   this.state.isLoading ?
@@ -231,16 +233,49 @@ class MyRecipe extends React.Component {
                           <th />
                         </tr>
                         {
-                          this.props.recipes.recipes.map(data => {
-                            const newDate = new Date(data.createdAt).toDateString();
-                            return (
-                              <tr key={data.recipeId}>
-                                <td><Link to={`/recipe/${data.recipeId}`}>{data.title}</Link></td>
-                                <td>{newDate}</td>
-                                <td><Link onClick={this.editRecipe(data)} to="#" data-toggle="modal" title="Edit" data-target="#editRecipe"><i className="fa fa-pencil" aria-hidden="true" />&nbsp;</Link> <Link to="#" onClick={this.deleteRecipe(data)} title="Delete"><i className="fa fa-trash text-danger" aria-hidden="true" /></Link></td>
-                              </tr>
-                            );
-                          })
+                          !isEmpty(this.props.recipes.recipes) ?
+                            this.props.recipes.recipes.map(data => {
+                              const newDate = new Date(data.createdAt)
+                                .toDateString();
+                              return (
+                                <tr key={data.recipeId}>
+                                  <td>
+                                    <Link to={`/recipe/${data.recipeId}`}>
+                                      {data.title}
+                                    </Link>
+                                  </td>
+                                  <td>{newDate}</td>
+                                  <td>
+                                    <Link
+                                      onClick={this.editRecipe(data)} to="#"
+                                      data-toggle="modal" title="Edit"
+                                      data-target="#editRecipe">
+                                      <i className="fa fa-pencil"
+                                        aria-hidden="true" />&nbsp;
+                                    </Link>
+                                    <Link to="#"
+                                      title="Delete" data-toggle="modal"
+                                      data-target="#delete-recipe">
+                                      <i className="fa fa-trash text-danger"
+                                        aria-hidden="true" />
+                                    </Link>
+                                    <EditRecipeModal
+                                      Title={this.state.Title}
+                                      onChange={this.onChange}
+                                      Description={this.state.Description}
+                                      publicId={this.state.publicId}
+                                      uploadWidget={this.uploadWidget}
+                                      onSubmit={this.onSubmit} />
+                                      
+                                    <DeleteRecipeModal onClick={this.deleteRecipe(data)} />
+                                  </td>
+                                </tr>
+                              );
+                            }) :
+                            <tr>
+                              <td>None</td>
+                              <td>None</td>
+                            </tr>
                         }
 
                       </tbody>
@@ -248,17 +283,13 @@ class MyRecipe extends React.Component {
                 }
                 <br />
                 {
-                  this.state.isSearching ?
-                    <Pagination
-                      pagination={{ ...this.state.pagination }}
-                      currentPage={this.state.currentPage}
-                      onChange={this.onSearchPageChange}
-                    /> :
+                  this.props.recipes.pagination.totalCount > 5 ?
                     <Pagination
                       pagination={{ ...this.state.pagination }}
                       currentPage={this.state.currentPage}
                       onChange={this.onPageChange}
-                    />
+                    /> :
+                    <div />
                 }
               </div>
 
@@ -268,65 +299,6 @@ class MyRecipe extends React.Component {
 
         <Footer />
 
-        {/* Modals */}
-        <div className="modal fade text-dark" id="editRecipe">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header bg-info">
-                <h5 className="modal-title" style={{ color: 'rgb(255, 255, 255)' }} id="contactModalTitle">
-                 Edit Recipe
-                </h5>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <div className="form-group">
-                    <label htmlFor="Title">Recipe Title</label>
-                    <input
-                      value={this.state.Title}
-                      onChange={this.onChange}
-                      type="text"
-                      name="Title"
-                      className="form-control"
-                      required/>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="Description">Recipe Description</label>
-                    <textarea
-                      value={this.state.Description}
-                      onChange={this.onChange}
-                      type="address"
-                      name="Description"
-                      className="form-control"
-                      rows="5"
-                      required />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="imgFile">Upload Image</label>
-                    <CloudinaryContext cloudName={`${process.env.CloudName}`}>
-                      <Image publicId={this.state.recipeDetail.publicId}>
-                        <Transformation
-                          crop="scale"
-                          width="100"
-                          height="100"
-                          dpr="auto"
-                          responsive_placeholder="blank"
-                        />
-                      </Image>
-                    </CloudinaryContext>
-                    <input className="form-control-file" onClick={this.uploadWidget} type="button" value="Upload Image" />
-                    <small id="fileHelp" className="form-text text-muted">Please upload an example image of recipe for better reviews.</small>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-info" data-dismiss="modal">Update</button>
-                    <button type="button" className="btn btn-info" data-dismiss="modal">Close</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <DeleteRecipeModal />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/';
+import paginate from '../services/paginate';
 import { sendResetPasswordEmail } from './mailer';
 
 require('dotenv').config();
@@ -403,6 +404,67 @@ class User {
     })
       .catch(() => res.status(404).send({
         message: 'User not found'
+      }));
+  }
+
+  /**
+   * Search favorite recipes by a user in the application
+   * @method
+   * @memberof User
+   * @static
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @param {Object} searchString response object
+   * @returns {function} Express middleware function that search
+   * users and sends response to client
+   */
+  static searchUserFavorites(req, res) {
+    const { limit, offset, searchString } = req.query;
+    return favoriteModel.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.query.offset,
+      order: [['createdAt', 'DESC']],
+      where: {
+        $and: [
+          {
+            userId: req.decoded.userId,
+          },
+          {
+            category: {
+              $iLike: `%${searchString}%`
+            }
+          }
+        ]
+      },
+      include: [{
+        model: db.Recipe
+      }],
+      attributes: {
+        exclude: ['updatedAt'],
+      }
+    })
+      .then((recipeSearchResult) => {
+        if (recipeSearchResult.count === 0) {
+          res.status(404).json({
+            message: 'Recipe not Found!'
+          });
+        } else {
+          const pagination = paginate({
+            limit,
+            offset,
+            totalCount: recipeSearchResult.count,
+            pageSize: recipeSearchResult.rows.length
+          });
+          res.status(200).json({
+            pagination,
+            totalCount: recipeSearchResult.count,
+            searchResult: recipeSearchResult.rows
+          });
+        }
+      })
+      .catch(err => res.status(400).json({
+        message: 'Recipe not Found',
+        err
       }));
   }
 }

@@ -11,6 +11,11 @@ export const getSingleFavoriteAction = serverRes => ({
   payload: serverRes
 });
 
+export const searchUserFavoriteAction = serverRes => ({
+  type: types.SEARCH_USER_FAVORITES,
+  payload: serverRes
+});
+
 export const getUserFavoriteAction = serverRes => ({
   type: types.GET_ALL_FAVORITE,
   payload: serverRes
@@ -25,16 +30,6 @@ export const addToFavorites = (recipeId, category) => {
   };
 };
 
-// export const getSingleFavorite = (recipeId) => {
-//   return (dispatch) => {
-//     return axios.get(`/api/v1/users/${recipeId}`)
-//       .then((response) => {
-//         dispatch(getSingleFavoriteAction(response.data));
-//       })
-//       .catch((error) => error.response.data.message);
-//   };
-// };
-
 export const getUserFavorite = (userId) => {
   return (dispatch) => {
     return axios.get(`/api/v1/users/${userId}/recipes`)
@@ -42,5 +37,21 @@ export const getUserFavorite = (userId) => {
         dispatch(getUserFavoriteAction(response.data.favoriteRecipe));
       })
       .catch((error) => error);
+  };
+};
+
+/**
+ * @export { function } viewRecipes
+ * @param {any} limit
+ * @param {any} offset
+ * @param {any} searchString
+ * @returns { object } action type and server response
+ */
+export const searchUserFavorite = (limit, offset, searchString) => {
+  return (dispatch) => {
+    return axios.get(`/api/v1/search/favorites?limit=${limit}&offset=${offset}&searchString=${searchString}`)
+      .then((response) => {
+        dispatch(searchUserFavoriteAction(response.data));
+      });
   };
 };
