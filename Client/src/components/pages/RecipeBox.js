@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
+import isEmpty from 'lodash/isEmpty';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import Pagination from '../services/UltimatePagination';
 import { viewAllRecipes } from '../../actions/recipeActions';
@@ -59,7 +60,9 @@ class RecipeBox extends React.Component {
           totalPages: this.props.allRecipe.pagination.pageCount,
         }
       });
-    });
+    },
+    (err) => toastr.error(err.response.data.message)
+    );
   }
 
   /**
@@ -122,95 +125,127 @@ class RecipeBox extends React.Component {
    * @returns {object} component
    */
   render() {
-    return (
-      <div>
-        <Header/>
+    if (!isEmpty(this.props.allRecipe.recipes)) {
+      return (
+        <div>
+          <Header/>
 
-        <header id="header" />
+          <header id="header" />
 
-        {/* BREADCRUMB  */}
-        <div className="container">
-          <nav className="breadcrumb">
-            <Link className="breadcrumb-item" to={'/recipe-box'}>Home</Link>
-            <span className="breadcrumb-item active">Recipe Box</span>
-          </nav>
-        </div>
-
-        {/* MAIN SECTION  */}
-        <section>
+          {/* BREADCRUMB  */}
           <div className="container">
-            <div className="row">
-              <SideBar />
+            <nav className="breadcrumb">
+              <Link className="breadcrumb-item" to={'/recipe-box'}>Home</Link>
+              <span className="breadcrumb-item active">Recipe Box</span>
+            </nav>
+          </div>
 
-              {/* RECIPE CATALOG  */}                            
-              <div className="col-md-8" id="display">
-                <input
-                  value={this.state.searchString}
-                  onInput={this.onInputChange}
-                  className="form-control"
-                  type="text"
-                  placeholder="Filter Recipes..."/>
-                <br />
-                <br />
-                { this.state.isLoading ?
-                  <div className="loader" /> :
-                  <CloudinaryContext cloudName={`${process.env.CloudName}`}>
-                    {
-                      this.props.allRecipe.recipes.map(allRecipes => {
-                        const newDate = new Date(allRecipes.createdAt)
-                          .toDateString();
-                        return (
-                          <div key={allRecipes.recipeId}>
-                            <div className="p-2 float-left">
-                              <Image publicId={allRecipes.publicId}>
-                                <Transformation
-                                  crop="scale"
-                                  width="100"
-                                  height="100"
-                                  dpr="auto"
-                                  responsive_placeholder="blank"
-                                />
-                              </Image>
-                            </div>
-                            <div className="p-2 align-self-end">
-                              <small className="text-muted float-right">
-                                {newDate}
-                              </small>
-                              <h3>
-                                <Link to={`/recipe/${allRecipes.recipeId}`}>
-                                  {allRecipes.title}
-                                </Link>
-                              </h3>
-                              <small>by: {allRecipes.fullname}</small>
-                              <p> {
-                                allRecipes.description.split(" ")
-                                  .splice(0, 80)
-                                  .join(' ')
-                                  .concat(' ...')} </p>
-                            </div>
-                          </div>
-                        );
-                      })
-                    }
-                  </CloudinaryContext>
-                }
-                {
-                  this.props.allRecipe.pagination.totalCount > 4 ?
-                    <Pagination
-                      pagination={{ ...this.state.pagination }}
-                      currentPage={this.state.currentPage}
-                      onChange={this.onPageChange}
-                    /> :
-                    <div />
-                }
+          {/* MAIN SECTION  */}
+          <section>
+            <div className="container">
+              <div className="row">
+                <SideBar />
+
+                {/* RECIPE CATALOG  */}                            
+                <div className="col-md-8" id="display">
+                  <input
+                    value={this.state.searchString}
+                    onInput={this.onInputChange}
+                    className="form-control"
+                    type="text"
+                    placeholder="Filter Recipes..."/>
+                  <br />
+                  {
+                    this.state.isLoading ?
+                      <div className="loader" /> :
+                      <CloudinaryContext cloudName={`${process.env.CloudName}`}>
+                        {
+                          this.props.allRecipe.recipes.map(allRecipes => {
+                            const newDate = new Date(allRecipes.createdAt)
+                              .toDateString();
+                            return (
+                              <div key={allRecipes.recipeId}>
+                                <div className="p-2 float-left">
+                                  <Image publicId={allRecipes.publicId}>
+                                    <Transformation
+                                      crop="scale"
+                                      width="100"
+                                      height="100"
+                                      dpr="auto"
+                                      responsive_placeholder="blank"
+                                    />
+                                  </Image>
+                                </div>
+                                <div className="p-2 align-self-end">
+                                  <small className="text-muted float-right">
+                                    {newDate}
+                                  </small>
+                                  <h3>
+                                    <Link to={`/recipe/${allRecipes.recipeId}`}>
+                                      {allRecipes.title}
+                                    </Link>
+                                  </h3>
+                                  <small>by: {allRecipes.fullname}</small>
+                                  <p> {
+                                    allRecipes.description.split(" ")
+                                      .splice(0, 80)
+                                      .join(' ')
+                                      .concat(' ...')} </p>
+                                </div>
+                              </div>
+                            );
+                          })
+                        }
+                      </CloudinaryContext>
+                  }
+                  {
+                    this.props.allRecipe.pagination.totalCount > 4 ?
+                      <Pagination
+                        pagination={{ ...this.state.pagination }}
+                        currentPage={this.state.currentPage}
+                        onChange={this.onPageChange}
+                      /> :
+                      <div />
+                  }
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <Footer />
-      </div>
-    );
+          <Footer />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Header/>
+
+          <header id="header" />
+
+          {/* BREADCRUMB  */}
+          <div className="container">
+            <nav className="breadcrumb">
+              <Link className="breadcrumb-item" to={'/recipe-box'}>Home</Link>
+              <span className="breadcrumb-item active">Recipe Box</span>
+            </nav>
+          </div>
+
+          {/* MAIN SECTION  */}
+          <section>
+            <div className="container">
+              <div className="row">
+                <SideBar />
+
+                {/* RECIPE CATALOG  */}                            
+                <div className="col-md-8" id="display" />
+                  
+              </div>
+            </div>
+          </section>
+          <Footer />
+        </div>
+      );
+    }
   }
 }
 

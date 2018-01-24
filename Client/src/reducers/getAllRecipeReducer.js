@@ -9,8 +9,6 @@ const getAllRecipeReducer = (state = initialState, action) => {
   switch (action.type) {
   case types.GET_ALL_RECIPES:
     return action.payload;
-  // case types.GET_USER_RECIPES:
-  //   return action.payload;
   default:
     return state;
   }

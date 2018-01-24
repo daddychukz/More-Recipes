@@ -60,13 +60,13 @@ class Upvote {
                 });
             });
             res.send({
-              message: `${req.decoded.username} removed his Upvote`,
+              message: 'You removed your Upvote',
               value: 0
             });
           })
           .catch(() => {
             res.send({
-              message: `${req.decoded.username} upvoted this recipe`,
+              message: 'You upvoted this recipe',
               value: 1
             });
 
@@ -128,7 +128,7 @@ class Upvote {
         if (!errors[0]) {
           errors[0] = { message: 'Something Went Wrong' };
         }
-        res.status(406).json(errors); // {error, data: req.body}
+        res.status(406).json(errors);
       });
   }
 
