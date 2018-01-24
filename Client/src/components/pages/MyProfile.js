@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import toastr from 'toastr';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as userActions from '../../actions/userActions';
 import SideBar from './SideBar';
 import Footer from './Footer';
+import ChangePasswordModal from '../modals/ChangePasswordModal';
 import HeaderProfile from './HeaderProfile';
+import EditProfileModal from '../modals/EditProfileModal';
 
 const customHistory = createBrowserHistory({
   forceRefresh: true
@@ -29,14 +31,15 @@ class MyProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: [],
-      imageUrl: '',
       publicId: '',
       UserName: '',
       About: '',
       Hobbies: '',
-      Phone: '',
+      Phone: 0,
       Address: '',
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
       isLoading: true
     };
     this.uploadWidget = this.uploadWidget.bind(this);
@@ -51,19 +54,10 @@ class MyProfile extends React.Component {
    * @returns {void}
    */
   componentWillMount() {
-    const decodedUserId = jwt.decode(localStorage.jwtToken).userId;
+    const decodedUserId = this.props.profile.userId;
     this.props.getUserProfile(decodedUserId).then(
       () => {
-        this.setState({ profile: this.props.profile });
-        console.log(this.state.profile);
         this.setState({
-          imageUrl: this.state.profile.imageUrl,
-          publicId: this.state.profile.publicUrl,
-          UserName: this.state.profile.username,
-          About: this.state.profile.about,
-          Hobbies: this.state.profile.hobbies,
-          Phone: this.state.profile.phone,
-          Address: this.state.profile.address,
           isLoading: false
         });
       })
@@ -85,9 +79,39 @@ class MyProfile extends React.Component {
       upload_preset: process.env.UploadPreset,
       tags: ['daddy'] },
     (error, result) => {
-      console.log(result[0]);
-      this.setState({ imageUrl: result[0].secure_url, publicId: result[0].public_id });
+      this.setState({
+        imageUrl: result[0].secure_url,
+        publicId: result[0].public_id
+      });
     });
+  }
+
+  changePassword = () => {
+    const { newPassword, confirmPassword } = this.state;
+    const data = {
+      Password: this.state.newPassword,
+      OldPassword: this.state.oldPassword,
+      UserId: this.props.profile.userId
+    };
+    if (newPassword !== confirmPassword) {
+      toastr.error('Passwords do not match');
+    } else {
+      this.props.resetPassword(data).then(
+        () => this.setState({
+          oldPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        }),
+        (err) => {
+          toastr.error(err.response.data.message);
+          this.setState({
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: ''
+          });
+        }
+      );
+    }
   }
 
   /**
@@ -119,7 +143,7 @@ class MyProfile extends React.Component {
    */
   onSubmit(e) {
     e.preventDefault();
-    const decodedUserId = jwt.decode(localStorage.jwtToken).userId;
+    const decodedUserId = this.props.profile.userId;
     const data = {
       imageUrl: this.state.imageUrl,
       publicId: this.state.publicId,
@@ -142,7 +166,6 @@ class MyProfile extends React.Component {
    * @memberof MyProfile
    */
   render() {
-    const { isAuthenticated } = this.props.auth;
     return (
       <div>
         <HeaderProfile />
@@ -170,13 +193,17 @@ class MyProfile extends React.Component {
                   <div className="col-md-8" id="display">
                     <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                       {
-                        <div key={this.state.profile.userId}>
+                        <div key={this.props.profile.userId}>
                           <div className="d-flex flex-row">
                             <div className="p-2 align-self-start">
                               {
-                                this.state.profile.publicUrl === "user-male_jvc8hn.jpg" ?
-                                  <img src={this.state.profile.imageUrl} alt="myPix" width="250" height="300" /> :
-                                  <Image publicId={this.state.profile.publicUrl}>
+                                this.props.profile.publicUrl ===
+                                "user-male_jvc8hn.jpg" ?
+                                  <img
+                                    src={this.props.profile.imageUrl}
+                                    alt="myPix" width="250"
+                                    height="300" /> :
+                                  <Image publicId={this.props.profile.publicUrl}>
                                     <Transformation
                                       crop="scale"
                                       width="250"
@@ -185,17 +212,43 @@ class MyProfile extends React.Component {
                                       responsive_placeholder="blank"
                                     />
                                   </Image>
-                              // <img src={this.state.imageUrl} alt="myPix" width="250" height="300" />
                               }
                             </div>
                             <div className="p-2 align-self-end">
-                              <p><span className="obj-color">About:</span>&nbsp; {this.state.profile.about}</p>
-                              <p><span className="obj-color">Hobbies:</span>&nbsp; {this.state.profile.hobbies}</p>
-                              <p><i className="fa fa-envelope-o obj-color" aria-hidden="true" />&nbsp; {this.state.profile.email}</p>
-                              <address><i className="fa fa-map-marker obj-color" aria-hidden="true" />&nbsp; {this.state.profile.address}</address>
-                              <p><i className="fa fa-phone obj-color" aria-hidden="true" />&nbsp;{this.state.profile.phone}</p>
-                              <p><i className="fa fa-user obj-color" aria-hidden="true" />&nbsp; {this.state.profile.username}</p>
-                              <Link className="btn btn-info" to="#" role="button" data-toggle="modal" data-target="#changePassword">Change Password</Link>
+                              <p><span className="obj-color">About:</span>
+                                &nbsp;
+                                {this.props.profile.about}
+                              </p>
+                              <p>
+                                <span className="obj-color">Hobbies:</span>
+                                &nbsp;
+                                {this.props.profile.hobbies}
+                              </p>
+                              <p>
+                                <i className="fa fa-envelope-o obj-color"
+                                  aria-hidden="true"/>&nbsp;
+                                {this.props.profile.email}
+                              </p>
+                              <address>
+                                <i className="fa fa-map-marker obj-color"
+                                  aria-hidden="true" />&nbsp;
+                                {this.props.profile.address}
+                              </address>
+                              <p>
+                                <i className="fa fa-phone obj-color"
+                                  aria-hidden="true" />&nbsp;
+                                {this.props.profile.phone}
+                              </p>
+                              <p>
+                                <i className="fa fa-user obj-color"
+                                  aria-hidden="true" />&nbsp;
+                                {this.props.profile.username}
+                              </p>
+                              <Link className="btn btn-info" to="#"
+                                role="button" data-toggle="modal"
+                                data-target="#changePassword">
+                                Change Password
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -208,91 +261,24 @@ class MyProfile extends React.Component {
         </section>
 
         <Footer />
-        <div className="modal fade text-dark" id="profileModal">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header bg-primary">
-                <h5 className="modal-title" style={{ color: 'white' }} id="contactModalTitle">
-                   Edit Profile
-                </h5>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={this.onSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="name">Username</label>
-                    <input
-                      value={this.state.UserName}
-                      onChange={this.onChange}
-                      type="text"
-                      name="UserName"
-                      className="form-control"
-                      required/>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="name">Phone Number</label>
-                    <input
-                      value={this.state.Phone}
-                      onChange={this.onChange}
-                      type="number"
-                      name="Phone"
-                      className="form-control"
-                      required/>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Hobbies</label>
-                    <input
-                      value={this.state.Hobbies}
-                      onChange={this.onChange}
-                      type="text"
-                      name="Hobbies"
-                      className="form-control"
-                      required/>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="name">About</label>
-                    <input
-                      value={this.state.About}
-                      onChange={this.onChange}
-                      type="text"
-                      name="About"
-                      className="form-control"
-                      required/>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="messager">Address</label>
-                    <textarea
-                      value={this.state.Address}
-                      onChange={this.onChange}
-                      name="Address"
-                      className="form-control"
-                      required />
-                  </div>
-                  <div className="form-group">
-                    <CloudinaryContext cloudName={`${process.env.CloudName}`}>
-                      <Image publicId={this.state.publicId}>
-                        <Transformation
-                          crop="scale"
-                          width="100"
-                          height="100"
-                          dpr="auto"
-                          responsive_placeholder="blank"
-                        />
-                      </Image>
-                    </CloudinaryContext>
-                    
-                    <input className="form-control-file" onClick={this.uploadWidget} type="button" value="Upload Image" />
-                    <small id="fileHelp" className="form-text text-muted">Upload profile picture</small>
-                    {/* {errors.message && <InlineError text={errors.message}/>} */}
-                  </div>
-                  <div className="modal-footer">
-                    <button type="submit" className="mt-2 btn btn-primary btn-block">Update</button>
-                    <button type="button" className="btn btn-primary btn-block" data-dismiss="modal">Close</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <ChangePasswordModal
+          oldPassword={this.state.oldPassword}
+          newPassword={this.state.newPassword}
+          confirmPassword={this.state.confirmPassword}
+          onClick={this.changePassword}
+          onChange={this.onChange}/>
+
+        <EditProfileModal
+          onSubmit={this.onSubmit}
+          onChange={this.onChange}
+          username={this.state.UserName}
+          phone={this.state.Phone}
+          hobbies={this.state.Hobbies}
+          about={this.state.About}
+          address={this.state.Address}
+          publicID={this.state.publicId}
+          uploadWidget={this.uploadWidget}/>
       </div>
     );
   }
@@ -301,18 +287,18 @@ class MyProfile extends React.Component {
 MyProfile.propTypes = {
   getUserProfile: PropTypes.func.isRequired,
   updateUserProfile: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  resetPassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  profile: state.user,
-  auth: state.auth
+  profile: state.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getUserProfile: (Id) => dispatch(userActions.getUserProfile(Id)),
+  resetPassword: password => dispatch(userActions.resetPassword(password)),
   updateUserProfile: (Id, data) => dispatch(userActions.updateUserProfile(Id, data)),
   logout: () => dispatch(userActions.logout())
 });
