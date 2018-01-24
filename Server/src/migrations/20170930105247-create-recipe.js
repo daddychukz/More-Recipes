@@ -47,6 +47,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
+      viewsCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      isViewed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
