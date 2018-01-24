@@ -17,9 +17,9 @@ const userReducer = (state = {}, action) => {
   case types.VALIDATE_USER_TOKEN:
     return action.payload;
   case types.RESET_USER_PASSWORD:
-    return action.payload;
+    return Object.assign({}, state, action.payload);
   case types.RESET_USER_PASSWORD_REQUEST:
-    return action.payload;
+    return Object.assign({}, state, action.payload);
 
   default:
     return state;

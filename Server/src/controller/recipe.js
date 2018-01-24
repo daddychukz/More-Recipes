@@ -3,7 +3,6 @@ import db from '../models';
 import paginate from '../services/paginate';
 
 const recipeModel = db.Recipe;
-const error = {};
 
 /**
  * @class Recipe
@@ -43,7 +42,7 @@ class Recipe {
       .then((recipes) => {
         if (recipes.count === 0) {
           res.status(404).json({
-            message: 'Recipe not Found!'
+            message: 'No Recipe Has Been Created'
           });
         } else {
           const pagination = paginate({
@@ -270,9 +269,25 @@ class Recipe {
             message: 'Record not Found!'
           });
         } else if (recipe) {
-          res.status(200).json({
-            recipe
-          });
+          if (recipe.userId === req.decoded.userId && !recipe.isViewed) {
+            recipe.update({ isViewed: true, viewsCount: recipe.viewsCount + 1 },
+              { returning: true }).then(
+              res.status(200).json({
+                recipe
+              })
+            );
+          } else if (recipe.userId === req.decoded.userId && recipe.isViewed) {
+            res.status(200).json({
+              recipe
+            });
+          } else if (recipe.userId !== req.decoded.userId) {
+            recipe.update({ viewsCount: recipe.viewsCount + 1 },
+              { returning: true }).then(
+              res.status(200).json({
+                recipe
+              })
+            );
+          }
         } else {
           res.status(404).json({
             message: 'Record not Found!'
@@ -284,66 +299,6 @@ class Recipe {
         err
       }));
   }
-
-  // /**
-  //  * Search users in the application
-  //  * @method
-  //  * @memberof Recipe
-  //  * @static
-  //  * @param {Object} req request object
-  //  * @param {Object} res response object
-  //  * @param {Object} searchString response object
-  //  * @returns {function} Express middleware function that search
-  //  * users and sends response to client
-  //  */
-  // static searchAllRecipes(req, res) {
-  //   const { limit, offset, searchString } = req.query;
-  //   return recipeModel.findAndCountAll({
-  //     limit,
-  //     offset,
-  //     order: [['createdAt', 'DESC']],
-  //     where: {
-  //       $or: [
-  //         {
-  //           title: {
-  //             $iLike: `%${searchString}%`
-  //           }
-  //         },
-  //         {
-  //           description: {
-  //             $iLike: `%${searchString}%`
-  //           }
-  //         }
-  //       ]
-  //     },
-  //     attributes: {
-  //       exclude: ['updatedAt']
-  //     }
-  //   })
-  //     .then((recipeSearchResult) => {
-  //       if (recipeSearchResult.count === 0) {
-  //         res.status(404).json({
-  //           message: 'Recipe not Found!'
-  //         });
-  //       } else {
-  //         const pagination = paginate({
-  //           limit,
-  //           offset,
-  //           totalCount: recipeSearchResult.count,
-  //           pageSize: recipeSearchResult.rows.length
-  //         });
-  //         res.status(200).json({
-  //           pagination,
-  //           totalCount: recipeSearchResult.count,
-  //           searchResult: recipeSearchResult.rows
-  //         });
-  //       }
-  //     })
-  //     .catch(err => res.status(400).json({
-  //       message: 'Recipe not Found',
-  //       err
-  //     }));
-  // }
 }
 
 export default Recipe;

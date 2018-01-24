@@ -50,8 +50,12 @@ class ResetPassword extends React.Component {
       <div>
         <nav className="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
           <div className="container">
-            <Link to={'/'} className="navbar-brand"><h1 id="logo">More-Recipes</h1></Link>
-            <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <Link to={'/'} className="navbar-brand">
+              <h1 id="logo">More-Recipes</h1>
+            </Link>
+            <button className="navbar-toggler"
+              data-toggle="collapse"
+              data-target="#navbarCollapse">
               <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
@@ -80,7 +84,8 @@ class ResetPassword extends React.Component {
                     <ResetPassswordForm token={token} />
                   </div>
                 }
-                { !loading && !success && <h5>You currently do not have Permission to this Page</h5> }
+                { !loading && !success &&
+                <h5>You currently do not have Permission to this Page</h5> }
               </div>
             </div>
           </div>

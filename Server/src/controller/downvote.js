@@ -59,13 +59,13 @@ class Downvote {
                 });
             });
             res.send({
-              message: `${req.decoded.username} removed his Downvote`,
+              message: 'You removed your Downvote',
               value: 0
             });
           })
           .catch(() => {
             res.send({
-              message: `${req.decoded.username} downvoted this recipe`,
+              message: 'You downvoted this recipe',
               value: 1
             });
 

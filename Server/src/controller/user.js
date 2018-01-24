@@ -315,6 +315,37 @@ class User {
   }
 
   /**
+   * 
+   * 
+   * @static
+   * @param {any} Password 
+   * @param {any} UserId
+   * @param {any} res
+   * @memberof User
+   * @returns {object} response
+   */
+  static updatePassword(Password, UserId, res) {
+    const updateRecord = {};
+    userModel.findOne({
+      where: {
+        userId: UserId
+      }
+    }).then((userInfo) => {
+      if (userInfo) {
+        if (Password) {
+          updateRecord.password = bcrypt.hashSync(Password, bcrypt.genSaltSync(8));
+        }
+        userInfo.update(updateRecord)
+          .then(() => res.json({
+            message: 'Password Successfuly Updated'
+          }));
+      } else {
+        res.status(404).json({ message: 'Invalid Token' });
+      }
+    });
+  }
+
+  /**
    * resetPassword
    * @desc resets the password of a registered user
    * Route: POST: '/user/reset_password_request
@@ -323,33 +354,32 @@ class User {
    * @returns {object} userInfo
    */
   static resetPassword(req, res) {
-    const { Password, Token } = req.body;
-    const updateRecord = {};
-    jwt.verify(Token, process.env.SECRET, (err, decoded) => {
-      if (err) {
-        res.status(401).json({ message: 'Invalid Token' });
-      } else {
-        userModel.findOne({
-          where: {
-            userId: decoded.userId
-          }
-        }).then((userInfo) => {
-          if (userInfo) {
-            if (Password) {
-              updateRecord.password = bcrypt.hashSync(Password, bcrypt.genSaltSync(8));
+    const { Password, Token, OldPassword, UserId } = req.body;
+    if (Token) {
+      jwt.verify(Token, process.env.SECRET, (err, decoded) => {
+        if (err) {
+          res.status(401).json({ message: 'Invalid Token' });
+        } else {
+          User.updatePassword(Password, decoded, res);
+        }
+      });
+    } else {
+      userModel.findOne({
+        where: {
+          userId: UserId
+        },
+      })
+        .then((user) => {
+          bcrypt.compare(OldPassword, user.password, (err, response) => {
+            if (response) {
+              User.updatePassword(Password, UserId, res);
+            } else {
+              res.status(409).send({ message: 'Incorrect User Password' });
             }
-            userInfo.update(updateRecord)
-              .then(() => res.json({
-                message: 'update successful'
-              }));
-          } else {
-            res.status(404).json({ message: 'Invalid Token' });
-          }
+          });
         });
-      }
-    });
+    }
   }
-
 
   /**
    * updateUserProfile

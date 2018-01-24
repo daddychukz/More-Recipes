@@ -73,6 +73,14 @@ export default (sequelize, DataTypes) => {
       validate: {
         notEmpty: { msg: 'Empty strings not allowed' }
       }
+    },
+    viewsCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    isViewed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
   Recipe.associate = (models) => {

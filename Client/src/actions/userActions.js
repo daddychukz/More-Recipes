@@ -119,6 +119,7 @@ export const resetPassword = (data) => {
   return (dispatch) => {
     return axios.post('/api/v1/user/reset-password', data)
       .then((response) => {
+        toastr.success(response.data.message);
         dispatch(resetPasswordAction(response.data));
       });
   };

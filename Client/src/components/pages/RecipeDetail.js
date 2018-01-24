@@ -11,6 +11,7 @@ import * as favoriteActions from '../../actions/favoriteActions';
 import Header from './Header';
 import SideBar from './SideBar';
 import Footer from './Footer';
+import FavoriteRecipeModal from '../modals/FavoriteRecipeModal';
 
 /**
  * 
@@ -419,7 +420,8 @@ class RecipeDetail extends React.Component {
                         <li className="list-inline-item">
                           <Link className="btn btn-sm" to="#" title="Views">
                             <i className="fa fa-2x fa-eye obj-color" /></Link>
-                          <span className="badge badge-info" title="Views">30
+                          <span className="badge badge-info" title="Views">
+                            {this.props.singleRecipe.viewsCount}
                           </span></li>
 
                         <li className="list-inline-item float-right">
@@ -479,53 +481,14 @@ class RecipeDetail extends React.Component {
         </section>
 
         <Footer />
-
-        <div className="modal fade text-dark" id="category">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header bg-info">
-                <h5 className="modal-title" style={{ color: 'white' }}
-                  id="contactModalTitle">
-                  Select a Category
-                </h5>
-              </div>
-              <div className="modal-body">
-                <form>
-                  <div className="form-group">
-                    <select
-                      disabled={this.state.isDisabled}
-                      onChange={this.onChange}
-                      value={this.state.selectCategory}
-                      name="selectCategory"
-                      className="form-control form-control-lg">
-                      {
-                        this.getUniqueCategories().map((item, index) =>
-                          <option key={index}>{item}</option>
-                        )
-                      }
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <input
-                      onInput={this.onInput}
-                      value={this.state.Category}
-                      type="text"
-                      name="Category"
-                      className="form-control form-control-lg"
-                      placeholder="or enter new category"
-                      required />
-                  </div>
-                  <input
-                    type="button"
-                    value="Add To Favorites"
-                    className="btn btn-info btn-block"
-                    data-dismiss="modal"
-                    onClick={this.favoriteRecipe}/>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FavoriteRecipeModal
+          disabled={this.state.isDisabled}
+          onChange={this.onChange}
+          value={this.state.selectCategory}
+          getUniqueCategories={this.getUniqueCategories()}
+          onInput={this.onInput}
+          onClick={this.favoriteRecipe}
+          Category={this.state.Category}/>
       </div>
     );
   }
