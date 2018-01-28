@@ -6,6 +6,7 @@ services:
 - postgresql
 
 before_script:
+  - npm install -g codeclimate-test-reporter
   - psql -c 'create database chuksrecipes;' -U postgres
   - psql -c 'create database recipetest;' -U postgres
   - sequelize db:migrate
@@ -13,8 +14,7 @@ before_script:
 env:
   global:
     - export NODE_ENV=test
-    
-script:
-  - npm run coverage
   
-after_success: 'npm run coveralls'
+after_success:
+  - npm run coveralls
+  - codeclimate-test-reporter < ./coverage/lcov.info
