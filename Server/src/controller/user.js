@@ -118,7 +118,9 @@ class User {
             message: 'This record does not exists!'
           });
         }
-      });
+      }).catch(() => response.status(404).send({
+        message: 'Please register to signin'
+      }));
   }
 
   /**
@@ -146,7 +148,9 @@ class User {
             message: 'User not found!'
           });
         }
-      });
+      }).catch(() => response.status(404).send({
+        message: 'User not found'
+      }));
   }
 
 
