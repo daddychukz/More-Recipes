@@ -6,19 +6,19 @@ const recipeModel = db.Recipe;
 
 /**
  * @class Recipe
- *@classdesc creates a class Recipe
+ * @classdesc creates a class Recipe
  */
 class Recipe {
 /**
    * retrieveRecipe
    * @desc Gets all recipe from catalog
    * Route: GET: '/recipes'
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static retrieveRecipes(req, res) {
-    const { limit, offset, searchString } = req.query;
+  static retrieveRecipes(request, response) {
+    const { limit, offset, searchString } = request.query;
     recipeModel
       .findAndCountAll({
         order: [['createdAt', 'DESC']],
@@ -41,9 +41,7 @@ class Recipe {
       })
       .then((recipes) => {
         if (recipes.count === 0) {
-          res.status(404).json({
-            message: 'No Recipe Has Been Created'
-          });
+          response.status(204);
         } else {
           const pagination = paginate({
             limit,
@@ -51,15 +49,15 @@ class Recipe {
             totalCount: recipes.count,
             pageSize: recipes.rows.length
           });
-          res.status(200).json({
+          response.status(200).json({
             pagination,
             recipes: recipes.rows
           });
         }
       })
-      .catch(err => res.status(400).json({
-        message: 'Recipe not Found',
-        err
+      .catch(error => response.status(500).json({
+        message: 'Internal Server Error',
+        error
       }));
   }
 
@@ -67,92 +65,93 @@ class Recipe {
    * myRecipe
    * @desc Gets all recipe created by a user
    * Route: GET: '/recipes/myrecipes'
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static myRecipes(req, res) {
+  static myRecipes(request, response) {
     recipeModel
       .findAndCountAll({
         where: {
-          userId: req.decoded.userId,
+          userId: request.decoded.userId,
         },
         order: [['createdAt', 'DESC']],
-        limit: req.query.limit,
-        offset: req.query.offset
+        limit: request.query.limit,
+        offset: request.query.offset
       })
       .then((recipes) => {
-        const { limit, offset } = req.query;
+        if (recipes.count === 0) {
+          response.status(204);
+        }
+        const { limit, offset } = request.query;
         const pagination = paginate({
           limit,
           offset,
           totalCount: recipes.count,
           pageSize: recipes.rows.length
         });
-        res.status(200).json({
+        response.status(200).json({
           pagination,
           recipes: recipes.rows
         });
       })
-      .catch(err => res.status(400).send(err));
+      .catch(error => response.status(500).json({
+        message: 'Internal Server Error',
+        error
+      }));
   }
 
   /**
    * createRecipe
    * @desc adds a review to a recipe
    * Route: POST: '/recipes/:recipeID/reviews'
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static createRecipe(req, res) {
-    if (!req.body.Title || req.body.Title.trim().length === 0) {
-      return res.status(400).json({
+  static createRecipe(request, response) {
+    const {
+      Title, Description, imageUrl, publicId
+    } = request.body;
+    const { userId, fullname } = request.decoded;
+    if (!Title || Title.trim().length === 0) {
+      return response.status(406).json({
         message: 'Title Field should not be Empty',
       });
-    } else if (!req.body.Description || req.body.Description.trim().length === 0) {
-      return res.status(400).json({
+    } else if (!Description || Description.trim().length === 0) {
+      return response.status(406).json({
         message: 'Description Field should not be Empty',
       });
     }
     recipeModel
-      .findOrCreate({ where: {
-        userId: req.decoded.userId,
-        title: req.body.Title
-      },
-      defaults: {
-        fullname: req.decoded.fullname,
-        title: req.body.Title,
-        description: req.body.Description,
-        imageUrl: req.body.imageUrl,
-        publicId: req.body.publicId
-      } })
-      .spread((recipe, created) => {
-        if (created === false) {
-          res.status(409).json({
-            message: 'You already have a recipe with this Title'
-          });
-        } else if (created === true) {
-          res.status(201).json({
-            recipe
-          });
+      .findOne({
+        where: {
+          userId,
+          title: Title
+        },
+        attributes: {
+          exclude: ['imageUrl', 'publicId', 'fullname', 'updatedAt']
         }
       })
-      .catch(() => {
-        recipeModel.findOne({
-          where: {
-            userId: req.decoded.userId,
-            title: req.body.Title
-          },
-          attributes: {
-            exclude: ['imageUrl', 'publicId', 'fullname', 'updatedAt']
-          }
-        })
-          .then((recipe) => {
-            res.status(200).json({
-              recipe
-            });
+      .then((recipeFound) => {
+        if (recipeFound) {
+          response.status(409).json({
+            message: 'You already have a recipe with this Title'
           });
+        } else {
+          recipeModel.create({
+            userId,
+            fullname,
+            title: Title,
+            description: Description,
+            imageUrl,
+            publicId
+          }).then(recipe => response.status(201).json({
+            recipe
+          })).catch(() => response.status(500).json({
+            message: 'Internal server error',
+          }));
+        }
       });
   }
 
@@ -160,20 +159,22 @@ class Recipe {
    * deleteRecipe
    * @desc deletes a recipe from catalog
    * Route: DELETE: '/recipes/:recipeID'
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static deleteRecipe(req, res) {
-    recipeModel.destroy({ where: {
-      recipeId: req.params.recipeID,
-      userId: req.decoded.userId
-    } })
+  static deleteRecipe(request, response) {
+    recipeModel.destroy({
+      where: {
+        recipeId: request.params.recipeID,
+        userId: request.decoded.userId
+      }
+    })
       .then(() => {
         recipeModel
           .findAndCountAll({
             where: {
-              userId: req.decoded.userId,
+              userId: request.decoded.userId,
             },
             order: [['createdAt', 'DESC']],
             limit: 5,
@@ -186,14 +187,14 @@ class Recipe {
               totalCount: recipes.count,
               pageSize: recipes.rows.length
             });
-            res.status(200).send({
+            response.status(200).send({
               message: 'Recipe successfully deleted!',
               pagination,
               recipes
             });
           });
       })
-      .catch(() => res.status(404).send({
+      .catch(() => response.status(404).send({
         message: 'Record not found for this User!'
       }));
   }
@@ -202,45 +203,48 @@ class Recipe {
    * updateRecipe
    * @desc modifies a recipe in the catalog
    * Route: PUT: '/recipes/:recipeID'
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static updateRecipe(req, res) {
+  static updateRecipe(request, response) {
     const updateRecord = {};
+    const {
+      Title, Description, imageUrl, publicId
+    } = request.body;
 
     recipeModel.findOne({
       where: {
-        recipeId: req.params.recipeID,
-        userId: req.decoded.userId
+        recipeId: request.params.recipeID,
+        userId: request.decoded.userId
       },
     }).then((recipe) => {
-      if (req.body.Title) {
-        updateRecord.title = req.body.Title;
+      if (Title) {
+        updateRecord.title = Title;
       }
-      if (req.body.Description) {
-        updateRecord.description = req.body.Description;
+      if (Description) {
+        updateRecord.description = Description;
       }
-      if (req.body.imageUrl) {
-        updateRecord.imageUrl = req.body.imageUrl;
+      if (imageUrl) {
+        updateRecord.imageUrl = imageUrl;
       }
-      if (req.body.publicId) {
-        updateRecord.publicId = req.body.publicId;
+      if (publicId) {
+        updateRecord.publicId = publicId;
       }
       recipe.update(updateRecord)
         .then(() => {
           recipeModel.all({
             where: {
-              userId: req.decoded.userId
+              userId: request.decoded.userId
             },
             order: [['createdAt', 'DESC']],
           })
-            .then(updatedRecipe => res.send({
+            .then(updatedRecipe => response.send({
               updatedRecipe,
             }));
         });
     })
-      .catch(() => res.status(404).send({
+      .catch(() => response.status(404).send({
         message: 'Record not found for this User'
       }));
   }
@@ -249,15 +253,16 @@ class Recipe {
    * retrieveRecipe
    * @desc gets a single recipe in the catalog
    * Route: GET: '/recipes/:recipeID'
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static retrieveRecipe(req, res) {
+  static retrieveRecipe(request, response) {
+    const { userId } = request.decoded;
     recipeModel
       .findOne({
         where: {
-          recipeId: req.params.recipeID,
+          recipeId: request.params.recipeID,
         },
         include: [{
           model: db.Vote
@@ -265,38 +270,34 @@ class Recipe {
       })
       .then((recipe) => {
         if (isEmpty(recipe)) {
-          res.status(404).json({
+          response.status(404).json({
             message: 'Record not Found!'
           });
         } else if (recipe) {
-          if (recipe.userId === req.decoded.userId && !recipe.isViewed) {
-            recipe.update({ isViewed: true, viewsCount: recipe.viewsCount + 1 },
-              { returning: true }).then(
-              res.status(200).json({
-                recipe
-              })
-            );
-          } else if (recipe.userId === req.decoded.userId && recipe.isViewed) {
-            res.status(200).json({
+          if (recipe.userId === userId && !recipe.isViewed) {
+            recipe.update(
+              { isViewed: true, viewsCount: recipe.viewsCount + 1 },
+              { returning: true }
+            ).then(response.status(200).json({
+              recipe
+            }));
+          } else if (recipe.userId === userId && recipe.isViewed) {
+            response.status(200).json({
               recipe
             });
-          } else if (recipe.userId !== req.decoded.userId) {
-            recipe.update({ viewsCount: recipe.viewsCount + 1 },
-              { returning: true }).then(
-              res.status(200).json({
-                recipe
-              })
-            );
+          } else if (recipe.userId !== userId) {
+            recipe.update(
+              { viewsCount: recipe.viewsCount + 1 },
+              { returning: true }
+            ).then(response.status(200).json({
+              recipe
+            }));
           }
-        } else {
-          res.status(404).json({
-            message: 'Record not Found!'
-          });
         }
       })
-      .catch(err => res.status(404).json({
-        message: 'Recipe not Found',
-        err
+      .catch(error => response.status(500).json({
+        message: 'Internal Server Error',
+        error
       }));
   }
 }

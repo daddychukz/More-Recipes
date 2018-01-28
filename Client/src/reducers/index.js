@@ -4,7 +4,6 @@ import auth from './authReducer';
 import getRecipe from './recipeReducer';
 import review from './reviewReducer';
 import favorite from './favoriteReducer';
-import vote from './voteReducer';
 import popularRecipes from './getRecipeReducer';
 import search from './searchReducer';
 import singleRecipe from './singleRecipeReducer';
@@ -17,7 +16,6 @@ const rootReducer = combineReducers({
   review,
   favorite,
   popularRecipes,
-  vote,
   search,
   singleRecipe,
   allRecipe

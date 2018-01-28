@@ -1,0 +1,52 @@
+  {
+    "root": true,
+    "extends": "airbnb",
+    "env": {
+      "node": true,
+      "browser": true,
+      "es6": true,
+      "mocha": true,
+      "commonjs": true,
+      "jquery": true
+    },
+    "globals": {
+      "localStorage": true,
+      "window": true
+    },
+    "rules": {
+      "indent": ["error", 2],
+      "one-var": 0,
+      "one-var-declaration-per-line": 0,
+      "new-cap": 0,
+      "jsx-a11y/href-no-hash": "off",
+      "jsx-a11y/label-has-for": [ 2, {
+        "components": [ "Label" ],
+        "required": {
+          "some": [ "nesting", "id" ]
+        },
+        "allowChildren": false
+      }],
+      "max-len": [1, 80, 2],
+      "consistent-return": 0,
+      "no-param-reassign": 0,
+      "no-useless-escape": 0,
+      "no-case-declarations": 0,
+      "comma-dangle": 0,
+      "curly": ["error", "multi-line"],
+      "import/no-unresolved": [2, { "commonjs": true }],
+      "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+      "valid-jsdoc": ["error", {
+        "requireReturn": true,
+        "requireReturnType": true,
+        "requireParamDescription": false,
+        "requireReturnDescription": true
+      }],
+      "require-jsdoc": ["error", {
+          "require": {
+              "FunctionDeclaration": true,
+              "MethodDefinition": true,
+              "ClassDeclaration": true
+          }
+      }]
+    }
+  }

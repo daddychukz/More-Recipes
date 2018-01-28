@@ -13,7 +13,7 @@ const fakeData = {
 
   userTwo: {
     FullName: faker.Name.findName(),
-    Email: 'user@yahoo.com',
+    Email: 'chuks@yahoo.com',
     Sex: 'Male',
     UserName: 'user',
     Password: 'user',

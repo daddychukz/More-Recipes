@@ -6,13 +6,12 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 
 export const signUp = user => (dispatch) => {
-  return axios.post('/api/v1/users/signup', user).then((response) => {
-    console.log(response.data);
+  return axios.post('/api/v1/users/signup', user).then(() => {
     dispatch({
       type: types.CREATE_USER,
       payload: user
     });
-  });
+  }).catch(error => toastr.error(error.response.data.error.message));
 };
 
 export const setCurrentUser = user => ({
@@ -64,35 +63,29 @@ export const logout = () => (dispatch) => {
 /**
  * @export { function } viewRecipes
  * @returns { object } action type and server response
- * @param { object } userId
  */
-export const getUserProfile = (userId) => {
+export const getUserProfile = () => {
   return (dispatch) => {
     return axios.get('/api/v1/user/profile/')
       .then((response) => {
         dispatch(getUserProfileAction(response.data));
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   };
 };
 
 /**
  * @export { function } viewRecipes
  * @returns { object } action type and server response
- * @param { object } userId
- * @param { object } data
+ * @param { object } user
  */
-export const updateUserProfile = (userId, data) => {
+export const updateUserProfile = (user) => {
   return (dispatch) => {
-    return axios.post('/api/v1/user/profile/edit', data)
+    return axios.post('/api/v1/user/profile/edit', user)
       .then((response) => {
         dispatch(updateUserProfileAction(response.data));
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   };
 };
 
@@ -112,12 +105,12 @@ export const resetPasswordRequest = (email) => {
 
 /**
  * @export { function } resetPassword
- * @param { object } data
+ * @param { object } userData
  * @returns { object } action type and server response
  */
-export const resetPassword = (data) => {
+export const resetPassword = (userData) => {
   return (dispatch) => {
-    return axios.post('/api/v1/user/reset-password', data)
+    return axios.post('/api/v1/user/reset-password', userData)
       .then((response) => {
         toastr.success(response.data.message);
         dispatch(resetPasswordAction(response.data));

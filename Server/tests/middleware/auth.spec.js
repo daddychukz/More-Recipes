@@ -6,58 +6,56 @@ import chai from 'chai';
 import app from '../../src/app';
 import models from '../../src/models';
 import fakeData from '../helpers/fakeData';
+import { userToken, newUser } from '../api/1_user.spec';
 
-const expect = chai.expect;
-let userToken;
-let newUser;
-let recipe1;
-let recipe2;
+const { expect } = chai;
+const recipe1 = {};
+
+models
+  .Recipe
+  .destroy({
+    cascade: true,
+    truncate: true
+  });
+
+models
+  .User
+  .destroy({
+    cascade: true,
+    truncate: true
+  });
+
+models
+  .Favorite
+  .destroy({
+    cascade: true,
+    truncate: true
+  });
+
+models
+  .Review
+  .destroy({
+    cascade: true,
+    truncate: true
+  });
 
 describe('User Signin/Signup', () => {
-  models
-    .Recipe
-    .destroy({
-      cascade: true,
-      truncate: true
-    });
-
-  models
-    .User
-    .destroy({
-      cascade: true,
-      truncate: true
-    });
-
-  models
-    .Favorite
-    .destroy({
-      cascade: true,
-      truncate: true
-    });
-
-  models
-    .Review
-    .destroy({
-      cascade: true,
-      truncate: true
-    });
-
-  it('returns a token upon successful signin', (done) => {
-    request(app)
-      .post('/api/v1/users/signin')
-      .send({
-        Email: 'chuks@yahoo.com',
-        Password: 'chuks'
-      })
-      .expect(200)
-      .end((err, res) => {
-        userToken = res.body.token;
-        expect(userToken);
-        expect(res.body.message).to.equal('Welcome chuks');
-        if (err) return done(err);
-        done();
-      });
-  });
+  // it('returns a token upon successful signin', (done) => {
+  //   request(app)
+  //     .post('/api/v1/users/signin')
+  //     .send({
+  //       Email: 'chuks@yahoo.com',
+  //       Password: 'chuks'
+  //     })
+  //     .expect(200)
+  //     .end((err, res) => {
+  //       userToken = res.body.token;
+  //       expect(userToken);
+  //       expect(res.body.message).to.equal('Welcome chuks');
+  //       if (err) return done(err);
+  //       done();
+  //     });
+  // });
 
   it('fails to add recipe for viewers without token', (done) => {
     request(app)
@@ -73,34 +71,14 @@ describe('User Signin/Signup', () => {
 });
 
 describe('Recipe Operations', () => {
-  models
-    .Recipe
-    .destroy({
-      cascade: true,
-      truncate: true
-    });
-
   it('users require a token to add recipe', (done) => {
     request(app)
       .post('/api/v1/recipes')
-      .set('authorization', userToken)
+      .set('authorization', userToken.token)
       .send(fakeData.recipe)
-      .expect(200)
+      .expect(201)
       .end((err, res) => {
-        recipe1 = res.body.recipe;
-        if (err) return done(err);
-        done();
-      });
-  });
-
-  it('adds a recipe to the catalog', (done) => {
-    request(app)
-      .post('/api/v1/recipes')
-      .set('authorization', userToken)
-      .send(fakeData.recipe4)
-      .expect(200)
-      .end((err, res) => {
-        recipe2 = res.body.recipe;
+        recipe1.recipe = res.body.recipe;
         if (err) return done(err);
         done();
       });
