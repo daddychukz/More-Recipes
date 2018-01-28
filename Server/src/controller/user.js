@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/';
-import sendResetPasswordEmail from './Mailer';
+import sendResetPasswordEmail from './mailer';
 import errorHandling from './HandleErrors/errorHandling';
 
 require('dotenv').config();

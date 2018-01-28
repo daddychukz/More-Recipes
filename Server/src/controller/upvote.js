@@ -1,5 +1,5 @@
 import db from '../models/';
-import countVote from './Common/VoteOperations';
+import countVote from './Common/countVote';
 import errorHandling from './HandleErrors/errorHandling';
 
 const recipeModel = db.Recipe;

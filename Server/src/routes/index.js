@@ -1,10 +1,10 @@
 import express from 'express';
 import recipeController from '../controller/recipe';
-import upvotesController from '../controller/Upvote';
-import downvotesController from '../controller/Downvote';
-import reviewController from '../controller/Review';
-import userController from '../controller/User';
-import favoriteController from '../controller/Favorite';
+import upvotesController from '../controller/upvote';
+import downvotesController from '../controller/downvote';
+import reviewController from '../controller/review';
+import userController from '../controller/user';
+import favoriteController from '../controller/favorite';
 import Auth from '../middleware/auth';
 
 const router = express.Router();
