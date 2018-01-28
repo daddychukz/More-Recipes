@@ -1,0 +1,7 @@
+{
+    "editor.tabSize": 2,
+    "files.trimTrailingWhitespace": true,
+    "javascript.validate.enable": false,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
+}

@@ -4,6 +4,7 @@ import upvotesController from '../controller/upvote';
 import downvotesController from '../controller/downvote';
 import reviewController from '../controller/review';
 import userController from '../controller/user';
+import favoriteController from '../controller/favorites';
 import Auth from '../middleware/auth';
 
 const router = express.Router();
@@ -22,16 +23,13 @@ router.post('/users/signup', userController.signUp);
 router.post('/users/signin', userController.signIn);
 
 // Get Favorite recipes
-router.get('/users/:userID/recipes', Auth.verify, userController.retrieveFavorites);
+router.get('/users/:userID/recipes', Auth.verify, favoriteController.retrieveFavorites);
 
 // Get User Info
 router.get('/user/profile', Auth.verify, userController.getUserProfile);
 
 // Edit User Info
 router.post('/user/profile/edit', Auth.verify, userController.updateUserProfile);
-
-// Get one favorite
-router.get('/users/:recipeID', Auth.verify, userController.getSingleFavorite);
 
 // Retrieve all recipes created by a user
 router.get('/recipes/myrecipes', Auth.verify, recipeController.myRecipes);
@@ -49,7 +47,7 @@ router.get('/recipes/:recipeID', Auth.verify, recipeController.retrieveRecipe);
 router.post('/recipes', Auth.verify, recipeController.createRecipe);
 
 // Add Favorite recipes
-router.post('/recipes/:recipeID', Auth.verify, userController.addFavorites);
+router.post('/recipes/:recipeID', Auth.verify, favoriteController.addFavorites);
 
 // Delete a recipe
 router.delete('/recipes/:recipeID', Auth.verify, recipeController.deleteRecipe);
@@ -78,11 +76,8 @@ router.post('/validate-token', Auth.checkMailToken);
 // reset password
 router.post('/user/reset-password', userController.resetPassword);
 
-// Search All Recipes
-// router.get('/search/recipes', recipeController.searchAllRecipes);
-
 // Search recipes created by a user
-router.get('/search/favorites', Auth.verify, userController.searchUserFavorites);
+router.get('/search/favorites', Auth.verify, favoriteController.searchUserFavorites);
 
 // A catch-all routes not define.
 router.use('*', (req, res) => res.status(404).json({

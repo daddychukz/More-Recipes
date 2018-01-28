@@ -7,7 +7,9 @@
  * @return {object} pagination metadata
  */
 
-const paginate = ({ limit, offset, totalCount, pageSize }) => {
+const paginate = ({
+  limit, offset, totalCount, pageSize
+}) => {
   const pageCount = Math.ceil(totalCount / limit);
   const Page = Math.floor((parseInt((offset), 10) + parseInt((limit), 10)) / parseInt((limit), 10));
   return {

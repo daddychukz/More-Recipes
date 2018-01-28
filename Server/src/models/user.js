@@ -66,14 +66,16 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'user-male_jvc8hn.jpg'
     },
-  }, { hooks: {
-    beforeCreate: (newUser) => {
-      newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
-    },
-    afterUpdate: (newUser) => {
-      newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
+  }, {
+    hooks: {
+      beforeCreate: (newUser) => {
+        newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
+      },
+      afterUpdate: (newUser) => {
+        newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
+      }
     }
-  } });
+  });
   User.associate = (models) => {
     // associations can be defined here
     User.hasMany(models.Recipe, { foreignKey: 'userId', onDelete: 'SET NULL' });
@@ -89,8 +91,7 @@ export default (sequelize, DataTypes) => {
   User.prototype.generateResetPasswordToken = function generateResetPasswordToken() {
     return jwt.sign({
       userId: this.userId
-    }, process.env.SECRET, { expiresIn: '1h' }
-    );
+    }, process.env.SECRET, { expiresIn: '1h' });
   };
 
   return User;

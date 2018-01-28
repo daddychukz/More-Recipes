@@ -1,134 +1,85 @@
 import db from '../models/';
+import countVote from './Common/countVote';
+import errorHandling from './HandleErrors/errorHandling';
 
 const recipeModel = db.Recipe;
 const voteModel = db.Vote;
-const errors = [];
 
 /**
  * @class Upvote
- *@classdesc creates a class Upvote
+ * @classdesc creates a class Upvote
  */
 class Upvote {
-/**
+  /**
    * upvoteRecipe
    * @desc upvotes a Recipe
    * Route: PUT: /recipes/:recipeID/upvote
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static upvoteRecipe(req, res) {
+  static upvoteRecipe(request, response) {
     recipeModel.findOne({
       where: {
-        recipeId: req.params.recipeID
+        recipeId: request.params.recipeID
       },
     }).then((recipes) => {
       if (recipes) {
-      // finds if vote by a user for a recipe exists else creates it
         voteModel
-          .findOrCreate({ where: {
-            userId: req.decoded.userId,
-            recipeId: req.params.recipeID,
-            vote: true
-          },
-          defaults: { vote: true } })
-          .spread(() => {
-            voteModel.destroy({
-              where: {
-                userId: req.decoded.userId,
-                recipeId: req.params.recipeID,
-                vote: true
-              }
-            }).then(() => {
-            // counts total number of upvotes immediately after removing own upvote
-              voteModel
-                .count({
-                  where: {
-                    recipeId: req.params.recipeID,
-                    vote: true
-                  }
-                }).then((totalUpvotes) => {
-                  recipeModel.findOne({
-                    where: {
-                      recipeId: req.params.recipeID
-                    },
-                  }).then((recipeFound) => {
-                    recipeFound.updateAttributes({
-                      upvotes: totalUpvotes
-                    });
-                  });
-                });
-            });
-            res.send({
-              message: 'You removed your Upvote',
-              value: 0
-            });
-          })
-          .catch(() => {
-            res.send({
-              message: 'You upvoted this recipe',
-              value: 1
-            });
-
-            // deletes downvote created by same user for same recipe
-            voteModel.destroy({
-              where: {
-                recipeId: req.params.recipeID,
-                userId: req.decoded.userId,
-                vote: false
-              },
-            }).then(() => {
-            // counts total number of upvotes immediately after upvoting
-              voteModel
-                .count({ where: {
-                  recipeId: req.params.recipeID,
+          .findOne({
+            where: {
+              userId: request.decoded.userId,
+              recipeId: request.params.recipeID,
+              vote: true
+            }
+          }).then((vote) => {
+            if (vote) {
+              voteModel.destroy({
+                where: {
+                  userId: request.decoded.userId,
+                  recipeId: request.params.recipeID,
                   vote: true
                 }
-                }).then((total) => {
-                  recipeModel.findOne({
-                    where: {
-                      recipeId: req.params.recipeID
-                    },
-                  }).then((recipeFound) => {
-                    recipeFound.updateAttributes({
-                      upvotes: total
-                    });
-                  });
+              }).then(() => {
+                // counts total number of upvotes
+                countVote(request, true);
+              });
+              response.status(200).send({
+                message: 'You removed your Upvote',
+                value: 0
+              });
+            } else {
+              voteModel.create({
+                userId: request.decoded.userId,
+                recipeId: request.params.recipeID,
+                vote: true
+              }).then(() => {
+                response.status(201).send({
+                  message: 'You upvoted this recipe',
+                  value: 1
                 });
 
-              // counts total number of downvotes after deleting previous downvote 
-              voteModel
-                .count({ where: {
-                  recipeId: req.params.recipeID,
-                  vote: false
-                }
-                }).then((totalDownvotes) => {
-                  recipeModel.findOne({
-                    where: {
-                      recipeId: req.params.recipeID
-                    },
-                  }).then((recipeFound) => {
-                    recipeFound.updateAttributes({
-                      downvotes: totalDownvotes
-                    });
-                  });
+                voteModel.destroy({
+                  where: {
+                    recipeId: request.params.recipeID,
+                    userId: request.decoded.userId,
+                    vote: false
+                  },
+                }).then(() => {
+                  countVote(request, true);
+                  countVote(request, false);
                 });
-            });
+              });
+            }
           });
       } else {
-        res.status(404).send({
+        response.status(404).send({
           message: 'This recipe record does not exists!'
         });
       }
     })
-      .catch((err) => {
-        if (err.parent.routine === 'string_to_uuid') {
-          errors[0] = { message: 'Invalid Recipe ID' };
-        }
-        if (!errors[0]) {
-          errors[0] = { message: 'Something Went Wrong' };
-        }
-        res.status(406).json(errors);
+      .catch((error) => {
+        errorHandling.validateRecipeIdErrors(error, response);
       });
   }
 
@@ -136,12 +87,12 @@ class Upvote {
    * mostRecipeUpvote
    * @desc Gets recipe with Upvotes in descending order
    * Route: PUT: /recipes/:recipeID/upvote
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @param {Object} request request object
+   * @param {Object} response response object
    * @returns {void}
    */
-  static mostRecipeUpvote(req, res) {
-    if (req.query.sort === 'upvotes' && req.query.order === 'des') {
+  static mostRecipeUpvote(request, response) {
+    if (request.query.sort === 'upvotes' && request.query.order === 'des') {
       recipeModel.all({
         order: [['upvotes', 'DESC']],
         attributes: {
@@ -149,10 +100,10 @@ class Upvote {
         },
         limit: 3
       })
-        .then(recipes => res.status(200).json({ recipes }))
-        .catch(err => res.status(400).send(err));
+        .then(recipes => response.status(200).json({ recipes }))
+        .catch(error => response.status(400).send(error));
     } else {
-      res.status(404).send({
+      response.status(404).send({
         message: 'Invalid URL...'
       });
     }

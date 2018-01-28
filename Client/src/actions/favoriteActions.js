@@ -1,13 +1,9 @@
 import axios from 'axios';
+import toastr from 'toastr';
 import * as types from './types';
 
 export const addToFavoriteAction = serverRes => ({
   type: types.ADD_TO_FAVORITES,
-  payload: serverRes
-});
-
-export const getSingleFavoriteAction = serverRes => ({
-  type: types.GET_SINGLE_FAVORITE,
   payload: serverRes
 });
 
@@ -26,6 +22,7 @@ export const addToFavorites = (recipeId, category) => {
     return axios.post(`/api/v1/recipes/${recipeId}`, category)
       .then((response) => {
         dispatch(addToFavoriteAction(response.data.favorite));
+        toastr.success(response.data.message);
       });
   };
 };
@@ -49,7 +46,10 @@ export const getUserFavorite = (userId) => {
  */
 export const searchUserFavorite = (limit, offset, searchString) => {
   return (dispatch) => {
-    return axios.get(`/api/v1/search/favorites?limit=${limit}&offset=${offset}&searchString=${searchString}`)
+    return axios.get(
+      `/api/v1/search/favorites?limit=${limit}&offset=${offset}
+      &searchString=${searchString}`
+    )
       .then((response) => {
         dispatch(searchUserFavoriteAction(response.data));
       });

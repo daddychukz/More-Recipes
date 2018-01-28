@@ -7,11 +7,10 @@ const favoriteReducer = (state = [], action) => {
       return [...state,
         Object.assign({}, action.payload)
       ];
-    } else {
-      return [
-        ...state.slice(0, state.length - 1)
-      ];
     }
+    return [
+      ...state.slice(0, state.length - 1)
+    ];
   case types.GET_SINGLE_FAVORITE:
     return action.payload;
   case types.GET_ALL_FAVORITE:

@@ -24,8 +24,6 @@ export const viewAllReviews = (recipeId) => {
       .then((response) => {
         dispatch(viewAllReviewsAction(response.data.reviews));
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   };
 };
