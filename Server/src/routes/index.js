@@ -4,7 +4,7 @@ import upvotesController from '../controller/upvote';
 import downvotesController from '../controller/downvote';
 import reviewController from '../controller/review';
 import userController from '../controller/user';
-import favoriteController from '../controller/favorite';
+import favoriteController from '../controller/favorites';
 import Auth from '../middleware/auth';
 
 const router = express.Router();

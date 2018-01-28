@@ -56,7 +56,7 @@ class Favorite {
   }
 
   /**
-   * retrieveFavorites
+   * retrieve user favorites
    * @desc gets all favorites added by a user
    * Route: GET: '/users/:userID/recipes
    * @param {Object} request request object
