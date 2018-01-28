@@ -388,7 +388,10 @@ class RecipeDetail extends React.Component {
                     <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                       {
                         <div key={this.props.singleRecipe.recipeId}>
-                          <h1 className="text-center obj-color">
+                          <h1
+                            className="text-center obj-color"
+                            style={{ wordWrap: 'break-word' }}
+                          >
                             {this.props.singleRecipe.title}</h1>
                           <div className="text-center p-2">
                             <Image publicId={this.props.singleRecipe.publicId}>
@@ -401,10 +404,13 @@ class RecipeDetail extends React.Component {
                               />
                             </Image>
                           </div>
-                          <h6 className="text-muted text-center">by:
-                            {this.props.singleRecipe.fullname}</h6>
+                          <h6 className="text-muted text-center">
+                            by:&nbsp;
+                            {this.props.singleRecipe.fullname}
+                          </h6>
                           <br />
-                          <p>{this.props.singleRecipe.description}</p>
+                          <p style={{ wordWrap: 'break-word' }}>
+                            {this.props.singleRecipe.description}</p>
                         </div>
                       }
                       <hr />
@@ -467,33 +473,44 @@ class RecipeDetail extends React.Component {
                           className="btn btn-primary"
                         >Post Review</button>
                       </form>
+                      <br />
                       <h3>REVIEWS</h3>
-                      {
-                        this.props.showReview.map(reviews => (
-                          <div key={reviews.id}>
-                            <div className="d-flex flex-row">
-                              <div className="p-2 align-self-start">
-                                <Image publicId={this.props.user.publicUrl}>
-                                  <Transformation
-                                    crop="scale"
-                                    width="30"
-                                    height="30"
-                                    dpr="auto"
-                                    responsive_placeholder="blank"
-                                  />
-                                </Image>
-                              </div>
-                              <div className="p-2 align-self-end">
-                                <h4><a to="#">{this.props.user.fullname}</a>
-                                </h4>
-                                <small className="text-muted">{reviews.createdAt}
-                                </small>
-                                <p>{reviews.review}</p>
+                      <div
+                        style={{
+                          border: '#E9ECEF 1px solid',
+                          backgroundColor: '#EAECEF',
+                          height: '500px',
+                          overflow: 'scroll',
+                          wordBreak: 'break-all',
+                        }}
+                      >
+                        {
+                          this.props.showReview.map(reviews => (
+                            <div key={reviews.id}>
+                              <div className="d-flex flex-row">
+                                <div className="p-2 align-self-start">
+                                  <Image publicId={this.props.user.publicUrl}>
+                                    <Transformation
+                                      crop="scale"
+                                      width="30"
+                                      height="30"
+                                      dpr="auto"
+                                      responsive_placeholder="blank"
+                                    />
+                                  </Image>
+                                </div>
+                                <div className="p-2 align-self-end">
+                                  <h5><a to="#">{this.props.user.fullname}</a>
+                                  </h5>
+                                  <small className="text-muted">{reviews.createdAt}
+                                  </small>
+                                  <p>{reviews.review}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )
-                        )}
+                          )
+                          )}
+                      </div>
                     </CloudinaryContext>
                     <br />
 

@@ -2,8 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
+import createBrowserHistory from 'history/createBrowserHistory';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as recipeActions from '../../actions/recipeActions';
+
+const customHistory = createBrowserHistory({
+  forceRefresh: true
+});
 
 /**
  *
@@ -55,7 +60,7 @@ class RecipeForm extends React.Component {
     this.setState({ errors: {}, isLoading: true });
     this.props.addRecipe(this.state)
       .then(
-        () => this.setState({ Title: '', Description: '' }),
+        () => customHistory.push('/recipe-box'),
         (err) => {
           toastr.error(err.response.data.message);
         }

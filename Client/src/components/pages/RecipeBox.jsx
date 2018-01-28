@@ -181,13 +181,13 @@ class RecipeBox extends React.Component {
                                   <small className="text-muted float-right">
                                     {newDate}
                                   </small>
-                                  <h3>
+                                  <h3 style={{ wordWrap: 'break-word' }}>
                                     <Link to={`/recipe/${allRecipes.recipeId}`}>
                                       {allRecipes.title}
                                     </Link>
                                   </h3>
                                   <small>by: {allRecipes.fullname}</small>
-                                  <p> {
+                                  <p style={{ wordWrap: 'break-word' }}> {
                                     allRecipes.description.split(' ')
                                       .splice(0, 80)
                                       .join(' ')

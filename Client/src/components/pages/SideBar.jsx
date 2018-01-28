@@ -95,14 +95,23 @@ class SideBar extends React.Component {
                   key={popular.recipeId}
                   className="list-group-item list-group-item-action flex-column align-items-start"
                 >
-                  <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-1"><Link
-                      to={`/recipe/${popular.recipeId}`}
+                  <div className="d-flex justify-content-between">
+                    <h5
                       className="mb-1"
-                    ><strong>{popular.title}</strong></Link></h5>
+                      style={{
+                        wordWrap: 'break-word',
+                        minWidth: '230px',
+                        maxWidth: '230px',
+                        whiteSpace: 'normal' }}
+                    >
+                      <Link
+                        to={`/recipe/${popular.recipeId}`}
+                        className="mb-1"
+                      ><strong>{popular.title}</strong>
+                      </Link></h5>
                     <small className="text-muted">{newDate}</small>
                   </div>
-                  <p className="mb-1"> {
+                  <p className="mb-1" style={{ wordWrap: 'break-word' }}> {
                     popular.description.split(' ')
                       .splice(0, 15)
                       .join(' ')

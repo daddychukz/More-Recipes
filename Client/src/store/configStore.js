@@ -4,10 +4,14 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../reducers';
 
+const middleware = (process.env.NODE_ENV === 'development') ?
+  composeWithDevTools(applyMiddleware(thunk, reduxImmutableStateInvariant())) :
+  applyMiddleware(thunk);
+
 const configStore = initialState => createStore(
   rootReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(thunk, reduxImmutableStateInvariant()))
+  middleware
 );
 
 export default configStore;

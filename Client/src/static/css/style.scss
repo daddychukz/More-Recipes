@@ -19,7 +19,7 @@ body{
     min-height: 700px;
     background-size: cover;
     background-attachment: fixed;
-   
+
 .dark-overlay{
     background-color: $dark-overlay;
     position:absolute;
@@ -33,10 +33,6 @@ body{
     padding-top: 120px;
 }
 
-// .card-form{
-//     opacity: 0.8;
-// }
-
 .fa{
     color: #fff;
     padding: 4px;
@@ -47,7 +43,7 @@ body{
   .main-color-bg{
     background: $bg-color;
     border: $primary-color 3px solid;
-    
+
   }
 
   a{
@@ -67,7 +63,7 @@ body{
       color: #ffffff;
       padding-bottom: 10px;
       margin-bottom: 15px;
-      padding-top: 70px;
+      padding-top: 57px;
   }
 
   .breadcrumb a{
@@ -104,13 +100,13 @@ body{
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
   }
-  
+
   /* Safari */
   @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
   }
-  
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
