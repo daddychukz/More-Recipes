@@ -1,5 +1,5 @@
 import express from 'express';
-import recipeController from '../controller/Recipe';
+import recipeController from '../controller/recipe';
 import upvotesController from '../controller/Upvote';
 import downvotesController from '../controller/Downvote';
 import reviewController from '../controller/Review';
