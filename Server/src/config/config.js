@@ -16,6 +16,6 @@ module.exports = {
     dialect: process.env.configDialect
   },
   production: {
-    use_env_variable: process.env.configEnvVar
+    use_env_variable: process.env.DATABASE_URL
   }
 };
