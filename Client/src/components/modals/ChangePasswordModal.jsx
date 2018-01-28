@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * 
- * 
+ *
+ *
  * @class ChangePasswordModal
  * @extends {React.Component}
  */
 class ChangePasswordModal extends React.Component {
   /**
    * Creates an instance of ChangePasswordModal.
-   * @param {any} props 
+   * @param {any} props
    * @memberof ChangePasswordModal
    */
   constructor(props) {
@@ -18,9 +18,10 @@ class ChangePasswordModal extends React.Component {
     this.state = {
     };
   }
+
   /**
-   * 
-   * 
+   *
+   *
    * @memberof ChangePasswordModal
    * @returns {void}
    */

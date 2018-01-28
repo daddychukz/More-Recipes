@@ -18,8 +18,8 @@ const customHistory = createBrowserHistory({
 class LoginForm extends React.Component {
   /**
    * Creates an instance of LoginForm.
-   * @param {any} props 
-   * @param {any} context 
+   * @param {any} props
+   * @param {any} context
    * @memberof LoginForm
    */
   constructor(props, context) {
@@ -39,9 +39,9 @@ class LoginForm extends React.Component {
   }
 
   /**
-     * 
-     * 
-     * @param {any} e 
+     *
+     *
+     * @param {any} e
      * @memberof LoginForm
      * @returns {void}
      */
@@ -59,7 +59,7 @@ class LoginForm extends React.Component {
   }
 
   /**
-   * @param {any} e 
+   * @param {any} e
    * @memberof LoginForm
    * @returns {void}
    */
@@ -67,11 +67,10 @@ class LoginForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-
   /**
-   * 
-   * 
-   * @param {any} response 
+   *
+   *
+   * @param {any} response
    * @memberof LoginForm
    * @returns {object} user details
    */
@@ -97,7 +96,7 @@ class LoginForm extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method sendResetLink
    * @param {any} e
    * @memberof LoginForm
@@ -116,8 +115,8 @@ class LoginForm extends React.Component {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @returns {void}
    * @memberof LoginForm
    */

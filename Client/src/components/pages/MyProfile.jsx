@@ -17,15 +17,15 @@ const customHistory = createBrowserHistory({
 });
 
 /**
- * 
- * 
+ *
+ *
  * @class MyProfile
  * @extends {React.Component}
  */
 class MyProfile extends React.Component {
   /**
    * Creates an instance of MyProfile.
-   * @param {any} props 
+   * @param {any} props
    * @memberof MyProfile
    */
   constructor(props) {
@@ -73,7 +73,7 @@ class MyProfile extends React.Component {
   /**
    * submits updated user details
    * @returns {object} userProfile
-   * @param {any} e 
+   * @param {any} e
    * @memberof MyProfile
    */
   onSubmit(e) {
@@ -91,9 +91,9 @@ class MyProfile extends React.Component {
   }
 
   /**
-   * 
+   *
    * @returns {void}
-   * @param {any} e 
+   * @param {any} e
    * @memberof MyProfile
    */
   onChange(e) {
@@ -121,8 +121,8 @@ class MyProfile extends React.Component {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @memberof MyProfile
    * @returns {void}
    */
@@ -165,7 +165,7 @@ class MyProfile extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method render
    * @returns {component} MyProfile
    * @memberof MyProfile
@@ -334,4 +334,3 @@ const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(userActions.logout())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);
-

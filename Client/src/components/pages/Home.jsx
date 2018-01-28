@@ -7,7 +7,7 @@ import Footer from './Footer';
 
 const Home = () => (
   <div>
-    <Header active="nav-link active"/>
+    <Header active="nav-link active" />
     <header id="home-section">
       <div className="dark-overlay">
         <div className="home-inner">
@@ -43,13 +43,23 @@ const Home = () => (
                 </div>
               </div>
               <div className="col-lg-4">
-                <Link to="#" className="btn btn-info" role="button"
-                  data-toggle="collapse" data-target="#cardLogin"
-                  data-parent="#parent">Signin
+                <Link
+                  to="#"
+                  className="btn btn-info"
+                  role="button"
+                  data-toggle="collapse"
+                  data-target="#cardLogin"
+                  data-parent="#parent"
+                >Signin
                 </Link>&nbsp;
-                <Link to="#" className="btn btn-info" role="button"
-                  data-toggle="collapse" data-target="#cardRegister"
-                  data-parent="#parent">Signup
+                <Link
+                  to="#"
+                  className="btn btn-info"
+                  role="button"
+                  data-toggle="collapse"
+                  data-target="#cardRegister"
+                  data-parent="#parent"
+                >Signup
                 </Link>
                                         
                 <div className="collapse show py-3" id="cardLogin">

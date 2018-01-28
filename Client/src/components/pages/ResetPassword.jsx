@@ -6,15 +6,15 @@ import ResetPassswordForm from '../forms/ResetPasswordForm';
 import { validateToken } from '../../actions/authActions';
 
 /**
- * 
- * 
+ *
+ *
  * @class ResetPassword
  * @extends {Component}
  */
 class ResetPassword extends React.Component {
   /**
    * Creates an instance of ResetPassword.
-   * @param {any} props 
+   * @param {any} props
    * @memberof ResetPassword
    */
   constructor(props) {
@@ -26,8 +26,8 @@ class ResetPassword extends React.Component {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @memberof ResetPassword
    * @returns {String} Token
    */
@@ -38,8 +38,8 @@ class ResetPassword extends React.Component {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @returns {object} component
    * @memberof ResetPassword
    */

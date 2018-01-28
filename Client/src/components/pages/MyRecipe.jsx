@@ -13,15 +13,15 @@ import DeleteRecipeModal from '../modals/DeleteRecipeModal';
 import EditRecipeModal from '../modals/EditRecipeModal';
 
 /**
- * 
- * 
+ *
+ *
  * @class MyRecipe
  * @extends {React.Component}
  */
 class MyRecipe extends React.Component {
   /**
    * Creates an instance of MyRecipe.
-   * @param {any} props 
+   * @param {any} props
    * @memberof MyRecipe
    */
   constructor(props) {
@@ -75,9 +75,9 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   * 
+   *
    * @returns {object} recipe
-   * @param {any} e 
+   * @param {any} e
    * @memberof MyRecipe
    */
   onSubmit(e) {
@@ -123,7 +123,7 @@ class MyRecipe extends React.Component {
   /**
    * @returns {void}
    * @method onChange
-   * @param {any} e 
+   * @param {any} e
    * @memberof MyRecipe
    */
   onChange(e) {
@@ -131,9 +131,9 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method editRecipes
-   * @param {any} recipe 
+   * @param {any} recipe
    * @returns {object} recipes
    * @memberof MyRecipe
    */
@@ -148,7 +148,7 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   * 
+   *
    * @returns {object} image
    * @memberof MyRecipe
    */
@@ -163,9 +163,9 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} recipe 
+   *
+   *
+   * @param {any} recipe
    * @returns {void}
    * @memberof MyRecipe
    */
@@ -185,7 +185,7 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method render
    * @returns {object} component
    * @memberof MyRecipe

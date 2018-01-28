@@ -8,7 +8,9 @@ const Header = () => (
         <Link to={'/'} className="navbar-brand">
           <h1 id="logo">More-Recipes</h1>
         </Link>
-        <button className="navbar-toggler" data-toggle="collapse"
+        <button
+          className="navbar-toggler"
+          data-toggle="collapse"
           data-target="#navbarCollapse">
           <span className="navbar-toggler-icon" />
         </button>
@@ -18,7 +20,10 @@ const Header = () => (
               <Link to={'/'} className="nav-link active">Home</Link>
             </li>
             <li className="nav-item">
-              <Link to="#" className="nav-link" data-toggle="modal"
+              <Link
+                to="#"
+                className="nav-link"
+                data-toggle="modal"
                 data-target="#contactModal">Contact</Link>
             </li>
           </ul>
@@ -30,7 +35,9 @@ const Header = () => (
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header bg-primary">
-            <h5 className="modal-title" style={{ color: 'white' }}
+            <h5
+              className="modal-title"
+              style={{ color: 'white' }}
               id="contactModalTitle">
             Contact Us
             </h5>

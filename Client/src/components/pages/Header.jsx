@@ -11,33 +11,42 @@ const customHistory = createBrowserHistory({
 });
 
 /**
- * 
- * 
+ *
+ *
  * @class Header
  * @extends {React.Component}
  */
 class Header extends React.Component {
   /**
-   * 
-   * @returns {void}
-   * @param {any} e 
+   * Creates an instance of Header.
+   * @param {any} props
    * @memberof Header
    */
-  logout(e) {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
+  /**
+   *
+   * @returns {void}
+   * @param {any} e
+   * @memberof Header
+   */
+  logout() {
     this.props.logout();
     customHistory.push('/');
   }
   /**
-   * 
-   * 
+   *
+   *
    * @returns {object} component
    * @memberof Header
    */
   render() {
     const { pathname } = window.location;
 
-    const className = (link) => classNames({
-      'active': pathname === link,
+    const className = link => classNames({
+      active: pathname === link,
       'nav-link': true
     });
 
@@ -48,17 +57,21 @@ class Header extends React.Component {
             <Link to={'/recipe-box'} className="navbar-brand">
               <h1 id="logo">More-Recipes</h1>
             </Link>
-            <button className="navbar-toggler"
+            <button
+              className="navbar-toggler"
               data-toggle="collapse"
-              data-target="#navbarCollapse">
+              data-target="#navbarCollapse"
+            >
               <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link to={'/recipe-box'}
+                  <Link
+                    to={'/recipe-box'}
                     className={`nav-link ${pathname === '/recipe-box' &&
-                    'active'}`}>Home</Link>
+                    'active'}`}
+                  >Home</Link>
                 </li>
                 <li className="nav-item">
                   <Link to={'/add-recipe'} className={className('/add-recipe')}>
@@ -77,8 +90,11 @@ class Header extends React.Component {
                 </li>
                 <li className="nav-item">
                   <div className="btn-group open">
-                    <i className="fa fa-user-circle fa-2x pull-right"
-                      data-toggle="dropdown" aria-hidden="true" />
+                    <i
+                      className="fa fa-user-circle fa-2x pull-right"
+                      data-toggle="dropdown"
+                      aria-hidden="true"
+                    />
                     <ul className="dropdown-menu">
                       <li>
                         <Link className="dropdown-item" to={'/my-profile'}>
@@ -87,8 +103,11 @@ class Header extends React.Component {
                       </li>
                       <li className="divider" />
                       <li>
-                        <Link className="dropdown-item" to={'/'}
-                          onClick={this.logout.bind(this)}>
+                        <Link
+                          className="dropdown-item"
+                          to={'/'}
+                          onClick={this.logout}
+                        >
                           Logout
                         </Link>
                       </li>
@@ -104,8 +123,11 @@ class Header extends React.Component {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header bg-primary">
-                <h5 className="modal-title" style={{ color: 'white' }}
-                  id="contactModalTitle">
+                <h5
+                  className="modal-title"
+                  style={{ color: 'white' }}
+                  id="contactModalTitle"
+                >
                   Contact Us
                 </h5>
               </div>
@@ -138,12 +160,7 @@ class Header extends React.Component {
 
 
 Header.propTypes = {
-  auth: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { logout })(Header);
+export default connect(null, { logout })(Header);

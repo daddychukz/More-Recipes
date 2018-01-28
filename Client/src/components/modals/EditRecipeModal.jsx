@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 
 /**
- * 
- * 
+ *
+ *
  * @class EditRecipeModal
  * @extends {React.Component}
  */
 class EditRecipeModal extends React.Component {
   /**
    * Creates an instance of EditRecipeModal.
-   * @param {any} props 
+   * @param {any} props
    * @memberof EditRecipeModal
    */
   constructor(props) {
@@ -20,8 +20,8 @@ class EditRecipeModal extends React.Component {
     };
   }
   /**
-   * 
-   * 
+   *
+   *
    * @memberof EditRecipeModal
    * @returns {void}
    */

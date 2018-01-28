@@ -7,15 +7,15 @@ import * as recipeActions from '../../actions/recipeActions';
 import { getUserFavorite } from '../../actions/favoriteActions';
 
 /**
- * 
- * 
+ *
+ *
  * @class SideBar
  * @extends {React.Component}
  */
 class SideBar extends React.Component {
   /**
    * Creates an instance of SideBar.
-   * @param {any} props 
+   * @param {any} props
    * @memberof SideBar
    */
   constructor(props) {
@@ -27,14 +27,14 @@ class SideBar extends React.Component {
   }
 
   /**
-   * 
+   *
    * dispatches actions that makes request to get user profile info
    * dispatches actions that makes request to get popular/most upvoted recipes
-   * 
+   *
    * @method componentDidMount
-   * 
+   *
    * @memberof SideBar
-   * 
+   *
    * @returns {object} component
    */
   componentDidMount() {
@@ -52,7 +52,7 @@ class SideBar extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method render
    * @memberof SideBar
    * @returns {object} component

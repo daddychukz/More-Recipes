@@ -9,17 +9,18 @@ import * as userActions from '../../actions/userActions';
 const customHistory = createBrowserHistory({
   forceRefresh: true
 });
+
 /**
- * 
- * 
+ *
+ *
  * @class SignupForm
  * @extends {React.Component}
  */
 class SignupForm extends React.Component {
   /**
    * Creates an instance of SignupForm.
-   * @param {any} props 
-   * @param {any} context 
+   * @param {any} props
+   * @param {any} context
    * @memberof SignupForm
    */
   constructor(props, context) {
@@ -39,9 +40,9 @@ class SignupForm extends React.Component {
   }
 
   /**
-   * 
+   *
    * @returns {void}
-   * @param {any} e 
+   * @param {any} e
    * @memberof SignupForm
    */
   onChange(e) {
@@ -49,9 +50,9 @@ class SignupForm extends React.Component {
   }
 
   /**
-   * 
+   *
    * @returns {void}
-   * @param {any} e 
+   * @param {any} e
    * @memberof SignupForm
    */
   onSubmit(e) {
@@ -74,8 +75,8 @@ class SignupForm extends React.Component {
 
 
   /**
-   * 
-   * 
+   *
+   *
    * @returns {object} component
    * @memberof SignupForm
    */

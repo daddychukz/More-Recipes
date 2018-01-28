@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 
 /**
- * 
- * 
+ *
+ *
  * @class EditProfileModal
  * @extends {React.Component}
  */
 class EditProfileModal extends React.Component {
   /**
    * Creates an instance of EditProfileModal.
-   * @param {any} props 
+   * @param {any} props
    * @memberof EditProfileModal
    */
   constructor(props) {
@@ -20,8 +20,8 @@ class EditProfileModal extends React.Component {
     };
   }
   /**
-   * 
-   * 
+   *
+   *
    * @memberof EditProfileModal
    * @returns {void}
    */
@@ -103,7 +103,7 @@ class EditProfileModal extends React.Component {
                       />
                     </Image>
                   </CloudinaryContext>
-                    
+
                   <input
                     className="form-control-file"
                     onClick={this.props.uploadWidget}

@@ -6,16 +6,16 @@ import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as recipeActions from '../../actions/recipeActions';
 
 /**
- * 
- * 
+ *
+ *
  * @class RecipeForm
  * @extends {React.Component}
  */
 class RecipeForm extends React.Component {
   /**
    * Creates an instance of RecipeForm.
-   * @param {any} props 
-   * @param {any} context 
+   * @param {any} props
+   * @param {any} context
    * @memberof RecipeForm
    */
   constructor(props, context) {
@@ -33,9 +33,9 @@ class RecipeForm extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} e 
+   *
+   *
+   * @param {any} e
    * @memberof RecipeForm
    * @returns {void}
    */
@@ -44,9 +44,9 @@ class RecipeForm extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} e 
+   *
+   *
+   * @param {any} e
    * @memberof RecipeForm
    * @returns {void}
    */
@@ -63,7 +63,7 @@ class RecipeForm extends React.Component {
   }
 
   /**
-   * 
+   *
    * @returns {void}
    * @memberof RecipeForm
    */
@@ -81,8 +81,8 @@ class RecipeForm extends React.Component {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @memberof RecipeForm
    * @returns {object} component
    */

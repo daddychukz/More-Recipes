@@ -5,7 +5,11 @@ import {
   ITEM_TYPES } from 'react-ultimate-pagination';
 
 const propTypes = ({
-  pagination: PropTypes.object.isRequired,
+  pagination: PropTypes.shape({
+    totalPages: PropTypes.number,
+    boundaryPagesRange: PropTypes.number,
+    siblingPagesRange: PropTypes.number
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired
 });

@@ -10,15 +10,15 @@ import SideBar from './SideBar';
 import Footer from './Footer';
 
 /**
- * 
- * 
+ *
+ *
  * @class MyRecipe
  * @extends {React.Component}
  */
 class MyFavoriteRecipe extends React.Component {
   /**
    * Creates an instance of MyRecipe.
-   * @param {any} props 
+   * @param {any} props
    * @memberof MyRecipe
    */
   constructor(props) {
@@ -51,9 +51,9 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} event 
+   *
+   *
+   * @param {any} event
    * @memberof RecipeBox
    * @returns {object} recipes
    */
@@ -65,11 +65,11 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} event 
+   *
+   *
+   * @param {any} event
    * @memberof MyFavoriteRecipe
-   * 
+   *
    * @returns {object} recipes
    */
   onKeyPressEnter(event) {
@@ -87,9 +87,9 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} recipe 
+   *
+   *
+   * @param {any} recipe
    * @returns {void}
    * @memberof MyRecipe
    */
@@ -107,7 +107,7 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method render
    * @returns {object} component
    * @memberof MyRecipe

@@ -11,33 +11,42 @@ const customHistory = createBrowserHistory({
 });
 
 /**
- * 
- * 
+ *
+ *
  * @class HeaderProfile
  * @extends {React.Component}
  */
 class HeaderProfile extends React.Component {
   /**
-   * 
-   * @returns {void}
-   * @param {any} e 
+   * Creates an instance of HeaderProfile.
+   * @param {any} props
    * @memberof HeaderProfile
    */
-  logout(e) {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
+  /**
+   *
+   * @returns {void}
+   * @param {any} e
+   * @memberof HeaderProfile
+   */
+  logout() {
     this.props.logout();
     customHistory.push('/');
   }
   /**
-   * 
-   * 
+   *
+   *
    * @returns {object} component
    * @memberof HeaderProfile
    */
   render() {
     const { pathname } = window.location;
 
-    const className = (link) => classNames({
-      'active': pathname === link,
+    const className = link => classNames({
+      active: pathname === link,
       'nav-link': true
     });
 
@@ -47,15 +56,21 @@ class HeaderProfile extends React.Component {
           <div className="container">
             <Link to={'/recipe-box'} className="navbar-brand">
               <h1 id="logo">More-Recipes</h1></Link>
-            <button className="navbar-toggler" data-toggle="collapse"
-              data-target="#navbarCollapse">
+            <button
+              className="navbar-toggler"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
               <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link to={'/recipe-box'} className={`nav-link
-                  ${pathname === '/recipe-box' && 'active'}`}>Home</Link>
+                  <Link
+                    to={'/recipe-box'}
+                    className={`nav-link
+                  ${pathname === '/recipe-box' && 'active'}`}
+                  >Home</Link>
                 </li>
                 <li className="nav-item">
                   <Link to={'/add-recipe'} className={className('/add-recipe')}>
@@ -68,15 +83,20 @@ class HeaderProfile extends React.Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/my-favorite'}
-                    className={className('/my-favorite')}>
+                  <Link
+                    to={'/my-favorite'}
+                    className={className('/my-favorite')}
+                  >
                     Favorites
                   </Link>
                 </li>
                 <li className="nav-item">
                   <div className="btn-group open">
-                    <i className="fa fa-user-circle fa-2x pull-right"
-                      data-toggle="dropdown" aria-hidden="true" />
+                    <i
+                      className="fa fa-user-circle fa-2x pull-right"
+                      data-toggle="dropdown"
+                      aria-hidden="true"
+                    />
                     <ul className="dropdown-menu">
                       <li>
                         <Link className="dropdown-item" to={'/my-profile'}>
@@ -85,13 +105,20 @@ class HeaderProfile extends React.Component {
                       </li>
                       <li className="divider" />
                       <li>
-                        <Link className="dropdown-item" to="#"
-                          data-toggle="modal" data-target="#profileModal">
+                        <Link
+                          className="dropdown-item"
+                          to="#"
+                          data-toggle="modal"
+                          data-target="#profileModal"
+                        >
                           Edit Profile
                         </Link></li>
                       <li>
-                        <Link className="dropdown-item" to={'/'}
-                          onClick={this.logout.bind(this)}>
+                        <Link
+                          className="dropdown-item"
+                          to={'/'}
+                          onClick={this.logout}
+                        >
                           Logout
                         </Link></li>
                     </ul>

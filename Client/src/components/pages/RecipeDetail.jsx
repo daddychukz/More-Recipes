@@ -14,15 +14,15 @@ import Footer from './Footer';
 import FavoriteRecipeModal from '../modals/FavoriteRecipeModal';
 
 /**
- * 
- * 
+ *
+ *
  * @class RecipeDetail
  * @extends {React.Component}
  */
 class RecipeDetail extends React.Component {
   /**
    * Creates an instance of RecipeDetail.
-   * @param {any} props 
+   * @param {any} props
    * @memberof RecipeDetail
    */
   constructor(props) {
@@ -53,10 +53,10 @@ class RecipeDetail extends React.Component {
   }
   /**
    * dispatches actions that makes request to get a single recipe
-   * 
+   *
    * dispatches actions that makes request to get all reviews
    * for a particular recipe
-   * 
+   *
    * dispatches actions that makes request to get a single recipe
    * favorited by a user
    * @method componentWillMount
@@ -110,7 +110,7 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
+   *
    * @param {any} nextProps
    * @method componentWillReceiveProps
    * @memberof RecipeDetail
@@ -169,9 +169,9 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method onChange
-   * @param {any} e 
+   * @param {any} e
    * @memberof RecipeDetail
    * @returns {void}
    */
@@ -180,11 +180,11 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} e 
+   *
+   *
+   * @param {any} e
    * @memberof RecipeDetail
-   * 
+   *
    * @returns {void}
    */
   onInput(e) {
@@ -197,9 +197,9 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} e 
+   *
+   *
+   * @param {any} e
    * @memberof RecipeDetail
    * @returns {object} reviews
    * @returns {object} favorite recipe
@@ -221,7 +221,7 @@ class RecipeDetail extends React.Component {
 
   /**
    * @method getUniqueCategories
-   * 
+   *
    * @memberof RecipeDetail
    * @returns {array} uniqueCategories
    */
@@ -233,7 +233,7 @@ class RecipeDetail extends React.Component {
 
   /**
    * @method openModal
-   * 
+   *
    * @memberof RecipeDetail
    * @returns {void}
    */
@@ -251,7 +251,7 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method favoriteRecipe
    * @memberof RecipeDetail
    * @returns {object} favoriteRecipe
@@ -279,7 +279,7 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method upvote
    * @memberof RecipeDetail
    * @returns {object} upvotes
@@ -316,7 +316,7 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method downVote
    * @memberof RecipeDetail
    * @returns {object} downvote
@@ -353,10 +353,10 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method render
    * @memberof RecipeDetail
-   * @returns {object} component 
+   * @returns {object} component
    */
   render() {
     return (

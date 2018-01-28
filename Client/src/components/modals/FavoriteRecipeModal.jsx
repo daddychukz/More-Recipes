@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * 
- * 
+ *
+ *
  * @class FavoriteRecipeModal
  * @extends {React.Component}
  */
 class FavoriteRecipeModal extends React.Component {
   /**
    * Creates an instance of FavoriteRecipeModal.
-   * @param {any} props 
+   * @param {any} props
    * @memberof FavoriteRecipeModal
    */
   constructor(props) {
@@ -19,8 +19,8 @@ class FavoriteRecipeModal extends React.Component {
     };
   }
   /**
-   * 
-   * 
+   *
+   *
    * @memberof FavoriteRecipeModal
    * @returns {void}
    */

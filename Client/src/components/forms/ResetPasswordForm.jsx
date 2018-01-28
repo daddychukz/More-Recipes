@@ -9,16 +9,16 @@ const customHistory = createBrowserHistory({
   forceRefresh: true
 });
 /**
- * 
- * 
+ *
+ *
  * @class ResetPasswordForm
  * @extends {React.Component}
  */
 class ResetPasswordForm extends React.Component {
   /**
    * Creates an instance of ResetPasswordForm.
-   * @param {any} props 
-   * @param {any} context 
+   * @param {any} props
+   * @param {any} context
    * @memberof ResetPasswordForm
    */
   constructor(props, context) {
@@ -34,9 +34,9 @@ class ResetPasswordForm extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} e 
+   *
+   *
+   * @param {any} e
    * @memberof ResetPasswordForm
    * @returns {void}
    */
@@ -45,9 +45,9 @@ class ResetPasswordForm extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} e 
+   *
+   *
+   * @param {any} e
    * @memberof ResetPasswordForm
    * @returns {void}
    */
@@ -69,8 +69,8 @@ class ResetPasswordForm extends React.Component {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @memberof ResetPasswordForm
    * @returns {object} component
    */
@@ -104,7 +104,7 @@ class ResetPasswordForm extends React.Component {
               required
             />
           </div>
-          
+
           <button type="submit" className="btn btn-info">
             Reset Password
           </button>

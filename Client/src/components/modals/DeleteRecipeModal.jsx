@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * 
- * 
+ *
+ *
  * @class DeleteRecipeModal
  * @extends {React.Component}
  */
 class DeleteRecipeModal extends React.Component {
   /**
    * Creates an instance of DeleteRecipeModal.
-   * @param {any} props 
+   * @param {any} props
    * @memberof DeleteRecipeModal
    */
   constructor(props) {
@@ -19,8 +19,8 @@ class DeleteRecipeModal extends React.Component {
     };
   }
   /**
-   * 
-   * 
+   *
+   *
    * @memberof DeleteRecipeModal
    * @returns {void}
    */

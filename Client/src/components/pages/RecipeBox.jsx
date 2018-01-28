@@ -12,15 +12,15 @@ import SideBar from './SideBar';
 import Footer from './Footer';
 
 /**
- * 
- * 
+ *
+ *
  * @class RecipeBox
  * @extends {React.Component}
  */
 class RecipeBox extends React.Component {
   /**
    * Creates an instance of RecipeBox.
-   * @param {any} props 
+   * @param {any} props
    * @memberof RecipeBox
    */
   constructor(props) {
@@ -91,9 +91,9 @@ class RecipeBox extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} event 
+   *
+   *
+   * @param {any} event
    * @memberof RecipeBox
    * @returns {object} recipes
    */
@@ -119,7 +119,7 @@ class RecipeBox extends React.Component {
   }
 
   /**
-   * 
+   *
    * @method render
    * @memberof RecipeBox
    * @returns {object} component
@@ -146,7 +146,7 @@ class RecipeBox extends React.Component {
               <div className="row">
                 <SideBar />
 
-                {/* RECIPE CATALOG  */}                            
+                {/* RECIPE CATALOG  */}
                 <div className="col-md-8" id="display">
                   <input
                     value={this.state.searchString}
@@ -237,7 +237,7 @@ class RecipeBox extends React.Component {
             <div className="row">
               <SideBar />
 
-              {/* RECIPE CATALOG  */}                            
+              {/* RECIPE CATALOG  */}
               <div className="col-md-8" id="display" />
 
             </div>
