@@ -13,5 +13,8 @@ before_script:
 env:
   global:
     - export NODE_ENV=test
+    
+script:
+  - npm run coverage
   
-after_success: 'npm run coverage'
+after_success: 'npm run coveralls'
