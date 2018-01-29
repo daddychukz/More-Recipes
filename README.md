@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/daddychukz/More-Recipes.svg?branch=feature_API_Badges_Dummy_Data)](https://travis-ci.org/daddychukz/More-Recipes)
-[![Coverage Status](https://coveralls.io/repos/github/daddychukz/More-Recipes/badge.svg?branch=develop)](https://coveralls.io/github/daddychukz/More-Recipes?branch=develop)
 [![Code Climate](https://codeclimate.com/github/daddychukz/More-Recipes.png)](https://codeclimate.com/github/daddychukz/More-Recipes)
 
 # MORE-RECIPES
