@@ -84,7 +84,9 @@ const config = {
       safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
       systemvars: true
     }),
-    new webpack.optimize.UglifyJsPlugin()
+    (process.env.NODE_ENV === 'development') ?
+      {} :
+      new webpack.optimize.UglifyJsPlugin()
   ],
 };
 
