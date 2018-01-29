@@ -6,12 +6,13 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 
 export const signUp = user => (dispatch) => {
-  return axios.post('/api/v1/users/signup', user).then(() => {
+  return axios.post('/api/v1/users/signup', user).then((response) => {
+    toastr.success(response.data.Message);
     dispatch({
       type: types.CREATE_USER,
       payload: user
     });
-  }).catch(error => toastr.error(error.response.data.error.message));
+  });
 };
 
 export const setCurrentUser = user => ({

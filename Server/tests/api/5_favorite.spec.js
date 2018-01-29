@@ -5,7 +5,7 @@ import app from '../../src/app';
 import models from '../../src/models';
 import fakeData from '../helpers/fakeData';
 import { userToken, newUser } from './1_user.spec';
-import recipe3 from './3_review.spec';
+import recipe from './2_recipe.spec';
 
 const { expect } = chai;
 
@@ -19,10 +19,10 @@ models
 describe('User Favorite Operations', () => {
   it('adds a recipe to users favorites', (done) => {
     request(app)
-      .post(`/api/v1/recipes/${recipe3.recipe.recipeId}`)
+      .post(`/api/v1/recipes/${recipe.recipe2.recipeId}`)
       .set('authorization', userToken.token)
       .send({
-        recipeId: recipe3.recipe.recipeId,
+        recipeId: recipe.recipe2.recipeId,
         userId: newUser.user.userId,
         Category: 'Soups'
       })

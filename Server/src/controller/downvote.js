@@ -42,7 +42,7 @@ class Downvote {
                 }
               }).then(() => {
               // counts all downvotes
-                countVote(request, false);
+                countVote.countDownvote(request);
               });
               response.send({
                 message: 'You removed your Downvote',
@@ -68,8 +68,8 @@ class Downvote {
                   },
                 })
                   .then(() => {
-                    countVote(request, false);
-                    countVote(request, true);
+                    countVote.countUpvote(request);
+                    countVote.countDownvote(request);
                   });
               });
             }

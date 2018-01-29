@@ -55,14 +55,20 @@ class User {
       })
       .then((user) => {
         const { fullname, username, email } = user;
-        response.status(201).send({
-          Message: 'User created successfully',
-          User: {
-            fullname,
-            username,
-            email
-          }
-        });
+        if (user) {
+          response.status(201).send({
+            Message: 'User created successfully',
+            User: {
+              fullname,
+              username,
+              email
+            }
+          });
+        } else {
+          response.status(404).send({
+            message: 'This record does not exists!'
+          });
+        }
       })
       .catch((error) => {
         errorHandling.validateSignupErrors(error, response);
@@ -186,8 +192,8 @@ class User {
   }
 
   /**
-   * 
-   * 
+   *
+   *
    * @static
    * @param {any} Password
    * @param {any} UserId
@@ -313,9 +319,10 @@ class User {
             hobbies,
             phone,
             imageUrl,
-            publicUrl
+            publicUrl,
+            email
           } = updatedRecord;
-          response.send({
+          response.status(202).send({
             fullname,
             about,
             username,
@@ -323,7 +330,8 @@ class User {
             hobbies,
             phone,
             imageUrl,
-            publicUrl
+            publicUrl,
+            email
           });
         });
     })

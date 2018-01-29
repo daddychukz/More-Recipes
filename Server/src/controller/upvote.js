@@ -42,7 +42,7 @@ class Upvote {
                 }
               }).then(() => {
                 // counts total number of upvotes
-                countVote(request, true);
+                countVote.countUpvote(request);
               });
               response.status(200).send({
                 message: 'You removed your Upvote',
@@ -66,8 +66,8 @@ class Upvote {
                     vote: false
                   },
                 }).then(() => {
-                  countVote(request, true);
-                  countVote(request, false);
+                  countVote.countUpvote(request);
+                  countVote.countDownvote(request);
                 });
               });
             }
@@ -86,7 +86,7 @@ class Upvote {
   /**
    * mostRecipeUpvote
    * @desc Gets recipe with Upvotes in descending order
-   * Route: PUT: /recipes/:recipeID/upvote
+   * Route: GET: /api/v1/recipe?sort=upvotes&order=des
    * @param {Object} request request object
    * @param {Object} response response object
    * @returns {void}

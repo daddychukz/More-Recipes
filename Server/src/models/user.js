@@ -14,6 +14,15 @@ export default (sequelize, DataTypes) => {
     fullname: {
       type: DataTypes.STRING,
       allowNull: true,
+      validate: {
+        notEmpty: {
+          msg: 'Full name is required'
+        },
+        is: {
+          args: /^[a-z ]+$/i,
+          msg: 'Full name must only contain letters'
+        }
+      }
     },
     email: {
       type: DataTypes.STRING,
