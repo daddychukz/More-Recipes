@@ -1,13 +1,12 @@
 import request from 'supertest';
 import chai from 'chai';
-import faker from 'Faker';
 import app from '../../src/app';
 import models from '../../src/models';
 import fakeData from '../helpers/fakeData';
 import { userToken } from './1_user.spec';
 
 const { expect } = chai;
-const recipe2 = {};
+const recipe = {};
 
 models
   .Recipe
@@ -21,10 +20,36 @@ describe('Recipe Operations', () => {
     request(app)
       .post('/api/v1/recipes')
       .set('authorization', userToken.token)
-      .send(fakeData.recipe)
+      .send(fakeData.recipe1)
       .expect(201)
       .end((err, res) => {
-        recipe2.recipe = res.body.recipe;
+        recipe.recipe1 = res.body.recipe;
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('adds a second recipe to the catalog', (done) => {
+    request(app)
+      .post('/api/v1/recipes')
+      .set('authorization', userToken.token)
+      .send(fakeData.recipe2)
+      .expect(201)
+      .end((err, res) => {
+        recipe.recipe2 = res.body.recipe;
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('adds a third recipe to the catalog', (done) => {
+    request(app)
+      .post('/api/v1/recipes')
+      .set('authorization', userToken.token)
+      .send(fakeData.recipe3)
+      .expect(201)
+      .end((err, res) => {
+        recipe.recipe3 = res.body.recipe;
         if (err) return done(err);
         done();
       });
@@ -42,7 +67,7 @@ describe('Recipe Operations', () => {
 
   it('modifies a recipe in catalog', (done) => {
     request(app)
-      .post(`/api/v1/recipe/${recipe2.recipe.recipeId}`)
+      .post(`/api/v1/recipe/${recipe.recipe1.recipeId}`)
       .set('authorization', userToken.token)
       .send({
         Title: 'Egusi soup preparation',
@@ -57,7 +82,7 @@ describe('Recipe Operations', () => {
 
   it('deletes recipe from catalog', (done) => {
     request(app)
-      .delete(`/api/v1/recipes/${recipe2.recipe.recipeId}`)
+      .delete(`/api/v1/recipes/${recipe.recipe1.recipeId}`)
       .set('authorization', userToken.token)
       .expect(200)
       .end((err, res) => {
@@ -66,3 +91,5 @@ describe('Recipe Operations', () => {
       });
   });
 });
+
+export default recipe;

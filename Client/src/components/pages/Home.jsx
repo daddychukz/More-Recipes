@@ -61,7 +61,7 @@ const Home = () => (
                   data-parent="#parent"
                 >Signup
                 </Link>
-                                        
+
                 <div className="collapse show py-3" id="cardLogin">
                   <div className="card main-color-bg text-center card-form">
                     <div className="card-body">
@@ -71,7 +71,7 @@ const Home = () => (
                     </div>
                   </div>
                 </div>
-                                        
+
                 <div className="collapse py-3" id="cardRegister">
                   <div className="card main-color-bg text-center card-form">
                     <div className="card-body">
@@ -92,4 +92,3 @@ const Home = () => (
 );
 
 export default Home;
-

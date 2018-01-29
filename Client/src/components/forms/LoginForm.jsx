@@ -168,7 +168,7 @@ class LoginForm extends React.Component {
                   style={{ width: '',
                     backgroundColor: 'transparent',
                     borderColor: 'transparent' }}
-                  clientId="1020610939165-pgmi2vuh8broeahhfo1v6vfqueb92sak.apps.googleusercontent.com"
+                  clientId={process.env.ClientId}
                   buttonText={<i className="fa fa-2x fa-google-plus" />}
                   onSuccess={this.responseGoogle}
                   onFailure={this.responseGoogle}

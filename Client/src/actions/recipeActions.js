@@ -80,7 +80,11 @@ export const viewSingleRecipe = (recipeId) => {
       .then((response) => {
         dispatch(viewSingleRecipeAction(response.data.recipe));
       })
-      .catch(() => {});
+      .catch((error) => {
+        if (error.response.data.message === 'Record not Found!') {
+          window.location.replace('/error');
+        }
+      });
   };
 };
 
@@ -117,7 +121,7 @@ export const downvoteRecipe = (recipeId) => {
 /**
  * @param {any} limit
  * @param {any} offset
- * 
+ *
  * @export { function } viewRecipes
  * @returns { object } action type and server response
  */

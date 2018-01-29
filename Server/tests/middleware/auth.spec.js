@@ -75,7 +75,7 @@ describe('Recipe Operations', () => {
     request(app)
       .post('/api/v1/recipes')
       .set('authorization', userToken.token)
-      .send(fakeData.recipe)
+      .send(fakeData.recipe4)
       .expect(201)
       .end((err, res) => {
         recipe1.recipe = res.body.recipe;

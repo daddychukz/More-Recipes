@@ -236,7 +236,12 @@ class MyRecipe extends React.Component {
                                 .toDateString();
                               return (
                                 <tr key={recipe.recipeId}>
-                                  <td>
+                                  <td style={{
+                                    wordWrap: 'break-word',
+                                    minWidth: '160px',
+                                    maxWidth: '160px',
+                                    whiteSpace: 'normal' }}
+                                  >
                                     <Link to={`/recipe/${recipe.recipeId}`}>
                                       {recipe.title}
                                     </Link>

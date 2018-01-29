@@ -55,7 +55,7 @@ class Header extends React.Component {
         <nav className="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
           <div className="container">
             <Link to={'/recipe-box'} className="navbar-brand">
-              <h1 id="logo">More-Recipes</h1>
+              <h3 id="logo">More-Recipes</h3>
             </Link>
             <button
               className="navbar-toggler"

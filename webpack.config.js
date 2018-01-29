@@ -4,8 +4,6 @@ const webpack = require('webpack');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
-const DIST_DIR = path.resolve(__dirname, 'Client/dist');
-
 // directory to serve and transpile app from
 const SRC_DIR = path.resolve(__dirname, 'Client/src');
 
@@ -83,9 +81,12 @@ const config = {
   plugins: [
     new Dotenv({
       path: path.resolve('./.env'), // Path to .env file
-      safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe) 
+      safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
       systemvars: true
-    })
+    }),
+    (process.env.NODE_ENV === 'development') ?
+      {} :
+      new webpack.optimize.UglifyJsPlugin()
   ],
 };
 

@@ -61,10 +61,7 @@ class SignupForm extends React.Component {
       toastr.error('Passwords do not match');
     } else {
       this.props.actions.signUp(this.state).then(
-        () => {
-          toastr.success('Registration Successful');
-          customHistory.push('/');
-        },
+        () => customHistory.push('/'),
         (error) => {
           this.setState({ isLoading: false });
           toastr.error(error.response.data.error.message);
