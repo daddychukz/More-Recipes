@@ -82,17 +82,18 @@ class LoginForm extends React.Component {
       Email: email,
       Password: googleId,
       ConfirmPassword: googleId,
-      ImageUrl: imageUrl }).then(
-      () => {
-        this.props.signIn({ Email: email, Password: googleId }).then(
-          () => customHistory.push('/recipe-box'),
-          (error) => {
-            this.setState({ errors: error.response.data, isLoading: false });
-            toastr.error(error.response.data.message);
-          }
-        );
-      }
-    );
+      ImageUrl: imageUrl });
+    //   .then(
+    //   () => {
+    //     this.props.signIn({ Email: email, Password: googleId }).then(
+    //       () => customHistory.push('/recipe-box'),
+    //       (error) => {
+    //         this.setState({ errors: error.response.data, isLoading: false });
+    //         toastr.error(error.response.data.message);
+    //       }
+    //     );
+    //   }
+    // );
   }
 
   /**

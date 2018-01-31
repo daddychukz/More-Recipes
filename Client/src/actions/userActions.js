@@ -1,9 +1,13 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import toastr from 'toastr';
+import createBrowserHistory from 'history/createBrowserHistory';
 import * as types from './types';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
+const customHistory = createBrowserHistory({
+  forceRefresh: true
+});
 
 export const setCurrentUser = user => ({
   type: types.SET_CURRENT_USER,
@@ -18,11 +22,12 @@ export const signUp = user => (dispatch) => {
     setAuthorizationToken(token);
     dispatch(setCurrentUser(jwt.decode(token)));
     localStorage.setItem('user', jwt.decode(token).userId);
+    customHistory.push('/recipe-box');
     dispatch({
       type: types.CREATE_USER,
       payload: user
     });
-  });
+  }).catch(error => toastr.error(error.response.data.error.message));
 };
 
 export const resetPasswordRequestAction = serverRes => ({
