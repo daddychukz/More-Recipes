@@ -82,7 +82,7 @@ class LoginForm extends React.Component {
       Email: email,
       Password: googleId,
       ConfirmPassword: googleId,
-      imageUrl }).then(
+      ImageUrl: imageUrl }).then(
       () => {
         this.props.signIn({ Email: email, Password: googleId }).then(
           () => customHistory.push('/recipe-box'),

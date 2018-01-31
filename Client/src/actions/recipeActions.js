@@ -83,6 +83,8 @@ export const viewSingleRecipe = (recipeId) => {
       .catch((error) => {
         if (error.response.data.message === 'Record not Found!') {
           window.location.replace('/error');
+        } else if (error.response.data.error.message === 'Invalid Recipe ID') {
+          window.location.replace('/error');
         }
       });
   };
@@ -143,7 +145,7 @@ export const getUserRecipes = (limit, offset) => {
  */
 export const updateUserRecipe = (recipeID, recipe) => {
   return (dispatch) => {
-    return axios.post(`/api/v1/recipe/${recipeID}`, recipe)
+    return axios.put(`/api/v1/recipe/${recipeID}`, recipe)
       .then((response) => {
         dispatch(updateUserRecipeAction(response.data.updatedRecipe));
       })

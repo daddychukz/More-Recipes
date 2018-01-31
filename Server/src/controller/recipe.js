@@ -1,6 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 import db from '../models';
 import paginate from '../services/paginate';
+import errorHandling from './HandleErrors/errorHandling';
 
 const recipeModel = db.Recipe;
 
@@ -19,6 +20,11 @@ class Recipe {
    */
   static retrieveRecipes(request, response) {
     const { limit, offset, searchString } = request.query;
+    if (Number.isNaN(parseInt(limit, 10)) || Number.isNaN(parseInt(offset, 10))) {
+      return response.status(406).json({
+        message: 'Limit or Offset must be a number',
+      });
+    }
     recipeModel
       .findAndCountAll({
         order: [['createdAt', 'DESC']],
@@ -111,14 +117,15 @@ class Recipe {
    */
   static createRecipe(request, response) {
     const {
-      Title, Description, imageUrl, publicId
+      Title, Description, ImageUrl, PublicId
     } = request.body;
     const { userId, fullname } = request.decoded;
     if (!Title || Title.trim().length === 0) {
       return response.status(406).json({
         message: 'Title Field should not be Empty',
       });
-    } else if (!Description || Description.trim().length === 0) {
+    }
+    if (!Description || Description.trim().length === 0) {
       return response.status(406).json({
         message: 'Description Field should not be Empty',
       });
@@ -144,12 +151,12 @@ class Recipe {
             fullname,
             title: Title,
             description: Description,
-            imageUrl,
-            publicId
+            imageUrl: ImageUrl,
+            publicId: PublicId
           }).then(recipe => response.status(201).json({
             recipe
           })).catch(() => response.status(500).json({
-            message: 'Internal server error',
+            message: 'Internal server error'
           }));
         }
       });
@@ -295,10 +302,7 @@ class Recipe {
           }
         }
       })
-      .catch(error => response.status(500).json({
-        message: 'Internal Server Error',
-        error
-      }));
+      .catch(error => errorHandling.validateRecipeIdErrors(error, response));
   }
 }
 

@@ -26,7 +26,7 @@ class User {
    */
   static signUp(request, response) {
     const {
-      Email, UserName, FullName, Password, ConfirmPassword, imageUrl
+      Email, UserName, FullName, Password, ConfirmPassword, ImageUrl
     } = request.body;
     if (!Email || Email.trim().length === 0) {
       errors.error = { message: 'Email Field should not be Empty' };
@@ -51,17 +51,23 @@ class User {
         username: UserName,
         password: Password,
         confirmPassword: ConfirmPassword,
-        imageUrl
+        imageUrl: ImageUrl
       })
       .then((user) => {
-        const { fullname, username, email } = user;
+        const { fullname, username, email, userId } = user;
         if (user) {
+          const token = jwt.sign({
+            username,
+            userId,
+            fullname
+          }, Secret, { expiresIn: '24h' });
           response.status(201).send({
             Message: 'User created successfully',
             User: {
               fullname,
               username,
-              email
+              email,
+              token
             }
           });
         } else {
@@ -196,30 +202,32 @@ class User {
    *
    * @static
    * @param {any} Password
-   * @param {any} UserId
+   * @param {any} userId
    * @param {any} response
    * @memberof User
    * @returns {object} response
    */
-  static updatePassword(Password, UserId, response) {
+  static updatePassword(Password, userId, response) {
     const updateRecord = {};
     userModel.findOne({
       where: {
-        userId: UserId
+        userId
       }
     }).then((userInfo) => {
       if (userInfo) {
         if (Password) {
           updateRecord.password = bcrypt.hashSync(Password, bcrypt.genSaltSync(8));
+          userInfo.update(updateRecord)
+            .then(() => response.status(200).json({
+              message: 'Password Successfuly Updated'
+            }));
         }
-        userInfo.update(updateRecord)
-          .then(() => response.status(200).json({
-            message: 'Password Successfuly Updated'
-          }));
       } else {
         response.status(401).json({ message: 'Invalid Token' });
       }
-    });
+    }).catch(() => response.status(500).send({
+      message: 'Internal Server Error'
+    }));
   }
 
   /**
@@ -239,7 +247,7 @@ class User {
         if (error) {
           response.status(401).json({ message: 'Invalid Token' });
         } else {
-          User.updatePassword(Password, decoded, response);
+          User.updatePassword(Password, decoded.userId, response);
         }
       });
     } else {

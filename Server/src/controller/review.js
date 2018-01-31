@@ -48,7 +48,11 @@ class Review {
           recipeId: request.params.recipeID,
         },
         include: [{
-          model: db.User
+          model: db.User,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt', 'password', 'sex',
+              'username', 'address', 'about']
+          }
         }]
       })
       .then((reviews) => {

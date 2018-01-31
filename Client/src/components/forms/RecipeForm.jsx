@@ -29,8 +29,8 @@ class RecipeForm extends React.Component {
     this.state = {
       Title: '',
       Description: '',
-      imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
-      publicId: 'home_gipmmy.jpg',
+      ImageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+      PublicId: 'home_gipmmy.jpg',
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -79,8 +79,8 @@ class RecipeForm extends React.Component {
       tags: ['daddy'] },
     (error, result) => {
       this.setState({
-        imageUrl: result[0].secure_url,
-        publicId: result[0].public_id
+        ImageUrl: result[0].secure_url,
+        PublicId: result[0].public_id
       });
     });
   }
@@ -124,7 +124,7 @@ class RecipeForm extends React.Component {
           </div>
           <div className="form-group">
             <CloudinaryContext cloudName="chuks-andela32">
-              <Image publicId={this.state.publicId}>
+              <Image publicId={this.state.PublicId}>
                 <Transformation
                   crop="scale"
                   width="200"

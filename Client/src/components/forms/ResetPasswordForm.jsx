@@ -63,7 +63,7 @@ class ResetPasswordForm extends React.Component {
     } else {
       this.props.resetPassword(userData).then(
         () => customHistory.push('/'),
-        () => {}
+        error => console.log(error.response.data)
       );
     }
   }

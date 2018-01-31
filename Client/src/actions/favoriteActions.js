@@ -21,9 +21,9 @@ export const addToFavorites = (recipeId, category) => {
   return (dispatch) => {
     return axios.post(`/api/v1/recipes/${recipeId}`, category)
       .then((response) => {
-        dispatch(addToFavoriteAction(response.data.favorite));
+        dispatch(addToFavoriteAction(response.data));
         toastr.success(response.data.message);
-      });
+      }).catch(error => toastr.error(error.response.data.message));
   };
 };
 
@@ -33,7 +33,7 @@ export const getUserFavorite = (userId) => {
       .then((response) => {
         dispatch(getUserFavoriteAction(response.data.favoriteRecipe));
       })
-      .catch((error) => error);
+      .catch(() => {});
   };
 };
 

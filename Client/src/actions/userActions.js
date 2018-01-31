@@ -5,20 +5,25 @@ import * as types from './types';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 
+export const setCurrentUser = user => ({
+  type: types.SET_CURRENT_USER,
+  user
+});
+
 export const signUp = user => (dispatch) => {
   return axios.post('/api/v1/users/signup', user).then((response) => {
     toastr.success(response.data.Message);
+    const token = response.data.User.token;
+    localStorage.setItem('jwtToken', token);
+    setAuthorizationToken(token);
+    dispatch(setCurrentUser(jwt.decode(token)));
+    localStorage.setItem('user', jwt.decode(token).userId);
     dispatch({
       type: types.CREATE_USER,
       payload: user
     });
   });
 };
-
-export const setCurrentUser = user => ({
-  type: types.SET_CURRENT_USER,
-  user
-});
 
 export const resetPasswordRequestAction = serverRes => ({
   type: types.RESET_USER_PASSWORD_REQUEST,

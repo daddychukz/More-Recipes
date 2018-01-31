@@ -45,6 +45,7 @@ class MyProfile extends React.Component {
     this.uploadWidget = this.uploadWidget.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
 
   /**
@@ -87,7 +88,12 @@ class MyProfile extends React.Component {
       Phone: this.state.Phone,
       Address: this.state.Address
     };
-    this.props.updateUserProfile(data);
+    this.props.updateUserProfile(data).then(
+      () => {
+        toastr.success('Profile updated successfully');
+        $('#profileModal').modal('toggle');
+      }
+    );
   }
 
   /**
@@ -131,7 +137,8 @@ class MyProfile extends React.Component {
     const userData = {
       Password: this.state.newPassword,
       OldPassword: this.state.oldPassword,
-      UserId: this.props.profile.userId
+      UserId: this.props.profile.userId,
+      isChange: true
     };
     if (newPassword !== confirmPassword) {
       toastr.error('Passwords do not match');
@@ -199,7 +206,7 @@ class MyProfile extends React.Component {
                     <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                       {
                         <div key={this.props.profile.userId}>
-                          <div className="d-flex flex-row">
+                          <div className="d-flex flex-row flex-wrap">
                             <div className="p-2 align-self-start">
                               {
                                 this.props.profile.publicUrl ===

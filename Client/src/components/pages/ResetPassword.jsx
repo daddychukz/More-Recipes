@@ -51,7 +51,7 @@ class ResetPassword extends React.Component {
         <nav className="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
           <div className="container">
             <Link to={'/'} className="navbar-brand">
-              <h1 id="logo">More-Recipes</h1>
+              <h3 id="logo">More-Recipes</h3>
             </Link>
             <button
               className="navbar-toggler"
@@ -70,26 +70,31 @@ class ResetPassword extends React.Component {
           </div>
         </nav>
 
-        <header id="header" />
+        <header style={{
+          background: '#333333',
+          paddingTop: '67px'
+        }}
+        />
 
-        <section>
+        <section
+          className="d-flex flex-row align-items-center
+          justify-content-center obj-color"
+          style={{ width: '100vw', height: '52vw' }}
+        >
           <br />
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 obj-color">
+          <div>
 
-                { loading && <div className="loader" /> }
-                { !loading && success &&
-                  <div>
-                    <h4 className="text-center"> Reset Your Password </h4>
-                    <br />
-                    <ResetPassswordForm token={token} />
-                  </div>
-                }
-                { !loading && !success &&
-                <h5>You currently do not have Permission to this Page</h5> }
-              </div>
+            { loading && <div className="loader" /> }
+            { !loading && success &&
+            <div style={{ marginTop: '-300px' }}>
+              <h4 className="text-center"> Reset Your Password </h4>
+              <br />
+              <ResetPassswordForm token={token} />
             </div>
+            }
+            { !loading && !success &&
+            <h5>You currently do not have Permission to this Page</h5>
+            }
           </div>
         </section>
       </div>
