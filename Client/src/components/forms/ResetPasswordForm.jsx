@@ -62,8 +62,7 @@ class ResetPasswordForm extends React.Component {
       toastr.error('Passwords do not match');
     } else {
       this.props.resetPassword(userData).then(
-        () => customHistory.push('/'),
-        error => console.log(error.response.data)
+        () => customHistory.push('/')
       );
     }
   }

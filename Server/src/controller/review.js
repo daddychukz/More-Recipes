@@ -28,7 +28,20 @@ class Review {
       recipeId: request.params.recipeID,
       fullname: request.decoded.fullname,
       review: request.body.Review
-    }).then(rev => response.status(201).json({ rev }))
+    }).then((rev) => {
+      response.status(201).json({
+        id: rev.id,
+        userId: rev.userId,
+        recipeId: rev.recipeId,
+        review: rev.review,
+        createdAt: rev.createdAt,
+        User: {
+          fullname: rev.fullname,
+          publicUrl: request.decoded.publicUrl,
+          imageUrl: request.decoded.imageUrl
+        }
+      });
+    })
       .catch((error) => {
         errorHandling.validateRecipeIdErrors(error, response);
       });

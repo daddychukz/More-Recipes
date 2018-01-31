@@ -8,7 +8,7 @@ export const reviewRecipe = (recipeId, reviews) => (dispatch) => {
     toastr.success('Review Successfully added');
     dispatch({
       type: types.REVIEW_RECIPE,
-      payload: response.data.rev
+      payload: response.data
     });
   });
 };

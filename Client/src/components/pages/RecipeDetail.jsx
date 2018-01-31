@@ -214,8 +214,7 @@ class RecipeDetail extends React.Component {
       .then(
         () => {
           this.setState({ Review: '' });
-        },
-        error => this.setState({ errors: error.response.review })
+        }
       );
   }
 

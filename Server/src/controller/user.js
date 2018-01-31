@@ -106,14 +106,16 @@ class User {
       },
     })
       .then((user) => {
-        const { fullname, username, userId } = user;
+        const { fullname, username, userId, imageUrl, publicUrl } = user;
         if (user) {
           bcrypt.compare(Password, user.password, (error, password) => {
             if (password) {
               const token = jwt.sign({
                 username,
                 userId,
-                fullname
+                fullname,
+                imageUrl,
+                publicUrl
               }, Secret, { expiresIn: '24h' });
               return response.status(200).send({
                 message: `Welcome ${username}`,
