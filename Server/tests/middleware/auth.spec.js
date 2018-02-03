@@ -25,12 +25,12 @@ models
     truncate: true
   });
 
-// models
-//   .Favorite
-//   .destroy({
-//     cascade: true,
-//     truncate: true
-//   });
+models
+  .Favorite
+  .destroy({
+    cascade: true,
+    truncate: true
+  });
 
 models
   .Review
@@ -40,23 +40,6 @@ models
   });
 
 describe('User Signin/Signup', () => {
-  // it('returns a token upon successful signin', (done) => {
-  //   request(app)
-  //     .post('/api/v1/users/signin')
-  //     .send({
-  //       Email: 'chuks@yahoo.com',
-  //       Password: 'chuks'
-  //     })
-  //     .expect(200)
-  //     .end((err, res) => {
-  //       userToken = res.body.token;
-  //       expect(userToken);
-  //       expect(res.body.message).to.equal('Welcome chuks');
-  //       if (err) return done(err);
-  //       done();
-  //     });
-  // });
-
   it('fails to add recipe for viewers without token', (done) => {
     request(app)
       .post('/api/v1/recipes')

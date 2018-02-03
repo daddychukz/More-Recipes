@@ -16,7 +16,8 @@ models
   });
 
 describe('Recipe Operations', () => {
-  it('fails to adds a recipe to the catalog whose required field is empty', (done) => {
+  it(`fails to adds a recipe to the catalog whose required
+  field is empty`, (done) => {
     request(app)
       .post('/api/v1/recipes')
       .set('authorization', userToken.token)
@@ -29,14 +30,16 @@ describe('Recipe Operations', () => {
       });
   });
 
-  it('fails to adds a recipe to the catalog whose required field is empty', (done) => {
+  it(`fails to adds a recipe to the catalog whose required
+   field is empty`, (done) => {
     request(app)
       .post('/api/v1/recipes')
       .set('authorization', userToken.token)
       .send(fakeData.incompleteRecipe2)
       .expect(406)
       .end((err, res) => {
-        expect(res.body.message).to.equal('Description Field should not be Empty');
+        expect(res.body.message)
+          .to.equal('Description Field should not be Empty');
         if (err) return done(err);
         done();
       });
@@ -56,14 +59,16 @@ describe('Recipe Operations', () => {
       });
   });
 
-  it('fails to add a recipe to the catalog of a user with same recipe title', (done) => {
+  it(`fails to add a recipe to the catalog of a user with same
+   recipe title`, (done) => {
     request(app)
       .post('/api/v1/recipes')
       .set('authorization', userToken.token)
       .send(fakeData.recipe1)
       .expect(409)
       .end((err, res) => {
-        expect(res.body.message).to.equal('You already have a recipe with this Title');
+        expect(res.body.message)
+          .to.equal('You already have a recipe with this Title');
         if (err) return done(err);
         done();
       });
@@ -97,7 +102,8 @@ describe('Recipe Operations', () => {
       });
   });
 
-  it('fails to retrieves recipes from catalog with invalid limit or offset', (done) => {
+  it(`fails to retrieves recipes from catalog with invalid limit
+  or offset`, (done) => {
     request(app)
       .get('/api/v1/recipes?limit=aa&offset=0&searchString=')
       .expect(406)
@@ -108,7 +114,8 @@ describe('Recipe Operations', () => {
       });
   });
 
-  it('should return no content when retrieving all recipes from catalog whose searched item is not found', (done) => {
+  it(`should return no content when retrieving all recipes from
+    catalog whose searched item is not found`, (done) => {
     request(app)
       .get('/api/v1/recipes?limit=9&offset=0&searchString=indomie')
       .expect(204)
@@ -118,7 +125,8 @@ describe('Recipe Operations', () => {
       });
   });
 
-  it('should return no content when retrieving recipes of a user who has not created any', (done) => {
+  it(`should return no content when retrieving recipes of a
+  user who has not created any`, (done) => {
     request(app)
       .get('/api/v1/recipes/myrecipes?limit=10&offset=0&searchString=')
       .set('authorization', userToken.token2)
@@ -139,7 +147,8 @@ describe('Recipe Operations', () => {
       });
   });
 
-  it('fails to retrieve a single recipe from catalog on invalid recipeId', (done) => {
+  it(`fails to retrieve a single recipe from catalog
+  on invalid recipeId`, (done) => {
     request(app)
       .get('/api/v1/recipes/98c58f26-0423-4276-b70f-80364abe5were')
       .set('authorization', userToken.token2)

@@ -1,8 +1,6 @@
-
 import request from 'supertest';
 import chai from 'chai';
-import jwt_decode from 'jwt-decode';
-import faker from 'Faker';
+import jwtDecode from 'jwt-decode';
 import app from '../../src/app';
 import models from '../../src/models';
 import fakeData from '../helpers/fakeData';
@@ -139,19 +137,22 @@ describe('User Signin/Signup', () => {
       });
   });
 
-  it('ensures user cannot signin if one of email or password is lacking.', (done) => {
-    request(app)
-      .post('/api/v1/users/signin')
-      .send({
-        Password: 'password'
-      })
-      .expect(406)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Email Field should not be Empty');
-        if (err) return done(err);
-        done();
-      });
-  });
+  it(
+    'ensures user cannot signin if one of email or password is lacking.',
+    (done) => {
+      request(app)
+        .post('/api/v1/users/signin')
+        .send({
+          Password: 'password'
+        })
+        .expect(406)
+        .end((err, res) => {
+          expect(res.body.message).to.equal('Email Field should not be Empty');
+          if (err) return done(err);
+          done();
+        });
+    }
+  );
 
   it('ensures user cannot be created if email is lacking.', (done) => {
     fakeData.userThree.Email = null;
@@ -181,19 +182,22 @@ describe('User Signin/Signup', () => {
       });
   });
 
-  it('ensures user cannot signin if one of email or password is lacking.', (done) => {
-    request(app)
-      .post('/api/v1/users/signin')
-      .send({
-        Email: 'Email'
-      })
-      .expect(406)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Password Field should not be Empty');
-        if (err) return done(err);
-        done();
-      });
-  });
+  it(
+    'ensures user cannot signin if one of email or password is lacking.',
+    (done) => {
+      request(app)
+        .post('/api/v1/users/signin')
+        .send({
+          Email: 'Email'
+        })
+        .expect(406)
+        .end((err, res) => {
+          expect(res.body.message).to.equal('Password Field should not be Empty');
+          if (err) return done(err);
+          done();
+        });
+    }
+  );
 
   it('ensures user cannot be created if username is lacking.', (done) => {
     fakeData.userFour.UserName = null;
@@ -245,7 +249,8 @@ describe('User Signin/Signup', () => {
       .send(fakeData.wrongUser)
       .expect(406)
       .end((error, res) => {
-        expect(res.body.error.message).to.equal('Full name must only contain letters');
+        expect(res.body.error.message)
+          .to.equal('Full name must only contain letters');
         if (error) return done(error);
         done();
       });
@@ -331,7 +336,8 @@ describe('get user profile details cases', () => {
       .set('authorization', fakeData.invalidToken)
       .expect(403)
       .end((error, response) => {
-        expect(response.body.message).to.equal('You do not have Permission to this Page');
+        expect(response.body.message)
+          .to.equal('You do not have Permission to this Page');
         done();
       });
   });
@@ -344,7 +350,8 @@ describe('User profile test cases', () => {
       .set('authorization', fakeData.invalidToken)
       .expect(401)
       .end((error, response) => {
-        expect(response.body.message).to.equal('You do not have Permission to this Page');
+        expect(response.body.message)
+          .to.equal('You do not have Permission to this Page');
         if (error) done(error);
         done();
       });
@@ -378,7 +385,8 @@ describe('User profile test cases', () => {
 });
 
 describe('Reset user password test cases', () => {
-  it('should fail to send reset password link when an unregistered email is supplied', (done) => {
+  it(`should fail to send reset password link when an unregistered
+  email is supplied`, (done) => {
     request(app)
       .post('/api/v1/user/reset_password_request')
       .expect(404)
@@ -390,20 +398,23 @@ describe('Reset user password test cases', () => {
       });
   });
 
-  it('should send reset password link when a registered email is supplied', (done) => {
+  it(`should send reset password link when a registered email
+  is supplied`, (done) => {
     request(app)
       .post('/api/v1/user/reset_password_request')
       .expect(200)
       .send({ Email: 'chuks@yahoo.com' })
       .end((error, response) => {
-        expect(response.body.message).to.equal('Reset Password link sent successfully');
+        expect(response.body.message)
+          .to.equal('Reset Password link sent successfully');
         if (error) done(error);
         done();
       });
   });
 
-  it('should fail to change password with wrong old password supplied', (done) => {
-    const decoded = jwt_decode(userToken.token);
+  it(`should fail to change password with wrong old
+  password supplied`, (done) => {
+    const decoded = jwtDecode(userToken.token);
     request(app)
       .post('/api/v1/user/reset-password')
       .set('authorization', userToken.token)
@@ -458,7 +469,7 @@ describe('Reset user password test cases', () => {
   });
 
   it('should change password of a registered user', (done) => {
-    const decoded = jwt_decode(userToken.token);
+    const decoded = jwtDecode(userToken.token);
     request(app)
       .post('/api/v1/user/reset-password')
       .set('authorization', userToken.token)

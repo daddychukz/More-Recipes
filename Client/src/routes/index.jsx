@@ -18,11 +18,19 @@ const myRoutes = () => (
       <Route path="/" exact component={noAuth(Home)} />
       <Route path="/recipe-box" exact component={requireAuth(RecipeBox)} />
       <Route path="/add-recipe" exact component={requireAuth(AddRecipe)} />
-      <Route path="/recipe/:recipeId" exact component={requireAuth(RecipeDetail)} />
+      <Route
+        path="/recipe/:recipeId"
+        exact
+        component={requireAuth(RecipeDetail)}
+      />
       <Route path="/my-recipe" exact component={requireAuth(MyRecipe)} />
       <Route path="/my-favorite" exact component={requireAuth(MyFavorite)} />
       <Route path="/my-profile" exact component={requireAuth(MyProfile)} />
-      <Route path="/reset-password/:token" exact component={noAuth(ResetPassword)} />
+      <Route
+        path="/reset-password/:token"
+        exact
+        component={noAuth(ResetPassword)}
+      />
       <Route component={NotFound} />
     </Switch>
   </Router>

@@ -158,7 +158,9 @@ class MyRecipe extends React.Component {
       upload_preset: process.env.UploadPreset,
       tags: ['daddy'] },
     (error, result) => {
-      this.setState({ imageUrl: result[0].secure_url, publicId: result[0].public_id });
+      this.setState({
+        imageUrl: result[0].secure_url,
+        publicId: result[0].public_id });
     });
   }
 
@@ -279,7 +281,9 @@ class MyRecipe extends React.Component {
                                       uploadWidget={this.uploadWidget}
                                       onSubmit={this.onSubmit}
                                     />
-                                    <DeleteRecipeModal onClick={this.deleteRecipe(recipe)} />
+                                    <DeleteRecipeModal
+                                      onClick={this.deleteRecipe(recipe)}
+                                    />
                                   </td>
                                 </tr>
                               );

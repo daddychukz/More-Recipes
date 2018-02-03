@@ -1,4 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
 import db from '../models/';
 import paginate from '../services/paginate';
 

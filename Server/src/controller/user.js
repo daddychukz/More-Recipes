@@ -104,7 +104,13 @@ class User {
       },
     })
       .then((user) => {
-        const { fullname, username, userId, imageUrl, publicUrl } = user;
+        const {
+          fullname,
+          username,
+          userId,
+          imageUrl,
+          publicUrl
+        } = user;
         if (user) {
           bcrypt.compare(Password, user.password, (error, password) => {
             if (password) {

@@ -166,9 +166,10 @@ class MyFavoriteRecipe extends React.Component {
                                 .toDateString();
                               return (
                                 <tr key={favorites.recipeId}>
-                                  <td><Link to={`/recipe/${favorites.recipeId}`}>
-                                    {favorites.Recipe.title}
-                                  </Link></td>
+                                  <td>
+                                    <Link to={`/recipe/${favorites.recipeId}`}>
+                                      {favorites.Recipe.title}
+                                    </Link></td>
                                   <td>{favorites.category}</td>
                                   <td>{newDate}</td>
                                   <td><Link

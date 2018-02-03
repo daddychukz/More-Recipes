@@ -1,10 +1,8 @@
 import request from 'supertest';
 import chai from 'chai';
-import faker from 'Faker';
 import app from '../../src/app';
 import models from '../../src/models';
 import fakeData from '../helpers/fakeData';
-import fakeFavorite from '../helpers/fakeFavorite';
 import { userToken, newUser } from './1_user.spec';
 import recipe from './2_recipe.spec';
 
@@ -28,7 +26,8 @@ describe('User Favorite Operations', () => {
       })
       .expect(406)
       .end((error, response) => {
-        expect(response.body.message).to.equal('Category Field should not be Empty');
+        expect(response.body.message)
+          .to.equal('Category Field should not be Empty');
         if (error) return done(error);
         done();
       });
@@ -62,7 +61,8 @@ describe('User Favorite Operations', () => {
       })
       .expect(201)
       .end((err, response) => {
-        expect(response.body.message).to.equal('Recipe added to your favorites');
+        expect(response.body.message)
+          .to.equal('Recipe added to your favorites');
         if (err) return done(err);
         done();
       });
@@ -79,7 +79,8 @@ describe('User Favorite Operations', () => {
       })
       .expect(201)
       .end((err, response) => {
-        expect(response.body.message).to.equal('Recipe added to your favorites');
+        expect(response.body.message)
+          .to.equal('Recipe added to your favorites');
         if (err) return done(err);
         done();
       });
@@ -96,7 +97,8 @@ describe('User Favorite Operations', () => {
       })
       .expect(200)
       .end((err, response) => {
-        expect(response.body.message).to.equal('Recipe removed from your favorites');
+        expect(response.body.message)
+          .to.equal('Recipe removed from your favorites');
         if (err) return done(err);
         done();
       });
@@ -107,25 +109,28 @@ describe('User Favorite Operations', () => {
       .get(`/api/v1/users/${newUser.user.userId}/recipes`)
       .set('authorization', userToken.token)
       .expect(200)
-      .end((err, res) => {
+      .end((err) => {
         if (err) return done(err);
         done();
       });
   });
 
-  it('raises an error retrieving favorite recipe with invalid userId', (done) => {
+  it(`raises an error retrieving favorite recipe
+  with invalid userId`, (done) => {
     request(app)
       .get(`/api/v1/users/${newUser.user.userId}/recipes`)
-      .set('authorization', fakeFavorite.invalidToken)
+      .set('authorization', fakeData.invalidToken)
       .expect(401)
       .end((err, response) => {
-        expect(response.body.message).to.equal('You do not have Permission to this Page');
+        expect(response.body.message)
+          .to.equal('You do not have Permission to this Page');
         if (err) return done(err);
         done();
       });
   });
 
-  it('should return nothing retrieving users favorite when user has no favorite recipe', (done) => {
+  it(`should return nothing retrieving users favorite when
+  user has no favorite recipe`, (done) => {
     request(app)
       .get(`/api/v1/users/${newUser.user.userId}/recipes`)
       .set('authorization', userToken.token2)

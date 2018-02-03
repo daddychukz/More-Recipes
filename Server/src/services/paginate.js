@@ -11,7 +11,8 @@ const paginate = ({
   limit, offset, totalCount, pageSize
 }) => {
   const pageCount = Math.ceil(totalCount / limit);
-  const Page = Math.floor((parseInt((offset), 10) + parseInt((limit), 10)) / parseInt((limit), 10));
+  const Page =
+  Math.floor((parseInt((offset), 10) + parseInt((limit), 10)) / parseInt((limit), 10));
   return {
     Page,
     pageSize: Page ? pageSize : null,

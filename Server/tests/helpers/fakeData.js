@@ -73,7 +73,7 @@ const fakeData = {
     Title: 'Beans',
     FullName: 'Daddychuks',
     Description: 'This is how to prepare beans',
-    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 
@@ -81,7 +81,7 @@ const fakeData = {
     Title: 'Egusi',
     FullName: 'Daddychuks',
     Description: 'This is how to prepare Egusi soup',
-    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 
@@ -90,7 +90,7 @@ const fakeData = {
     Title: 'Yam',
     FullName: 'Emeka Oka',
     Description: 'This is how to prepare Yam',
-    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 
@@ -99,7 +99,7 @@ const fakeData = {
     Title: 'Egg Sauce',
     FullName: 'Emeka Oka',
     Description: 'This is how to prepare Yam',
-    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 
@@ -107,7 +107,7 @@ const fakeData = {
     userId: '0c29ce2f-0dab-4a68-a776-ca1338577cda',
     FullName: 'Emeka Oka',
     Description: 'This is how to prepare Yam',
-    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 
@@ -115,7 +115,7 @@ const fakeData = {
     userId: '0c29ce2f-0dab-4a68-a776-ca1338577cda',
     FullName: 'Emeka Oka',
     Title: 'Afang',
-    imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+    imageUrl: 'https://res.cloudinary.com/chuks-andela32/home_gipmmy.jpg',
     publicId: 'home_gipmmy.jpg'
   },
 

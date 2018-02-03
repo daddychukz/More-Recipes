@@ -96,14 +96,17 @@ class RecipeDetail extends React.Component {
     this.props.viewAllReviews(recipeId);
 
     const isFavorited = recipe => recipe.recipeId ===
-    this.props.match.params.recipeId && recipe.userId === this.props.user.userId;
+    this.props.match.params.recipeId &&
+    recipe.userId === this.props.user.userId;
 
     this.props.getFavorite(userId).then(
       () => {
         if (this.props.favoriteData.find(isFavorited)) {
           this.setState({ favoriteIcon: 'fa fa-2x fa-star', favorited: true });
         } else {
-          this.setState({ favoriteIcon: 'fa fa-2x fa-star-o', favorited: false });
+          this.setState({
+            favoriteIcon: 'fa fa-2x fa-star-o',
+            favorited: false });
         }
       }
     );
@@ -452,7 +455,8 @@ class RecipeDetail extends React.Component {
                             to="#"
                             title="Favorite"
                           >
-                            <i className={this.state.favoriteIcon} /></Link></li>
+                            <i className={this.state.favoriteIcon} />
+                          </Link></li>
                       </ul>
                       <br />
                       <form className="mb-3" onSubmit={this.onSubmit}>
@@ -501,7 +505,8 @@ class RecipeDetail extends React.Component {
                                 <div className="p-2 align-self-end">
                                   <h5><a to="#">{reviews.User.fullname}</a>
                                   </h5>
-                                  <small className="text-muted">{reviews.createdAt}
+                                  <small className="text-muted">
+                                    {reviews.createdAt}
                                   </small>
                                   <p>{reviews.review}</p>
                                 </div>
@@ -579,9 +584,11 @@ const mapDispatchToProps = dispatch => ({
   viewSingleRecipe: Id => dispatch(recipesActions.viewSingleRecipe(Id)),
   upvoteRecipe: id => dispatch(recipesActions.upvoteRecipe(id)),
   downvoteRecipe: id => dispatch(recipesActions.downvoteRecipe(id)),
-  reviewRecipe: (Id, reviews) => dispatch(reviewActions.reviewRecipe(Id, reviews)),
+  reviewRecipe: (Id, reviews) => dispatch(
+    reviewActions.reviewRecipe(Id, reviews)),
   viewAllReviews: Id => dispatch(reviewActions.viewAllReviews(Id)),
-  addFavorite: (Id, category) => dispatch(favoriteActions.addToFavorites(Id, category)),
+  addFavorite: (Id, category) => dispatch(
+    favoriteActions.addToFavorites(Id, category)),
   getFavorite: Id => dispatch(favoriteActions.getUserFavorite(Id))
 });
 

@@ -23,7 +23,10 @@ router.post('/users/signup', userController.signUp);
 router.post('/users/signin', userController.signIn);
 
 // Get Favorite recipes
-router.get('/users/:userID/recipes', Auth.verify, favoriteController.retrieveFavorites);
+router.get(
+  '/users/:userID/recipes',
+  Auth.verify, favoriteController.retrieveFavorites
+);
 
 // Get User Info
 router.get('/user/profile', Auth.verify, userController.getUserProfile);
@@ -56,13 +59,22 @@ router.delete('/recipes/:recipeID', Auth.verify, recipeController.deleteRecipe);
 router.put('/recipe/:recipeID', Auth.verify, recipeController.updateRecipe);
 
 // Post a review
-router.post('/recipes/:recipeID/reviews', Auth.verify, reviewController.reviewRecipe);
+router.post(
+  '/recipes/:recipeID/reviews',
+  Auth.verify, reviewController.reviewRecipe
+);
 
 // Upvote a recipe
-router.post('/recipes/:recipeID/upvote', Auth.verify, upvotesController.upvoteRecipe);
+router.post(
+  '/recipes/:recipeID/upvote',
+  Auth.verify, upvotesController.upvoteRecipe
+);
 
 // Downvote a recipe
-router.post('/recipes/:recipeID/downvote', Auth.verify, downvotesController.downvoteRecipe);
+router.post(
+  '/recipes/:recipeID/downvote',
+  Auth.verify, downvotesController.downvoteRecipe
+);
 
 // Get Recipe by Most Upvotes
 router.get('/recipe', upvotesController.mostRecipeUpvote);
@@ -77,7 +89,10 @@ router.post('/validate-token', Auth.checkMailToken);
 router.post('/user/reset-password', userController.resetPassword);
 
 // Search recipes created by a user
-router.get('/search/favorites', Auth.verify, favoriteController.searchUserFavorites);
+router.get(
+  '/search/favorites',
+  Auth.verify, favoriteController.searchUserFavorites
+);
 
 // A catch-all routes not define.
 router.use('*', (req, res) => res.status(404).json({

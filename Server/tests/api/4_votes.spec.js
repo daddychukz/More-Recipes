@@ -1,7 +1,6 @@
 import request from 'supertest';
 import chai from 'chai';
 import app from '../../src/app';
-import fakeData from '../helpers/fakeData';
 import { userToken } from './1_user.spec';
 import recipe from './2_recipe.spec';
 
@@ -65,7 +64,8 @@ describe('test cases for upvoting a recipe', () => {
       });
   });
 
-  it('should fail to return sorted list of recipes by upvotes in descending order upon wrong url params', (done) => {
+  it(`should fail to return sorted list of recipes by upvotes in descending
+  order upon wrong url params`, (done) => {
     request(app)
       .get('/api/v1/recipe?sort=upvot&order=desc')
       .set('authorization', userToken.token)
@@ -76,7 +76,8 @@ describe('test cases for upvoting a recipe', () => {
       });
   });
 
-  it('should return sorted list of recipes by upvotes in descending order', (done) => {
+  it(`should return sorted list of recipes by upvotes
+  in descending order`, (done) => {
     request(app)
       .get('/api/v1/recipe?sort=upvotes&order=des')
       .set('authorization', userToken.token)
