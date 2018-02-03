@@ -54,12 +54,14 @@ class User {
         imageUrl: ImageUrl
       })
       .then((user) => {
-        const { fullname, username, email, userId } = user;
+        const { fullname, username, email, userId, imageUrl, publicUrl } = user;
         if (user) {
           const token = jwt.sign({
             username,
             userId,
-            fullname
+            fullname,
+            imageUrl,
+            publicUrl
           }, Secret, { expiresIn: '24h' });
           response.status(201).send({
             Message: 'User created successfully',
@@ -69,10 +71,6 @@ class User {
               email,
               token
             }
-          });
-        } else {
-          response.status(404).send({
-            message: 'This record does not exists!'
           });
         }
       })
@@ -127,10 +125,6 @@ class User {
               message: 'Username or password incorrect'
             });
           });
-        } else {
-          response.status(404).send({
-            message: 'This record does not exists!'
-          });
         }
       }).catch(() => response.status(404).send({
         message: 'Please register to signin'
@@ -157,10 +151,6 @@ class User {
       .then((userInfo) => {
         if (userInfo) {
           response.status(200).send(userInfo);
-        } else {
-          response.status(404).send({
-            message: 'User not found!'
-          });
         }
       }).catch(() => response.status(404).send({
         message: 'User not found'
@@ -224,8 +214,6 @@ class User {
               message: 'Password Successfuly Updated'
             }));
         }
-      } else {
-        response.status(401).json({ message: 'Invalid Token' });
       }
     }).catch(() => response.status(500).send({
       message: 'Internal Server Error'
@@ -266,7 +254,8 @@ class User {
               response.status(409).send({ message: 'Incorrect User Password' });
             }
           });
-        });
+        }).catch(() =>
+          response.status(401).json({ message: 'Invalid Token' }));
     }
   }
 
@@ -287,8 +276,8 @@ class User {
       Address,
       Phone,
       Hobbies,
-      imageUrl,
-      publicId
+      ImageUrl,
+      PublicId
     } = request.body;
     userModel.findOne({
       where: {
@@ -313,11 +302,11 @@ class User {
       if (Hobbies) {
         updateRecord.hobbies = Hobbies;
       }
-      if (imageUrl) {
-        updateRecord.imageUrl = imageUrl;
+      if (ImageUrl) {
+        updateRecord.imageUrl = ImageUrl;
       }
-      if (publicId) {
-        updateRecord.publicUrl = publicId;
+      if (PublicId) {
+        updateRecord.publicUrl = PublicId;
       }
       userInfo.update(updateRecord)
         .then((updatedRecord) => {

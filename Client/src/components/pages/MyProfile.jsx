@@ -31,7 +31,7 @@ class MyProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      publicId: '',
+      PublicId: '',
       UserName: '',
       About: '',
       Hobbies: '',
@@ -63,7 +63,7 @@ class MyProfile extends React.Component {
           Address: this.props.profile.address,
           About: this.props.profile.about,
           Hobbies: this.props.profile.hobbies,
-          publicId: this.props.profile.publicUrl,
+          PublicId: this.props.profile.publicUrl,
           Email: this.props.profile.email,
           isLoading: false
         });
@@ -80,8 +80,8 @@ class MyProfile extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     const data = {
-      imageUrl: this.state.imageUrl,
-      publicId: this.state.publicId,
+      ImageUrl: this.state.ImageUrl,
+      PublicId: this.state.PublicId,
       UserName: this.state.UserName,
       About: this.state.About,
       Hobbies: this.state.Hobbies,
@@ -120,8 +120,8 @@ class MyProfile extends React.Component {
       tags: ['daddy'] },
     (error, result) => {
       this.setState({
-        imageUrl: result[0].secure_url,
-        publicId: result[0].public_id
+        ImageUrl: result[0].secure_url,
+        PublicId: result[0].public_id
       });
     });
   }
@@ -138,7 +138,6 @@ class MyProfile extends React.Component {
       Password: this.state.newPassword,
       OldPassword: this.state.oldPassword,
       UserId: this.props.profile.userId,
-      isChange: true
     };
     if (newPassword !== confirmPassword) {
       toastr.error('Passwords do not match');
@@ -202,7 +201,7 @@ class MyProfile extends React.Component {
               {
                 this.state.isLoading ?
                   <div className="loader" /> :
-                  <div className="col-md-8" id="display">
+                  <div className="col-sm-12 col-md-12 col-lg-8" id="display">
                     <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                       {
                         <div key={this.props.profile.userId}>
@@ -220,7 +219,7 @@ class MyProfile extends React.Component {
                                   <Image publicId={this.props.profile.publicUrl}>
                                     <Transformation
                                       crop="scale"
-                                      width="250"
+                                      width="300"
                                       height="300"
                                       dpr="auto"
                                       responsive_placeholder="blank"
@@ -229,6 +228,17 @@ class MyProfile extends React.Component {
                               }
                             </div>
                             <div className="p-2 align-self-end">
+                              <p>
+                                <i
+                                  className="fa fa-user obj-color"
+                                  aria-hidden="true"
+                                />&nbsp;
+                                {this.props.profile.username}
+                              </p>
+                              <p><span className="obj-color">Name:</span>
+                                &nbsp;
+                                {this.props.profile.fullname}
+                              </p>
                               <p><span className="obj-color">About:</span>
                                 &nbsp;
                                 {this.props.profile.about}
@@ -258,13 +268,6 @@ class MyProfile extends React.Component {
                                   aria-hidden="true"
                                 />&nbsp;
                                 {this.props.profile.phone}
-                              </p>
-                              <p>
-                                <i
-                                  className="fa fa-user obj-color"
-                                  aria-hidden="true"
-                                />&nbsp;
-                                {this.props.profile.username}
                               </p>
                               <Link
                                 className="btn btn-info"
@@ -304,7 +307,7 @@ class MyProfile extends React.Component {
           hobbies={this.state.Hobbies}
           about={this.state.About}
           address={this.state.Address}
-          publicID={this.state.publicId}
+          publicID={this.state.PublicId}
           uploadWidget={this.uploadWidget}
         />
       </div>
@@ -325,7 +328,8 @@ MyProfile.propTypes = {
     hobbies: PropTypes.string,
     phone: PropTypes.string,
     publicUrl: PropTypes.string,
-    imageUrl: PropTypes.string
+    imageUrl: PropTypes.string,
+    fullname: PropTypes.string
   }).isRequired,
   resetPassword: PropTypes.func.isRequired
 };

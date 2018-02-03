@@ -47,7 +47,7 @@ class Recipe {
       })
       .then((recipes) => {
         if (recipes.count === 0) {
-          response.status(204);
+          response.status(204).send();
         } else {
           const pagination = paginate({
             limit,
@@ -87,7 +87,7 @@ class Recipe {
       })
       .then((recipes) => {
         if (recipes.count === 0) {
-          response.status(204);
+          return response.status(204).send();
         }
         const { limit, offset } = request.query;
         const pagination = paginate({
@@ -217,7 +217,7 @@ class Recipe {
   static updateRecipe(request, response) {
     const updateRecord = {};
     const {
-      Title, Description, imageUrl, publicId
+      Title, Description, ImageUrl, PublicId
     } = request.body;
 
     recipeModel.findOne({
@@ -232,11 +232,11 @@ class Recipe {
       if (Description) {
         updateRecord.description = Description;
       }
-      if (imageUrl) {
-        updateRecord.imageUrl = imageUrl;
+      if (ImageUrl) {
+        updateRecord.imageUrl = ImageUrl;
       }
-      if (publicId) {
-        updateRecord.publicId = publicId;
+      if (PublicId) {
+        updateRecord.publicId = PublicId;
       }
       recipe.update(updateRecord)
         .then(() => {
