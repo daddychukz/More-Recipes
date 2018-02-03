@@ -10,7 +10,6 @@ import {
   getUserFavorite } from '../../actions/favoriteActions';
 import Header from './Header';
 import SideBar from './SideBar';
-import Footer from './Footer';
 
 /**
  *
@@ -200,8 +199,6 @@ class MyFavoriteRecipe extends React.Component {
             </div>
           </div>
         </section>
-
-        <Footer />
       </div>
     );
   }

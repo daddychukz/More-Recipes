@@ -8,7 +8,6 @@ import Pagination from '../services/UltimatePagination';
 import * as recipesActions from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
-import Footer from './Footer';
 import DeleteRecipeModal from '../modals/DeleteRecipeModal';
 import EditRecipeModal from '../modals/EditRecipeModal';
 
@@ -312,9 +311,6 @@ class MyRecipe extends React.Component {
             </div>
           </div>
         </section>
-
-        <Footer />
-
       </div>
     );
   }

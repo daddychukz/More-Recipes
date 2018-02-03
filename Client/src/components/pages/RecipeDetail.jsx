@@ -10,7 +10,6 @@ import * as reviewActions from '../../actions/reviewActions';
 import * as favoriteActions from '../../actions/favoriteActions';
 import Header from './Header';
 import SideBar from './SideBar';
-import Footer from './Footer';
 import FavoriteRecipeModal from '../modals/FavoriteRecipeModal';
 
 /**
@@ -524,7 +523,6 @@ class RecipeDetail extends React.Component {
           </div>
         </section>
 
-        <Footer />
         <FavoriteRecipeModal
           disabled={this.state.isDisabled}
           onChange={this.onChange}

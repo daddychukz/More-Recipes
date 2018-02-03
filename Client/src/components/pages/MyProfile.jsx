@@ -7,7 +7,6 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 import * as userActions from '../../actions/userActions';
 import SideBar from './SideBar';
-import Footer from './Footer';
 import ChangePasswordModal from '../modals/ChangePasswordModal';
 import HeaderProfile from './HeaderProfile';
 import EditProfileModal from '../modals/EditProfileModal';
@@ -290,8 +289,6 @@ class MyProfile extends React.Component {
             </div>
           </div>
         </section>
-
-        <Footer />
 
         <ChangePasswordModal
           oldPassword={this.state.oldPassword}

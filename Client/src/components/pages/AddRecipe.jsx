@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import SideBar from './SideBar';
-import Footer from './Footer';
 import RecipeForm from '../forms/RecipeForm';
 
 const AddRecipe = () => (
@@ -32,8 +31,6 @@ const AddRecipe = () => (
       </div>
     </section>
     <br />
-
-    <Footer />
   </div>
 );
 

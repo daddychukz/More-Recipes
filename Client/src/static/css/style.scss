@@ -6,6 +6,13 @@ $icon-size: 30px;
 
 body{
     color: $font-color;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+html{
+    height: 100%;
 }
 
 .navbar{
@@ -16,9 +23,8 @@ body{
 /* HOME STYLINGS */
 #home-section{
     background: url('../img/home.jpg') no-repeat;
-    min-height: 700px;
+    height: 100vh;
     background-size: cover;
-    background-attachment: fixed;
 
 .dark-overlay{
     background-color: $dark-overlay;
@@ -26,7 +32,7 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 700px;
+    min-height: 100%;
 }
 
 .home-inner{
@@ -124,4 +130,10 @@ body{
     bottom: 0;
     left: 0;
     text-align: center;
+  }
+
+  .content{
+      flex-grow: 1;
+      flex-shrink: 0;
+      flex-basis: auto
   }

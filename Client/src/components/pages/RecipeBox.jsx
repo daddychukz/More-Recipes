@@ -9,7 +9,6 @@ import Pagination from '../services/UltimatePagination';
 import { viewAllRecipes } from '../../actions/recipeActions';
 import Header from './Header';
 import SideBar from './SideBar';
-import Footer from './Footer';
 
 /**
  *
@@ -213,7 +212,7 @@ class RecipeBox extends React.Component {
             </div>
           </section>
 
-          <Footer />
+          {/* <Footer /> */}
         </div>
       );
     }
@@ -243,7 +242,6 @@ class RecipeBox extends React.Component {
             </div>
           </div>
         </section>
-        <Footer />
       </div>
     );
   }
