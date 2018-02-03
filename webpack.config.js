@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 // resolve path of application
@@ -90,7 +89,7 @@ const config = {
     ]) : (
     [
       new Dotenv({
-        path: path.resolve('./.env'), // Path to .env file
+        path: './.env', // Path to .env file
         safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
         systemvars: true
       }),

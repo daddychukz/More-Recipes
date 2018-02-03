@@ -4,28 +4,25 @@
 *   Signup:
 *     type: object
 *     properties:
-*       fullname:
+*       FullName:
 *         type: string
-*       email:
+*       Email:
 *         type: string
 *         format: email
-*       sex:
+*       UserName:
 *         type: string
-*       username:
-*         type: string
-*       password:
+*       Password:
 *         type: string
 *         format: password
-*       confirmPassword:
+*       ConfirmPassword:
 *         type: string
 *         format: password
 *     example:
-*       fullname: Adam Eve
-*       email: example@example.com
-*       sex: male
-*       username: username
-*       password: password
-*       confirmPassword: password
+*       FullName: Adam Eve
+*       Email: example@example.com
+*       UserName: username
+*       Password: password
+*       ConfirmPassword: password
 */
 
 /**
@@ -33,15 +30,15 @@
 * definitions:
 *   Signin:
 *     properties:
-*       email:
+*       Email:
 *         type: string
 *         format: email
-*       password:
+*       Password:
 *         type: string
 *         format: password
 *     example:
-*       email: example@example.com
-*       password: password
+*       Email: example@example.com
+*       Password: password
 */
 
 /**
@@ -49,13 +46,13 @@
 * definitions:
 *   Recipes:
 *     properties:
-*       title:
+*       Title:
 *         type: string
-*       description:
+*       Description:
 *         type: string
 *     example:
-*       title: Jollof Rice
-*       description: lorem ipsum bla bla bla
+*       Title: Jollof Rice
+*       Description: lorem ipsum bla bla bla
 */
 
 /**
@@ -63,10 +60,42 @@
 * definitions:
 *   Favorites:
 *     properties:
-*       category:
+*       Category:
 *         type: string
 *     example:
-*       category: Lunch
+*       Category: Lunch
+*/
+
+/**
+* @swagger
+* definitions:
+*   UserPass:
+*     properties:
+*       OldPassword:
+*         type: string
+*       Password:
+*         type: string
+*         format: password
+*       UserId:
+*         type: string
+*     example:
+*       OldPassword: password
+*       Password: password
+*       UserId: id
+*/
+
+/**
+* @swagger
+* definitions:
+*   User:
+*     properties:
+*       UserName:
+*         type: string
+*       Address:
+*         type: string
+*     example:
+*       UserName: Enter name
+*       Address: Enter address
 */
 
 /**
@@ -74,16 +103,10 @@
 * definitions:
 *   Reviews:
 *     properties:
-*       title:
-*         type: string
-*       fullname:
-*         type: string
-*       review:
+*       Review:
 *         type: string
 *     example:
-*       title: Jollof Rice
-*       fullname: Ade
-*       review: Cool Stuff!
+*       Review: Cool Stuff!
 */
 
 // Register a new User
@@ -131,8 +154,93 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
+*      type: apiKey
+*      in: header
+*      name: authorization
+* /api/v1/user/profile:
+*   get:
+*     tags:
+*       - Users
+*     description: Gets user profile information
+*     produces:
+*       - application/json
+*     security:
+*       - ApiKeyAuth: []
+*     responses:
+*       200:
+*         description: Successful
+*         schema:
+*
+*/
+
+/**
+* @swagger
+*  securityDefinitions:
+*    ApiKeyAuth:
+*      type: apiKey
+*      in: header
+*      name: authorization
+* /api/v1/user/profile/edit:
+*   post:
+*     tags:
+*       - Users
+*     description: Edit user profile information
+*     produces:
+*       - application/json
+*     security:
+*       - ApiKeyAuth: []
+*     parameters:
+*       - name: User details
+*         description: Click on the example to the right and specify field to update
+*         in: body
+*         required: true
+*         type: string
+*         schema:
+*           $ref: '#/definitions/User'
+*     responses:
+*       200:
+*         description: Successful
+*         schema:
+*
+*/
+
+/**
+* @swagger
+*  securityDefinitions:
+*    ApiKeyAuth:
+*      type: apiKey
+*      in: header
+*      name: authorization
+* /api/v1/user/reset-password:
+*   post:
+*     tags:
+*       - Users
+*     description: Change user password
+*     produces:
+*       - application/json
+*     security:
+*       - ApiKeyAuth: []
+*     parameters:
+*       - name: User password details
+*         description: Click on the example to the right and specify field to update
+*         in: body
+*         required: true
+*         type: string
+*         schema:
+*           $ref: '#/definitions/UserPass'
+*     responses:
+*       200:
+*         description: Successful
+*         schema:
+*
+*/
+
+/**
+* @swagger
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -160,13 +268,32 @@
 
 /**
 * @swagger
-* /api/v1/recipes:
+* /api/v1/recipes?limit={limit}&offset={offset}&searchString={searchString}:
 *   get:
 *     tags:
 *       - Recipes
 *     description: Returns all Recipes
 *     produces:
 *       - application/json
+*     parameters:
+*       - name: limit
+*         description: Enter limit
+*         in: path
+*         required: true
+*         type: integer
+*         format: int32
+*         minimum: 0
+*       - name: offset
+*         description: Enter offset
+*         in: path
+*         required: true
+*         type: integer
+*         format: int32
+*         minimum: 0
+*       - name: searchString
+*         description: Filter Recipes
+*         in: path
+*         type: string
 *     responses:
 *       200:
 *         description: Successful
@@ -176,8 +303,8 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -200,13 +327,51 @@
 *       200:
 *         description: Successful
 *         schema:
-*           
+*
 */
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
+*      type: apiKey
+*      in: header
+*      name: authorization
+* /api/v1/recipes/myrecipes?limit={limit}&offset={offset}:
+*   get:
+*     tags:
+*       - Recipes
+*     description: Returns all recipes created by a user
+*     produces:
+*       - application/json
+*     security:
+*       - ApiKeyAuth: []
+*     parameters:
+*       - name: limit
+*         description: Enter limit
+*         in: path
+*         required: true
+*         type: integer
+*         format: int32
+*         minimum: 0
+*       - name: offset
+*         description: Enter offset
+*         in: path
+*         required: true
+*         type: integer
+*         format: int32
+*         minimum: 0
+*     responses:
+*       200:
+*         description: Successful
+*         schema:
+*
+*/
+
+/**
+* @swagger
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -232,12 +397,12 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
-* /api/v1/recipes/{recipeID}:
+* /api/v1/recipe/{recipeID}:
 *   put:
 *     tags:
 *       - Recipes
@@ -266,8 +431,8 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -307,8 +472,8 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -341,8 +506,35 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
+*      type: apiKey
+*      in: header
+*      name: authorization
+* /api/v1/reviews/{recipeID}:
+*   get:
+*     tags:
+*       - Reviews
+*     description: Returns all reviews for a recipe
+*     produces:
+*       - application/json
+*     security:
+*       - ApiKeyAuth: []
+*     parameters:
+*       - name: recipeID
+*         description: Enter Recipe ID
+*         in: path
+*         required: true
+*         type: string
+*     responses:
+*       200:
+*         description: Successful
+*/
+
+/**
+* @swagger
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -375,8 +567,8 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -402,8 +594,8 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization
@@ -429,8 +621,8 @@
 
 /**
 * @swagger
-*  securityDefinitions: 
-*    ApiKeyAuth: 
+*  securityDefinitions:
+*    ApiKeyAuth:
 *      type: apiKey
 *      in: header
 *      name: authorization

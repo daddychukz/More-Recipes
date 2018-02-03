@@ -25,12 +25,12 @@ models
     truncate: true
   });
 
-models
-  .Favorite
-  .destroy({
-    cascade: true,
-    truncate: true
-  });
+// models
+//   .Favorite
+//   .destroy({
+//     cascade: true,
+//     truncate: true
+//   });
 
 models
   .Review

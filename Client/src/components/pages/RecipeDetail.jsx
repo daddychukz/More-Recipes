@@ -383,7 +383,7 @@ class RecipeDetail extends React.Component {
                 this.state.isLoading ?
                   <div className="loader" /> :
 
-                  <div className="col-md-8" id="display">
+                  <div className="col-md-12 col-lg-8" id="display">
                     <CloudinaryContext cloudName={`${process.env.CloudName}`}>
                       {
                         <div key={this.props.singleRecipe.recipeId}>

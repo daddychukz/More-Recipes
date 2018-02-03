@@ -212,7 +212,7 @@ class MyRecipe extends React.Component {
               <SideBar />
 
               {/* RECIPE CATALOG  */}
-              <div className="col-md-8" id="display">
+              <div className="col-md-12 col-lg-8" id="display">
                 <input
                   className="form-control"
                   type="text"

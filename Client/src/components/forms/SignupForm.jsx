@@ -3,12 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import PropTypes from 'prop-types';
-import createBrowserHistory from 'history/createBrowserHistory';
 import * as userActions from '../../actions/userActions';
-
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
 
 /**
  *

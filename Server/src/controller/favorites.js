@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import db from '../models/';
 import paginate from '../services/paginate';
 
@@ -52,7 +53,7 @@ class Favorite {
               favorite
             });
           }).catch(() => response.status(404).send({
-            message: 'Recipe not found for this User'
+            message: 'Recipe not found'
           }));
         }
       });
@@ -80,19 +81,14 @@ class Favorite {
         }
       })
       .then((recipe) => {
-        if (recipe) {
+        if (recipe.length > 0) {
           response.status(200).send({
             favoriteRecipe: recipe
           });
         } else {
-          response.status(404).send({
-            message: 'Record not Found!'
-          });
+          response.status(204).send();
         }
-      })
-      .catch(() => response.status(400).send({
-        message: 'Record not found for this User!'
-      }));
+      });
   }
 
   /**
