@@ -1,8 +1,9 @@
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 // resolve path of application
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
 
 // directory to serve and transpile app from
 const SRC_DIR = path.resolve(__dirname, 'Client/src');
@@ -19,7 +20,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  devServer: {
+  devServer: (process.env.NODE_ENV === 'development') ? {
     proxy: {
       '/api': 'http://localhost:5000'
     },
@@ -27,7 +28,7 @@ const config = {
     inline: true,
     historyApiFallback: true,
     hot: true
-  },
+  } : {},
   node: {
     net: 'empty',
     dns: 'empty'
@@ -78,16 +79,26 @@ const config = {
       }
     ]
   },
-  plugins: [
-    new Dotenv({
-      path: path.resolve('./.env'), // Path to .env file
-      safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
-      systemvars: true
-    }),
-    (process.env.NODE_ENV === 'development') ?
-      {} :
-      new webpack.optimize.UglifyJsPlugin()
-  ],
+  plugins: (process.env.NODE_ENV === 'development') ? (
+    [
+      new Dotenv({
+        path: path.resolve('./.env'), // Path to .env file
+        safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
+        systemvars: true
+      }),
+      new webpack.HotModuleReplacementPlugin()
+    ]) : (
+    [
+      new Dotenv({
+        path: path.resolve('./.env'), // Path to .env file
+        safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
+        systemvars: true
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true
+      })
+    ]
+  )
 };
 
 module.exports = config;

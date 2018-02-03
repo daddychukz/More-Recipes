@@ -59,7 +59,7 @@ class SideBar extends React.Component {
    */
   render() {
     return (
-      <div className="col-md-4">
+      <div className="col-md-4 d-none d-lg-block">
         <div className="list-group mb-3">
           <li className="list-group-item active text-center"><h5>
             {this.props.profile.fullname}</h5>
@@ -93,14 +93,15 @@ class SideBar extends React.Component {
               return (
                 <div
                   key={popular.recipeId}
-                  className="list-group-item list-group-item-action flex-column align-items-start"
+                  className="list-group-item
+                  list-group-item-action flex-column align-items-start"
                 >
                   <div className="d-flex justify-content-between">
                     <h5
                       className="mb-1"
                       style={{
                         wordWrap: 'break-word',
-                        minWidth: '230px',
+                        minWidth: '80px',
                         maxWidth: '230px',
                         whiteSpace: 'normal' }}
                     >

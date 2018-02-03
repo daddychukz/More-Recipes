@@ -31,6 +31,7 @@ const AddRecipe = () => (
         </div>
       </div>
     </section>
+    <br />
 
     <Footer />
   </div>

@@ -82,17 +82,7 @@ class LoginForm extends React.Component {
       Email: email,
       Password: googleId,
       ConfirmPassword: googleId,
-      imageUrl }).then(
-      () => {
-        this.props.signIn({ Email: email, Password: googleId }).then(
-          () => customHistory.push('/recipe-box'),
-          (error) => {
-            this.setState({ errors: error.response.data, isLoading: false });
-            toastr.error(error.response.data.message);
-          }
-        );
-      }
-    );
+      ImageUrl: imageUrl });
   }
 
   /**
@@ -159,7 +149,7 @@ class LoginForm extends React.Component {
           </Link>
           <hr className="bg-white" />
           <Link to="#">
-            or sign in with one of these services
+            or register with one of these services
           </Link>
           <ul className="list-inline text-center">
             <li className="list-inline-item">

@@ -4,7 +4,7 @@
   "description": "A platform to share exciting recipe ideas",
   "main": "index.js",
   "scripts": {
-    "client": "webpack -d && cp Client/src/index.html Client/dist/index.html && webpack-dev-server --content-base Client/src/ --inline --hot",
+    "client": "webpack -d && cp Client/src/index.html Client/dist/index.html && NODE_ENV=development webpack-dev-server",
     "test": "npm run migrations && NODE_ENV=test nyc --reporter=html --reporter=text mocha ./Server/tests/**/*.spec.js --compilers js:babel-register",
     "start": "sequelize db:migrate && nodemon ./Server/dist/app.js",
     "setup:seed": "npm run migrations && sequelize db:seed:all",
@@ -123,6 +123,7 @@
     "nyc": "^11.1.0",
     "prettier": "^1.6.1",
     "sass-loader": "^6.0.6",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "^0.6.2"
   }
 }

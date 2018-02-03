@@ -48,17 +48,11 @@ export default (sequelize, DataTypes) => {
     },
     imageUrl: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
-      }
+      defaultValue: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg'
     },
     publicId: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: { msg: 'Empty strings not allowed' }
-      }
+      defaultValue: 'home_gipmmy.jpg'
     },
     upvotes: {
       type: DataTypes.INTEGER,

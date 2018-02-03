@@ -4,8 +4,8 @@ import paginate from '../services/paginate';
 const favoriteModel = db.Favorite;
 
 /**
- * 
- * 
+ *
+ *
  * @class Favorite
  */
 class Favorite {
@@ -35,7 +35,8 @@ class Favorite {
         if (prevFavorite) {
           prevFavorite.destroy();
           response.status(200).send({
-            message: 'Recipe removed from your favorites'
+            message: 'Recipe removed from your favorites',
+            prevFavorite
           });
         } else {
           favoriteModel.create({
@@ -50,7 +51,9 @@ class Favorite {
               message: 'Recipe added to your favorites',
               favorite
             });
-          }).catch(error => response.status(500).send(error));
+          }).catch(() => response.status(404).send({
+            message: 'Recipe not found for this User'
+          }));
         }
       });
   }

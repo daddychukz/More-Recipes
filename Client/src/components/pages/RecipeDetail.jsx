@@ -214,8 +214,7 @@ class RecipeDetail extends React.Component {
       .then(
         () => {
           this.setState({ Review: '' });
-        },
-        error => this.setState({ errors: error.response.review })
+        }
       );
   }
 
@@ -489,7 +488,7 @@ class RecipeDetail extends React.Component {
                             <div key={reviews.id}>
                               <div className="d-flex flex-row">
                                 <div className="p-2 align-self-start">
-                                  <Image publicId={this.props.user.publicUrl}>
+                                  <Image publicId={reviews.User.publicUrl}>
                                     <Transformation
                                       crop="scale"
                                       width="30"
@@ -500,7 +499,7 @@ class RecipeDetail extends React.Component {
                                   </Image>
                                 </div>
                                 <div className="p-2 align-self-end">
-                                  <h5><a to="#">{this.props.user.fullname}</a>
+                                  <h5><a to="#">{reviews.User.fullname}</a>
                                   </h5>
                                   <small className="text-muted">{reviews.createdAt}
                                   </small>

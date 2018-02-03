@@ -26,7 +26,7 @@ class User {
    */
   static signUp(request, response) {
     const {
-      Email, UserName, FullName, Password, ConfirmPassword, imageUrl
+      Email, UserName, FullName, Password, ConfirmPassword, ImageUrl
     } = request.body;
     if (!Email || Email.trim().length === 0) {
       errors.error = { message: 'Email Field should not be Empty' };
@@ -51,22 +51,26 @@ class User {
         username: UserName,
         password: Password,
         confirmPassword: ConfirmPassword,
-        imageUrl
+        imageUrl: ImageUrl
       })
       .then((user) => {
-        const { fullname, username, email } = user;
+        const { fullname, username, email, userId, imageUrl, publicUrl } = user;
         if (user) {
+          const token = jwt.sign({
+            username,
+            userId,
+            fullname,
+            imageUrl,
+            publicUrl
+          }, Secret, { expiresIn: '24h' });
           response.status(201).send({
             Message: 'User created successfully',
             User: {
               fullname,
               username,
-              email
+              email,
+              token
             }
-          });
-        } else {
-          response.status(404).send({
-            message: 'This record does not exists!'
           });
         }
       })
@@ -100,14 +104,16 @@ class User {
       },
     })
       .then((user) => {
-        const { fullname, username, userId } = user;
+        const { fullname, username, userId, imageUrl, publicUrl } = user;
         if (user) {
           bcrypt.compare(Password, user.password, (error, password) => {
             if (password) {
               const token = jwt.sign({
                 username,
                 userId,
-                fullname
+                fullname,
+                imageUrl,
+                publicUrl
               }, Secret, { expiresIn: '24h' });
               return response.status(200).send({
                 message: `Welcome ${username}`,
@@ -118,10 +124,6 @@ class User {
             return response.status(409).send({
               message: 'Username or password incorrect'
             });
-          });
-        } else {
-          response.status(404).send({
-            message: 'This record does not exists!'
           });
         }
       }).catch(() => response.status(404).send({
@@ -149,10 +151,6 @@ class User {
       .then((userInfo) => {
         if (userInfo) {
           response.status(200).send(userInfo);
-        } else {
-          response.status(404).send({
-            message: 'User not found!'
-          });
         }
       }).catch(() => response.status(404).send({
         message: 'User not found'
@@ -196,30 +194,30 @@ class User {
    *
    * @static
    * @param {any} Password
-   * @param {any} UserId
+   * @param {any} userId
    * @param {any} response
    * @memberof User
    * @returns {object} response
    */
-  static updatePassword(Password, UserId, response) {
+  static updatePassword(Password, userId, response) {
     const updateRecord = {};
     userModel.findOne({
       where: {
-        userId: UserId
+        userId
       }
     }).then((userInfo) => {
       if (userInfo) {
         if (Password) {
           updateRecord.password = bcrypt.hashSync(Password, bcrypt.genSaltSync(8));
+          userInfo.update(updateRecord)
+            .then(() => response.status(200).json({
+              message: 'Password Successfuly Updated'
+            }));
         }
-        userInfo.update(updateRecord)
-          .then(() => response.status(200).json({
-            message: 'Password Successfuly Updated'
-          }));
-      } else {
-        response.status(401).json({ message: 'Invalid Token' });
       }
-    });
+    }).catch(() => response.status(500).send({
+      message: 'Internal Server Error'
+    }));
   }
 
   /**
@@ -239,7 +237,7 @@ class User {
         if (error) {
           response.status(401).json({ message: 'Invalid Token' });
         } else {
-          User.updatePassword(Password, decoded, response);
+          User.updatePassword(Password, decoded.userId, response);
         }
       });
     } else {
@@ -256,7 +254,8 @@ class User {
               response.status(409).send({ message: 'Incorrect User Password' });
             }
           });
-        });
+        }).catch(() =>
+          response.status(401).json({ message: 'Invalid Token' }));
     }
   }
 
@@ -277,8 +276,8 @@ class User {
       Address,
       Phone,
       Hobbies,
-      imageUrl,
-      publicId
+      ImageUrl,
+      PublicId
     } = request.body;
     userModel.findOne({
       where: {
@@ -303,11 +302,11 @@ class User {
       if (Hobbies) {
         updateRecord.hobbies = Hobbies;
       }
-      if (imageUrl) {
-        updateRecord.imageUrl = imageUrl;
+      if (ImageUrl) {
+        updateRecord.imageUrl = ImageUrl;
       }
-      if (publicId) {
-        updateRecord.publicUrl = publicId;
+      if (PublicId) {
+        updateRecord.publicUrl = PublicId;
       }
       userInfo.update(updateRecord)
         .then((updatedRecord) => {

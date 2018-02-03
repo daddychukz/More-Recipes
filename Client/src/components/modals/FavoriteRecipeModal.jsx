@@ -82,12 +82,16 @@ class FavoriteRecipeModal extends React.Component {
   }
 }
 
+FavoriteRecipeModal.defaultProps = {
+  value: ''
+};
+
 FavoriteRecipeModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   Category: PropTypes.string.isRequired,
   getUniqueCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired
 };

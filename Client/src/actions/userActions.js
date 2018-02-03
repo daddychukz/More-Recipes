@@ -1,24 +1,34 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import toastr from 'toastr';
+import createBrowserHistory from 'history/createBrowserHistory';
 import * as types from './types';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
-
-export const signUp = user => (dispatch) => {
-  return axios.post('/api/v1/users/signup', user).then((response) => {
-    toastr.success(response.data.Message);
-    dispatch({
-      type: types.CREATE_USER,
-      payload: user
-    });
-  });
-};
+const customHistory = createBrowserHistory({
+  forceRefresh: true
+});
 
 export const setCurrentUser = user => ({
   type: types.SET_CURRENT_USER,
   user
 });
+
+export const signUp = user => (dispatch) => {
+  return axios.post('/api/v1/users/signup', user).then((response) => {
+    toastr.success(response.data.Message);
+    const token = response.data.User.token;
+    localStorage.setItem('jwtToken', token);
+    setAuthorizationToken(token);
+    dispatch(setCurrentUser(jwt.decode(token)));
+    localStorage.setItem('user', jwt.decode(token).userId);
+    customHistory.push('/recipe-box');
+    dispatch({
+      type: types.CREATE_USER,
+      payload: user
+    });
+  }).catch(error => toastr.error(error.response.data.error.message));
+};
 
 export const resetPasswordRequestAction = serverRes => ({
   type: types.RESET_USER_PASSWORD_REQUEST,
