@@ -34,6 +34,8 @@ export default (ComposedComponent) => {
             localStorage.removeItem('jwtToken');
             customHistory.push('/');
           }
+          localStorage.removeItem('jwtToken');
+          customHistory.push('/');
         }
       });
     }

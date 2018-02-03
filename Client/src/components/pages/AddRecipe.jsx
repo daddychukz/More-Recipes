@@ -25,7 +25,7 @@ const AddRecipe = () => (
       <div className="container">
         <div className="row">
           <SideBar />
-          <div className="col-md-8">
+          <div className="col-md-12 col-lg-8">
             <RecipeForm />
           </div>
         </div>

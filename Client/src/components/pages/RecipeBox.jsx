@@ -147,7 +147,7 @@ class RecipeBox extends React.Component {
                 <SideBar />
 
                 {/* RECIPE CATALOG  */}
-                <div className="col-md-8" id="display">
+                <div className="col-md-12 col-lg-8" id="display">
                   <input
                     value={this.state.searchString}
                     onInput={this.onInputChange}

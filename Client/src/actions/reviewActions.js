@@ -4,13 +4,14 @@ import * as types from './types';
 
 
 export const reviewRecipe = (recipeId, reviews) => (dispatch) => {
-  return axios.post(`/api/v1/recipes/${recipeId}/reviews`, reviews).then((response) => {
-    toastr.success('Review Successfully added');
-    dispatch({
-      type: types.REVIEW_RECIPE,
-      payload: response.data
+  return axios.post(`/api/v1/recipes/${recipeId}/reviews`, reviews).then(
+    (response) => {
+      toastr.success('Review Successfully added');
+      dispatch({
+        type: types.REVIEW_RECIPE,
+        payload: response.data
+      });
     });
-  });
 };
 
 export const viewAllReviewsAction = serverRes => ({

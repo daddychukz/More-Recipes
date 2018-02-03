@@ -70,9 +70,9 @@ class Review {
       })
       .then((reviews) => {
         if (!isEmpty(reviews)) {
-          response.status(200).json({ reviews });
+          return response.status(200).json({ reviews });
         }
-        response.status(204);
+        response.status(204).send();
       })
       .catch(error => errorHandling.validateRecipeIdErrors(error, response));
   }

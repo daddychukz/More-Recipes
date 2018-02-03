@@ -138,7 +138,7 @@ class MyFavoriteRecipe extends React.Component {
               <SideBar />
 
               {/* RECIPE CATALOG  */}
-              <div className="col-md-8" id="display">
+              <div className="col-md-12 col-lg-8" id="display">
                 <input
                   value={this.state.searchString}
                   onInput={this.onInputChange}
@@ -166,9 +166,10 @@ class MyFavoriteRecipe extends React.Component {
                                 .toDateString();
                               return (
                                 <tr key={favorites.recipeId}>
-                                  <td><Link to={`/recipe/${favorites.recipeId}`}>
-                                    {favorites.Recipe.title}
-                                  </Link></td>
+                                  <td>
+                                    <Link to={`/recipe/${favorites.recipeId}`}>
+                                      {favorites.Recipe.title}
+                                    </Link></td>
                                   <td>{favorites.category}</td>
                                   <td>{newDate}</td>
                                   <td><Link

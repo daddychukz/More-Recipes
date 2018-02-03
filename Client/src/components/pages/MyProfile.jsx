@@ -216,7 +216,9 @@ class MyProfile extends React.Component {
                                     width="280"
                                     height="300"
                                   /> :
-                                  <Image publicId={this.props.profile.publicUrl}>
+                                  <Image
+                                    publicId={this.props.profile.publicUrl}
+                                  >
                                     <Transformation
                                       crop="scale"
                                       width="300"
@@ -341,7 +343,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUserProfile: () => dispatch(userActions.getUserProfile()),
   resetPassword: password => dispatch(userActions.resetPassword(password)),
-  updateUserProfile: userData => dispatch(userActions.updateUserProfile(userData)),
+  updateUserProfile: userData => dispatch(
+    userActions.updateUserProfile(userData)),
   logout: () => dispatch(userActions.logout())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);

@@ -10,7 +10,7 @@ const errorHandling = {
       errors.error = { message: 'Email already exists' };
       return response.status(409).json(errors);
     }
-    if (error.errors[0].message === 'enter a Valid Email') {
+    if (error.errors[0].message === 'Enter a Valid Email') {
       errors.error = { message: 'Not an email' };
       return response.status(409).json(errors);
     }
@@ -29,14 +29,6 @@ const errorHandling = {
     if (error.parent.routine === 'string_to_uuid') {
       errors.error = { message: 'Invalid Recipe ID' };
       response.status(406).json(errors);
-    }
-    if (error.parent.routine === 'string_to_uuid') {
-      errors[0] = { message: 'Invalid Recipe ID' };
-      response.status(406).send(errors);
-    }
-    if (error.parent.routine === 'ri_ReportViolation') {
-      errors[0] = { message: 'User not found' };
-      response.status(406).send(errors);
     }
     if (!errors.error) {
       errors.error = { message: 'Something Went Wrong' };

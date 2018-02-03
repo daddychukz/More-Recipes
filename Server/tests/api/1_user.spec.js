@@ -1,7 +1,6 @@
-
 import request from 'supertest';
 import chai from 'chai';
-import faker from 'Faker';
+import jwtDecode from 'jwt-decode';
 import app from '../../src/app';
 import models from '../../src/models';
 import fakeData from '../helpers/fakeData';
@@ -138,19 +137,22 @@ describe('User Signin/Signup', () => {
       });
   });
 
-  it('ensures user cannot signin if one of email or password is lacking.', (done) => {
-    request(app)
-      .post('/api/v1/users/signin')
-      .send({
-        Password: 'password'
-      })
-      .expect(406)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Email Field should not be Empty');
-        if (err) return done(err);
-        done();
-      });
-  });
+  it(
+    'ensures user cannot signin if one of email or password is lacking.',
+    (done) => {
+      request(app)
+        .post('/api/v1/users/signin')
+        .send({
+          Password: 'password'
+        })
+        .expect(406)
+        .end((err, res) => {
+          expect(res.body.message).to.equal('Email Field should not be Empty');
+          if (err) return done(err);
+          done();
+        });
+    }
+  );
 
   it('ensures user cannot be created if email is lacking.', (done) => {
     fakeData.userThree.Email = null;
@@ -180,6 +182,51 @@ describe('User Signin/Signup', () => {
       });
   });
 
+  it(
+    'ensures user cannot signin if one of email or password is lacking.',
+    (done) => {
+      request(app)
+        .post('/api/v1/users/signin')
+        .send({
+          Email: 'Email'
+        })
+        .expect(406)
+        .end((err, res) => {
+          expect(res.body.message).to.equal('Password Field should not be Empty');
+          if (err) return done(err);
+          done();
+        });
+    }
+  );
+
+  it('ensures user cannot be created if username is lacking.', (done) => {
+    fakeData.userFour.UserName = null;
+    request(app)
+      .post('/api/v1/users/signup')
+      .send(fakeData.userFour)
+      .expect(406)
+      .end((err, res) => {
+        expect(res.body.error.message)
+          .to
+          .equal('Username Field should not be Empty');
+        done();
+      });
+  });
+
+  it('ensures user cannot be created if fullname is lacking.', (done) => {
+    fakeData.userOne.FullName = null;
+    request(app)
+      .post('/api/v1/users/signup')
+      .send(fakeData.userOne)
+      .expect(406)
+      .end((err, res) => {
+        expect(res.body.error.message)
+          .to
+          .equal('Fullname Field should not be Empty');
+        done();
+      });
+  });
+
   it('denies access for an unregistered user', (done) => {
     request(app)
       .post('/api/v1/users/signin')
@@ -202,7 +249,22 @@ describe('User Signin/Signup', () => {
       .send(fakeData.wrongUser)
       .expect(406)
       .end((error, res) => {
-        expect(res.body.error.message).to.equal('Full name must only contain letters');
+        expect(res.body.error.message)
+          .to.equal('Full name must only contain letters');
+        if (error) return done(error);
+        done();
+      });
+  });
+
+  it(`should not be able to create a new account when Password and
+  PasswordConfirmation fields are different`, (done) => {
+    fakeData.wrongUser.Password = '12345';
+    request(app)
+      .post('/api/v1/users/signup')
+      .send(fakeData.wrongUser)
+      .expect(406)
+      .end((error, res) => {
+        expect(res.body.error.message).to.equal('Password Mismatch!');
         if (error) return done(error);
         done();
       });
@@ -214,7 +276,7 @@ describe('User Signin/Signup', () => {
       .send(fakeData.wrongUser2)
       .end((error, res) => {
         expect(406);
-        expect(res.body.error.message).to.equal('Enter a Valid Email');
+        expect(res.body.error.message).to.equal('Not an email');
         if (error) done(error);
         done();
       });
@@ -274,14 +336,40 @@ describe('get user profile details cases', () => {
       .set('authorization', fakeData.invalidToken)
       .expect(403)
       .end((error, response) => {
-        expect(response.body.message).to.equal('You do not have Permission to this Page');
+        expect(response.body.message)
+          .to.equal('You do not have Permission to this Page');
         done();
       });
   });
 });
 
-describe('update user profile details test', () => {
-  it('should not be able to update user profile field not specified', (done) => {
+describe('User profile test cases', () => {
+  it('should fail to get user profile information on wrong token', (done) => {
+    request(app)
+      .get('/api/v1/user/profile')
+      .set('authorization', fakeData.invalidToken)
+      .expect(401)
+      .end((error, response) => {
+        expect(response.body.message)
+          .to.equal('You do not have Permission to this Page');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it('should get user profile information', (done) => {
+    request(app)
+      .get('/api/v1/user/profile')
+      .set('authorization', userToken.token)
+      .expect(200)
+      .end((error, response) => {
+        expect(response.body.about).to.equal('Nil');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it('should update user profile with specified field', (done) => {
     request(app)
       .post('/api/v1/user/profile/edit')
       .set('authorization', userToken.token)
@@ -289,7 +377,126 @@ describe('update user profile details test', () => {
       .expect(202)
       .end((error, response) => {
         expect(response.body.email).to.equal('chuks@yahoo.com');
-        expect(response.body.about).to.equal('Nil');
+        expect(response.body.about).to.equal('learner');
+        if (error) done(error);
+        done();
+      });
+  });
+});
+
+describe('Reset user password test cases', () => {
+  it(`should fail to send reset password link when an unregistered
+  email is supplied`, (done) => {
+    request(app)
+      .post('/api/v1/user/reset_password_request')
+      .expect(404)
+      .send({ Email: 'ade@yahoo.com' })
+      .end((error, response) => {
+        expect(response.body.message).to.equal('User not found!');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it(`should send reset password link when a registered email
+  is supplied`, (done) => {
+    request(app)
+      .post('/api/v1/user/reset_password_request')
+      .expect(200)
+      .send({ Email: 'chuks@yahoo.com' })
+      .end((error, response) => {
+        expect(response.body.message)
+          .to.equal('Reset Password link sent successfully');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it(`should fail to change password with wrong old
+  password supplied`, (done) => {
+    const decoded = jwtDecode(userToken.token);
+    request(app)
+      .post('/api/v1/user/reset-password')
+      .set('authorization', userToken.token)
+      .send({
+        OldPassword: 'dee',
+        Password: 'password2',
+        confirmPassword: 'password2',
+        UserId: decoded.userId
+      })
+      .expect(409)
+      .end((error, response) => {
+        expect(response.body.message).to.equal('Incorrect User Password');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it('should fail to reset password if invalid token is supplied', (done) => {
+    request(app)
+      .post('/api/v1/user/reset-password')
+      .set('authorization', userToken.token)
+      .send({
+        Password: 'password2',
+        Token: fakeData.invalidToken
+      })
+      .expect(401)
+      .end((error, response) => {
+        expect(response.body.message).to.equal('Invalid Token');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it('should fail to change password if invalid token is supplied', (done) => {
+    const decoded = {
+      userId: '171530ce-0c87-4732-b8f2-cbd47f7a90eb'
+    };
+    request(app)
+      .post('/api/v1/user/reset-password')
+      .set('authorization', userToken.token)
+      .send({
+        OldPassword: 'chuks',
+        Password: 'password2',
+        UserId: decoded.userId
+      })
+      .expect(401)
+      .end((error, response) => {
+        expect(response.body.message).to.equal('Invalid Token');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it('should change password of a registered user', (done) => {
+    const decoded = jwtDecode(userToken.token);
+    request(app)
+      .post('/api/v1/user/reset-password')
+      .set('authorization', userToken.token)
+      .send({
+        OldPassword: 'chuks',
+        Password: 'password2',
+        UserId: decoded.userId
+      })
+      .expect(200)
+      .end((error, response) => {
+        expect(response.body.message).to.equal('Password Successfuly Updated');
+        if (error) done(error);
+        done();
+      });
+  });
+
+  it('should reset password of a registered user', (done) => {
+    request(app)
+      .post('/api/v1/user/reset-password')
+      .set('authorization', userToken.token)
+      .send({
+        Password: 'password2',
+        Token: userToken.token
+      })
+      .expect(200)
+      .end((error, response) => {
+        expect(response.body.message).to.equal('Password Successfuly Updated');
         if (error) done(error);
         done();
       });
