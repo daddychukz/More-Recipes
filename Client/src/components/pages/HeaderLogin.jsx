@@ -1,6 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * @description Login page header component
+ *
+ * @function Header
+ *
+ * @param {any} ()
+ *
+ * @returns {JSX} JSX representation of component
+ */
 const Header = () => (
   <div>
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -39,7 +48,8 @@ const Header = () => (
             <h5
               className="modal-title"
               style={{ color: 'white' }}
-              id="contactModalTitle">
+              id="contactModalTitle"
+            >
             Contact Us
             </h5>
           </div>

@@ -15,6 +15,13 @@ const setup = () => nodemailer.createTransport({
 
 const from = '"Chuks Recipes" <info@chuksrecipes.com';
 
+/**
+ * @description it handles sending reset link notification to user email
+ *
+ * @param {object} user
+ *
+ * @returns {object} message
+ */
 const sendResetPasswordEmail = (user) => {
   const transport = setup();
   const email = {

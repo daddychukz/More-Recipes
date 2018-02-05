@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
 import App from './routes';
-import { setCurrentUser } from './actions/userActions';
+import { setCurrentUser } from './actions/creators/userActionCreators';
 import './static/css/style.scss';
 import '../../node_modules/toastr/build/toastr.min.css';
 import setAuthorizationToken from './utils/setAuthorizationToken';

@@ -1,4 +1,15 @@
 
+  /**
+   * @description error methods to handle exceptions and validate fields
+   *
+   * @function errorHandling
+   *
+   * @param {object} request HTTP request
+   * @param {object} respons HTTP response
+   * @param {function} next
+   *
+   * @returns { object } response message object
+   */
 const errorHandling = {
   validateFields(request, response, next) {
     const {

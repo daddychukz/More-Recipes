@@ -17,11 +17,11 @@ const Secret = process.env.SECRET;
  */
 class User {
 /**
-   * signUp
-   * @desc Registers a user to the application
-   * Route: POST: '/users/signup'
-   * @param {Object} request request object
-   * @param {Object} response response object
+   * @description Registers a user to the application
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
    * @returns {void}
    */
   static signUp(request, response) {
@@ -80,12 +80,12 @@ class User {
   }
 
   /**
-   * signIn
-   * @desc Login a user to the application
-   * Route: POST: '/users/signin'
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   * @description Login a user to the application
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} user
    */
   static signIn(request, response) {
     const { Email, Password } = request.body;
@@ -138,12 +138,12 @@ class User {
   }
 
   /**
-   * getUserProfile
-   * @desc gets the info of a registered user
-   * Route: GET: '/user/:recipeId/recipes
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   * @description gets the info of a registered user
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} user details
    */
   static getUserProfile(request, response) {
     userModel.findOne({
@@ -165,12 +165,12 @@ class User {
 
 
   /**
-   * resetPassword
    * @desc resets the password of a registered user
-   * Route: POST: '/user/reset_password_request
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {object} userInfo
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {void}
    */
   static resetPasswordRequest(request, response) {
     userModel.findOne({
@@ -196,13 +196,12 @@ class User {
   }
 
   /**
+   * @description updates user password
    *
-   *
-   * @static
    * @param {any} Password
    * @param {any} userId
-   * @param {any} response
-   * @memberof User
+   * @param {any} response HTTP response object
+   *
    * @returns {object} response
    */
   static updatePassword(Password, userId, response) {
@@ -227,11 +226,11 @@ class User {
   }
 
   /**
-   * resetPassword
    * @desc resets the password of a registered user
-   * Route: POST: '/user/reset-password
+   *
    * @param {Object} request request object
    * @param {Object} response response object
+   *
    * @returns {object} userInfo
    */
   static resetPassword(request, response) {
@@ -266,12 +265,12 @@ class User {
   }
 
   /**
-   * updateUserProfile
    * @desc updates the profile of a registered user
-   * Route: POST: '/user/profile/edit
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} updated user profile
    */
   static updateUserProfile(request, response) {
     const updateRecord = {};

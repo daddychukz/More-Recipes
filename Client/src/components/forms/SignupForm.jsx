@@ -6,21 +6,20 @@ import PropTypes from 'prop-types';
 import * as userActions from '../../actions/userActions';
 
 /**
- *
- *
  * @class SignupForm
+ *
  * @extends {React.Component}
  */
 class SignupForm extends React.Component {
   /**
-   * Creates an instance of SignupForm.
+   * @description Creates an instance of Home Page.
+   *
    * @param {any} props
-   * @param {any} context
+   *
    * @memberof SignupForm
    */
-  constructor(props, context) {
-    super(props, context);
-
+  constructor(props) {
+    super(props);
     this.state = {
       Email: '',
       UserName: '',
@@ -35,23 +34,29 @@ class SignupForm extends React.Component {
   }
 
   /**
+   * @description update component state when form value changes
+   *
+   * @param {any} event
+   *
+   * @memberof SignupForm
    *
    * @returns {void}
-   * @param {any} e
-   * @memberof SignupForm
    */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
+   * @description handles user registration
+   *
+   * @param {any} event
+   *
+   * @memberof SignupForm
    *
    * @returns {void}
-   * @param {any} e
-   * @memberof SignupForm
    */
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     if (this.state.Password !== this.state.ConfirmPassword) {
       toastr.error('Passwords do not match');
     } else {
@@ -61,10 +66,11 @@ class SignupForm extends React.Component {
 
 
   /**
+   * @description renders component to the DOM
    *
-   *
-   * @returns {object} component
    * @memberof SignupForm
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (

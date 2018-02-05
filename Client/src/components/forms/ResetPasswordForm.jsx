@@ -2,28 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import PropTypes from 'prop-types';
-import createBrowserHistory from 'history/createBrowserHistory';
+import customHistory from '../common/commonFunctions';
 import * as userActions from '../../actions/userActions';
 
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
 /**
- *
- *
  * @class ResetPasswordForm
+ *
  * @extends {React.Component}
  */
 class ResetPasswordForm extends React.Component {
   /**
-   * Creates an instance of ResetPasswordForm.
+   * @description Creates an instance of ResetPassword.
+   *
    * @param {any} props
-   * @param {any} context
+   *
    * @memberof ResetPasswordForm
    */
-  constructor(props, context) {
-    super(props, context);
-
+  constructor(props) {
+    super(props);
     this.state = {
       token: this.props.token,
       Password: '',
@@ -34,25 +30,29 @@ class ResetPasswordForm extends React.Component {
   }
 
   /**
+   * @description update component state when form value changes
    *
+   * @param {any} event
    *
-   * @param {any} e
    * @memberof ResetPasswordForm
+   *
    * @returns {void}
    */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
+   * @description handles reset password
    *
+   * @param {any} event
    *
-   * @param {any} e
    * @memberof ResetPasswordForm
+   *
    * @returns {void}
    */
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     const userData = {
       Token: this.state.token,
       Password: this.state.Password,
@@ -68,10 +68,11 @@ class ResetPasswordForm extends React.Component {
   }
 
   /**
-   *
+   * @description renders component to the DOM
    *
    * @memberof ResetPasswordForm
-   * @returns {object} component
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (

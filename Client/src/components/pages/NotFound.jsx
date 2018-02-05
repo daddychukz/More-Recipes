@@ -1,6 +1,15 @@
 import React from 'react';
 import Header from './Header';
 
+/**
+ * @description displays when a page content is not found
+ *
+ * @function AddRecipe
+ *
+ * @param {any} ()
+ *
+ * @returns {JSX} JSX representation of component
+ */
 const NotFound = () => (
   <div>
     <Header />

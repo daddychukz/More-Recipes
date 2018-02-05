@@ -3,6 +3,19 @@ import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
 const Secret = process.env.SECRET;
+
+/**
+   * @description auth method serves  as middleware for authentication
+   * it verifies token.
+   *
+   * @function auth
+   *
+   * @param {object} req HTTP request
+   * @param {object} res HTTP response
+   * @param {function} next
+   *
+   * @returns { object } response message object
+   */
 const Auth = {
   // function to authenticate access to users with a token
   verify(req, res, next) {
@@ -31,7 +44,6 @@ const Auth = {
           message: 'You do not have Permission to this Page'
         });
       } else {
-        // if everything is good, save to request for use in other routes
         res.json({ message: 'all good' });
       }
     });

@@ -2,91 +2,85 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * @description delete user recipe
  *
+ * @function favoriteRecipeModal
  *
- * @class FavoriteRecipeModal
- * @extends {React.Component}
+ * @param {object} props
+ *
+ * @returns {views} favorite recipe modal
  */
-class FavoriteRecipeModal extends React.Component {
-  /**
-   * Creates an instance of FavoriteRecipeModal.
-   * @param {any} props
-   * @memberof FavoriteRecipeModal
-   */
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-  /**
-   *
-   *
-   * @memberof FavoriteRecipeModal
-   * @returns {void}
-   */
-  render() {
-    return (
-      <div className="modal fade text-dark" id="category">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header bg-info">
-              <h5
-                className="modal-title"
-                style={{ color: 'white' }}
-                id="contactModalTitle"
-              >
+const favoriteRecipeModal = (props) => {
+  const {
+    onClick,
+    onInput,
+    Category,
+    getUniqueCategories,
+    value,
+    onChange,
+    disabled } = props;
+
+  return (
+    <div className="modal fade text-dark" id="category">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header bg-info">
+            <h5
+              className="modal-title"
+              style={{ color: 'white' }}
+              id="contactModalTitle"
+            >
                 Select a Category
-              </h5>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="form-group">
-                  <select
-                    disabled={this.props.disabled}
-                    onChange={this.props.onChange}
-                    value={this.props.value}
-                    name="selectCategory"
-                    className="form-control form-control-lg"
-                  >
-                    {
-                      this.props.getUniqueCategories.map(item =>
-                        <option key={item}>{item}</option>
-                      )
-                    }
-                  </select>
-                </div>
-                <div className="form-group">
-                  <input
-                    onInput={this.props.onInput}
-                    value={this.props.Category}
-                    type="text"
-                    name="Category"
-                    className="form-control form-control-lg"
-                    placeholder="or enter new category"
-                    required
-                  />
-                </div>
+            </h5>
+          </div>
+          <div className="modal-body">
+            <form>
+              <div className="form-group">
+                <select
+                  disabled={disabled}
+                  onChange={onChange}
+                  value={value}
+                  name="selectCategory"
+                  className="form-control form-control-lg"
+                >
+                  {
+                    getUniqueCategories.map(item =>
+                      <option key={item}>{item}</option>
+                    )
+                  }
+                </select>
+              </div>
+              <div className="form-group">
                 <input
-                  type="button"
-                  value="Add To Favorites"
-                  className="btn btn-info btn-block"
-                  data-dismiss="modal"
-                  onClick={this.props.onClick}
+                  onInput={onInput}
+                  value={Category}
+                  type="text"
+                  name="Category"
+                  className="form-control form-control-lg"
+                  placeholder="or enter new category"
+                  required
                 />
-              </form>
-            </div>
+              </div>
+              <input
+                type="button"
+                value="Add To Favorites"
+                className="btn btn-info btn-block"
+                data-dismiss="modal"
+                onClick={onClick}
+              />
+            </form>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-FavoriteRecipeModal.defaultProps = {
+favoriteRecipeModal.defaultProps = {
   value: ''
 };
 
-FavoriteRecipeModal.propTypes = {
+favoriteRecipeModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
   Category: PropTypes.string.isRequired,
@@ -96,4 +90,4 @@ FavoriteRecipeModal.propTypes = {
   disabled: PropTypes.bool.isRequired
 };
 
-export default FavoriteRecipeModal;
+export default favoriteRecipeModal;

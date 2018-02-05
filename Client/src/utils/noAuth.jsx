@@ -2,25 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
-import createBrowserHistory from 'history/createBrowserHistory';
-
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
+import customHistory from '../components/common/commonFunctions';
 
 export default (ComposedComponent) => {
   /**
-   * 
-   * 
    * @class Authenticate
+   *
    * @extends {React.Component}
    */
   class Authenticate extends React.Component {
     /**
-     * 
-     * 
+     * @description life cycle method called before component mounts the DOM
+     *
      * @memberof Authenticate
-     * @returns {object} recipes
+     *
+     * @returns {void}
      */
     componentWillMount() {
       const token = localStorage.getItem('jwtToken');
@@ -37,10 +33,11 @@ export default (ComposedComponent) => {
       }
     }
     /**
-     * 
-     * 
+     * @description renders component to the DOM
+     *
      * @memberof Authenticate
-     * @returns {object} component
+     *
+     * @returns {JSX} JSX representation of component
      */
     render() {
       return (

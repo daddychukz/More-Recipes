@@ -1,22 +1,19 @@
 import axios from 'axios';
 import toastr from 'toastr';
-import * as types from './types';
+import {
+  addToFavoriteAction,
+  getUserFavoriteAction,
+  searchUserFavoriteAction
+} from './creators/favoriteActionCreators';
 
-export const addToFavoriteAction = serverRes => ({
-  type: types.ADD_TO_FAVORITES,
-  payload: serverRes
-});
-
-export const searchUserFavoriteAction = serverRes => ({
-  type: types.SEARCH_USER_FAVORITES,
-  payload: serverRes
-});
-
-export const getUserFavoriteAction = serverRes => ({
-  type: types.GET_ALL_FAVORITE,
-  payload: serverRes
-});
-
+/**
+ * @export { function } addToFavorites
+ *
+ * @param {any} recipeId
+ * @param {any} category
+ *
+ * @returns { object } resolves with success message and favorite data
+ */
 export const addToFavorites = (recipeId, category) => {
   return (dispatch) => {
     return axios.post(`/api/v1/recipes/${recipeId}`, category)
@@ -27,6 +24,13 @@ export const addToFavorites = (recipeId, category) => {
   };
 };
 
+/**
+ * @export { function } getUserFavorite
+ *
+ * @param {any} userId
+ *
+ * @returns { object } resolves with all user favorite recipes
+ */
 export const getUserFavorite = (userId) => {
   return (dispatch) => {
     return axios.get(`/api/v1/users/${userId}/recipes`)
@@ -38,11 +42,13 @@ export const getUserFavorite = (userId) => {
 };
 
 /**
- * @export { function } viewRecipes
+ * @export { function } searchUserFavorite
+ *
  * @param {any} limit
  * @param {any} offset
  * @param {any} searchString
- * @returns { object } action type and server response
+ *
+ * @returns { object } resolves with searched favorite recipe
  */
 export const searchUserFavorite = (limit, offset, searchString) => {
   return (dispatch) => {

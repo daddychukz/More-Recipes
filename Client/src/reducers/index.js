@@ -1,18 +1,21 @@
 import { combineReducers } from 'redux';
 import user from './userReducer';
 import auth from './authReducer';
-import getRecipe from './recipeReducer';
+import recipeOperations from './recipeReducer';
 import review from './reviewReducer';
 import favorite from './favoriteReducer';
-import popularRecipes from './getRecipeReducer';
+import popularRecipes from './popularRecipeReducer';
 import search from './searchReducer';
 import singleRecipe from './singleRecipeReducer';
 import allRecipe from './getAllRecipeReducer';
 
+/**
+ * @description combines all reducers into one
+ */
 const rootReducer = combineReducers({
   user,
   auth,
-  getRecipe,
+  recipeOperations,
   review,
   favorite,
   popularRecipes,

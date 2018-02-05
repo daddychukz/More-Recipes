@@ -7,15 +7,14 @@ import * as recipeActions from '../../actions/recipeActions';
 import { getUserFavorite } from '../../actions/favoriteActions';
 
 /**
- *
- *
  * @class SideBar
+ *
  * @extends {React.Component}
  */
 class SideBar extends React.Component {
   /**
-   * Creates an instance of SideBar.
    * @param {any} props
+   *
    * @memberof SideBar
    */
   constructor(props) {
@@ -27,15 +26,12 @@ class SideBar extends React.Component {
   }
 
   /**
-   *
-   * dispatches actions that makes request to get user profile info
-   * dispatches actions that makes request to get popular/most upvoted recipes
-   *
-   * @method componentDidMount
+   * @description life cycle method called before component mounts the DOM
    *
    * @memberof SideBar
    *
-   * @returns {object} component
+   * @returns {object} fetches user profile information
+   * @returns {object} fetches popular/most upvoted recipes
    */
   componentDidMount() {
     const userId = this.props.profile.userId;
@@ -52,10 +48,11 @@ class SideBar extends React.Component {
   }
 
   /**
+   * @description renders component to the DOM
    *
-   * @method render
    * @memberof SideBar
-   * @returns {object} component
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (
@@ -153,7 +150,7 @@ SideBar.propTypes = {
 const mapStateToProps = state => ({
   profile: state.user,
   viewRecipes: state.popularRecipes,
-  myRecipes: state.getRecipe,
+  myRecipes: state.recipeOperations,
   favorites: state.favorite
 });
 

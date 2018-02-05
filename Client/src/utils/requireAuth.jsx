@@ -11,17 +11,17 @@ const customHistory = createBrowserHistory({
 
 export default (ComposedComponent) => {
   /**
-     *
-     *
      * @class Authenticate
+     *
      * @extends {React.Component}
      */
   class Authenticate extends React.Component {
-    /**
-     *
+  /**
+     * @description life cycle method called before component mounts the DOM
      *
      * @memberof Authenticate
-     * @returns {object} home page
+     *
+     * @returns {void}
      */
     componentWillMount() {
       if (!this.props.isAuthenticated) {
@@ -40,10 +40,11 @@ export default (ComposedComponent) => {
       });
     }
     /**
-     *
+     * @description renders component to the DOM
      *
      * @memberof Authenticate
-     * @returns {object} component
+     *
+     * @returns {JSX} JSX representation of component
      */
     render() {
       return (

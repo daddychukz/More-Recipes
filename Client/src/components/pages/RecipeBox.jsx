@@ -11,15 +11,14 @@ import Header from './Header';
 import SideBar from './SideBar';
 
 /**
- *
- *
  * @class RecipeBox
+ *
  * @extends {React.Component}
  */
 class RecipeBox extends React.Component {
   /**
-   * Creates an instance of RecipeBox.
    * @param {any} props
+   *
    * @memberof RecipeBox
    */
   constructor(props) {
@@ -41,10 +40,11 @@ class RecipeBox extends React.Component {
   }
 
   /**
-   * dispatches actions that makes request to get all recipes
-   * @method componentDidMount
+   * @description life cycle method called before component mounts the DOM
+   *
    * @memberof RecipeBox
-   * @returns {void}
+   *
+   * @returns { object } fetches all recipes
    */
   componentWillMount() {
     const limit = this.state.pagination.limit;
@@ -65,8 +65,12 @@ class RecipeBox extends React.Component {
   }
 
   /**
+   * @description handles page change
+   *
    * @param {any} number
+   *
    * @memberof RecipeBox
+   *
    * @returns {object} recipes
    */
   onPageChange(number) {
@@ -90,11 +94,13 @@ class RecipeBox extends React.Component {
   }
 
   /**
-   *
+   * @description update component state when user searches
    *
    * @param {any} event
+   *
    * @memberof RecipeBox
-   * @returns {object} recipes
+   *
+   * @returns { object } recipes
    */
   onInputChange(event) {
     const { limit, offset } = this.state.pagination;
@@ -118,10 +124,11 @@ class RecipeBox extends React.Component {
   }
 
   /**
+   * @description renders component to the DOM
    *
-   * @method render
    * @memberof RecipeBox
-   * @returns {object} component
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     if (!isEmpty(this.props.allRecipe.recipes)) {

@@ -1,5 +1,13 @@
 import * as types from '../actions/types';
 
+/**
+ * @description Reducer that handles favorite actions
+ *
+ * @param {array} state initial state for the favorite section of the store
+ * @param {Object} action the dispatched action
+ *
+ * @returns {array} new state of the favorite section of the store
+ */
 const favoriteReducer = (state = [], action) => {
   switch (action.type) {
   case types.ADD_TO_FAVORITES:

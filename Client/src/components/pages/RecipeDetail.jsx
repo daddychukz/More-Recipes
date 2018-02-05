@@ -5,23 +5,23 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import * as recipesActions from '../../actions/recipeActions';
+import { viewSingleRecipe } from '../../actions/recipeActions';
 import * as reviewActions from '../../actions/reviewActions';
 import * as favoriteActions from '../../actions/favoriteActions';
+import * as voteActions from '../../actions/voteActions';
 import Header from './Header';
 import SideBar from './SideBar';
 import FavoriteRecipeModal from '../modals/FavoriteRecipeModal';
 
 /**
- *
- *
  * @class RecipeDetail
+ *
  * @extends {React.Component}
  */
 class RecipeDetail extends React.Component {
   /**
-   * Creates an instance of RecipeDetail.
    * @param {any} props
+   *
    * @memberof RecipeDetail
    */
   constructor(props) {
@@ -51,16 +51,12 @@ class RecipeDetail extends React.Component {
     this.openModal = this.openModal.bind(this);
   }
   /**
-   * dispatches actions that makes request to get a single recipe
+   * @description life cycle method called before component mounts the DOM
    *
-   * dispatches actions that makes request to get all reviews
-   * for a particular recipe
-   *
-   * dispatches actions that makes request to get a single recipe
-   * favorited by a user
-   * @method componentWillMount
    * @memberof RecipeDetail
-   * @returns {object} component
+   *
+   * @returns {object} fetches a single recipe
+   * @returns {object} fetches all reviews for the recipe
    */
   componentDidMount() {
     const recipeId = this.props.match.params.recipeId;
@@ -112,11 +108,12 @@ class RecipeDetail extends React.Component {
   }
 
   /**
+   * @description called when component receives new propTypes
    *
-   * @param {any} nextProps
-   * @method componentWillReceiveProps
-   * @memberof RecipeDetail
-   * @returns {object} component
+   * @param {Object} nextProps
+   *
+   * @returns {object} fetches a single recipe
+   * @returns {object} fetches all reviews for the recipe
    */
   componentWillReceiveProps(nextProps) {
     const recipeId = nextProps.match.params.recipeId;
@@ -171,43 +168,43 @@ class RecipeDetail extends React.Component {
   }
 
   /**
+   * @description update component state when form value changes
    *
-   * @method onChange
-   * @param {any} e
+   * @param {any} event
+   *
    * @memberof RecipeDetail
+   *
    * @returns {void}
    */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
+   * @description update component state when user searches
    *
+   * @param {any} event
    *
-   * @param {any} e
-   * @memberof RecipeDetail
-   *
-   * @returns {void}
+   * @returns { void }
    */
-  onInput(e) {
-    e.preventDefault();
+  onInput(event) {
+    event.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
       isDisabled: true,
       selectCategory: ''
     });
   }
 
   /**
+   * @description adds a review to a recipe
    *
+   * @param {any} event
    *
-   * @param {any} e
-   * @memberof RecipeDetail
    * @returns {object} reviews
-   * @returns {object} favorite recipe
    */
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     const recipeId = this.props.match.params.recipeId;
     const review = {
       Review: this.state.Review
@@ -221,9 +218,10 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * @method getUniqueCategories
+   * @description gets users categories without duplicate
    *
    * @memberof RecipeDetail
+   *
    * @returns {array} uniqueCategories
    */
   getUniqueCategories() {
@@ -233,9 +231,10 @@ class RecipeDetail extends React.Component {
   }
 
   /**
-   * @method openModal
+   * @description display modal to favorite a recipe
    *
    * @memberof RecipeDetail
+   *
    * @returns {void}
    */
   openModal() {
@@ -252,9 +251,10 @@ class RecipeDetail extends React.Component {
   }
 
   /**
+   * @description enables user add recipe to favorite
    *
-   * @method favoriteRecipe
    * @memberof RecipeDetail
+   *
    * @returns {object} favoriteRecipe
    */
   favoriteRecipe() {
@@ -280,9 +280,10 @@ class RecipeDetail extends React.Component {
   }
 
   /**
+   * @description upvote a recipe
    *
-   * @method upvote
    * @memberof RecipeDetail
+   *
    * @returns {object} upvotes
    */
   upvote() {
@@ -317,9 +318,10 @@ class RecipeDetail extends React.Component {
   }
 
   /**
+   * @description downvote a recipe
    *
-   * @method downVote
    * @memberof RecipeDetail
+   *
    * @returns {object} downvote
    */
   downVote() {
@@ -354,10 +356,11 @@ class RecipeDetail extends React.Component {
   }
 
   /**
+   * @description renders component to the DOM
    *
-   * @method render
    * @memberof RecipeDetail
-   * @returns {object} component
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (
@@ -579,9 +582,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  viewSingleRecipe: Id => dispatch(recipesActions.viewSingleRecipe(Id)),
-  upvoteRecipe: id => dispatch(recipesActions.upvoteRecipe(id)),
-  downvoteRecipe: id => dispatch(recipesActions.downvoteRecipe(id)),
+  viewSingleRecipe: Id => dispatch(viewSingleRecipe(Id)),
+  upvoteRecipe: id => dispatch(voteActions.upvoteRecipe(id)),
+  downvoteRecipe: id => dispatch(voteActions.downvoteRecipe(id)),
   reviewRecipe: (Id, reviews) => dispatch(
     reviewActions.reviewRecipe(Id, reviews)),
   viewAllReviews: Id => dispatch(reviewActions.viewAllReviews(Id)),

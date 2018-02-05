@@ -4,6 +4,13 @@ import Header from './HeaderLogin';
 import LoginForm from '../forms/LoginForm';
 import SignupForm from '../forms/SignupForm';
 
+/**
+ * @description renders component to the DOM
+ *
+ * @function Home
+ *
+ * @returns {JSX} JSX representation of component
+ */
 const Home = () => (
   <div>
     <Header active="nav-link active" />

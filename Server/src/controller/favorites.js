@@ -4,17 +4,15 @@ import paginate from '../services/paginate';
 const favoriteModel = db.Favorite;
 
 /**
- *
- *
  * @class Favorite
  */
 class Favorite {
 /**
-   * addFavorites
-   * @desc adds a recipe to users favorites
-   * Route: POST: '/recipes/:recipeID'
-   * @param {Object} request request object
-   * @param {Object} response response object
+   * @description adds a recipe to users favorites
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
    * @returns {void}
    */
   static addFavorites(request, response) {
@@ -59,12 +57,12 @@ class Favorite {
   }
 
   /**
-   * retrieve user favorites
    * @desc gets all favorites added by a user
-   * Route: GET: '/users/:userID/recipes
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} user favorites
    */
   static retrieveFavorites(request, response) {
     favoriteModel
@@ -91,13 +89,14 @@ class Favorite {
   }
 
   /**
-   * Search favorite recipes by a user in the application
-   * @method
-   * @memberof User
-   * @static
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @param {Object} searchString response object
+   * @description Search favorite recipes by a user in the application
+   *
+   * @memberof Favorite
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   * @param {Object} searchString
+   *
    * @returns {function} Express middleware function that search
    * users and sends response to client
    */

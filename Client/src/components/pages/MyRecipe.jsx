@@ -12,15 +12,14 @@ import DeleteRecipeModal from '../modals/DeleteRecipeModal';
 import EditRecipeModal from '../modals/EditRecipeModal';
 
 /**
- *
- *
  * @class MyRecipe
+ *
  * @extends {React.Component}
  */
 class MyRecipe extends React.Component {
   /**
-   * Creates an instance of MyRecipe.
    * @param {any} props
+   *
    * @memberof MyRecipe
    */
   constructor(props) {
@@ -51,10 +50,11 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   * dispatches actions that makes request get recipes created by a user
-   * @returns {void}
-   * @method componentWillMount
+   * @description life cycle method called after component mounts the DOM
+   *
    * @memberof MyRecipe
+   *
+   * @returns { array } fetches recipes created by a user
    */
   componentDidMount() {
     const limit = this.state.pagination.limit;
@@ -74,13 +74,15 @@ class MyRecipe extends React.Component {
   }
 
   /**
+   * @description updates a recipe
+   * @param {any} event
    *
-   * @returns {object} recipe
-   * @param {any} e
    * @memberof MyRecipe
+   *
+   * @returns {object} recipes
    */
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     const recipeID = this.state.recipeId;
     const recipe = {
       imageUrl: this.state.imageUrl,
@@ -95,8 +97,12 @@ class MyRecipe extends React.Component {
   }
 
   /**
+   * @description handles page change
+   *
    * @param {any} number
-   * @memberof RecipeBox
+   *
+   * @memberof MyRecipe
+   *
    * @returns {object} recipes
    */
   onPageChange(number) {
@@ -120,21 +126,24 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   * @returns {void}
-   * @method onChange
-   * @param {any} e
+   * @description update component state when form value changes
+   *
+   * @param {any} event
+   *
    * @memberof MyRecipe
+   *
+   * @returns {void}
    */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
-   *
-   * @method editRecipes
    * @param {any} recipe
-   * @returns {object} recipes
+   *
    * @memberof MyRecipe
+   *
+   * @returns {object} recipes
    */
   editRecipe(recipe) {
     return () => this.setState({
@@ -147,9 +156,11 @@ class MyRecipe extends React.Component {
   }
 
   /**
+   * @description cloudinary image widget
    *
-   * @returns {object} image
    * @memberof MyRecipe
+   *
+   * @returns {void}
    */
   uploadWidget() {
     window.cloudinary.openUploadWidget({
@@ -164,11 +175,11 @@ class MyRecipe extends React.Component {
   }
 
   /**
-   *
+   * @description deletes a recipe
    *
    * @param {any} recipe
+   *
    * @returns {void}
-   * @memberof MyRecipe
    */
   deleteRecipe(recipe) {
     const recipeId = recipe.recipeId;
@@ -186,10 +197,11 @@ class MyRecipe extends React.Component {
   }
 
   /**
+   * @description renders component to the DOM
    *
-   * @method render
-   * @returns {object} component
    * @memberof MyRecipe
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (
@@ -330,7 +342,7 @@ MyRecipe.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  recipes: state.getRecipe,
+  recipes: state.recipeOperations,
 });
 
 const mapDispatchToProps = dispatch => ({

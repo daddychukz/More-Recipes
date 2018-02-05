@@ -11,12 +11,12 @@ const voteModel = db.Vote;
  */
 class Upvote {
   /**
-   * upvoteRecipe
-   * @desc upvotes a Recipe
-   * Route: PUT: /recipes/:recipeID/upvote
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   * @description upvotes a Recipe
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} message
    */
   static upvoteRecipe(request, response) {
     recipeModel.findOne({
@@ -84,11 +84,11 @@ class Upvote {
   }
 
   /**
-   * mostRecipeUpvote
-   * @desc Gets recipe with Upvotes in descending order
-   * Route: GET: /api/v1/recipe?sort=upvotes&order=des
-   * @param {Object} request request object
-   * @param {Object} response response object
+   * @description Gets recipe with Most Upvotes in descending order
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
    * @returns {void}
    */
   static mostRecipeUpvote(request, response) {

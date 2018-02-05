@@ -3,28 +3,23 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
-import createBrowserHistory from 'history/createBrowserHistory';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
+import customHistory from '../common/commonFunctions';
 import * as userActions from '../../actions/userActions';
 import SideBar from './SideBar';
 import ChangePasswordModal from '../modals/ChangePasswordModal';
 import HeaderProfile from './HeaderProfile';
 import EditProfileModal from '../modals/EditProfileModal';
 
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
-
 /**
- *
- *
  * @class MyProfile
+ *
  * @extends {React.Component}
  */
 class MyProfile extends React.Component {
   /**
-   * Creates an instance of MyProfile.
    * @param {any} props
+   *
    * @memberof MyProfile
    */
   constructor(props) {
@@ -48,10 +43,13 @@ class MyProfile extends React.Component {
   }
 
   /**
-   * dispatches actions that makes request to get users profile
+   * @description life cycle method called before component mounts the DOM
+   *
    * @method componentWillMount
+   *
    * @memberof MyProfile
-   * @returns {void}
+   *
+   * @returns {object} fetches user profile information
    */
   componentWillMount() {
     this.props.getUserProfile().then(
@@ -71,13 +69,16 @@ class MyProfile extends React.Component {
   }
 
   /**
-   * submits updated user details
-   * @returns {object} userProfile
-   * @param {any} e
+   * @description submits updated user details
+   *
+   * @param {any} event
+   *
    * @memberof MyProfile
+   *
+   * @returns {object} userProfile
    */
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     const data = {
       ImageUrl: this.state.ImageUrl,
       PublicId: this.state.PublicId,
@@ -96,21 +97,24 @@ class MyProfile extends React.Component {
   }
 
   /**
+   * @description update component state when form value changes
+   *
+   * @param {any} event
+   *
+   * @memberof MyProfile
    *
    * @returns {void}
-   * @param {any} e
-   * @memberof MyProfile
    */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
-   * uploadWidget
-   * uploads user profile photo
-   * @method uploadWidget
+   * @description cloudinary image widget
+   *
    * @memberof MyProfile
-   * @returns {object} component
+   *
+   * @returns {void}
    */
   uploadWidget() {
     window.cloudinary.openUploadWidget({
@@ -126,10 +130,12 @@ class MyProfile extends React.Component {
   }
 
   /**
-   *
+   * @description changes user password
    *
    * @memberof MyProfile
-   * @returns {void}
+   *
+   * @returns {message} success message
+   * @returns {message} error messsage
    */
   changePassword() {
     const { newPassword, confirmPassword } = this.state;
@@ -160,9 +166,11 @@ class MyProfile extends React.Component {
   }
 
   /**
-   * logs out a user
-   * @returns {void}
+   * @description logs out a user
+   *
    * @memberof MyProfile
+   *
+   * @returns {void}
    */
   logout() {
     this.props.logout();
@@ -170,10 +178,11 @@ class MyProfile extends React.Component {
   }
 
   /**
+   * @description renders component to the DOM
    *
-   * @method render
-   * @returns {component} MyProfile
    * @memberof MyProfile
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (

@@ -11,12 +11,12 @@ const recipeModel = db.Recipe;
  */
 class Recipe {
 /**
-   * retrieveRecipe
    * @desc Gets all recipe from catalog
-   * Route: GET: '/recipes'
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} recipes
    */
   static retrieveRecipes(request, response) {
     const { limit, offset, searchString } = request.query;
@@ -68,12 +68,12 @@ class Recipe {
   }
 
   /**
-   * myRecipe
-   * @desc Gets all recipe created by a user
-   * Route: GET: '/recipes/myrecipes'
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   * @description Gets all recipe created by a user
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {array} recipes
    */
   static myRecipes(request, response) {
     recipeModel
@@ -108,12 +108,12 @@ class Recipe {
   }
 
   /**
-   * createRecipe
-   * @desc adds a review to a recipe
-   * Route: POST: '/recipes/:recipeID/reviews'
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   * @description adds a review to a recipe
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} success message
    */
   static createRecipe(request, response) {
     const {
@@ -163,12 +163,12 @@ class Recipe {
   }
 
   /**
-   * deleteRecipe
    * @desc deletes a recipe from catalog
-   * Route: DELETE: '/recipes/:recipeID'
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} deleted recipe
    */
   static deleteRecipe(request, response) {
     recipeModel.destroy({
@@ -207,12 +207,12 @@ class Recipe {
   }
 
   /**
-   * updateRecipe
    * @desc modifies a recipe in the catalog
-   * Route: PUT: '/recipes/:recipeID'
-   * @param {Object} request request object
-   * @param {Object} response response object
-   * @returns {void}
+   *
+   * @param {Object} request HTTP request object
+   * @param {Object} response HTTP response object
+   *
+   * @returns {object} updated recipe
    */
   static updateRecipe(request, response) {
     const updateRecord = {};
@@ -257,12 +257,12 @@ class Recipe {
   }
 
   /**
-   * retrieveRecipe
    * @desc gets a single recipe in the catalog
-   * Route: GET: '/recipes/:recipeID'
+   *
    * @param {Object} request request object
    * @param {Object} response response object
-   * @returns {void}
+   *
+   * @returns {object} recipe
    */
   static retrieveRecipe(request, response) {
     const { userId } = request.decoded;

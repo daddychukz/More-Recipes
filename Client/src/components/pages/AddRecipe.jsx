@@ -4,6 +4,15 @@ import Header from './Header';
 import SideBar from './SideBar';
 import RecipeForm from '../forms/RecipeForm';
 
+/**
+ * @description Add recipe component
+ *
+ * @function AddRecipe
+ *
+ * @param {any} ()
+ *
+ * @returns {JSX} JSX representation of component
+ */
 const AddRecipe = () => (
 
   <div>

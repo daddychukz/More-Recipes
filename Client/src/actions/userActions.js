@@ -1,19 +1,28 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import toastr from 'toastr';
-import createBrowserHistory from 'history/createBrowserHistory';
+import customHistory from '../components/common/commonFunctions';
 import * as types from './types';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
+import {
+  setCurrentUser,
+  getUserProfileAction,
+  updateUserProfileAction,
+  resetPasswordAction,
+  resetPasswordRequestAction
+} from './creators/userActionCreators';
 
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
-
-export const setCurrentUser = user => ({
-  type: types.SET_CURRENT_USER,
-  user
-});
-
+/**
+ * @description dispatch action to register a user
+ * @description dispatch action to set the current user
+ *
+ * @export { function } signUp
+ *
+ * @param { object } user
+ *
+ * @returns { object } resolves axios promise with user information
+ * @returns { object } error message
+ */
 export const signUp = user => (dispatch) => {
   return axios.post('/api/v1/users/signup', user).then((response) => {
     toastr.success(response.data.Message);
@@ -21,35 +30,24 @@ export const signUp = user => (dispatch) => {
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
     dispatch(setCurrentUser(jwt.decode(token)));
-    localStorage.setItem('user', jwt.decode(token).userId);
     customHistory.push('/recipe-box');
     dispatch({
       type: types.CREATE_USER,
-      payload: user
+      payload: response.data.User
     });
   }).catch(error => toastr.error(error.response.data.error.message));
 };
 
-export const resetPasswordRequestAction = serverRes => ({
-  type: types.RESET_USER_PASSWORD_REQUEST,
-  payload: serverRes
-});
-
-export const resetPasswordAction = serverRes => ({
-  type: types.RESET_USER_PASSWORD,
-  payload: serverRes
-});
-
-export const getUserProfileAction = serverRes => ({
-  type: types.GET_USER_PROFILE,
-  payload: serverRes
-});
-
-export const updateUserProfileAction = serverRes => ({
-  type: types.EDIT_USER_PROFILE,
-  payload: serverRes
-});
-
+/**
+ * @description dispatch action to signin a user
+ * @description dispatch action to set the current user
+ *
+ * @export { function } signIn
+ *
+ * @param { object } user
+ *
+ * @returns { object } resolves axios promise with user information
+ */
 export const signIn = user => (dispatch) => {
   return axios.post('/api/v1/users/signin', user).then((response) => {
     toastr.success(response.data.message);
@@ -61,10 +59,19 @@ export const signIn = user => (dispatch) => {
       type: types.USER_LOGGED_IN,
       payload: user
     });
-    localStorage.setItem('user', jwt.decode(token).userId);
   });
 };
 
+/**
+ * @description dispatch action to logout a user
+ * @description dispatch action to set the current user
+ *
+ * @export { function } logOut
+ *
+ * @param { any } ()
+ *
+ * @returns { void }
+ */
 export const logout = () => (dispatch) => {
   localStorage.removeItem('jwtToken');
   setAuthorizationToken(false);
@@ -72,8 +79,13 @@ export const logout = () => (dispatch) => {
 };
 
 /**
- * @export { function } viewRecipes
- * @returns { object } action type and server response
+ * @description dispatch action to get user profile information
+ *
+ * @export { function } getUserProfile
+ *
+ * @param { any } ()
+ *
+ * @returns { object } resolve axios promise with user information
  */
 export const getUserProfile = () => {
   return (dispatch) => {
@@ -86,9 +98,13 @@ export const getUserProfile = () => {
 };
 
 /**
- * @export { function } viewRecipes
- * @returns { object } action type and server response
+ * @description dispatch action to update user profile
+ *
  * @param { object } user
+ *
+ * @export { function } updateUserProfile
+ *
+ * @returns { object } resolve axios promise with updated user information
  */
 export const updateUserProfile = (user) => {
   return (dispatch) => {
@@ -101,9 +117,13 @@ export const updateUserProfile = (user) => {
 };
 
 /**
+ * @description dispatch action to reset password request
+ *
  * @export { function } resetPasswordRequest
+ *
  * @param { object } email
- * @returns { object } action type and server response
+ *
+ * @returns { object } success message
  */
 export const resetPasswordRequest = (email) => {
   return (dispatch) => {
@@ -115,9 +135,13 @@ export const resetPasswordRequest = (email) => {
 };
 
 /**
+ * @description dispatch action to reset user password
+ *
  * @export { function } resetPassword
+ *
  * @param { object } userData
- * @returns { object } action type and server response
+ *
+ * @returns { void }
  */
 export const resetPassword = (userData) => {
   return (dispatch) => {
