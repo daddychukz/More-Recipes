@@ -130,8 +130,9 @@ describe('Recipe Operations', () => {
     request(app)
       .get('/api/v1/recipes/myrecipes?limit=10&offset=0&searchString=')
       .set('authorization', userToken.token2)
-      .expect(204)
-      .end((err) => {
+      .expect(404)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('no recipes created');
         if (err) return done(err);
         done();
       });

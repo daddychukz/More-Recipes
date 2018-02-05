@@ -81,7 +81,7 @@ class ResetPassword extends React.Component {
         <section
           className="d-flex flex-row align-items-center
           justify-content-center obj-color"
-          style={{ width: '100vw', height: '52vw' }}
+          style={{ width: '100vw', height: '48vw' }}
         >
           <br />
           <div>

@@ -65,7 +65,7 @@ class SideBar extends React.Component {
             <i className="fa fa-cutlery" aria-hidden="true" />&nbsp;
               My Recipes
             <span className="badge badge-pill badge-info float-right">
-              {this.props.myRecipes.pagination.totalCount}</span></Link>
+              {this.props.myRecipes.recipes.length}</span></Link>
 
           <Link to={'/my-favorite'} className="list-group-item">
             <i className="fa fa-star" aria-hidden="true" />&nbsp;
