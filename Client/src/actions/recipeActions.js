@@ -1,8 +1,24 @@
 import axios from 'axios';
 import toastr from 'toastr';
 import * as types from './types';
+import {
+  viewAllRecipesAction,
+  viewSingleRecipeAction,
+  getUserRecipesAction,
+  updateUserRecipeAction,
+  deleteUserRecipeAction,
+  getPopularRecipesAction
+} from './creators/recipeActionCreators';
 
-
+/**
+ * @export { function } addRecipe
+ *
+ * @description it dispatch actions to add a new recipe
+ *
+ * @param { object } recipe
+ *
+ * @returns { object } recipe added
+ */
 export const addRecipe = recipe => (dispatch) => {
   return axios.post('/api/v1/recipes', recipe).then((response) => {
     toastr.success('Recipe Successfully Created');
@@ -13,52 +29,16 @@ export const addRecipe = recipe => (dispatch) => {
   });
 };
 
-export const viewAllRecipesAction = serverRes => ({
-  type: types.GET_ALL_RECIPES,
-  payload: serverRes
-});
-
-export const getUserRecipesAction = serverRes => ({
-  type: types.GET_USER_RECIPES,
-  payload: serverRes
-});
-
-export const viewSingleRecipeAction = serverRes => ({
-  type: types.GET_SINGLE_RECIPE,
-  payload: serverRes
-});
-
-export const upvoteRecipeAction = serverRes => ({
-  type: types.UPVOTE_RECIPE,
-  payload: serverRes
-});
-
-export const downvoteRecipeAction = serverRes => ({
-  type: types.DOWNVOTE_RECIPE,
-  payload: serverRes
-});
-
-export const updateUserRecipeAction = serverRes => ({
-  type: types.UPDATE_USER_RECIPE,
-  payload: serverRes
-});
-
-export const deleteUserRecipeAction = serverRes => ({
-  type: types.DELETE_USER_RECIPE,
-  payload: serverRes
-});
-
-export const getPopularRecipesAction = serverRes => ({
-  type: types.GET_POPULAR_RECIPE,
-  payload: serverRes
-});
-
 /**
- * @export { function } viewRecipes
- * @param {any} limit
- * @param {any} offset
- * @param {any} searchString
- * @returns { object } action type and server response
+ * @description dispatch action to get all recipes
+ *
+ * @export { function } viewAllRecipes
+ *
+ * @param { number } limit
+ * @param { number } offset
+ * @param { string } searchString
+ *
+ * @returns { object } resolves axios promise with all recipes
  */
 export const viewAllRecipes = (limit, offset, searchString) => {
   return (dispatch) => {
@@ -70,9 +50,14 @@ export const viewAllRecipes = (limit, offset, searchString) => {
 };
 
 /**
- * @export { function } viewRecipes
- * @returns { object } action type and server response
- * @param { object } recipeId
+ * @description dispatch action to get a recipe
+ *
+ * @export { function } viewSingleRecipe
+ *
+ * @param { string } recipeId
+ *
+ * @returns { object } resolves axios promisen with a recipe information
+ * @returns { error } error messages
  */
 export const viewSingleRecipe = (recipeId) => {
   return (dispatch) => {
@@ -91,41 +76,14 @@ export const viewSingleRecipe = (recipeId) => {
 };
 
 /**
- * @export { function } viewRecipes
- * @returns { object } action type and server response
- * @param { object } recipeId
- */
-export const upvoteRecipe = (recipeId) => {
-  return (dispatch) => {
-    return axios.post(`/api/v1/recipes/${recipeId}/upvote`)
-      .then((response) => {
-        dispatch(upvoteRecipeAction(response.data));
-      })
-      .catch(() => {});
-  };
-};
-
-/**
- * @export { function } viewRecipes
- * @returns { object } action type and server response
- * @param { object } recipeId
- */
-export const downvoteRecipe = (recipeId) => {
-  return (dispatch) => {
-    return axios.post(`/api/v1/recipes/${recipeId}/downvote`)
-      .then((response) => {
-        dispatch(downvoteRecipeAction(response.data));
-      })
-      .catch(() => {});
-  };
-};
-
-/**
- * @param {any} limit
- * @param {any} offset
+ * @description dispatch action to get recipes added by a user
  *
- * @export { function } viewRecipes
- * @returns { object } action type and server response
+ * @export { function } getUserRecipes
+ *
+ * @param { number } limit
+ * @param { number } offset
+ *
+ * @returns { array } resolves axios promise with user recipes
  */
 export const getUserRecipes = (limit, offset) => {
   return (dispatch) => {
@@ -138,10 +96,14 @@ export const getUserRecipes = (limit, offset) => {
 };
 
 /**
+ * @description dispact action to update a user recipe
+ *
  * @export { function } updateUserRecipe
- * @returns { object } action type and server response
- * @param { object } recipeID
+ *
+ * @param { string } recipeID
  * @param { object } recipe
+ *
+ * @returns { object } resolves axios promise with updated recipe
  */
 export const updateUserRecipe = (recipeID, recipe) => {
   return (dispatch) => {
@@ -154,10 +116,13 @@ export const updateUserRecipe = (recipeID, recipe) => {
 };
 
 /**
+ * @description dispatch action to delete a users recipe
+ *
  * @export { function } deleteUserRecipe
- * @returns { object } action type and server response
- * @param { object } recipeID
- * @param { object } data
+ *
+ * @param { string } recipeID
+ *
+ * @returns { object } resolves axios promise with success message
  */
 export const deleteUserRecipe = (recipeID) => {
   return (dispatch) => {
@@ -170,8 +135,13 @@ export const deleteUserRecipe = (recipeID) => {
 };
 
 /**
+ * @description dispatch action to get popular recipes
+ *
  * @export { function } getPopularRecipes
- * @returns { object } action type and server response
+ *
+ * @param {any} null
+ *
+ * @returns { array } resolves axios promise with popular recipes
  */
 export const getPopularRecipes = () => {
   return (dispatch) => {

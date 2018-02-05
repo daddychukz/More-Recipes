@@ -7,15 +7,15 @@ const voteModel = db.Vote;
 
 /**
  * @class Downvote
- * @classdesc creates a class Recipe
  */
 class Downvote {
 /**
    * downvoteRecipe
    * @desc downvotes a Recipe
-   * Route: PUT: /recipes/:recipeID/upvote
+   *
    * @param {Object} request request object
    * @param {Object} response response object
+   *
    * @returns {void}
    */
   static downvoteRecipe(request, response) {

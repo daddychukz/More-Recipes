@@ -2,9 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import SideBar from './SideBar';
-import Footer from './Footer';
 import RecipeForm from '../forms/RecipeForm';
 
+/**
+ * @description Add recipe component
+ *
+ * @function AddRecipe
+ *
+ * @param {any} ()
+ *
+ * @returns {JSX} JSX representation of component
+ */
 const AddRecipe = () => (
 
   <div>
@@ -32,8 +40,6 @@ const AddRecipe = () => (
       </div>
     </section>
     <br />
-
-    <Footer />
   </div>
 );
 

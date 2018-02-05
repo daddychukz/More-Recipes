@@ -2,45 +2,46 @@ import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import createBrowserHistory from 'history/createBrowserHistory';
 import PropTypes from 'prop-types';
+import customHistory from '../common/commonFunctions';
 import { logout } from '../../actions/userActions';
 
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
-
 /**
- *
- *
  * @class HeaderProfile
+ *
  * @extends {React.Component}
  */
 class HeaderProfile extends React.Component {
   /**
-   * Creates an instance of HeaderProfile.
+   * @description Creates an instance of MyProfile.
+   *
    * @param {any} props
+   *
    * @memberof HeaderProfile
    */
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
   }
+
   /**
+   * @description logs out a signed in user
+   *
+   * @memberof HeaderProfile
    *
    * @returns {void}
-   * @param {any} e
-   * @memberof HeaderProfile
    */
   logout() {
     this.props.logout();
     customHistory.push('/');
   }
+
   /**
+   * @description renders component to the DOM
    *
-   *
-   * @returns {object} component
    * @memberof HeaderProfile
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     const { pathname } = window.location;

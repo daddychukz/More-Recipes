@@ -10,19 +10,17 @@ import {
   getUserFavorite } from '../../actions/favoriteActions';
 import Header from './Header';
 import SideBar from './SideBar';
-import Footer from './Footer';
 
 /**
+ * @class MyFavoriteRecipe
  *
- *
- * @class MyRecipe
  * @extends {React.Component}
  */
 class MyFavoriteRecipe extends React.Component {
   /**
-   * Creates an instance of MyRecipe.
    * @param {any} props
-   * @memberof MyRecipe
+   *
+   * @memberof MyFavoriteRecipe
    */
   constructor(props) {
     super(props);
@@ -38,10 +36,13 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   * dispatch actions that make requests to get all favorite recipe of a user
+   * @description life cycle method called before component mounts the DOM
+   *
    * @method componentWillMount
-   * @memberof MyRecipe
-   * @returns {void}
+   *
+   * @memberof MyFavopriteRecipe
+   *
+   * @returns { object } fetches users favorite recipes
    */
   componentWillMount() {
     const userId = this.props.user.userId;
@@ -54,11 +55,13 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   *
+   * @description update component state when user searches
    *
    * @param {any} event
-   * @memberof RecipeBox
-   * @returns {object} recipes
+   *
+   * @memberof MyFavoriteRecipe
+   *
+   * @returns {void}
    */
   onInputChange(event) {
     this.setState({
@@ -68,12 +71,13 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   *
+   * @description update component state when user press Enter key to search
    *
    * @param {any} event
+   *
    * @memberof MyFavoriteRecipe
    *
-   * @returns {object} recipes
+   * @returns {array} recipes
    */
   onKeyPressEnter(event) {
     if (event.key === 'Enter') {
@@ -91,11 +95,13 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
-   *
+   * @description remove recipe among user favorite list
    *
    * @param {any} recipe
+   *
+   * @memberof MyFavoriteRecipe
+   *
    * @returns {void}
-   * @memberof MyRecipe
    */
   deleteRecipe(recipe) {
     const recipeId = recipe.recipeId;
@@ -111,10 +117,11 @@ class MyFavoriteRecipe extends React.Component {
   }
 
   /**
+   * @description renders component to the DOM
    *
-   * @method render
-   * @returns {object} component
-   * @memberof MyRecipe
+   * @memberof MyFavoriteRecipe
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (
@@ -200,8 +207,6 @@ class MyFavoriteRecipe extends React.Component {
             </div>
           </div>
         </section>
-
-        <Footer />
       </div>
     );
   }

@@ -6,16 +6,16 @@ const userReview = db.Review;
 
 /**
  * @class Review
- *@classdesc creates a class Review
+ * @classdesc creates a class Review
  */
 class Review {
   /**
-   * reviewRecipe
-   * @desc adds a review to a recipe
-   * Route: POST: '/recipes/:recipeID/reviews'
+   * @description adds a review to a recipe
+   *
    * @param {Object} request request object
    * @param {Object} response response object
-   * @returns {void}
+   *
+   * @returns {object} review
    */
   static reviewRecipe(request, response) {
     if (!request.body.Review || request.body.Review.trim().length === 0) {
@@ -47,12 +47,12 @@ class Review {
       });
   }
   /**
-   * retrieveReviews
    * @desc gets all reviews for a recipe
-   * Route: GET: '/reviews/:recipeID'
+   *
    * @param {Object} request request object
    * @param {Object} response response object
-   * @returns {void}
+   *
+   * @returns {array} reviews
    */
   static retrieveReviews(request, response) {
     userReview

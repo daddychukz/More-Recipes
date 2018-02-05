@@ -4,26 +4,24 @@ import { connect } from 'react-redux';
 import toastr from 'toastr';
 import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types';
-import createBrowserHistory from 'history/createBrowserHistory';
+import customHistory from '../common/commonFunctions';
 import * as userActions from '../../actions/userActions';
-
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
 
 /**
  * @class LoginForm
+ *
  * @extends {React.Component}
  */
 class LoginForm extends React.Component {
   /**
-   * Creates an instance of LoginForm.
+   * @description Creates an instance of HomePage.
+   *
    * @param {any} props
-   * @param {any} context
+   *
    * @memberof LoginForm
    */
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       Email: '',
@@ -39,14 +37,16 @@ class LoginForm extends React.Component {
   }
 
   /**
-     *
-     *
-     * @param {any} e
-     * @memberof LoginForm
-     * @returns {void}
-     */
-  onSubmit(e) {
-    e.preventDefault();
+   * @description handles signin
+   *
+   * @param {any} event
+   *
+   * @memberof LoginForm
+   *
+   * @returns {void}
+   */
+  onSubmit(event) {
+    event.preventDefault();
     this.setState({ errors: {}, isLoading: true });
     this.props.signIn(this.state)
       .then(
@@ -59,26 +59,32 @@ class LoginForm extends React.Component {
   }
 
   /**
-   * @param {any} e
+   * @description update component state when form value changes
+   *
+   * @param {any} event
+   *
    * @memberof LoginForm
+   *
    * @returns {void}
    */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
-   *
+   * @description google signin request
    *
    * @param {any} response
+   *
    * @memberof LoginForm
+   *
    * @returns {object} user details
    */
   responseGoogle(response) {
-    const { email, name, givenName, googleId, imageUrl } = response.profileObj;
+    const { email, name, googleId, imageUrl } = response.profileObj;
     this.props.signUp({
       FullName: name,
-      UserName: givenName,
+      UserName: email,
       Email: email,
       Password: googleId,
       ConfirmPassword: googleId,
@@ -86,14 +92,18 @@ class LoginForm extends React.Component {
   }
 
   /**
+   * @description verify user email and sends reset passsword link
    *
    * @method sendResetLink
-   * @param {any} e
+   *
+   * @param {any} event
+   *
    * @memberof LoginForm
+   *
    * @returns {void}
    */
-  sendResetLink(e) {
-    e.preventDefault();
+  sendResetLink(event) {
+    event.preventDefault();
     const userEmail = {
       Email: this.state.resetEmail
     };
@@ -105,10 +115,11 @@ class LoginForm extends React.Component {
   }
 
   /**
+   * @description renders component to the DOM
    *
-   *
-   * @returns {void}
    * @memberof LoginForm
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (

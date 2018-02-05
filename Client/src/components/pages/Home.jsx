@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom';
 import Header from './HeaderLogin';
 import LoginForm from '../forms/LoginForm';
 import SignupForm from '../forms/SignupForm';
-import Footer from './Footer';
 
+/**
+ * @description renders component to the DOM
+ *
+ * @function Home
+ *
+ * @returns {JSX} JSX representation of component
+ */
 const Home = () => (
   <div>
     <Header active="nav-link active" />
@@ -87,7 +93,6 @@ const Home = () => (
         </div>
       </div>
     </header>
-    <Footer />
   </div>
 );
 

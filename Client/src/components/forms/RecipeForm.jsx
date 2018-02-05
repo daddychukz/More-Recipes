@@ -2,30 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
-import createBrowserHistory from 'history/createBrowserHistory';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
+import customHistory from '../common/commonFunctions';
 import * as recipeActions from '../../actions/recipeActions';
 
-const customHistory = createBrowserHistory({
-  forceRefresh: true
-});
-
 /**
- *
- *
  * @class RecipeForm
+ *
  * @extends {React.Component}
  */
 class RecipeForm extends React.Component {
   /**
-   * Creates an instance of RecipeForm.
+   * @description Creates an instance of AddRecipe.
+   *
    * @param {any} props
-   * @param {any} context
+   *
    * @memberof RecipeForm
    */
-  constructor(props, context) {
-    super(props, context);
-
+  constructor(props) {
+    super(props);
     this.state = {
       Title: '',
       Description: '',
@@ -38,25 +33,29 @@ class RecipeForm extends React.Component {
   }
 
   /**
+   * @description update component state when form value changes
    *
+   * @param {any} event
    *
-   * @param {any} e
    * @memberof RecipeForm
+   *
    * @returns {void}
    */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
+   * @description handles adding a new recipe
    *
+   * @param {any} event
    *
-   * @param {any} e
    * @memberof RecipeForm
+   *
    * @returns {void}
    */
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     this.setState({ errors: {}, isLoading: true });
     this.props.addRecipe(this.state)
       .then(
@@ -68,9 +67,11 @@ class RecipeForm extends React.Component {
   }
 
   /**
+   * @description cloudinary image widget
+   *
+   * @memberof RecipeForm
    *
    * @returns {void}
-   * @memberof RecipeForm
    */
   uploadWidget() {
     window.cloudinary.openUploadWidget({
@@ -86,10 +87,11 @@ class RecipeForm extends React.Component {
   }
 
   /**
-   *
+   * @description renders component to the DOM
    *
    * @memberof RecipeForm
-   * @returns {object} component
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (

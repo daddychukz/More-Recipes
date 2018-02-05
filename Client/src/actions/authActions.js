@@ -1,16 +1,24 @@
 import axios from 'axios';
 import * as types from './types';
 
-
-export const validateUserTokenAction = serverRes => ({
+/**
+ * Action creator
+ * @export { function } validateUserTokenAction
+ *
+ * @param { object } serverResponse
+ *
+ * @returns { object } action type and server response
+ */
+export const validateUserTokenAction = serverResponse => ({
   type: types.VALIDATE_USER_TOKEN,
-  payload: serverRes
+  payload: serverResponse
 });
 
 /**
  * @export { function } validateToken
+ *
  * @param { object } token
- * @returns { object } action type and server response
+ * @returns { object } of Token state
  */
 export const validateToken = (token) => {
   return (dispatch) => {

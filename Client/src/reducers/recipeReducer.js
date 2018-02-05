@@ -5,6 +5,14 @@ const initialState = {
   recipes: []
 };
 
+/**
+ * @description Reducer that handles CRUD actions on recipes
+ *
+ * @param {object} state initial state for recipeOperations section of the store
+ * @param {Object} action the dispatched action
+ *
+ * @returns {object} new state of recipeOperations section of the store
+ */
 const recipeReducer = (state = initialState, action) => {
   switch (action.type) {
   case types.CREATE_RECIPE:

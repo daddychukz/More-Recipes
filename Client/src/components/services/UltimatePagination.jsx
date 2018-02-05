@@ -91,6 +91,13 @@ const UltimatePaginationBootstrap4 = createUltimatePagination({
   itemTypeToComponent,
   WrapperComponent });
 
+  /**
+ * @description displays pagination component on the DOM
+ *
+ * @function Pagination
+ *
+ * @returns {JSX} JSX representation of component
+ */
 const Pagination = ({
   pagination,
   currentPage,

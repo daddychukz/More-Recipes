@@ -6,15 +6,14 @@ import ResetPassswordForm from '../forms/ResetPasswordForm';
 import { validateToken } from '../../actions/authActions';
 
 /**
- *
- *
  * @class ResetPassword
+ *
  * @extends {Component}
  */
 class ResetPassword extends React.Component {
   /**
-   * Creates an instance of ResetPassword.
    * @param {any} props
+   *
    * @memberof ResetPassword
    */
   constructor(props) {
@@ -26,22 +25,25 @@ class ResetPassword extends React.Component {
   }
 
   /**
-   *
+   * @description life cycle method called before component mounts the DOM
    *
    * @memberof ResetPassword
+   *
    * @returns {String} Token
    */
   componentDidMount() {
     this.props.validateToken(this.props.match.params.token.replace(/\-io/g, '.'))
-      .then(() => this.setState({ loading: false, success: true }),
+      .then(
+        () => this.setState({ loading: false, success: true }),
         () => this.setState({ loading: false, success: false }));
   }
 
   /**
+   * @description renders component to the DOM
    *
-   *
-   * @returns {object} component
    * @memberof ResetPassword
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     const { loading, success } = this.state;
@@ -83,17 +85,20 @@ class ResetPassword extends React.Component {
         >
           <br />
           <div>
-
-            { loading && <div className="loader" /> }
-            { !loading && success &&
-            <div style={{ marginTop: '-300px' }}>
-              <h4 className="text-center"> Reset Your Password </h4>
-              <br />
-              <ResetPassswordForm token={token} />
-            </div>
+            {
+              loading && <div className="loader" />
             }
-            { !loading && !success &&
-            <h5>You currently do not have Permission to this Page</h5>
+            {
+              !loading && success &&
+              <div style={{ marginTop: '-300px' }}>
+                <h4 className="text-center"> Reset Your Password </h4>
+                <br />
+                <ResetPassswordForm token={token} />
+              </div>
+            }
+            {
+              !loading && !success &&
+              <h5>You currently do not have Permission to this Page</h5>
             }
           </div>
         </section>

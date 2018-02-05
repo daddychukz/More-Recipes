@@ -12,6 +12,13 @@ import ResetPassword from '../components/pages/ResetPassword';
 import requireAuth from '../utils/requireAuth';
 import noAuth from '../utils/noAuth';
 
+/**
+ * @description all application routes
+ *
+ * @function myRoutes
+ *
+ * @returns {void}
+ */
 const myRoutes = () => (
   <Router>
     <Switch>
