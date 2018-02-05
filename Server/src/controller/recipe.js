@@ -87,7 +87,7 @@ class Recipe {
       })
       .then((recipes) => {
         if (recipes.count === 0) {
-          return response.status(204).send();
+          response.status(204);
         }
         const { limit, offset } = request.query;
         const pagination = paginate({
