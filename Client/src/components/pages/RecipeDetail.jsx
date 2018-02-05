@@ -484,7 +484,7 @@ class RecipeDetail extends React.Component {
                         style={{
                           border: '#E9ECEF 1px solid',
                           backgroundColor: '#EAECEF',
-                          height: '500px',
+                          maxHeight: '500px',
                           overflow: 'scroll',
                           wordBreak: 'break-all',
                         }}

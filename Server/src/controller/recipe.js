@@ -94,9 +94,8 @@ class Recipe {
           pageSize: recipes.rows.length
         });
         if (recipes.count === 0) {
-          return response.status(204).json({
-            pagination,
-            recipes: recipes.rows
+          return response.status(404).json({
+            message: 'no recipes created'
           });
         }
         return response.status(200).json({

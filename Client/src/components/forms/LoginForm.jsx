@@ -160,7 +160,7 @@ class LoginForm extends React.Component {
           </Link>
           <hr className="bg-white" />
           <Link to="#">
-            or register with one of these services
+            or register with your Google account
           </Link>
           <ul className="list-inline text-center">
             <li className="list-inline-item">
@@ -176,11 +176,6 @@ class LoginForm extends React.Component {
                   disabledStyle
                 />
               </Link>&nbsp; </li>
-            <li className="list-inline-item">
-              <Link className="btn btn-lg" to="#" title="Facebook">
-                <i className="fa fa-2x fa-facebook" />
-              </Link>
-            </li>
           </ul>
         </form>
 
