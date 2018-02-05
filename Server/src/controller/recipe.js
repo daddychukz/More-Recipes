@@ -86,9 +86,6 @@ class Recipe {
         offset: request.query.offset
       })
       .then((recipes) => {
-        if (recipes.count === 0) {
-          response.status(204);
-        }
         const { limit, offset } = request.query;
         const pagination = paginate({
           limit,
@@ -96,7 +93,13 @@ class Recipe {
           totalCount: recipes.count,
           pageSize: recipes.rows.length
         });
-        response.status(200).json({
+        if (recipes.count === 0) {
+          return response.status(204).json({
+            pagination,
+            recipes: recipes.rows
+          });
+        }
+        return response.status(200).json({
           pagination,
           recipes: recipes.rows
         });
