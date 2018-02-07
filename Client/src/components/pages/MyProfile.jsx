@@ -26,7 +26,7 @@ class MyProfile extends React.Component {
     super(props);
     this.state = {
       PublicId: '',
-      UserName: '',
+      FullName: '',
       About: '',
       Hobbies: '',
       Phone: '',
@@ -40,6 +40,7 @@ class MyProfile extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.changePassword = this.changePassword.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
   /**
@@ -55,7 +56,7 @@ class MyProfile extends React.Component {
     this.props.getUserProfile().then(
       () => {
         this.setState({
-          UserName: this.props.profile.username,
+          FullName: this.props.profile.fullname,
           Phone: this.props.profile.phone,
           Address: this.props.profile.address,
           About: this.props.profile.about,
@@ -82,7 +83,7 @@ class MyProfile extends React.Component {
     const data = {
       ImageUrl: this.state.ImageUrl,
       PublicId: this.state.PublicId,
-      UserName: this.state.UserName,
+      FullName: this.state.FullName,
       About: this.state.About,
       Hobbies: this.state.Hobbies,
       Phone: this.state.Phone,
@@ -163,6 +164,22 @@ class MyProfile extends React.Component {
         }
       );
     }
+  }
+
+  /**
+   * @description resets password fields
+   *
+   * @memberof MyProfile
+   *
+   * @returns {void}
+   */
+  openModal() {
+    this.setState({
+      newPassword: '',
+      oldPassword: '',
+      confirmPassword: ''
+    });
+    $('#changePassword').modal('show');
   }
 
   /**
@@ -284,7 +301,7 @@ class MyProfile extends React.Component {
                                 to="#"
                                 role="button"
                                 data-toggle="modal"
-                                data-target="#changePassword"
+                                onClick={this.openModal}
                               >
                                 Change Password
                               </Link>
@@ -310,7 +327,7 @@ class MyProfile extends React.Component {
         <EditProfileModal
           onSubmit={this.onSubmit}
           onChange={this.onChange}
-          username={this.state.UserName}
+          fullname={this.state.FullName}
           phone={this.state.Phone}
           hobbies={this.state.Hobbies}
           about={this.state.About}

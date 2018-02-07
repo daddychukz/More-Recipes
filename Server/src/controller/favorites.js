@@ -1,5 +1,6 @@
 import db from '../models/';
 import paginate from '../services/paginate';
+import errorHandling from './HandleErrors/errorHandling';
 
 const favoriteModel = db.Favorite;
 
@@ -53,6 +54,8 @@ class Favorite {
             message: 'Recipe not found'
           }));
         }
+      }).catch((error) => {
+        errorHandling.validateRecipeIdErrors(error, response);
       });
   }
 

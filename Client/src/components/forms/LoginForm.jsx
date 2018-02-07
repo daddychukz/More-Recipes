@@ -159,16 +159,15 @@ class LoginForm extends React.Component {
             <strong>forgot your password?</strong>
           </Link>
           <hr className="bg-white" />
-          <Link to="#">
             or register with your Google account
-          </Link>
           <ul className="list-inline text-center">
             <li className="list-inline-item">
               <Link className="btn btn-lg" to="#" title="Google">
                 <GoogleLogin
                   style={{ width: '',
-                    backgroundColor: 'transparent',
-                    borderColor: 'transparent' }}
+                    backgroundColor: '#49A0B5',
+                    borderColor: 'transparent',
+                    cursor: 'pointer' }}
                   clientId={process.env.ClientId}
                   buttonText={<i className="fa fa-2x fa-google-plus" />}
                   onSuccess={this.responseGoogle}
