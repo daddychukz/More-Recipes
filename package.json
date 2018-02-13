@@ -16,11 +16,12 @@
     "postinstall": "npm run build && npm run client:build",
     "client:build": "webpack -p && cp Client/src/index.html Client/dist/index.html",
     "prod": "node Server/dist/app.js",
-    "test:client": "jest",
+    "test:client": "jest && codecov",
     "undo:migrations": "sequelize db:migrate:undo:all",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
     "pre:test": "sequelize db:migrate:undo:all && sequelize db:migrate",
-    "e2e:test": "npm run pre:test && nightwatch ./e2etests/*.js"
+    "e2e:test": "npm run pre:test && nightwatch ./e2etests/*.js",
+    "coverage:all": "npm run coverage && npm run test:client"
   },
   "repository": {
     "type": "git",

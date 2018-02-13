@@ -17,6 +17,4 @@ env:
     - export NODE_ENV=test
 
 after_success:
-  - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
-  - codecov
-  - npm run coverage
+  - npm run coverage:all
