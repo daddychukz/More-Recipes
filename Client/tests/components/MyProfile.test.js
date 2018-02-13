@@ -156,6 +156,7 @@ describe('MyFavorite test suite', () => {
     sinon.spy(shallowWrapper.instance(), 'componentWillMount');
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.calledOnce).toEqual(true);
+    expect(shallowWrapper.instance().componentWillMount.calledOnce)
+      .toEqual(true);
   });
 });

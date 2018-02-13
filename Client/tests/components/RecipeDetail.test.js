@@ -225,7 +225,7 @@ describe('Reset password test suite', () => {
     expect(shallowWrapper.instance().openModal.calledOnce).toEqual(true);
   });
 
-  it('sets upvote icon if user has already upvoted on componentDidMount', () => {
+  it('sets upvote icon if user has already upvoted on componentDidMnt', () => {
     props.user.userId = '1';
     props.singleRecipe.recipeId = '2';
     props.match.params.recipeId = '2';
@@ -235,7 +235,7 @@ describe('Reset password test suite', () => {
     expect(shallowWrapper.instance().componentDidMount.calledOnce).toBe(true);
   });
 
-  it('sets downvote icon if user has already upvoted on componentDidMount', () => {
+  it('sets downvote icon if user has already upvoted on componntDidMnt', () => {
     props.singleRecipe.Votes[0].vote = false;
     props.user.userId = '1';
     props.singleRecipe.recipeId = '2';
@@ -258,31 +258,34 @@ describe('Reset password test suite', () => {
     expect(shallowWrapper.instance().componentDidMount.called).toBe(true);
   });
 
-  it('calls componentWillreceiveProps if all needed props are available', () => {
+  it('calls componentWillreceiveProps if needed props are available', () => {
     sinon.spy(shallowWrapper.instance(), 'componentWillReceiveProps');
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillReceiveProps(nextProps);
-    expect(shallowWrapper.instance().componentWillReceiveProps.calledOnce).toEqual(true);
+    expect(shallowWrapper.instance().componentWillReceiveProps.calledOnce)
+      .toEqual(true);
   });
 
-  it('sets upvote icon if user has already upvoted when receiving props', () => {
+  it('sets upvote icon if user has already upvoted when receivin props', () => {
     props.singleRecipe.Votes[0].vote = true;
     props.user.userId = '1';
     props.singleRecipe.recipeId = '2';
     props.match.params.recipeId = '2';
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillReceiveProps(nextProps);
-    expect(shallowWrapper.instance().componentWillReceiveProps.called).toBe(true);
+    expect(shallowWrapper.instance().componentWillReceiveProps.called)
+      .toBe(true);
   });
 
-  it('sets downvote icon if user has already downvoted when receiving props', () => {
+  it('sets downvote icon if user has already downvoted', () => {
     props.singleRecipe.Votes[0].vote = false;
     props.user.userId = '1';
     props.singleRecipe.recipeId = '2';
     props.match.params.recipeId = '2';
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillReceiveProps(nextProps);
-    expect(shallowWrapper.instance().componentWillReceiveProps.called).toBe(true);
+    expect(shallowWrapper.instance().componentWillReceiveProps.called)
+      .toBe(true);
   });
 
   it('clears users upvote and downvote when receiving props', () => {
@@ -292,7 +295,8 @@ describe('Reset password test suite', () => {
     props.match.params.recipeId = '2';
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillReceiveProps(nextProps);
-    expect(shallowWrapper.instance().componentWillReceiveProps.called).toBe(true);
+    expect(shallowWrapper.instance().componentWillReceiveProps.called)
+      .toBe(true);
   });
 
   it('sets favorite icon if user has already favorited', () => {
@@ -305,6 +309,7 @@ describe('Reset password test suite', () => {
     props.match.params.recipeId = '8';
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillReceiveProps(nextProps);
-    expect(shallowWrapper.instance().componentWillReceiveProps.called).toBe(true);
+    expect(shallowWrapper.instance().componentWillReceiveProps.called)
+      .toBe(true);
   });
 });

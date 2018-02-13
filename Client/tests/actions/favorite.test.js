@@ -33,7 +33,8 @@ describe('Test for favorite action', () => {
     ];
     const store = mockStore({});
 
-    return store.dispatch(addToFavorites('851e6aef-192a-46a3-b6e4-a65b681c', 'Lunch'))
+    return store.dispatch(addToFavorites(
+      '851e6aef-192a-46a3-b6e4-a65b681c', 'Lunch'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
@@ -41,10 +42,12 @@ describe('Test for favorite action', () => {
   });
 
   it('should dispatch action to get favorite recipes of a user', (done) => {
-    moxios.stubRequest('/api/v1/users/851e6aef-192a-46a3-b6e4-a65b681cb30c/recipes', {
-      status: 200,
-      response: mockData.getFavoriteRecipeResponse
-    });
+    moxios
+      .stubRequest('/api/v1/users/851e6aef-192a-46a3-b6e4-a65b681cb30c/recipes',
+        {
+          status: 200,
+          response: mockData.getFavoriteRecipeResponse
+        });
 
     const expectedActions = [
       {
@@ -54,7 +57,8 @@ describe('Test for favorite action', () => {
     ];
     const store = mockStore({});
 
-    return store.dispatch(getUserFavorite('851e6aef-192a-46a3-b6e4-a65b681cb30c'))
+    return store.dispatch(getUserFavorite(
+      '851e6aef-192a-46a3-b6e4-a65b681cb30c'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
@@ -65,7 +69,8 @@ describe('Test for favorite action', () => {
     const searchString = 'Lunch';
     const limit = 10;
     const offset = 1;
-    moxios.stubRequest(`/api/v1/search/favorites?limit=${limit}&offset=${offset}&searchString=${searchString}`, {
+    moxios.stubRequest(`/api/v1/search/favorites?limit=${limit}&offset=${
+      offset}&searchString=${searchString}`, {
       status: 200,
       response: mockData.searchUserFavoriteResponse
     });

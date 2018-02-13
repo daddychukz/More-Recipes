@@ -5,7 +5,8 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import render from 'react-test-renderer';
 import { BrowserRouter } from 'react-router-dom';
-import ConnectedSignup, { PureSignup } from '../../../src/components/forms/SignupForm';
+import ConnectedSignup,
+{ PureSignup } from '../../../src/components/forms/SignupForm';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);

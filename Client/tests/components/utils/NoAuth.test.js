@@ -41,7 +41,7 @@ describe('Component: Authenticate', () => {
   });
 
   describe('Protected Routes test suite', () => {
-    it('Redirects Authenticated user trying to access login page to recipe box', () => {
+    it('Redirects Authenticated user from login page to recipe box', () => {
       props.isAuthenticated = true;
       expect(getComponent()).toMatchSnapshot();
     });

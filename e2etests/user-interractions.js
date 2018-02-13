@@ -135,7 +135,7 @@ module.exports = {
       .pause(1000);
   },
 
-  'user cannot add a recipe to recipe box with same title of a recipe he already added': (browser) => {
+  'user cannot add duplicate recipe titles': (browser) => {
     browser
       .assert.containsText('#logo', 'More-Recipes')
       .click('a#addRecipe')
@@ -147,7 +147,10 @@ module.exports = {
       .click('button[type=submit]')
       .pause(2000)
       .waitForElementVisible('.toast', 1000)
-      .expect.element('.toast').text.to.equal('You already have a recipe with this Title');
+      .expect.element('.toast')
+      .text
+      .to
+      .equal('You already have a recipe with this Title');
     browser.pause(1000);
   },
 
@@ -340,7 +343,8 @@ module.exports = {
     browser
       .expect.element('#favCount').text.to.equal(0);
     browser
-      .expect.element('.toast').text.to.equal('Recipe removed from your favorites');
+      .expect.element('.toast')
+      .text.to.equal('Recipe removed from your favorites');
     browser.pause(1000);
   },
 
@@ -371,7 +375,8 @@ module.exports = {
       .pause(3000)
       .expect.element('#title').text.to.equal('Potatoes');
     browser
-      .expect.element('.toast').text.to.equal('Recipe (Bread & Tea Sauce) deleted successfully');
+      .expect.element('.toast')
+      .text.to.equal('Recipe (Bread & Tea Sauce) deleted successfully');
     browser.pause(1000);
   },
 
@@ -395,7 +400,8 @@ module.exports = {
     browser
       .expect.element('#phone').text.to.equal(' 08088017115');
     browser
-      .expect.element('.toast').text.to.equal('Profile updated successfully');
+      .expect.element('.toast')
+      .text.to.equal('Profile updated successfully');
     browser.pause(1000);
   },
 
@@ -452,7 +458,7 @@ module.exports = {
       .expect.element('.toast').text.to.equal('Password Successfuly Updated');
     browser.pause(1000);
   },
-  
+
   'it logs out a user': (browser) => {
     browser
       .refresh()

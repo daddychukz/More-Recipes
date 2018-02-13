@@ -63,7 +63,9 @@ describe('Recipe Operations', () => {
       .end((err, res) => {
         recipe1.recipe = res.body.recipe;
         expect(res.body.recipe.title).to.equal('Egg Sauce');
-        expect(res.body.recipe.description).to.equal('This is how to prepare Egg');
+        expect(res.body.recipe.description)
+          .to
+          .equal('This is how to prepare Egg');
         if (err) return done(err);
         done();
       });

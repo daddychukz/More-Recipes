@@ -20,7 +20,8 @@ class Recipe {
    */
   static retrieveRecipes(request, response) {
     const { limit, offset, searchString } = request.query;
-    if (Number.isNaN(parseInt(limit, 10)) || Number.isNaN(parseInt(offset, 10))) {
+    if (Number.isNaN(parseInt(limit, 10)) ||
+    Number.isNaN(parseInt(offset, 10))) {
       return response.status(400).json({
         message: 'Limit or Offset must be a number',
       });

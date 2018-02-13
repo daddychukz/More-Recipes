@@ -1,5 +1,5 @@
 
-  /**
+/**
    * @description error methods to handle exceptions and validate fields
    *
    * @function errorHandling

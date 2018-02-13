@@ -45,10 +45,11 @@ describe('Test for recipes action', () => {
   });
 
   it('should dispatch action to get all recipe', (done) => {
-    moxios.stubRequest('/api/v1/recipes?limit=5&offset=0&searchString=', {
-      status: 200,
-      response: mockData.getAllRecipeResponse
-    });
+    moxios.stubRequest('/api/v1/recipes?limit=5&offset=0&searchString=',
+      {
+        status: 200,
+        response: mockData.getAllRecipeResponse
+      });
 
     const expectedActions = [
       {
@@ -66,10 +67,11 @@ describe('Test for recipes action', () => {
   });
 
   it('should dispatch action to get a single recipe', (done) => {
-    moxios.stubRequest('/api/v1/recipes/f871151a-6f33-44c1-8ad3-3b00b91d57fe', {
-      status: 200,
-      response: mockData.getSingleRecipeResponse
-    });
+    moxios.stubRequest('/api/v1/recipes/f871151a-6f33-44c1-8ad3-3b00b91d57fe',
+      {
+        status: 200,
+        response: mockData.getSingleRecipeResponse
+      });
 
     const expectedActions = [
       {
@@ -79,7 +81,8 @@ describe('Test for recipes action', () => {
     ];
     const store = mockStore({});
 
-    return store.dispatch(viewSingleRecipe('f871151a-6f33-44c1-8ad3-3b00b91d57fe'))
+    return store.dispatch(viewSingleRecipe(
+      'f871151a-6f33-44c1-8ad3-3b00b91d57fe'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
@@ -108,10 +111,11 @@ describe('Test for recipes action', () => {
   });
 
   it('should dispatch action to update recipe of a user', (done) => {
-    moxios.stubRequest('/api/v1/recipe/f871151a-6f33-44c1-8ad3-3b00b91d57fe', {
-      status: 200,
-      response: mockData.updateRecipeResponse
-    });
+    moxios.stubRequest('/api/v1/recipe/f871151a-6f33-44c1-8ad3-3b00b91d57fe',
+      {
+        status: 200,
+        response: mockData.updateRecipeResponse
+      });
 
     const expectedActions = [
       {
@@ -121,7 +125,8 @@ describe('Test for recipes action', () => {
     ];
     const store = mockStore({});
 
-    return store.dispatch(updateUserRecipe('f871151a-6f33-44c1-8ad3-3b00b91d57fe', mockData.addRecipeRequest))
+    return store.dispatch(updateUserRecipe(
+      'f871151a-6f33-44c1-8ad3-3b00b91d57fe', mockData.addRecipeRequest))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
@@ -129,10 +134,11 @@ describe('Test for recipes action', () => {
   });
 
   it('should dispatch action to delete recipe of a user', (done) => {
-    moxios.stubRequest('/api/v1/recipes/f871151a-6f33-44c1-8ad3-3b00b91d57fe', {
-      status: 200,
-      response: mockData.getAllRecipeResponse
-    });
+    moxios.stubRequest('/api/v1/recipes/f871151a-6f33-44c1-8ad3-3b00b91d57fe',
+      {
+        status: 200,
+        response: mockData.getAllRecipeResponse
+      });
 
     const expectedActions = [
       {
@@ -142,7 +148,8 @@ describe('Test for recipes action', () => {
     ];
     const store = mockStore({});
 
-    return store.dispatch(deleteUserRecipe('f871151a-6f33-44c1-8ad3-3b00b91d57fe'))
+    return store.dispatch(deleteUserRecipe(
+      'f871151a-6f33-44c1-8ad3-3b00b91d57fe'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

@@ -196,7 +196,9 @@ describe('User Signin/Signup', () => {
         })
         .expect(406)
         .end((err, res) => {
-          expect(res.body.message).to.equal('Password Field should not be Empty');
+          expect(res.body.message)
+            .to
+            .equal('Password Field should not be Empty');
           if (err) return done(err);
           done();
         });

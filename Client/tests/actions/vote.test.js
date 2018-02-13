@@ -19,10 +19,12 @@ describe('Test for Vote actions', () => {
     moxios.uninstall();
   });
   it('should dispatch action to upvote a recipe', (done) => {
-    moxios.stubRequest('/api/v1/recipes/851e6aef-192a-46a3-b6e4-a65b681c/upvote', {
-      status: 201,
-      response: mockData.upvoteRecipeResponse
-    });
+    moxios.stubRequest(
+      '/api/v1/recipes/851e6aef-192a-46a3-b6e4-a65b681c/upvote',
+      {
+        status: 201,
+        response: mockData.upvoteRecipeResponse
+      });
 
     const expectedActions = [
       {
@@ -40,10 +42,11 @@ describe('Test for Vote actions', () => {
   });
 
   it('should dispatch action to upvote a recipe', (done) => {
-    moxios.stubRequest('/api/v1/recipes/851e6aef-192a-46a3-b6e4-a65b681c/downvote', {
-      status: 201,
-      response: mockData.upvoteRecipeResponse
-    });
+    moxios.stubRequest(
+      '/api/v1/recipes/851e6aef-192a-46a3-b6e4-a65b681c/downvote', {
+        status: 201,
+        response: mockData.upvoteRecipeResponse
+      });
 
     const expectedActions = [
       {

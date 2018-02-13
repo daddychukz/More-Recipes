@@ -54,7 +54,9 @@ describe('Recipe Operations', () => {
       .end((err, res) => {
         recipe.recipe1 = res.body.recipe;
         expect(res.body.recipe.title).to.equal('Beans');
-        expect(res.body.recipe.description).to.equal('This is how to prepare beans');
+        expect(res.body.recipe.description)
+          .to
+          .equal('This is how to prepare beans');
         expect(res.body.recipe).to.haveOwnProperty('imageUrl');
         expect(res.body.recipe).to.haveOwnProperty('publicId');
         if (err) return done(err);
@@ -86,7 +88,9 @@ describe('Recipe Operations', () => {
       .end((err, res) => {
         recipe.recipe2 = res.body.recipe;
         expect(res.body.recipe.title).to.equal('Egusi');
-        expect(res.body.recipe.description).to.equal('This is how to prepare Egusi soup');
+        expect(res.body.recipe.description)
+          .to
+          .equal('This is how to prepare Egusi soup');
         expect(res.body.recipe).to.haveOwnProperty('imageUrl');
         expect(res.body.recipe).to.haveOwnProperty('publicId');
         if (err) return done(err);
@@ -103,7 +107,9 @@ describe('Recipe Operations', () => {
       .end((err, res) => {
         recipe.recipe3 = res.body.recipe;
         expect(res.body.recipe.title).to.equal('Yam');
-        expect(res.body.recipe.description).to.equal('This is how to prepare Yam');
+        expect(res.body.recipe.description)
+          .to
+          .equal('This is how to prepare Yam');
         expect(res.body.recipe).to.haveOwnProperty('imageUrl');
         expect(res.body.recipe).to.haveOwnProperty('publicId');
         if (err) return done(err);
@@ -184,7 +190,9 @@ describe('Recipe Operations', () => {
       .end((err, res) => {
         expect(res.body.recipe.title).to.equal('Beans');
         expect(res.body.recipe.fullname).to.equal('Daddychuks');
-        expect(res.body.recipe.description).to.equal('This is how to prepare beans');
+        expect(res.body.recipe.description)
+          .to
+          .equal('This is how to prepare beans');
         expect(res.body.recipe).to.haveOwnProperty('imageUrl');
         expect(res.body.recipe).to.haveOwnProperty('publicId');
         if (err) return done(err);
@@ -217,7 +225,9 @@ describe('Recipe Operations', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.updatedRecipe[2].title).to.equal('Egusi soup');
-        expect(res.body.updatedRecipe[2].description).to.equal('Egusi soup preparation');
+        expect(res.body.updatedRecipe[2].description)
+          .to
+          .equal('Egusi soup preparation');
         expect(res.body.updatedRecipe[2]).to.haveOwnProperty('imageUrl');
         if (err) return done(err);
         done();

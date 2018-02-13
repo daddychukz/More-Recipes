@@ -19,10 +19,12 @@ describe('Test for Review action', () => {
     moxios.uninstall();
   });
   it('should dispatch action to add a review to a recipe', (done) => {
-    moxios.stubRequest('/api/v1/recipes/851e6aef-192a-46a3-b6e4-a65b681c/reviews', {
-      status: 201,
-      response: mockData.addReviewResponse
-    });
+    moxios.stubRequest(
+      '/api/v1/recipes/851e6aef-192a-46a3-b6e4-a65b681c/reviews',
+      {
+        status: 201,
+        response: mockData.addReviewResponse
+      });
 
     const expectedActions = [
       {
@@ -32,7 +34,8 @@ describe('Test for Review action', () => {
     ];
     const store = mockStore({});
 
-    return store.dispatch(reviewRecipe('851e6aef-192a-46a3-b6e4-a65b681c', 'Nice'))
+    return store.dispatch(reviewRecipe(
+      '851e6aef-192a-46a3-b6e4-a65b681c', 'Nice'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

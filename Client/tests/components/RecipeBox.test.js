@@ -110,14 +110,16 @@ describe('RecipeBox test suite', () => {
     });
     sinon.spy(shallowWrapper.instance(), 'componentWillMount');
     shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.calledOnce).toEqual(true);
+    expect(shallowWrapper.instance().componentWillMount.calledOnce)
+      .toEqual(true);
   });
 
   it('displays loader when recipes is loading', () => {
     state.isLoading = true;
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.called).toEqual(true);
+    expect(shallowWrapper.instance().componentWillMount.called)
+      .toEqual(true);
     expect(state.isLoading).toBe(true);
   });
 
@@ -125,6 +127,7 @@ describe('RecipeBox test suite', () => {
     props.allRecipe.pagination.totalCount = 5;
     shallowWrapper.setState(state);
     shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.called).toEqual(true);
+    expect(shallowWrapper.instance().componentWillMount.called)
+      .toEqual(true);
   });
 });

@@ -22,7 +22,10 @@ export default (sequelize, DataTypes) => {
   });
   Vote.associate = (models) => {
     // associations can be defined here
-    Vote.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
+    Vote.belongsTo(models.Recipe, {
+      foreignKey: 'recipeId',
+      onDelete: 'SET NULL'
+    });
   };
   return Vote;
 };

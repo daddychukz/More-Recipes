@@ -5,7 +5,8 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import render from 'react-test-renderer';
 import { BrowserRouter } from 'react-router-dom';
-import ConnectedLogin, { PureLogin } from '../../../src/components/forms/LoginForm';
+import ConnectedLogin,
+{ PureLogin } from '../../../src/components/forms/LoginForm';
 
 jest.mock('react-google-login');
 
