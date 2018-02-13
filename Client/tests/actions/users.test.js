@@ -22,7 +22,7 @@ describe('Test for users action', () => {
   afterEach(() => {
     moxios.uninstall();
   });
-  describe('Signup/Signout test cases', () => {
+  describe('Signin/Signout test cases', () => {
     it('should dispatch action to sign up a user', (done) => {
       moxios.stubRequest('/api/v1/users/signup', {
         status: 201,
@@ -36,7 +36,7 @@ describe('Test for users action', () => {
         },
         {
           type: types.CREATE_USER,
-          payload: mockData.signupResponse.User,
+          payload: mockData.signupResponse.user,
         }
       ];
       const store = mockStore({});

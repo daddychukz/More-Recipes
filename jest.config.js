@@ -19,7 +19,6 @@ module.exports = {
     '!**/node_modules/**',
     '!**/vendor/**'
   ],
-  coverageDirectory: '/Client/coverage/',
   rootDir: 'Client',
   roots: ['<rootDir>'],
   testEnvironment: 'jsdom',

@@ -64,7 +64,10 @@ class SignupForm extends React.Component {
       });
       toastr.error('Passwords do not match');
     } else {
-      this.props.actions.signUp(this.state);
+      this.props.actions.signUp(this.state).then(
+        () => customHistory.push('/recipe-box'),
+        error => toastr.error(error.response.data.error.message)
+      );
     }
   }
 

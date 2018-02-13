@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import toastr from 'toastr';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
+import customHistory from '../../components/common/commonFunctions';
 import * as recipeActions from '../../actions/recipeActions';
 
 /**
@@ -55,7 +57,10 @@ class RecipeForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({ errors: {}, isLoading: true });
-    this.props.addRecipe(this.state);
+    this.props.addRecipe(this.state).then(
+      () => customHistory.push('/recipe-box'),
+      error => toastr.error(error.response.data.message)
+    );
   }
 
   /**

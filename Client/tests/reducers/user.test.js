@@ -12,7 +12,7 @@ describe('User Reducers', () => {
     it('adds user data when action of type CREATE_USER is called', (done) => {
       const action = {
         type: types.CREATE_USER,
-        payload: mockData.signupResponse.User,
+        payload: mockData.signupResponse.user,
       };
 
       const newState = userReducer({}, action);

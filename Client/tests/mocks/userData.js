@@ -19,8 +19,8 @@ const userData = {
   },
 
   signupResponse: {
-    Message: 'User created successfully',
-    User: {
+    message: 'User created successfully',
+    user: {
       fullname: 'Adam Eve',
       username: 'username',
       email: 'example@example.com',
@@ -35,13 +35,13 @@ const userData = {
   },
 
   signinRequest: {
-    Email: 'example@example.com',
-    Password: 'password',
+    email: 'example@example.com',
+    password: 'password',
   },
 
   signinResponse: {
-    Email: 'example@example.com',
-    Password: 'password'
+    email: 'example@example.com',
+    password: 'password'
   },
 
   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJu' +
@@ -67,8 +67,8 @@ const userData = {
   },
 
   updateProfileRequest: {
-    FullName: 'Chuks',
-    Address: 'Lagos'
+    fullName: 'Chuks',
+    address: 'Lagos'
   },
 
   updatedProfileResponse: {
@@ -86,8 +86,8 @@ const userData = {
   },
 
   resetPasswordRequest: {
-    Password: 'password2',
-    UserId: '8e48ff30-cb3c-462b-a8eb-fa476095c099'
+    password: 'password2',
+    userId: '8e48ff30-cb3c-462b-a8eb-fa476095c099'
   }
 
 };
