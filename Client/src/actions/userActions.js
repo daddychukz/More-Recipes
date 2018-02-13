@@ -1,7 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import toastr from 'toastr';
-import customHistory from '../components/common/commonFunctions';
 import * as types from './types';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import {
@@ -30,12 +29,12 @@ export const signUp = user => (dispatch) => {
     localStorage.setItem('jwtToken', token);
     setAuthorizationToken(token);
     dispatch(setCurrentUser(jwt.decode(token)));
-    customHistory.push('/recipe-box');
     dispatch({
       type: types.CREATE_USER,
       payload: response.data.User
     });
-  }).catch(error => toastr.error(error.response.data.error.message));
+  }).catch(error => toastr.error(error.response.data.error.message)
+  );
 };
 
 /**

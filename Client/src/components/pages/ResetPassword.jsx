@@ -116,5 +116,6 @@ ResetPassword.propTypes = {
   }).isRequired
 };
 
+export { ResetPassword };
 
 export default connect(null, { validateToken })(ResetPassword);

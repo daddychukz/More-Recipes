@@ -413,7 +413,10 @@ class RecipeDetail extends React.Component {
                             {this.props.singleRecipe.fullname}
                           </h6>
                           <br />
-                          <p style={{ wordWrap: 'break-word' }}>
+                          <p
+                            id="desc"
+                            style={{ wordWrap: 'break-word' }}
+                          >
                             {this.props.singleRecipe.description}</p>
                         </div>
                       }
@@ -422,6 +425,7 @@ class RecipeDetail extends React.Component {
                       <ul className="list-inline">
                         <li className="list-inline-item">
                           <Link
+                            id="upvote"
                             className="btn btn-sm"
                             to="#"
                             onClick={this.upvote}
@@ -433,6 +437,7 @@ class RecipeDetail extends React.Component {
                                             |
                         <li className="list-inline-item">
                           <Link
+                            id="downvote"
                             className="btn btn-sm"
                             to="#"
                             onClick={this.downVote}
@@ -452,12 +457,16 @@ class RecipeDetail extends React.Component {
 
                         <li className="list-inline-item float-right">
                           <Link
+                            id="favorite"
                             onClick={this.openModal}
                             className="btn btn-sm"
                             to="#"
                             title="Favorite"
                           >
-                            <i className={this.state.favoriteIcon} />
+                            <i
+                              id="favIcon"
+                              className={this.state.favoriteIcon}
+                            />
                           </Link></li>
                       </ul>
                       <br />
@@ -505,12 +514,12 @@ class RecipeDetail extends React.Component {
                                   </Image>
                                 </div>
                                 <div className="p-2 align-self-end">
-                                  <h5><a to="#">{reviews.User.fullname}</a>
+                                  <h5 id="fullname">{reviews.User.fullname}
                                   </h5>
                                   <small className="text-muted">
                                     {reviews.createdAt}
                                   </small>
-                                  <p>{reviews.review}</p>
+                                  <p id="user-review">{reviews.review}</p>
                                 </div>
                               </div>
                             </div>
@@ -593,4 +602,5 @@ const mapDispatchToProps = dispatch => ({
   getFavorite: Id => dispatch(favoriteActions.getUserFavorite(Id))
 });
 
+export { RecipeDetail as PureRecipeDetail };
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetail);

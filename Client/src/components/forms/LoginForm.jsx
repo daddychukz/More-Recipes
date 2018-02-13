@@ -164,6 +164,7 @@ class LoginForm extends React.Component {
             <li className="list-inline-item">
               <Link className="btn btn-lg" to="#" title="Google">
                 <GoogleLogin
+                  id="GoogleLogin"
                   style={{ width: '',
                     backgroundColor: '#49A0B5',
                     borderColor: 'transparent',
@@ -234,4 +235,5 @@ const mapDispatchToProps = dispatch => ({
   resetPasswordRequest: email => dispatch(userActions.resetPasswordRequest(email))
 });
 
+export { LoginForm as PureLogin };
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

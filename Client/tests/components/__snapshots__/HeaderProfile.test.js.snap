@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyFavorite test suite should match component snapshot 1`] = `
+<div>
+  <nav
+    className="navbar navbar-expand-md bg-dark navbar-dark fixed-top"
+  >
+    <div
+      className="container"
+    >
+      <Link
+        className="navbar-brand"
+        replace={false}
+        to="/recipe-box"
+      >
+        <h3
+          id="logo"
+        >
+          More-Recipes
+        </h3>
+      </Link>
+      <button
+        className="navbar-toggler"
+        data-target="#navbarCollapse"
+        data-toggle="collapse"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        className="collapse navbar-collapse"
+        id="navbarCollapse"
+      >
+        <ul
+          className="navbar-nav ml-auto"
+        >
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link
+                  false"
+              replace={false}
+              to="/recipe-box"
+            >
+              Home
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link"
+              replace={false}
+              to="/add-recipe"
+            >
+              Add Recipe
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link"
+              replace={false}
+              to="/my-recipe"
+            >
+              My Recipes
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link"
+              replace={false}
+              to="/my-favorite"
+            >
+              Favorites
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <div
+              className="btn-group open"
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-user-circle fa-2x pull-right drop"
+                data-toggle="dropdown"
+              />
+              <ul
+                className="dropdown-menu"
+              >
+                <li>
+                  <Link
+                    className="dropdown-item"
+                    replace={false}
+                    to="/my-profile"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li
+                  className="divider"
+                />
+                <li>
+                  <Link
+                    className="dropdown-item"
+                    data-target="#profileModal"
+                    data-toggle="modal"
+                    id="profile-edit"
+                    replace={false}
+                    to="#"
+                  >
+                    Edit Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="dropdown-item logOut"
+                    onClick={[Function]}
+                    replace={false}
+                    to="/"
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+`;

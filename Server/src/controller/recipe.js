@@ -47,7 +47,9 @@ class Recipe {
       })
       .then((recipes) => {
         if (recipes.count === 0) {
-          response.status(204).send();
+          response.status(404).json({
+            message: 'No Recipe Created'
+          });
         } else {
           const pagination = paginate({
             limit,

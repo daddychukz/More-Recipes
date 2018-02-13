@@ -1,0 +1,233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Not Found page test suite renders NotFound component 1`] = `
+<div>
+  <div>
+    <nav
+      className="navbar navbar-expand-md bg-dark navbar-dark fixed-top"
+    >
+      <div
+        className="container"
+      >
+        <a
+          className="navbar-brand"
+          href="/recipe-box"
+          onClick={[Function]}
+        >
+          <h3
+            id="logo"
+          >
+            More-Recipes
+          </h3>
+        </a>
+        <button
+          className="navbar-toggler"
+          data-target="#navbarCollapse"
+          data-toggle="collapse"
+        >
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse"
+          id="navbarCollapse"
+        >
+          <ul
+            className="navbar-nav ml-auto"
+          >
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link false"
+                href="/recipe-box"
+                id="home"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/add-recipe"
+                id="addRecipe"
+                onClick={[Function]}
+              >
+                Add Recipe
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/my-recipe"
+                id="my-recipe"
+                onClick={[Function]}
+              >
+                My Recipes
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/my-favorite"
+                onClick={[Function]}
+              >
+                Favorites
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <div
+                className="btn-group open"
+              >
+                <i
+                  aria-hidden="true"
+                  className="fa fa-user-circle fa-2x pull-right"
+                  data-toggle="dropdown"
+                  id="drop-down"
+                />
+                <ul
+                  className="dropdown-menu"
+                >
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/my-profile"
+                      onClick={[Function]}
+                    >
+                      Profile
+                    </a>
+                  </li>
+                  <li
+                    className="divider"
+                  />
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/"
+                      id="logout"
+                      onClick={[Function]}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div
+      className="modal fade text-dark"
+      id="contactModal"
+    >
+      <div
+        className="modal-dialog"
+      >
+        <div
+          className="modal-content"
+        >
+          <div
+            className="modal-header bg-primary"
+          >
+            <h5
+              className="modal-title"
+              id="contactModalTitle"
+              style={
+                Object {
+                  "color": "white",
+                }
+              }
+            >
+              Contact Us
+            </h5>
+          </div>
+          <div
+            className="modal-body"
+          >
+            <form>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="name"
+                >
+                  Name
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className="form-control"
+                  type="email"
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="messager"
+                >
+                  Message
+                </label>
+                <textarea
+                  className="form-control"
+                />
+              </div>
+            </form>
+          </div>
+          <div
+            className="modal-footer"
+          >
+            <button
+              className="btn btn-primary btn-block"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    id="header"
+  />
+  <section>
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-6 obj-color"
+        >
+          <h2>
+            404! Resource Not Found
+          </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+`;

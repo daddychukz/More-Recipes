@@ -324,7 +324,7 @@ describe('get user profile details cases', () => {
       .get('/api/v1/user/profile')
       .expect(403)
       .end((error, response) => {
-        expect(response.body.message).to.equal('No token provided');
+        expect(response.body.message).to.equal('Unauthorized');
         done();
       });
   });
@@ -442,7 +442,7 @@ describe('Reset user password test cases', () => {
       })
       .expect(401)
       .end((error, response) => {
-        expect(response.body.message).to.equal('Invalid Token');
+        expect(response.body.message).to.equal('Unauthorized');
         if (error) done(error);
         done();
       });
@@ -462,7 +462,7 @@ describe('Reset user password test cases', () => {
       })
       .expect(401)
       .end((error, response) => {
-        expect(response.body.message).to.equal('Invalid Token');
+        expect(response.body.message).to.equal('Unauthorized');
         if (error) done(error);
         done();
       });

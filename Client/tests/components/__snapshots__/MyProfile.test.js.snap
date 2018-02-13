@@ -1,0 +1,486 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyFavorite test suite should match component snapshot 1`] = `
+<div>
+  <div>
+    <nav
+      className="navbar navbar-expand-md bg-dark navbar-dark fixed-top"
+    >
+      <div
+        className="container"
+      >
+        <a
+          className="navbar-brand"
+          href="/recipe-box"
+          onClick={[Function]}
+        >
+          <h3
+            id="logo"
+          >
+            More-Recipes
+          </h3>
+        </a>
+        <button
+          className="navbar-toggler"
+          data-target="#navbarCollapse"
+          data-toggle="collapse"
+        >
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse"
+          id="navbarCollapse"
+        >
+          <ul
+            className="navbar-nav ml-auto"
+          >
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link
+                  false"
+                href="/recipe-box"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/add-recipe"
+                onClick={[Function]}
+              >
+                Add Recipe
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/my-recipe"
+                onClick={[Function]}
+              >
+                My Recipes
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/my-favorite"
+                onClick={[Function]}
+              >
+                Favorites
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <div
+                className="btn-group open"
+              >
+                <i
+                  aria-hidden="true"
+                  className="fa fa-user-circle fa-2x pull-right drop"
+                  data-toggle="dropdown"
+                />
+                <ul
+                  className="dropdown-menu"
+                >
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/my-profile"
+                      onClick={[Function]}
+                    >
+                      Profile
+                    </a>
+                  </li>
+                  <li
+                    className="divider"
+                  />
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      data-target="#profileModal"
+                      data-toggle="modal"
+                      href="#"
+                      id="profile-edit"
+                      onClick={[Function]}
+                    >
+                      Edit Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="dropdown-item logOut"
+                      href="/"
+                      onClick={[Function]}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <header
+    id="header"
+  />
+  <div
+    className="container"
+  >
+    <nav
+      className="breadcrumb"
+    >
+      <a
+        className="breadcrumb-item"
+        href="/recipe-box"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+      <span
+        className="breadcrumb-item active"
+      >
+        My Profile
+      </span>
+    </nav>
+  </div>
+  <section>
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-4 d-none d-lg-block"
+        >
+          <div
+            className="list-group mb-3"
+          >
+            <li
+              className="list-group-item active text-center"
+            >
+              <h5
+                id="Fname"
+              />
+            </li>
+            <a
+              className="list-group-item"
+              href="/my-recipe"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-cutlery"
+                id="my-recipe"
+              />
+                My Recipes
+              <span
+                className="badge badge-pill badge-info float-right"
+              >
+                0
+              </span>
+            </a>
+            <a
+              className="list-group-item"
+              href="/my-favorite"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-star"
+                id="my-favorite"
+              />
+                My Favourites
+              <span
+                className="badge badge-pill badge-info float-right"
+                id="favCount"
+              >
+                0
+              </span>
+            </a>
+            <a
+              className="list-group-item"
+              href="/my-profile"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-user"
+                id="my-profile"
+              />
+                My Profile
+            </a>
+          </div>
+          <ul
+            className="list-group mb-3"
+          >
+            <li
+              className="list-group-item active text-center"
+            >
+              <h5>
+                Popular Recipes
+              </h5>
+            </li>
+          </ul>
+        </div>
+        <div
+          className="loader"
+        />
+      </div>
+    </div>
+  </section>
+  <div
+    className="modal fade text-dark"
+    id="changePassword"
+  >
+    <div
+      className="modal-dialog"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header bg-info"
+        >
+          <h5
+            className="modal-title"
+            id="contactModalTitle"
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Change Your Password
+          </h5>
+        </div>
+        <div
+          className="modal-body"
+        >
+          <form>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control form-control-lg"
+                name="oldPassword"
+                onChange={[Function]}
+                placeholder="Old Password"
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control form-control-lg"
+                name="newPassword"
+                onChange={[Function]}
+                placeholder="New Password"
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control form-control-lg"
+                name="confirmPassword"
+                onChange={[Function]}
+                placeholder="Confirm Password"
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+            <input
+              className="btn btn-info btn-block"
+              data-dismiss="modal"
+              onClick={[Function]}
+              type="button"
+              value="Change Password"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="modal fade text-dark"
+    id="profileModal"
+  >
+    <div
+      className="modal-dialog"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header bg-primary"
+        >
+          <h5
+            className="modal-title"
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Edit Profile
+          </h5>
+        </div>
+        <div
+          className="modal-body"
+        >
+          <form
+            onSubmit={[Function]}
+          >
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="name"
+              >
+                Fullname
+              </label>
+              <input
+                className="form-control"
+                name="FullName"
+                onChange={[Function]}
+                required={true}
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="name"
+              >
+                Phone Number
+              </label>
+              <input
+                className="form-control"
+                name="Phone"
+                onChange={[Function]}
+                required={true}
+                type="number"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="email"
+              >
+                Hobbies
+              </label>
+              <input
+                className="form-control"
+                name="Hobbies"
+                onChange={[Function]}
+                required={true}
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="name"
+              >
+                About
+              </label>
+              <input
+                className="form-control"
+                name="About"
+                onChange={[Function]}
+                required={true}
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="messager"
+              >
+                Address
+              </label>
+              <textarea
+                className="form-control"
+                name="Address"
+                onChange={[Function]}
+                required={true}
+                value=""
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <div>
+                <img
+                  src=""
+                />
+              </div>
+              <input
+                className="form-control-file"
+                onClick={[Function]}
+                type="button"
+                value="Upload Image"
+              />
+              <small
+                className="form-text text-muted"
+                id="fileHelp"
+              >
+                Upload profile picture
+              </small>
+            </div>
+            <div
+              className="modal-footer"
+            >
+              <button
+                className="mt-2 btn btn-primary btn-block"
+                type="submit"
+              >
+                Update
+              </button>
+              <button
+                className="btn btn-primary btn-block"
+                data-dismiss="modal"
+                type="button"
+              >
+                Close
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import toastr from 'toastr';
 import * as types from './types';
+import customHistory from '../components/common/commonFunctions';
 import {
   viewAllRecipesAction,
   viewSingleRecipeAction,
@@ -22,11 +23,12 @@ import {
 export const addRecipe = recipe => (dispatch) => {
   return axios.post('/api/v1/recipes', recipe).then((response) => {
     toastr.success('Recipe Successfully Created');
+    customHistory.push('/recipe-box');
     dispatch({
       type: types.CREATE_RECIPE,
       payload: response.data.recipe
     });
-  });
+  }).catch(error => toastr.error(error.response.data.message));
 };
 
 /**

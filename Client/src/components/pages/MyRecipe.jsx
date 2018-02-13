@@ -65,12 +65,14 @@ class MyRecipe extends React.Component {
           this.setState({
             isLoading: false,
             pagination: {
-              ...this.state.pagination,
+              boundaryPagesRange: 1,
+              siblingPagesRange: 2,
+              limit: 5,
+              offset: 0,
               totalPages: this.props.recipes.pagination.pageCount,
             }
           });
-        })
-      .catch(() => {});
+        });
   }
 
   /**
@@ -188,7 +190,10 @@ class MyRecipe extends React.Component {
         () => {
           toastr.success(`Recipe (${recipe.title}) deleted successfully`);
           this.setState({ pagination: {
-            ...this.state.pagination,
+            boundaryPagesRange: 1,
+            siblingPagesRange: 2,
+            limit: 5,
+            offset: 0,
             totalPages: this.props.recipes.pagination.pageCount,
           }
           });
@@ -240,7 +245,7 @@ class MyRecipe extends React.Component {
                         <tr>
                           <th>Title</th>
                           <th>Created</th>
-                          <th />
+                          <th>Action</th>
                         </tr>
                         {
                           !isEmpty(this.props.recipes.recipes) ?
@@ -255,7 +260,10 @@ class MyRecipe extends React.Component {
                                     maxWidth: '160px',
                                     whiteSpace: 'normal' }}
                                   >
-                                    <Link to={`/recipe/${recipe.recipeId}`}>
+                                    <Link
+                                      id="title"
+                                      to={`/recipe/${recipe.recipeId}`}
+                                    >
                                       {recipe.title}
                                     </Link>
                                   </td>
@@ -312,7 +320,7 @@ class MyRecipe extends React.Component {
                 {
                   this.props.recipes.pagination.totalCount > 5 ?
                     <Pagination
-                      pagination={{ ...this.state.pagination }}
+                      pagination={this.state.pagination}
                       currentPage={this.state.currentPage}
                       onChange={this.onPageChange}
                     /> :
@@ -357,4 +365,5 @@ const mapDispatchToProps = dispatch => ({
   )
 });
 
+export { MyRecipe as PureUserRecipe };
 export default connect(mapStateToProps, mapDispatchToProps)(MyRecipe);

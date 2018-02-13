@@ -23,7 +23,8 @@ class ResetPasswordForm extends React.Component {
     this.state = {
       token: this.props.token,
       Password: '',
-      ConfirmPassword: ''
+      ConfirmPassword: '',
+      error: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -59,6 +60,9 @@ class ResetPasswordForm extends React.Component {
       ConfirmPassword: this.state.ConfirmPassword
     };
     if (this.state.Password !== this.state.ConfirmPassword) {
+      this.setState({
+        error: true
+      });
       toastr.error('Passwords do not match');
     } else {
       this.props.resetPassword(userData).then(
@@ -127,4 +131,5 @@ const mapDispatchToProps = dispatch => ({
   resetPassword: userData => dispatch(userActions.resetPassword(userData))
 });
 
+export { ResetPasswordForm as ResetPassword };
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm);

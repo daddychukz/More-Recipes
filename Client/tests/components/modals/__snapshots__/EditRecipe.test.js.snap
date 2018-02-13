@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit Recipe Modal test suite should match component snapshot 1`] = `
+<div
+  className="modal fade text-dark"
+  id="editRecipe"
+>
+  <div
+    className="modal-dialog"
+  >
+    <div
+      className="modal-content"
+    >
+      <div
+        className="modal-header bg-info"
+      >
+        <h5
+          className="modal-title"
+          id="contactModalTitle"
+          style={
+            Object {
+              "color": "rgb(255, 255, 255)",
+            }
+          }
+        >
+          Edit Recipe
+        </h5>
+      </div>
+      <div
+        className="modal-body"
+      >
+        <form>
+          <div
+            className="form-group"
+          >
+            <label
+              htmlFor="Title"
+            >
+              Recipe Title
+            </label>
+            <input
+              className="form-control"
+              name="Title"
+              onChange={[Function]}
+              required={true}
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            className="form-group"
+          >
+            <label
+              htmlFor="Description"
+            >
+              Recipe Description
+            </label>
+            <textarea
+              className="form-control"
+              name="Description"
+              onChange={[Function]}
+              required={true}
+              rows="5"
+              type="address"
+              value=""
+            />
+          </div>
+          <div
+            className="form-group"
+          >
+            <label
+              htmlFor="imgFile"
+            >
+              Upload Image
+            </label>
+            <CloudinaryContext
+              cloudName="undefined"
+            >
+              <Image
+                publicId=""
+              >
+                <Transformation
+                  crop="scale"
+                  dpr="auto"
+                  height="100"
+                  responsive_placeholder="blank"
+                  width="100"
+                />
+              </Image>
+            </CloudinaryContext>
+            <input
+              className="form-control-file"
+              onClick={[Function]}
+              type="button"
+              value="Upload Image"
+            />
+            <small
+              className="form-text text-muted"
+              id="fileHelp"
+            >
+              Please upload an example image of recipe for better reviews.
+            </small>
+          </div>
+          <div
+            className="modal-footer"
+          >
+            <button
+              className="btn btn-info"
+              data-dismiss="modal"
+              onClick={[Function]}
+              type="submit"
+            >
+              Update
+            </button>
+            <button
+              className="btn btn-info"
+              data-dismiss="modal"
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

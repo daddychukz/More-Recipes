@@ -58,24 +58,41 @@ class SideBar extends React.Component {
     return (
       <div className="col-md-4 d-none d-lg-block">
         <div className="list-group mb-3">
-          <li className="list-group-item active text-center"><h5>
-            {this.props.profile.fullname}</h5>
+          <li className="list-group-item active text-center">
+            <h5 id="Fname">
+              {this.props.profile.fullname}
+            </h5>
           </li>
           <Link to={'/my-recipe'} className="list-group-item">
-            <i className="fa fa-cutlery" aria-hidden="true" />&nbsp;
+            <i
+              id="my-recipe"
+              className="fa fa-cutlery"
+              aria-hidden="true"
+            />&nbsp;
               My Recipes
             <span className="badge badge-pill badge-info float-right">
               {this.props.myRecipes.recipes.length}</span></Link>
 
           <Link to={'/my-favorite'} className="list-group-item">
-            <i className="fa fa-star" aria-hidden="true" />&nbsp;
+            <i
+              id="my-favorite"
+              className="fa fa-star"
+              aria-hidden="true"
+            />&nbsp;
               My Favourites
-            <span className="badge badge-pill badge-info float-right">
+            <span
+              id="favCount"
+              className="badge badge-pill badge-info float-right"
+            >
               {this.props.favorites.length}</span>
           </Link>
 
           <Link to={'/my-profile'} className="list-group-item">
-            <i className="fa fa-user" aria-hidden="true" />&nbsp;
+            <i
+              id="my-profile"
+              className="fa fa-user"
+              aria-hidden="true"
+            />&nbsp;
               My Profile
           </Link>
         </div>

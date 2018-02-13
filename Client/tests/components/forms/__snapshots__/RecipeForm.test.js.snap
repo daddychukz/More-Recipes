@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add recipe test actions should match component snapshot 1`] = `
+<div>
+  <form
+    id="recipe-form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        className="text-dark"
+        htmlFor="title"
+      >
+        Recipe Title
+      </label>
+      <input
+        className="form-control"
+        id="title"
+        name="Title"
+        onChange={[Function]}
+        required={true}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="text-dark"
+        htmlFor="description"
+      >
+        Recipe Description
+      </label>
+      <textarea
+        className="form-control"
+        name="Description"
+        onChange={[Function]}
+        required={true}
+        rows="6"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <div>
+        <img
+          src="http://res.cloudinary.com/chuks-andela32/image/upload/c_scale,dpr_auto,h_150,w_200/home_gipmmy.jpg"
+        />
+      </div>
+      <input
+        className="form-control-file"
+        onClick={[Function]}
+        type="button"
+        value="Add Image"
+      />
+      <small
+        className="form-text text-muted"
+        id="fileHelp"
+      >
+        Please upload an example image of recipe for better reviews.
+      </small>
+    </div>
+    <button
+      className="btn btn-info"
+      type="submit"
+    >
+      Post Recipe
+    </button>
+  </form>
+</div>
+`;

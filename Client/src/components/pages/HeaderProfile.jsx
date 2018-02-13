@@ -32,8 +32,9 @@ class HeaderProfile extends React.Component {
    * @returns {void}
    */
   logout() {
-    this.props.logout();
-    customHistory.push('/');
+    this.props.logout().then(
+      () => customHistory.push('/')
+    );
   }
 
   /**
@@ -94,7 +95,7 @@ class HeaderProfile extends React.Component {
                 <li className="nav-item">
                   <div className="btn-group open">
                     <i
-                      className="fa fa-user-circle fa-2x pull-right"
+                      className="fa fa-user-circle fa-2x pull-right drop"
                       data-toggle="dropdown"
                       aria-hidden="true"
                     />
@@ -107,6 +108,7 @@ class HeaderProfile extends React.Component {
                       <li className="divider" />
                       <li>
                         <Link
+                          id="profile-edit"
                           className="dropdown-item"
                           to="#"
                           data-toggle="modal"
@@ -116,7 +118,7 @@ class HeaderProfile extends React.Component {
                         </Link></li>
                       <li>
                         <Link
-                          className="dropdown-item"
+                          className="dropdown-item logOut"
                           to={'/'}
                           onClick={this.logout}
                         >
@@ -139,4 +141,5 @@ HeaderProfile.propTypes = {
   logout: PropTypes.func.isRequired
 };
 
+export { HeaderProfile as PureHeader };
 export default connect(null, { logout })(HeaderProfile);

@@ -30,8 +30,9 @@ class Header extends React.Component {
    * @returns {void}
    */
   logout() {
-    this.props.logout();
-    customHistory.push('/');
+    this.props.logout().then(
+      () => customHistory.push('/')
+    );
   }
 
   /**
@@ -67,29 +68,42 @@ class Header extends React.Component {
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <Link
+                    id="home"
                     to={'/recipe-box'}
-                    className={`nav-link ${pathname === '/recipe-box' &&
-                    'active'}`}
+                    className={`nav-link ${
+                      pathname === '/recipe-box' && 'active'}`}
                   >Home</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/add-recipe'} className={className('/add-recipe')}>
+                  <Link
+                    id="addRecipe"
+                    to={'/add-recipe'}
+                    className={className('/add-recipe')}
+                  >
                   Add Recipe
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/my-recipe'} className={className('/my-recipe')}>
+                  <Link
+                    id="my-recipe"
+                    to={'/my-recipe'}
+                    className={className('/my-recipe')}
+                  >
                   My Recipes
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/my-favorite'} className={className('/my-favorite')}>
+                  <Link
+                    to={'/my-favorite'}
+                    className={className('/my-favorite')}
+                  >
                   Favorites
                   </Link>
                 </li>
                 <li className="nav-item">
                   <div className="btn-group open">
                     <i
+                      id="drop-down"
                       className="fa fa-user-circle fa-2x pull-right"
                       data-toggle="dropdown"
                       aria-hidden="true"
@@ -103,6 +117,7 @@ class Header extends React.Component {
                       <li className="divider" />
                       <li>
                         <Link
+                          id="logout"
                           className="dropdown-item"
                           to={'/'}
                           onClick={this.logout}
@@ -162,4 +177,5 @@ Header.propTypes = {
   logout: PropTypes.func.isRequired
 };
 
+export { Header as PureHeader };
 export default connect(null, { logout })(Header);

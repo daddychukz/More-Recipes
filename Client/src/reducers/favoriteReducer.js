@@ -17,8 +17,6 @@ const favoriteReducer = (state = [], action) => {
       ];
     }
     return state.filter(item => item.recipeId !== action.payload.prevFavorite.recipeId);
-  case types.GET_SINGLE_FAVORITE:
-    return action.payload;
   case types.GET_ALL_FAVORITE:
     return action.payload;
   case types.SEARCH_USER_FAVORITES:

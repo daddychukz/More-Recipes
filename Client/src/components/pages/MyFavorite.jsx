@@ -185,6 +185,7 @@ class MyFavoriteRecipe extends React.Component {
                                   <td>{favorites.category}</td>
                                   <td>{newDate}</td>
                                   <td><Link
+                                    id="deleteFav"
                                     onClick={this.deleteRecipe(favorites)}
                                     to="#"
                                     title="Delete"
@@ -240,4 +241,5 @@ const mapDispatchToProps = dispatch => ({
     searchUserFavorite(limit, offset, searchString))
 });
 
+export { MyFavoriteRecipe as PureFavorite };
 export default connect(mapStateToProps, mapDispatchToProps)(MyFavoriteRecipe);

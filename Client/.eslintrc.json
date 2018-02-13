@@ -11,7 +11,10 @@
     },
     "globals": {
       "localStorage": true,
-      "window": true
+      "window": true,
+      "expect": true,
+      "jest": true,
+      "cloudinary": true
     },
     "rules": {
       "indent": ["error", 2],
@@ -35,6 +38,7 @@
       "curly": ["error", "multi-line"],
       "import/no-unresolved": [2, { "commonjs": true }],
       "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "valid-jsdoc": ["error", {
         "requireReturn": true,
         "requireReturnType": true,

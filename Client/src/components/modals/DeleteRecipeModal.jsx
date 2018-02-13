@@ -32,6 +32,7 @@ const deleteRecipeModal = (props) => {
           </div>
           <div className="modal-footer">
             <button
+              id="delete"
               type="button"
               onClick={onClick}
               className="btn btn-primary"
@@ -52,6 +53,7 @@ const deleteRecipeModal = (props) => {
     </div>
   );
 };
+
 
 deleteRecipeModal.propTypes = {
   onClick: PropTypes.func.isRequired

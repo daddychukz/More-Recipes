@@ -57,13 +57,7 @@ class RecipeForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({ errors: {}, isLoading: true });
-    this.props.addRecipe(this.state)
-      .then(
-        () => customHistory.push('/recipe-box'),
-        (err) => {
-          toastr.error(err.response.data.message);
-        }
-      );
+    this.props.addRecipe(this.state);
   }
 
   /**
@@ -96,7 +90,7 @@ class RecipeForm extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} id="recipe-form">
           <div className="form-group">
             <label className="text-dark" htmlFor="title">
               Recipe Title
@@ -161,4 +155,5 @@ const mapDispatchToProps = dispatch => ({
   addRecipe: recipe => dispatch(recipeActions.addRecipe(recipe))
 });
 
+export { RecipeForm as PureRecipeForm };
 export default connect(null, mapDispatchToProps)(RecipeForm);

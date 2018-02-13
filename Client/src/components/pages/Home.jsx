@@ -50,6 +50,7 @@ const Home = () => (
               </div>
               <div className="col-lg-4">
                 <Link
+                  id="signIn"
                   to="#"
                   className="btn btn-info"
                   role="button"
@@ -59,6 +60,7 @@ const Home = () => (
                 >Signin
                 </Link>&nbsp;
                 <Link
+                  id="signUp"
                   to="#"
                   className="btn btn-info"
                   role="button"

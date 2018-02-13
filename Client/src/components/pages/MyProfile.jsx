@@ -190,8 +190,9 @@ class MyProfile extends React.Component {
    * @returns {void}
    */
   logout() {
-    this.props.logout();
-    customHistory.push('/');
+    this.props.logout().then(
+      () => customHistory.push('/')
+    );
   }
 
   /**
@@ -289,7 +290,7 @@ class MyProfile extends React.Component {
                                 />&nbsp;
                                 {this.props.profile.address}
                               </address>
-                              <p>
+                              <p id="phone">
                                 <i
                                   className="fa fa-phone obj-color"
                                   aria-hidden="true"
@@ -297,7 +298,7 @@ class MyProfile extends React.Component {
                                 {this.props.profile.phone}
                               </p>
                               <Link
-                                className="btn btn-info"
+                                className="btn btn-info password"
                                 to="#"
                                 role="button"
                                 data-toggle="modal"
@@ -370,4 +371,6 @@ const mapDispatchToProps = dispatch => ({
     userActions.updateUserProfile(userData)),
   logout: () => dispatch(userActions.logout())
 });
+
+export { MyProfile as PureProfile };
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);

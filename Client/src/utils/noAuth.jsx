@@ -22,10 +22,8 @@ export default (ComposedComponent) => {
       const token = localStorage.getItem('jwtToken');
       jwt.verify(token, process.env.SECRET, (error) => {
         if (error) {
-          if (error.message === 'jwt expired') {
-            localStorage.removeItem('jwtToken');
-            customHistory.push('/');
-          }
+          localStorage.removeItem('jwtToken');
+          this.props.history.push('/');
         }
       });
       if (this.props.isAuthenticated) {

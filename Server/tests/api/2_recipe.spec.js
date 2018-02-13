@@ -118,8 +118,9 @@ describe('Recipe Operations', () => {
     catalog whose searched item is not found`, (done) => {
     request(app)
       .get('/api/v1/recipes?limit=9&offset=0&searchString=indomie')
-      .expect(204)
-      .end((err) => {
+      .expect(404)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('No Recipe Created');
         if (err) return done(err);
         done();
       });

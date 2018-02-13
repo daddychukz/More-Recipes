@@ -39,14 +39,14 @@ models
     truncate: true
   });
 
-describe('User Signin/Signup', () => {
+describe('Verify and Validate token', () => {
   it('fails to add recipe for viewers without token', (done) => {
     request(app)
       .post('/api/v1/recipes')
       .send(fakeData.recipe)
       .expect(401)
       .end((err, res) => {
-        expect(res.body.message).to.equal('No token provided');
+        expect(res.body.message).to.equal('Unauthorized');
         if (err) return done(err);
         done();
       });

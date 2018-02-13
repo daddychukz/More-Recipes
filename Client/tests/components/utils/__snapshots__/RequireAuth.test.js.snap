@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Authenticate Protected Routes test suite Redirects user to homepage with invalid token 1`] = `
+<Connect(ResetPassword)
+  history={
+    Object {
+      "push": [MockFunction] {
+        "calls": Array [
+          Array [
+            "/",
+          ],
+        ],
+      },
+    }
+  }
+  isAuthenticated={true}
+/>
+`;
+
+exports[`Component: Authenticate Protected Routes test suite Redirects user to homepage without token 1`] = `
+<Connect(ResetPassword)
+  history={
+    Object {
+      "push": [MockFunction] {
+        "calls": Array [
+          Array [
+            "/",
+          ],
+          Array [
+            "/",
+          ],
+        ],
+      },
+    }
+  }
+  isAuthenticated={false}
+/>
+`;

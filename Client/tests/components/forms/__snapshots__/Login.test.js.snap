@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login should match component snapshot 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <input
+        className="form-control form-control-lg"
+        name="Email"
+        onChange={[Function]}
+        placeholder="Email"
+        required={true}
+        type="email"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <input
+        className="form-control form-control-lg"
+        name="Password"
+        onChange={[Function]}
+        placeholder="Password"
+        required={true}
+        type="password"
+        value=""
+      />
+    </div>
+    <input
+      className="btn btn-info btn-block"
+      type="submit"
+      value="Login"
+    />
+    <br />
+    <a
+      data-target="#sendEmailModal"
+      data-toggle="modal"
+      href="#"
+      onClick={[Function]}
+    >
+      <strong>
+        forgot your password?
+      </strong>
+    </a>
+    <hr
+      className="bg-white"
+    />
+    or register with your Google account
+    <ul
+      className="list-inline text-center"
+    >
+      <li
+        className="list-inline-item"
+      >
+        <a
+          className="btn btn-lg"
+          href="#"
+          onClick={[Function]}
+          title="Google"
+        />
+          
+      </li>
+    </ul>
+  </form>
+  <div
+    className="modal fade text-dark"
+    id="sendEmailModal"
+  >
+    <div
+      className="modal-dialog"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header bg-info"
+        >
+          <h5
+            className="modal-title"
+            id="contactModalTitle"
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Forgot Password
+          </h5>
+        </div>
+        <div
+          className="modal-body"
+        >
+          <form
+            onSubmit={[Function]}
+          >
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control form-control-lg"
+                name="resetEmail"
+                onChange={[Function]}
+                placeholder="Email"
+                required={true}
+                type="email"
+                value=""
+              />
+            </div>
+            <input
+              className="btn btn-info btn-block"
+              type="submit"
+              value="Send Reset Link"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

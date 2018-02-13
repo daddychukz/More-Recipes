@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import PropTypes from 'prop-types';
+import customHistory from '../common/commonFunctions';
 import * as userActions from '../../actions/userActions';
 
 /**
@@ -26,7 +27,7 @@ class SignupForm extends React.Component {
       FullName: '',
       Password: '',
       ConfirmPassword: '',
-      errors: {},
+      error: false,
       isLoading: false
     };
     this.onChange = this.onChange.bind(this);
@@ -58,9 +59,13 @@ class SignupForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     if (this.state.Password !== this.state.ConfirmPassword) {
+      this.setState({
+        error: true
+      });
       toastr.error('Passwords do not match');
     } else {
-      this.props.actions.signUp(this.state);
+      this.props.actions.signUp(this.state)
+        .then(() => customHistory.push('/recipe-box'));
     }
   }
 
@@ -76,7 +81,7 @@ class SignupForm extends React.Component {
     return (
       <div>
         {/* SIGNUP CARD  */}
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} id="signup-form">
           <div className="form-group">
             <input
               value={this.state.FullName}
@@ -101,6 +106,7 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
+              id="email"
               value={this.state.Email}
               onChange={this.onChange}
               type="email"
@@ -112,6 +118,7 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
+              id="password"
               value={this.state.Password}
               onChange={this.onChange}
               type="password"
@@ -157,4 +164,5 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(userActions, dispatch),
 });
 
+export { SignupForm as PureSignup };
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

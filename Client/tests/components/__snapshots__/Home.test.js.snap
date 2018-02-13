@@ -1,0 +1,503 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Homepage/> renders <Homepage/> component 1`] = `
+<div>
+  <div>
+    <nav
+      className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top"
+    >
+      <div
+        className="container"
+      >
+        <a
+          className="navbar-brand"
+          href="/"
+          onClick={[Function]}
+        >
+          <h3
+            id="logo"
+          >
+            More-Recipes
+          </h3>
+        </a>
+        <button
+          className="navbar-toggler"
+          data-target="#navbarCollapse"
+          data-toggle="collapse"
+        >
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse"
+          id="navbarCollapse"
+        >
+          <ul
+            className="navbar-nav ml-auto"
+          >
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link active"
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                data-target="#contactModal"
+                data-toggle="modal"
+                href="#"
+                onClick={[Function]}
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div
+      className="modal fade text-dark"
+      id="contactModal"
+    >
+      <div
+        className="modal-dialog"
+      >
+        <div
+          className="modal-content"
+        >
+          <div
+            className="modal-header bg-primary"
+          >
+            <h5
+              className="modal-title"
+              id="contactModalTitle"
+              style={
+                Object {
+                  "color": "white",
+                }
+              }
+            >
+              Contact Us
+            </h5>
+          </div>
+          <div
+            className="modal-body"
+          >
+            <form>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="name"
+                >
+                  Name
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className="form-control"
+                  type="email"
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="messager"
+                >
+                  Message
+                </label>
+                <textarea
+                  className="form-control"
+                />
+              </div>
+            </form>
+          </div>
+          <div
+            className="modal-footer"
+          >
+            <button
+              className="btn btn-primary btn-block"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    id="home-section"
+  >
+    <div
+      className="dark-overlay"
+    >
+      <div
+        className="home-inner"
+      >
+        <div
+          className="container"
+        >
+          <div
+            className="row"
+            id="parent"
+          >
+            <div
+              className="col-lg-8 d-none d-lg-block"
+            >
+              <h1
+                className="display-4"
+              >
+                 Share your 
+                <strong>
+                   awesome 
+                </strong>
+                and exciting 
+                <strong>
+                  recipe
+                </strong>
+                 ideas
+              </h1>
+              <div
+                className="d-flex flex-row"
+              >
+                <div
+                  className="p-4 align-self-start"
+                >
+                  <i
+                    className="fa fa-check btn-info"
+                  />
+                </div>
+                <div
+                  className="p-4 align-self-end"
+                >
+                  Find and share everyday cooking inspiration on More-Recipes.
+                </div>
+              </div>
+              <div
+                className="d-flex flex-row"
+              >
+                <div
+                  className="p-4 align-self-start"
+                >
+                  <i
+                    className="fa fa-check btn-info"
+                  />
+                </div>
+                <div
+                  className="p-4 align-self-end"
+                >
+                  Discover recipes, cooks, and how-tos based on the food you love and the friends you follow.
+                </div>
+              </div>
+              <div
+                className="d-flex flex-row"
+              >
+                <div
+                  className="p-4 align-self-start"
+                >
+                  <i
+                    className="fa fa-check btn-info"
+                  />
+                </div>
+                <div
+                  className="p-4 align-self-end"
+                >
+                  Find all the newest recipes published on More-Recipes.com
+                </div>
+              </div>
+            </div>
+            <div
+              className="col-lg-4"
+            >
+              <a
+                className="btn btn-info"
+                data-parent="#parent"
+                data-target="#cardLogin"
+                data-toggle="collapse"
+                href="#"
+                id="signIn"
+                onClick={[Function]}
+                role="button"
+              >
+                Signin
+              </a>
+               
+              <a
+                className="btn btn-info"
+                data-parent="#parent"
+                data-target="#cardRegister"
+                data-toggle="collapse"
+                href="#"
+                id="signUp"
+                onClick={[Function]}
+                role="button"
+              >
+                Signup
+              </a>
+              <div
+                className="collapse show py-3"
+                id="cardLogin"
+              >
+                <div
+                  className="card main-color-bg text-center card-form"
+                >
+                  <div
+                    className="card-body"
+                  >
+                    <h3>
+                      Log Into Your Account
+                    </h3>
+                    <p>
+                      Please enter your Login details
+                    </p>
+                    <div>
+                      <form
+                        onSubmit={[Function]}
+                      >
+                        <div
+                          className="form-group"
+                        >
+                          <input
+                            className="form-control form-control-lg"
+                            name="Email"
+                            onChange={[Function]}
+                            placeholder="Email"
+                            required={true}
+                            type="email"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          className="form-group"
+                        >
+                          <input
+                            className="form-control form-control-lg"
+                            name="Password"
+                            onChange={[Function]}
+                            placeholder="Password"
+                            required={true}
+                            type="password"
+                            value=""
+                          />
+                        </div>
+                        <input
+                          className="btn btn-info btn-block"
+                          type="submit"
+                          value="Login"
+                        />
+                        <br />
+                        <a
+                          data-target="#sendEmailModal"
+                          data-toggle="modal"
+                          href="#"
+                          onClick={[Function]}
+                        >
+                          <strong>
+                            forgot your password?
+                          </strong>
+                        </a>
+                        <hr
+                          className="bg-white"
+                        />
+                        or register with your Google account
+                        <ul
+                          className="list-inline text-center"
+                        >
+                          <li
+                            className="list-inline-item"
+                          >
+                            <a
+                              className="btn btn-lg"
+                              href="#"
+                              onClick={[Function]}
+                              title="Google"
+                            />
+                              
+                          </li>
+                        </ul>
+                      </form>
+                      <div
+                        className="modal fade text-dark"
+                        id="sendEmailModal"
+                      >
+                        <div
+                          className="modal-dialog"
+                        >
+                          <div
+                            className="modal-content"
+                          >
+                            <div
+                              className="modal-header bg-info"
+                            >
+                              <h5
+                                className="modal-title"
+                                id="contactModalTitle"
+                                style={
+                                  Object {
+                                    "color": "white",
+                                  }
+                                }
+                              >
+                                Forgot Password
+                              </h5>
+                            </div>
+                            <div
+                              className="modal-body"
+                            >
+                              <form
+                                onSubmit={[Function]}
+                              >
+                                <div
+                                  className="form-group"
+                                >
+                                  <input
+                                    className="form-control form-control-lg"
+                                    name="resetEmail"
+                                    onChange={[Function]}
+                                    placeholder="Email"
+                                    required={true}
+                                    type="email"
+                                    value=""
+                                  />
+                                </div>
+                                <input
+                                  className="btn btn-info btn-block"
+                                  type="submit"
+                                  value="Send Reset Link"
+                                />
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="collapse py-3"
+                id="cardRegister"
+              >
+                <div
+                  className="card main-color-bg text-center card-form"
+                >
+                  <div
+                    className="card-body"
+                  >
+                    <h3>
+                      Signup Today
+                    </h3>
+                    <p>
+                      Please fill out this form to register
+                    </p>
+                    <div>
+                      <form
+                        id="signup-form"
+                        onSubmit={[Function]}
+                      >
+                        <div
+                          className="form-group"
+                        >
+                          <input
+                            className="form-control form-control-lg"
+                            name="FullName"
+                            onChange={[Function]}
+                            placeholder="Full Name"
+                            required={true}
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          className="form-group"
+                        >
+                          <input
+                            className="form-control form-control-lg"
+                            name="UserName"
+                            onChange={[Function]}
+                            placeholder="Username"
+                            required={true}
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          className="form-group"
+                        >
+                          <input
+                            className="form-control form-control-lg"
+                            id="email"
+                            name="Email"
+                            onChange={[Function]}
+                            placeholder="Email"
+                            required={true}
+                            type="email"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          className="form-group"
+                        >
+                          <input
+                            className="form-control form-control-lg"
+                            id="password"
+                            name="Password"
+                            onChange={[Function]}
+                            placeholder="Password"
+                            required={true}
+                            type="password"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          className="form-group"
+                        >
+                          <input
+                            className="form-control form-control-lg"
+                            name="ConfirmPassword"
+                            onChange={[Function]}
+                            placeholder="Confirm Password"
+                            required={true}
+                            type="password"
+                            value=""
+                          />
+                        </div>
+                        <input
+                          className="btn btn-info btn-block"
+                          type="submit"
+                          value="Register"
+                        />
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;

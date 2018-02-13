@@ -240,7 +240,7 @@ class User {
     if (Token) {
       jwt.verify(Token, process.env.SECRET, (error, decoded) => {
         if (error) {
-          response.status(401).json({ message: 'Invalid Token' });
+          response.status(401).json({ message: 'Unauthorized' });
         } else {
           User.updatePassword(Password, decoded.userId, response);
         }
@@ -260,7 +260,7 @@ class User {
             }
           });
         }).catch(() =>
-          response.status(401).json({ message: 'Invalid Token' }));
+          response.status(401).json({ message: 'Unauthorized' }));
     }
   }
 
@@ -316,6 +316,7 @@ class User {
       userInfo.update(updateRecord)
         .then((updatedRecord) => {
           const {
+            userId,
             fullname,
             about,
             username,
@@ -327,6 +328,7 @@ class User {
             email
           } = updatedRecord;
           response.status(202).send({
+            userId,
             fullname,
             about,
             username,

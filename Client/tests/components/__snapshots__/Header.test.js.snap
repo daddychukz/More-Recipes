@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyFavorite test suite should match component snapshot 1`] = `
+<div>
+  <nav
+    className="navbar navbar-expand-md bg-dark navbar-dark fixed-top"
+  >
+    <div
+      className="container"
+    >
+      <Link
+        className="navbar-brand"
+        replace={false}
+        to="/recipe-box"
+      >
+        <h3
+          id="logo"
+        >
+          More-Recipes
+        </h3>
+      </Link>
+      <button
+        className="navbar-toggler"
+        data-target="#navbarCollapse"
+        data-toggle="collapse"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        className="collapse navbar-collapse"
+        id="navbarCollapse"
+      >
+        <ul
+          className="navbar-nav ml-auto"
+        >
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link false"
+              id="home"
+              replace={false}
+              to="/recipe-box"
+            >
+              Home
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link"
+              id="addRecipe"
+              replace={false}
+              to="/add-recipe"
+            >
+              Add Recipe
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link"
+              id="my-recipe"
+              replace={false}
+              to="/my-recipe"
+            >
+              My Recipes
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <Link
+              className="nav-link"
+              replace={false}
+              to="/my-favorite"
+            >
+              Favorites
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <div
+              className="btn-group open"
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-user-circle fa-2x pull-right"
+                data-toggle="dropdown"
+                id="drop-down"
+              />
+              <ul
+                className="dropdown-menu"
+              >
+                <li>
+                  <Link
+                    className="dropdown-item"
+                    replace={false}
+                    to="/my-profile"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li
+                  className="divider"
+                />
+                <li>
+                  <Link
+                    className="dropdown-item"
+                    id="logout"
+                    onClick={[Function]}
+                    replace={false}
+                    to="/"
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div
+    className="modal fade text-dark"
+    id="contactModal"
+  >
+    <div
+      className="modal-dialog"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header bg-primary"
+        >
+          <h5
+            className="modal-title"
+            id="contactModalTitle"
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Contact Us
+          </h5>
+        </div>
+        <div
+          className="modal-body"
+        >
+          <form>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="name"
+              >
+                Name
+              </label>
+              <input
+                className="form-control"
+                type="text"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="form-control"
+                type="email"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <label
+                htmlFor="messager"
+              >
+                Message
+              </label>
+              <textarea
+                className="form-control"
+              />
+            </div>
+          </form>
+        </div>
+        <div
+          className="modal-footer"
+        >
+          <button
+            className="btn btn-primary btn-block"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
