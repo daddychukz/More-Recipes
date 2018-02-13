@@ -12,7 +12,7 @@ import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
  * @returns {views} edit recipe modal
  */
 const editRecipeModal = (props) => {
-  const { Title, onChange, publicId, Description, uploadWidget, onSubmit } = props;
+  const { title, onChange, publicId, description, uploadWidget, onSubmit } = props;
   return (
     <div className="modal fade text-dark" id="editRecipe">
       <div className="modal-dialog">
@@ -31,10 +31,10 @@ const editRecipeModal = (props) => {
               <div className="form-group">
                 <label htmlFor="Title">Recipe Title</label>
                 <input
-                  value={Title}
+                  value={title}
                   onChange={onChange}
                   type="text"
-                  name="Title"
+                  name="title"
                   className="form-control"
                   required
                 />
@@ -42,10 +42,10 @@ const editRecipeModal = (props) => {
               <div className="form-group">
                 <label htmlFor="Description">Recipe Description</label>
                 <textarea
-                  value={Description}
+                  value={description}
                   onChange={onChange}
                   type="address"
-                  name="Description"
+                  name="description"
                   className="form-control"
                   rows="5"
                   required
@@ -101,10 +101,10 @@ const editRecipeModal = (props) => {
 };
 
 editRecipeModal.propTypes = {
-  Title: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   publicId: PropTypes.string.isRequired,
-  Description: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   uploadWidget: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };

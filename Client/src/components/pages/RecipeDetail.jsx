@@ -32,8 +32,8 @@ class RecipeDetail extends React.Component {
       upvote: 'fa fa-2x fa-thumbs-o-up',
       downvote: 'fa fa-2x fa-thumbs-o-down',
       favoriteIcon: 'fa fa-2x fa-star-o',
-      Review: '',
-      Category: '',
+      review: '',
+      category: '',
       selectCategory: '',
       upvoteCount: 0,
       downvoteCount: 0,
@@ -207,12 +207,12 @@ class RecipeDetail extends React.Component {
     event.preventDefault();
     const recipeId = this.props.match.params.recipeId;
     const review = {
-      Review: this.state.Review
+      review: this.state.review
     };
     this.props.reviewRecipe(recipeId, review)
       .then(
         () => {
-          this.setState({ Review: '' });
+          this.setState({ review: '' });
         }
       );
   }
@@ -244,7 +244,7 @@ class RecipeDetail extends React.Component {
       this.setState({
         selectCategory: uniqueCategories[0],
         isDisabled: false,
-        Category: '' });
+        category: '' });
 
       $('#category').modal('show');
     }
@@ -264,8 +264,8 @@ class RecipeDetail extends React.Component {
       recipe.userId === this.props.user.userId;
 
     const category = {
-      Category: this.state.Category ?
-        this.state.Category : this.state.selectCategory
+      category: this.state.category ?
+        this.state.category : this.state.selectCategory
     };
     this.props.addFavorite(recipeId, category).then(
       () => {
@@ -474,9 +474,9 @@ class RecipeDetail extends React.Component {
                         <h3>Post a Review</h3>
                         <div className="form-group">
                           <textarea
-                            value={this.state.Review}
+                            value={this.state.review}
                             onChange={this.onChange}
-                            name="Review"
+                            name="review"
                             className="form-control"
                             rows="6"
                             required
@@ -542,7 +542,7 @@ class RecipeDetail extends React.Component {
           getUniqueCategories={this.getUniqueCategories()}
           onInput={this.onInput}
           onClick={this.favoriteRecipe}
-          Category={this.state.Category}
+          category={this.state.category}
         />
       </div>
     );

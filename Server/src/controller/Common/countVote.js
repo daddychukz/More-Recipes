@@ -1,7 +1,7 @@
 import db from '../../models/';
 
-const recipeModel = db.Recipe;
-const voteModel = db.Vote;
+const RecipeModel = db.Recipe;
+const VoteModel = db.Vote;
 
 const countVote = {
 /**
@@ -14,13 +14,13 @@ const countVote = {
    * @returns {number} votes
    */
   countUpvote(req) {
-    voteModel.count({
+    VoteModel.count({
       where: {
         recipeId: req.params.recipeID,
         vote: true
       }
     }).then((totalUpvotes) => {
-      recipeModel.findOne({
+      RecipeModel.findOne({
         where: {
           recipeId: req.params.recipeID
         },
@@ -42,13 +42,13 @@ const countVote = {
    * @returns {number} votes
    */
   countDownvote(req) {
-    voteModel.count({
+    VoteModel.count({
       where: {
         recipeId: req.params.recipeID,
         vote: false
       }
     }).then((totalUpvotes) => {
-      recipeModel.findOne({
+      RecipeModel.findOne({
         where: {
           recipeId: req.params.recipeID
         },
@@ -59,6 +59,6 @@ const countVote = {
       });
     });
   }
-}
+};
 
 export default countVote;

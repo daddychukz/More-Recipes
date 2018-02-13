@@ -3,7 +3,7 @@ import db from '../models';
 import paginate from '../services/paginate';
 import errorHandling from './HandleErrors/errorHandling';
 
-const recipeModel = db.Recipe;
+const RecipeModel = db.Recipe;
 
 /**
  * @class Recipe
@@ -21,11 +21,11 @@ class Recipe {
   static retrieveRecipes(request, response) {
     const { limit, offset, searchString } = request.query;
     if (Number.isNaN(parseInt(limit, 10)) || Number.isNaN(parseInt(offset, 10))) {
-      return response.status(406).json({
+      return response.status(400).json({
         message: 'Limit or Offset must be a number',
       });
     }
-    recipeModel
+    RecipeModel
       .findAndCountAll({
         order: [['createdAt', 'DESC']],
         limit,
@@ -78,7 +78,7 @@ class Recipe {
    * @returns {array} recipes
    */
   static myRecipes(request, response) {
-    recipeModel
+    RecipeModel
       .findAndCountAll({
         where: {
           userId: request.decoded.userId,
@@ -121,24 +121,24 @@ class Recipe {
    */
   static createRecipe(request, response) {
     const {
-      Title, Description, ImageUrl, PublicId
+      title, description, imageUrl, publicId
     } = request.body;
     const { userId, fullname } = request.decoded;
-    if (!Title || Title.trim().length === 0) {
-      return response.status(406).json({
+    if (!title || title.trim().length === 0) {
+      return response.status(400).json({
         message: 'Title Field should not be Empty',
       });
     }
-    if (!Description || Description.trim().length === 0) {
-      return response.status(406).json({
+    if (!description || description.trim().length === 0) {
+      return response.status(400).json({
         message: 'Description Field should not be Empty',
       });
     }
-    recipeModel
+    RecipeModel
       .findOne({
         where: {
           userId,
-          title: Title
+          title
         },
         attributes: {
           exclude: ['imageUrl', 'publicId', 'fullname', 'updatedAt']
@@ -150,13 +150,13 @@ class Recipe {
             message: 'You already have a recipe with this Title'
           });
         } else {
-          recipeModel.create({
+          RecipeModel.create({
             userId,
             fullname,
-            title: Title,
-            description: Description,
-            imageUrl: ImageUrl,
-            publicId: PublicId
+            title,
+            description,
+            imageUrl,
+            publicId
           }).then(recipe => response.status(201).json({
             recipe
           })).catch(() => response.status(500).json({
@@ -175,14 +175,14 @@ class Recipe {
    * @returns {object} deleted recipe
    */
   static deleteRecipe(request, response) {
-    recipeModel.destroy({
+    RecipeModel.destroy({
       where: {
         recipeId: request.params.recipeID,
         userId: request.decoded.userId
       }
     })
       .then(() => {
-        recipeModel
+        RecipeModel
           .findAndCountAll({
             where: {
               userId: request.decoded.userId,
@@ -221,30 +221,30 @@ class Recipe {
   static updateRecipe(request, response) {
     const updateRecord = {};
     const {
-      Title, Description, ImageUrl, PublicId
+      title, description, imageUrl, publicId
     } = request.body;
 
-    recipeModel.findOne({
+    RecipeModel.findOne({
       where: {
         recipeId: request.params.recipeID,
         userId: request.decoded.userId
       },
     }).then((recipe) => {
-      if (Title) {
-        updateRecord.title = Title;
+      if (title) {
+        updateRecord.title = title;
       }
-      if (Description) {
-        updateRecord.description = Description;
+      if (description) {
+        updateRecord.description = description;
       }
-      if (ImageUrl) {
-        updateRecord.imageUrl = ImageUrl;
+      if (imageUrl) {
+        updateRecord.imageUrl = imageUrl;
       }
-      if (PublicId) {
-        updateRecord.publicId = PublicId;
+      if (publicId) {
+        updateRecord.publicId = publicId;
       }
       recipe.update(updateRecord)
         .then(() => {
-          recipeModel.all({
+          RecipeModel.all({
             where: {
               userId: request.decoded.userId
             },
@@ -270,7 +270,7 @@ class Recipe {
    */
   static retrieveRecipe(request, response) {
     const { userId } = request.decoded;
-    recipeModel
+    RecipeModel
       .findOne({
         where: {
           recipeId: request.params.recipeID,

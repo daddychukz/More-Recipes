@@ -22,11 +22,11 @@ class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Email: '',
-      UserName: '',
-      FullName: '',
-      Password: '',
-      ConfirmPassword: '',
+      email: '',
+      userName: '',
+      fullName: '',
+      password: '',
+      confirmPassword: '',
       error: false,
       isLoading: false
     };
@@ -58,14 +58,13 @@ class SignupForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    if (this.state.Password !== this.state.ConfirmPassword) {
+    if (this.state.password !== this.state.confirmPassword) {
       this.setState({
         error: true
       });
       toastr.error('Passwords do not match');
     } else {
-      this.props.actions.signUp(this.state)
-        .then(() => customHistory.push('/recipe-box'));
+      this.props.actions.signUp(this.state);
     }
   }
 
@@ -84,10 +83,10 @@ class SignupForm extends React.Component {
         <form onSubmit={this.onSubmit} id="signup-form">
           <div className="form-group">
             <input
-              value={this.state.FullName}
+              value={this.state.fullName}
               onChange={this.onChange}
               type="text"
-              name="FullName"
+              name="fullName"
               className="form-control form-control-lg"
               placeholder="Full Name"
               required
@@ -95,10 +94,10 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
-              value={this.state.UserName}
+              value={this.state.userName}
               onChange={this.onChange}
               type="text"
-              name="UserName"
+              name="userName"
               className="form-control form-control-lg"
               placeholder="Username"
               required
@@ -107,10 +106,10 @@ class SignupForm extends React.Component {
           <div className="form-group">
             <input
               id="email"
-              value={this.state.Email}
+              value={this.state.email}
               onChange={this.onChange}
               type="email"
-              name="Email"
+              name="email"
               className="form-control form-control-lg"
               placeholder="Email"
               required
@@ -122,7 +121,7 @@ class SignupForm extends React.Component {
               value={this.state.Password}
               onChange={this.onChange}
               type="password"
-              name="Password"
+              name="password"
               className="form-control form-control-lg"
               placeholder="Password"
               required
@@ -130,10 +129,10 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
-              value={this.state.ConfirmPassword}
+              value={this.state.confirmPassword}
               onChange={this.onChange}
               type="password"
-              name="ConfirmPassword"
+              name="confirmPassword"
               className="form-control form-control-lg"
               placeholder="Confirm Password"
               required

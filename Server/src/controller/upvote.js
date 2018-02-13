@@ -2,8 +2,8 @@ import db from '../models/';
 import countVote from './Common/countVote';
 import errorHandling from './HandleErrors/errorHandling';
 
-const recipeModel = db.Recipe;
-const voteModel = db.Vote;
+const RecipeModel = db.Recipe;
+const VoteModel = db.Vote;
 
 /**
  * @class Upvote
@@ -19,13 +19,13 @@ class Upvote {
    * @returns {object} message
    */
   static upvoteRecipe(request, response) {
-    recipeModel.findOne({
+    RecipeModel.findOne({
       where: {
         recipeId: request.params.recipeID
       },
     }).then((recipes) => {
       if (recipes) {
-        voteModel
+        VoteModel
           .findOne({
             where: {
               userId: request.decoded.userId,
@@ -34,7 +34,7 @@ class Upvote {
             }
           }).then((vote) => {
             if (vote) {
-              voteModel.destroy({
+              VoteModel.destroy({
                 where: {
                   userId: request.decoded.userId,
                   recipeId: request.params.recipeID,
@@ -49,7 +49,7 @@ class Upvote {
                 value: 0
               });
             } else {
-              voteModel.create({
+              VoteModel.create({
                 userId: request.decoded.userId,
                 recipeId: request.params.recipeID,
                 vote: true
@@ -59,7 +59,7 @@ class Upvote {
                   value: 1
                 });
 
-                voteModel.destroy({
+                VoteModel.destroy({
                   where: {
                     recipeId: request.params.recipeID,
                     userId: request.decoded.userId,
@@ -93,7 +93,7 @@ class Upvote {
    */
   static mostRecipeUpvote(request, response) {
     if (request.query.sort === 'upvotes' && request.query.order === 'des') {
-      recipeModel.all({
+      RecipeModel.all({
         order: [['upvotes', 'DESC']],
         attributes: {
           exclude: ['id', 'updatedAt']

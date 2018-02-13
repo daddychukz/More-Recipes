@@ -16,11 +16,11 @@ const errorHandling = {
     }
     if (error.errors[0].message === 'Full name must only contain letters') {
       errors.error = { message: 'Full name must only contain letters' };
-      return response.status(406).json(errors);
+      return response.status(400).json(errors);
     }
     if (!errors.error) {
       errors.error = { message: error.errors[0].message };
-      return response.status(406).json(errors);
+      return response.status(400).json(errors);
     }
   },
 
@@ -28,11 +28,11 @@ const errorHandling = {
     const errors = {};
     if (error.parent.routine === 'string_to_uuid') {
       errors.error = { message: 'Invalid Recipe ID' };
-      response.status(406).json(errors);
+      response.status(400).json(errors);
     }
     if (error.parent.routine === 'ri_ReportViolation') {
       errors.error = { message: 'Invalid Recipe ID' };
-      response.status(406).json(errors);
+      response.status(400).json(errors);
     }
     if (!errors.error) {
       errors.error = { message: 'Something Went Wrong' };

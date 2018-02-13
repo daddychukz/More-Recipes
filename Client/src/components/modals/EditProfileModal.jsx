@@ -39,7 +39,7 @@ const editProfileModal = (props) => {
                   value={fullname}
                   onChange={onChange}
                   type="text"
-                  name="FullName"
+                  name="fullName"
                   className="form-control"
                   required
                 />
@@ -50,7 +50,7 @@ const editProfileModal = (props) => {
                   value={phone}
                   onChange={onChange}
                   type="number"
-                  name="Phone"
+                  name="phone"
                   className="form-control"
                   required
                 />
@@ -61,7 +61,7 @@ const editProfileModal = (props) => {
                   value={hobbies}
                   onChange={onChange}
                   type="text"
-                  name="Hobbies"
+                  name="hobbies"
                   className="form-control"
                   required
                 />
@@ -72,7 +72,7 @@ const editProfileModal = (props) => {
                   value={about}
                   onChange={onChange}
                   type="text"
-                  name="About"
+                  name="about"
                   className="form-control"
                   required
                 />
@@ -82,7 +82,7 @@ const editProfileModal = (props) => {
                 <textarea
                   value={address}
                   onChange={onChange}
-                  name="Address"
+                  name="address"
                   className="form-control"
                   required
                 />

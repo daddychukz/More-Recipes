@@ -2,8 +2,8 @@ import db from '../models';
 import countVote from './Common/countVote';
 import errorHandling from './HandleErrors/errorHandling';
 
-const recipeModel = db.Recipe;
-const voteModel = db.Vote;
+const RecipeModel = db.Recipe;
+const VoteModel = db.Vote;
 
 /**
  * @class Downvote
@@ -19,13 +19,13 @@ class Downvote {
    * @returns {void}
    */
   static downvoteRecipe(request, response) {
-    recipeModel.findOne({
+    RecipeModel.findOne({
       where: {
         recipeId: request.params.recipeID
       },
     }).then((recipes) => {
       if (recipes) {
-        voteModel
+        VoteModel
           .findOne({
             where: {
               userId: request.decoded.userId,
@@ -34,7 +34,7 @@ class Downvote {
             }
           }).then((vote) => {
             if (vote) {
-              voteModel.destroy({
+              VoteModel.destroy({
                 where: {
                   userId: request.decoded.userId,
                   recipeId: request.params.recipeID,
@@ -49,7 +49,7 @@ class Downvote {
                 value: 0
               });
             } else {
-              voteModel.create({
+              VoteModel.create({
                 userId: request.decoded.userId,
                 recipeId: request.params.recipeID,
                 vote: false
@@ -60,7 +60,7 @@ class Downvote {
                 });
 
                 // deletes upvote created by same user for same recipe
-                voteModel.destroy({
+                VoteModel.destroy({
                   where: {
                     recipeId: request.params.recipeID,
                     userId: request.decoded.userId,

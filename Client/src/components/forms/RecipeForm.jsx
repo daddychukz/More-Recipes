@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import toastr from 'toastr';
 import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
-import customHistory from '../common/commonFunctions';
 import * as recipeActions from '../../actions/recipeActions';
 
 /**
@@ -22,10 +20,10 @@ class RecipeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Title: '',
-      Description: '',
-      ImageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
-      PublicId: 'home_gipmmy.jpg',
+      title: '',
+      description: '',
+      imageUrl: 'https://res.cloudinary.com/chuks-andela32/image/upload/v1509088084/home_gipmmy.jpg',
+      publicId: 'home_gipmmy.jpg',
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -74,8 +72,8 @@ class RecipeForm extends React.Component {
       tags: ['daddy'] },
     (error, result) => {
       this.setState({
-        ImageUrl: result[0].secure_url,
-        PublicId: result[0].public_id
+        imageUrl: result[0].secure_url,
+        publicId: result[0].public_id
       });
     });
   }
@@ -97,10 +95,10 @@ class RecipeForm extends React.Component {
             </label>
             <input
               id="title"
-              value={this.state.Title}
+              value={this.state.title}
               onChange={this.onChange}
               type="text"
-              name="Title"
+              name="title"
               className="form-control"
               required
             />
@@ -110,9 +108,9 @@ class RecipeForm extends React.Component {
               Recipe Description
             </label>
             <textarea
-              value={this.state.Description}
+              value={this.state.description}
               onChange={this.onChange}
-              name="Description"
+              name="description"
               rows="6"
               className="form-control"
               required
@@ -120,7 +118,7 @@ class RecipeForm extends React.Component {
           </div>
           <div className="form-group">
             <CloudinaryContext cloudName="chuks-andela32">
-              <Image publicId={this.state.PublicId}>
+              <Image publicId={this.state.publicId}>
                 <Transformation
                   crop="scale"
                   width="200"

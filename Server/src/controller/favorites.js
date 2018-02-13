@@ -17,9 +17,9 @@ class Favorite {
    * @returns {void}
    */
   static addFavorites(request, response) {
-    const { Category } = request.body;
-    if (!Category || Category.trim().length === 0) {
-      return response.status(406).json({
+    const { category } = request.body;
+    if (!category || category.trim().length === 0) {
+      return response.status(400).json({
         message: 'Category Field should not be Empty',
       });
     }
@@ -41,7 +41,7 @@ class Favorite {
           favoriteModel.create({
             userId: request.decoded.userId,
             recipeId: request.params.recipeID,
-            category: Category,
+            category,
             attributes: {
               exclude: ['id']
             }
@@ -86,7 +86,9 @@ class Favorite {
             favoriteRecipe: recipe
           });
         } else {
-          response.status(204).send();
+          response.status(404).send({
+            message: 'No recipe favorited'
+          });
         }
       });
   }
