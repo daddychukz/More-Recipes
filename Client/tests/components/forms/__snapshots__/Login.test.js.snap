@@ -10,7 +10,7 @@ exports[`Login should match component snapshot 1`] = `
     >
       <input
         className="form-control form-control-lg"
-        name="Email"
+        name="email"
         onChange={[Function]}
         placeholder="Email"
         required={true}
@@ -23,7 +23,7 @@ exports[`Login should match component snapshot 1`] = `
     >
       <input
         className="form-control form-control-lg"
-        name="Password"
+        name="password"
         onChange={[Function]}
         placeholder="Password"
         required={true}

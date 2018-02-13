@@ -5,12 +5,12 @@ import EditRecipe from '../../../src/components/modals/EditRecipeModal';
 
 
 const props = {
-  Title: '',
+  title: '',
   onChange: sinon.spy(() => new Promise((cb) => {
     cb();
   })),
   publicId: '',
-  Description: '',
+  description: '',
   onSubmit: sinon.spy(() => new Promise((cb) => {
     cb();
   })),

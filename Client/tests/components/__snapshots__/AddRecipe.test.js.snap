@@ -332,7 +332,7 @@ exports[`Add recipe page test suite renders AddRecipe component 1`] = `
                 <input
                   className="form-control"
                   id="title"
-                  name="Title"
+                  name="title"
                   onChange={[Function]}
                   required={true}
                   type="text"
@@ -350,7 +350,7 @@ exports[`Add recipe page test suite renders AddRecipe component 1`] = `
                 </label>
                 <textarea
                   className="form-control"
-                  name="Description"
+                  name="description"
                   onChange={[Function]}
                   required={true}
                   rows="6"

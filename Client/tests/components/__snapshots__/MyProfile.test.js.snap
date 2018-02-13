@@ -365,7 +365,7 @@ exports[`MyFavorite test suite should match component snapshot 1`] = `
               </label>
               <input
                 className="form-control"
-                name="FullName"
+                name="fullName"
                 onChange={[Function]}
                 required={true}
                 type="text"
@@ -382,7 +382,7 @@ exports[`MyFavorite test suite should match component snapshot 1`] = `
               </label>
               <input
                 className="form-control"
-                name="Phone"
+                name="phone"
                 onChange={[Function]}
                 required={true}
                 type="number"
@@ -399,7 +399,7 @@ exports[`MyFavorite test suite should match component snapshot 1`] = `
               </label>
               <input
                 className="form-control"
-                name="Hobbies"
+                name="hobbies"
                 onChange={[Function]}
                 required={true}
                 type="text"
@@ -416,7 +416,7 @@ exports[`MyFavorite test suite should match component snapshot 1`] = `
               </label>
               <input
                 className="form-control"
-                name="About"
+                name="about"
                 onChange={[Function]}
                 required={true}
                 type="text"
@@ -433,7 +433,7 @@ exports[`MyFavorite test suite should match component snapshot 1`] = `
               </label>
               <textarea
                 className="form-control"
-                name="Address"
+                name="address"
                 onChange={[Function]}
                 required={true}
                 value=""

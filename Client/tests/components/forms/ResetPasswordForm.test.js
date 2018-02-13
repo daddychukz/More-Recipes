@@ -35,15 +35,15 @@ const mountedWrapper = mount(
 const shallowWrapper = shallow(<ResetPassword {...props} />);
 const state = {
   token: props.token,
-  Password: '',
-  ConfirmPassword: '',
+  password: '',
+  confirmPassword: '',
   error: false
 };
 const event = {
   preventDefault: jest.fn(),
   target: {
-    Password: '',
-    ConfirmPassword: ''
+    password: '',
+    confirmPassword: ''
   }
 };
 
@@ -75,7 +75,7 @@ describe('Reset password test suite', () => {
   });
 
   it('calls onSubmit event with errors when password mismatch', () => {
-    state.ConfirmPassword = 'chuksy';
+    state.confirmPassword = 'chuksy';
     shallowWrapper.setState(state);
     shallowWrapper.instance().onSubmit(event);
     expect(shallowWrapper.state().error).toEqual(true);

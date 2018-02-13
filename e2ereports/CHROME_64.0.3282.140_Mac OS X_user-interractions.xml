@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="1"
-            tests="27">
+            failures="0"
+            tests="28">
 
   <testsuite name="user-interractions"
-    errors="0" failures="1" hostname="" id="" package="user-interractions" skipped="19"
-    tests="27" time="44.41" timestamp="Tue, 13 Feb 2018 04:26:27 GMT">
+    errors="0" failures="0" hostname="" id="" package="user-interractions" skipped="0"
+    tests="28" time="166.0" timestamp="Tue, 13 Feb 2018 08:18:37 GMT">
   
-    <testcase name="Display homepage and ensure all element are available" classname="user-interractions" time="6.892" assertions="8">
+    <testcase name="Display homepage and ensure all element are available" classname="user-interractions" time="6.485" assertions="8">
 
     
 
@@ -26,7 +26,7 @@
     
     </testcase>
   
-    <testcase name="it should not signin a user who has not registered" classname="user-interractions" time="4.784" assertions="7">
+    <testcase name="it should not signin a user who has not registered" classname="user-interractions" time="4.767" assertions="7">
 
     
 
@@ -43,32 +43,7 @@
     
     </testcase>
   
-    <testcase name="Does not sign user up without filling appropriate fields" classname="user-interractions" time="5.120" assertions="10">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="user gets error when signup field is not properly field" classname="user-interractions" time="4.997" assertions="11">
-
-    
+    <testcase name="Does not sign user up without filling appropriate fields" classname="user-interractions" time="5.113" assertions="10">
 
     
 
@@ -91,7 +66,32 @@
     
     </testcase>
   
-    <testcase name="it registers a user and redirect to recipe box" classname="user-interractions" time="5.784" assertions="10">
+    <testcase name="user gets error when signup field is not properly field" classname="user-interractions" time="5.054" assertions="11">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it registers a user and redirect to recipe box" classname="user-interractions" time="5.739" assertions="10">
 
     
 
@@ -114,7 +114,7 @@
     
     </testcase>
   
-    <testcase name="cannot add recipe without Title or Description" classname="user-interractions" time="5.452" assertions="4">
+    <testcase name="cannot add recipe without title or description" classname="user-interractions" time="5.505" assertions="4">
 
     
 
@@ -125,7 +125,7 @@
     
     </testcase>
   
-    <testcase name="user can add a recipe to recipe box" classname="user-interractions" time="5.717" assertions="4">
+    <testcase name="user can add a recipe to recipe box" classname="user-interractions" time="5.781" assertions="4">
 
     
 
@@ -136,14 +136,237 @@
     
     </testcase>
   
-    <testcase name="user cannot add a recipe to recipe box with same title of a recipe he already added" classname="user-interractions" time="5.669" assertions="4">
+    <testcase name="user cannot add a recipe to recipe box with same title of a recipe he already added" classname="user-interractions" time="5.571" assertions="5">
 
     
 
     
 
-      <failure message="Timed out while waiting for element &lt;.toast&gt; to be present for 1000 milliseconds.">    at Object.user cannot add a recipe to recipe box with same title of a recipe he already added (/Users/andeladeveloper/Documents/More-Recipes/e2etests/user-interractions.js:142:8)
-    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a second recipe to recipe box" classname="user-interractions" time="5.577" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a third recipe to recipe box" classname="user-interractions" time="6.447" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a fourth recipe to recipe box" classname="user-interractions" time="6.489" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a fifth recipe to recipe box" classname="user-interractions" time="6.475" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a sixthrecipe to recipe box" classname="user-interractions" time="6.506" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can search for a recipe in recipe box" classname="user-interractions" time="3.240" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can view a recipe" classname="user-interractions" time="2.176" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can upvote a recipe" classname="user-interractions" time="3.160" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can downvote a recipe" classname="user-interractions" time="3.164" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can remove downvote" classname="user-interractions" time="3.121" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can favorite a recipe" classname="user-interractions" time="5.410" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add review to a recipe" classname="user-interractions" time="8.377" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can remove a recipe from favorites" classname="user-interractions" time="4.798" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can edit a recipe he/she created" classname="user-interractions" time="7.440" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can delete a recipe he/she created" classname="user-interractions" time="4.763" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can edit his/her profile" classname="user-interractions" time="10.59" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user cannot change his/her password with wrong oldpassword" classname="user-interractions" time="9.607" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user cannot change password with wrong confirm password" classname="user-interractions" time="9.508" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can change his/her password" classname="user-interractions" time="9.484" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it logs out a user" classname="user-interractions" time="5.698" assertions="2">
+
+    
 
     
     </testcase>
@@ -151,103 +374,6 @@
 
   
 
-  
-    
-    <testcase
-      name="user can add a second recipe to recipe box" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can add a third recipe to recipe box" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can add a fourth recipe to recipe box" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can add a fifth recipe to recipe box" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can add a sixthrecipe to recipe box" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can search for a recipe in recipe box" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can view a recipe" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can upvote a recipe" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can downvote a recipe" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can remove downvote" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can favorite a recipe" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can add review to a recipe" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can remove a recipe from favorites" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can edit a recipe he/she created" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can delete a recipe he/she created" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can edit his/her profile" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user cannot change his/her password with wrong oldpassword" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="user can change his/her password" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="it logs out a user" classname="user-interractions">
-      <skipped />
-    </testcase>
-    
   
   </testsuite>
 </testsuites>

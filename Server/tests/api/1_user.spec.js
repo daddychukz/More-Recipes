@@ -66,9 +66,11 @@ describe('User Signin/Signup', () => {
       .send(fakeData.userOne)
       .expect(201)
       .end((err, res) => {
-        newUser.user = res.body.User;
+        newUser.user = res.body.user;
         expect(newUser.user).to.have.property('fullname');
         expect(newUser.user).to.have.property('email');
+        expect(res.body.user.email).to.equal('chuks@yahoo.com');
+        expect(res.body.user.fullname).to.equal('Daddychuks');
         if (err) return done(err);
         done();
       });
@@ -94,9 +96,11 @@ describe('User Signin/Signup', () => {
       .send(fakeData.userFour)
       .expect(201)
       .end((err, res) => {
-        newUser.user2 = res.body.User;
+        newUser.user2 = res.body.user;
         expect(newUser.user2).to.have.property('fullname');
         expect(newUser.user2).to.have.property('email');
+        expect(res.body.user.email).to.equal('emma@yahoo.com');
+        expect(res.body.user.fullname).to.equal('Emmanuel');
         if (err) return done(err);
         done();
       });
@@ -107,12 +111,12 @@ describe('User Signin/Signup', () => {
       .post('/api/v1/users/signup')
       .set('Content-Type', 'application/json')
       .send({
-        FullName: 'Daddychuks',
-        Email: 'chuksy@yahoo.com',
-        Sex: 'male',
-        UserName: 'chuks',
-        Password: 'chuks',
-        ConfirmPassword: 'chuks'
+        fullName: 'Daddychuks',
+        email: 'chuksy@yahoo.com',
+        sex: 'male',
+        userName: 'chuks',
+        password: 'chuks',
+        confirmPassword: 'chuks'
       })
       .expect(409)
       .end((err, res) => {
@@ -126,8 +130,8 @@ describe('User Signin/Signup', () => {
     request(app)
       .post('/api/v1/users/signin')
       .send({
-        Email: 'chuks@yahoo.com',
-        Password: 'password'
+        email: 'chuks@yahoo.com',
+        password: 'password'
       })
       .expect(409)
       .end((err, res) => {
@@ -143,7 +147,7 @@ describe('User Signin/Signup', () => {
       request(app)
         .post('/api/v1/users/signin')
         .send({
-          Password: 'password'
+          password: 'password'
         })
         .expect(406)
         .end((err, res) => {
@@ -155,7 +159,7 @@ describe('User Signin/Signup', () => {
   );
 
   it('ensures user cannot be created if email is lacking.', (done) => {
-    fakeData.userThree.Email = null;
+    fakeData.userThree.email = null;
     request(app)
       .post('/api/v1/users/signup')
       .send(fakeData.userThree)
@@ -169,7 +173,7 @@ describe('User Signin/Signup', () => {
   });
 
   it('ensures user cannot be created if password is lacking.', (done) => {
-    fakeData.userFour.Password = null;
+    fakeData.userFour.password = null;
     request(app)
       .post('/api/v1/users/signup')
       .send(fakeData.userFour)
@@ -188,7 +192,7 @@ describe('User Signin/Signup', () => {
       request(app)
         .post('/api/v1/users/signin')
         .send({
-          Email: 'Email'
+          email: 'Email'
         })
         .expect(406)
         .end((err, res) => {
@@ -200,7 +204,7 @@ describe('User Signin/Signup', () => {
   );
 
   it('ensures user cannot be created if username is lacking.', (done) => {
-    fakeData.userFour.UserName = null;
+    fakeData.userFour.userName = null;
     request(app)
       .post('/api/v1/users/signup')
       .send(fakeData.userFour)
@@ -214,7 +218,7 @@ describe('User Signin/Signup', () => {
   });
 
   it('ensures user cannot be created if fullname is lacking.', (done) => {
-    fakeData.userOne.FullName = null;
+    fakeData.userOne.fullName = null;
     request(app)
       .post('/api/v1/users/signup')
       .send(fakeData.userOne)
@@ -231,8 +235,8 @@ describe('User Signin/Signup', () => {
     request(app)
       .post('/api/v1/users/signin')
       .send({
-        Email: 'chika@yahoo.com',
-        Password: 'password'
+        email: 'chika@yahoo.com',
+        password: 'password'
       })
       .expect(404)
       .end((err, res) => {
@@ -247,7 +251,7 @@ describe('User Signin/Signup', () => {
     request(app)
       .post('/api/v1/users/signup')
       .send(fakeData.wrongUser)
-      .expect(406)
+      .expect(400)
       .end((error, res) => {
         expect(res.body.error.message)
           .to.equal('Full name must only contain letters');
@@ -258,7 +262,7 @@ describe('User Signin/Signup', () => {
 
   it(`should not be able to create a new account when Password and
   PasswordConfirmation fields are different`, (done) => {
-    fakeData.wrongUser.Password = '12345';
+    fakeData.wrongUser.password = '12345';
     request(app)
       .post('/api/v1/users/signup')
       .send(fakeData.wrongUser)
@@ -286,8 +290,8 @@ describe('User Signin/Signup', () => {
     request(app)
       .post('/api/v1/users/signin')
       .send({
-        Email: 'chuks@yahoo.com',
-        Password: 'chuks'
+        email: 'chuks@yahoo.com',
+        password: 'chuks'
       })
       .expect(200)
       .end((err, res) => {
@@ -303,8 +307,8 @@ describe('User Signin/Signup', () => {
     request(app)
       .post('/api/v1/users/signin')
       .send({
-        Email: 'emma@yahoo.com',
-        Password: 'emma'
+        email: 'emma@yahoo.com',
+        password: 'emma'
       })
       .expect(200)
       .end((err, res) => {
@@ -378,6 +382,9 @@ describe('User profile test cases', () => {
       .end((error, response) => {
         expect(response.body.email).to.equal('chuks@yahoo.com');
         expect(response.body.about).to.equal('learner');
+        expect(response.body).to.haveOwnProperty('fullname');
+        expect(response.body).to.haveOwnProperty('username');
+        expect(response.body).to.haveOwnProperty('address');
         if (error) done(error);
         done();
       });
@@ -390,7 +397,7 @@ describe('Reset user password test cases', () => {
     request(app)
       .post('/api/v1/user/reset_password_request')
       .expect(404)
-      .send({ Email: 'ade@yahoo.com' })
+      .send({ email: 'ade@yahoo.com' })
       .end((error, response) => {
         expect(response.body.message).to.equal('User not found!');
         if (error) done(error);
@@ -403,7 +410,7 @@ describe('Reset user password test cases', () => {
     request(app)
       .post('/api/v1/user/reset_password_request')
       .expect(200)
-      .send({ Email: 'chuks@yahoo.com' })
+      .send({ email: 'chuks@yahoo.com' })
       .end((error, response) => {
         expect(response.body.message)
           .to.equal('Reset Password link sent successfully');
@@ -419,10 +426,10 @@ describe('Reset user password test cases', () => {
       .post('/api/v1/user/reset-password')
       .set('authorization', userToken.token)
       .send({
-        OldPassword: 'dee',
-        Password: 'password2',
+        oldPassword: 'dee',
+        password: 'password2',
         confirmPassword: 'password2',
-        UserId: decoded.userId
+        userId: decoded.userId
       })
       .expect(409)
       .end((error, response) => {
@@ -437,8 +444,8 @@ describe('Reset user password test cases', () => {
       .post('/api/v1/user/reset-password')
       .set('authorization', userToken.token)
       .send({
-        Password: 'password2',
-        Token: fakeData.invalidToken
+        password: 'password2',
+        token: fakeData.invalidToken
       })
       .expect(401)
       .end((error, response) => {
@@ -456,9 +463,9 @@ describe('Reset user password test cases', () => {
       .post('/api/v1/user/reset-password')
       .set('authorization', userToken.token)
       .send({
-        OldPassword: 'chuks',
-        Password: 'password2',
-        UserId: decoded.userId
+        oldPassword: 'chuks',
+        password: 'password2',
+        userId: decoded.userId
       })
       .expect(401)
       .end((error, response) => {
@@ -474,9 +481,9 @@ describe('Reset user password test cases', () => {
       .post('/api/v1/user/reset-password')
       .set('authorization', userToken.token)
       .send({
-        OldPassword: 'chuks',
-        Password: 'password2',
-        UserId: decoded.userId
+        oldPassword: 'chuks',
+        password: 'password2',
+        userId: decoded.userId
       })
       .expect(200)
       .end((error, response) => {
@@ -491,8 +498,8 @@ describe('Reset user password test cases', () => {
       .post('/api/v1/user/reset-password')
       .set('authorization', userToken.token)
       .send({
-        Password: 'password2',
-        Token: userToken.token
+        password: 'password2',
+        token: userToken.token
       })
       .expect(200)
       .end((error, response) => {

@@ -32,16 +32,16 @@ const mountedWrapper = mount(
 
 const shallowWrapper = shallow(<PureSignup {...props} />);
 const state = {
-  Email: 'chuks@yahoo.com',
-  Password: 'chuks',
-  ConfirmPassword: 'chuks',
+  email: 'chuks@yahoo.com',
+  password: 'chuks',
+  confirmPassword: 'chuks',
   error: false
 };
 const event = {
   preventDefault: jest.fn(),
   target: {
-    Password: 'abcde',
-    Email: 'chuks@yahoo.com',
+    password: 'abcde',
+    email: 'chuks@yahoo.com',
   }
 };
 
@@ -73,7 +73,7 @@ describe('Signup test actiomns', () => {
   });
 
   it('calls onSubmit event with errors when password mismatch', () => {
-    state.ConfirmPassword = 'chuksy';
+    state.confirmPassword = 'chuksy';
     shallowWrapper.setState(state);
     shallowWrapper.instance().onSubmit(event);
     expect(shallowWrapper.state().error).toEqual(true);

@@ -40,7 +40,7 @@ exports[`Edit Recipe Modal test suite should match component snapshot 1`] = `
             </label>
             <input
               className="form-control"
-              name="Title"
+              name="title"
               onChange={[Function]}
               required={true}
               type="text"
@@ -57,7 +57,7 @@ exports[`Edit Recipe Modal test suite should match component snapshot 1`] = `
             </label>
             <textarea
               className="form-control"
-              name="Description"
+              name="description"
               onChange={[Function]}
               required={true}
               rows="5"

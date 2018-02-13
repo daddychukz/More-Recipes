@@ -363,7 +363,7 @@ exports[`Reset password test suite should match component snapshot 1`] = `
             >
               <input
                 className="form-control form-control-lg"
-                name="Category"
+                name="category"
                 onInput={[Function]}
                 placeholder="or enter new category"
                 required={true}

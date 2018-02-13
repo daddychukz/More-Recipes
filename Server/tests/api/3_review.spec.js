@@ -23,9 +23,9 @@ describe('Reviews Operations', () => {
       .send({
         userId: newUser.user.userId,
         recipeId: recipe.recipe2.recipeId,
-        FullName: newUser.user.fullname
+        fullName: newUser.user.fullname
       })
-      .expect(406)
+      .expect(400)
       .end((err, res) => {
         expect(res.body.message).to.equal('Review Field should not be Empty');
         if (err) return done(err);
@@ -40,10 +40,10 @@ describe('Reviews Operations', () => {
       .send({
         userId: newUser.user.userId,
         recipeId: recipe.recipe2.recipeId,
-        FullName: newUser.user.fullname,
-        Review: 'Nice'
+        fullName: newUser.user.fullname,
+        review: 'Nice'
       })
-      .expect(406)
+      .expect(400)
       .end((err, res) => {
         expect(res.body.error.message).to.equal('Invalid Recipe ID');
         if (err) return done(err);
@@ -58,11 +58,13 @@ describe('Reviews Operations', () => {
       .send({
         userId: newUser.user.userId,
         recipeId: recipe.recipe2.recipeId,
-        FullName: newUser.user.fullname,
-        Review: 'Cool Stuff!!'
+        fullName: newUser.user.fullname,
+        review: 'Cool Stuff!!'
       })
       .expect(201)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.review).to.equal('Cool Stuff!!');
+        expect(res.body.User.fullname).to.equal('Daddychuks');
         if (err) return done(err);
         done();
       });
@@ -74,7 +76,9 @@ describe('Reviews Operations', () => {
       .set('authorization', userToken.token)
       .expect(200)
       .end((err, res) => {
-        expect(res.body.reviews);
+        expect(res.body.reviews[0].review).to.equal('Cool Stuff!!');
+        expect(res.body.reviews[0].fullname).to.equal('Daddychuks');
+        expect(res.body.reviews[0].User.email).to.equal('chuks@yahoo.com');
         if (err) return done(err);
         done();
       });
