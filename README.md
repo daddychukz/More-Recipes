@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/daddychukz/More-Recipes.svg?branch=develop)](https://travis-ci.org/daddychukz/More-Recipes) [![Coverage Status](https://coveralls.io/repos/github/daddychukz/More-Recipes/badge.svg?branch=chore%2F154912425%2Fimprove-readme)](https://coveralls.io/github/daddychukz/More-Recipes?branch=chore%2F154912425%2Fimprove-readme)
+[![Build Status](https://travis-ci.org/daddychukz/More-Recipes.svg?branch=develop)](https://travis-ci.org/daddychukz/More-Recipes) [![Coverage Status](https://coveralls.io/repos/github/daddychukz/More-Recipes/badge.svg?branch=develop)](https://coveralls.io/github/daddychukz/More-Recipes?branch=develop)
 [![Code Climate](https://codeclimate.com/github/daddychukz/More-Recipes.png)](https://codeclimate.com/github/daddychukz/More-Recipes) [![codecov](https://codecov.io/gh/daddychukz/More-Recipes/branch/develop/graph/badge.svg)](https://codecov.io/gh/daddychukz/More-Recipes)
 
 # MORE-RECIPES
