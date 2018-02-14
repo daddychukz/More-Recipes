@@ -26,11 +26,11 @@
     "recipe"
   ],
   "author": "Chuks Durugo",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/daddychukz/More-Recipes/issues"
   },
-  "homepage": "https://github.com/daddychukz/More-Recipes#readme",
+  "homepage": "https://chuks-recipes.herokuapp.com",
   "dependencies": {
     "Faker": "^0.7.2",
     "array-unique": "^0.3.2",

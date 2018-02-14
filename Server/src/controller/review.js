@@ -47,7 +47,7 @@ class Review {
       });
   }
   /**
-   * @desc gets all reviews for a recipe
+   * @description gets all reviews for a recipe
    *
    * @param {Object} request request object
    * @param {Object} response response object

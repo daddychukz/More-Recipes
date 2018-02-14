@@ -14,7 +14,7 @@ import { CloudinaryContext, Transformation, Image } from 'cloudinary-react';
 const editProfileModal = (props) => {
   const {
     onSubmit,
-    username,
+    fullname,
     onChange,
     phone,
     hobbies,
@@ -34,12 +34,12 @@ const editProfileModal = (props) => {
           <div className="modal-body">
             <form onSubmit={onSubmit}>
               <div className="form-group">
-                <label htmlFor="name">Username</label>
+                <label htmlFor="name">Fullname</label>
                 <input
-                  value={username}
+                  value={fullname}
                   onChange={onChange}
                   type="text"
-                  name="UserName"
+                  name="FullName"
                   className="form-control"
                   required
                 />
@@ -142,7 +142,7 @@ editProfileModal.propTypes = {
   phone: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired
+  fullname: PropTypes.string.isRequired
 };
 
 export default editProfileModal;

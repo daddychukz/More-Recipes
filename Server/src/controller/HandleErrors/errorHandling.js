@@ -30,6 +30,10 @@ const errorHandling = {
       errors.error = { message: 'Invalid Recipe ID' };
       response.status(406).json(errors);
     }
+    if (error.parent.routine === 'ri_ReportViolation') {
+      errors.error = { message: 'Invalid Recipe ID' };
+      response.status(406).json(errors);
+    }
     if (!errors.error) {
       errors.error = { message: 'Something Went Wrong' };
       response.status(500).json(errors);
