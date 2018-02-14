@@ -281,11 +281,7 @@ class Recipe {
         }],
       })
       .then((recipe) => {
-        if (isEmpty(recipe)) {
-          response.status(404).json({
-            message: 'Record not Found!'
-          });
-        } else if (recipe) {
+        if (recipe) {
           if (recipe.userId === userId && !recipe.isViewed) {
             recipe.update(
               { isViewed: true, viewsCount: recipe.viewsCount + 1 },

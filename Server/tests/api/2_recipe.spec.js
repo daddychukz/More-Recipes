@@ -200,6 +200,42 @@ describe('Recipe Operations', () => {
       });
   });
 
+  it('retrieves a single recipe from catalog', (done) => {
+    request(app)
+      .get(`/api/v1/recipes/${recipe.recipe1.recipeId}`)
+      .set('authorization', userToken.token)
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.recipe.title).to.equal('Beans');
+        expect(res.body.recipe.fullname).to.equal('Daddychuks');
+        expect(res.body.recipe.description)
+          .to
+          .equal('This is how to prepare beans');
+        expect(res.body.recipe).to.haveOwnProperty('imageUrl');
+        expect(res.body.recipe).to.haveOwnProperty('publicId');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('retrieves a single recipe from catalog', (done) => {
+    request(app)
+      .get(`/api/v1/recipes/${recipe.recipe1.recipeId}`)
+      .set('authorization', userToken.token)
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.recipe.title).to.equal('Beans');
+        expect(res.body.recipe.fullname).to.equal('Daddychuks');
+        expect(res.body.recipe.description)
+          .to
+          .equal('This is how to prepare beans');
+        expect(res.body.recipe).to.haveOwnProperty('imageUrl');
+        expect(res.body.recipe).to.haveOwnProperty('publicId');
+        if (err) return done(err);
+        done();
+      });
+  });
+
   it('should not update recipe on wrong recipeId', (done) => {
     request(app)
       .put('/api/v1/recipe/98c58f26-0423-4276-b70f-80364abe5were')

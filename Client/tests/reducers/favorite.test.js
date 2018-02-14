@@ -8,7 +8,8 @@ describe('Favorite Recipe Reducer', () => {
     done();
   });
 
-  it('adds a recipe to favorite when action of type ADD_TO_FAVORITE is called', (done) => {
+  it(`adds a recipe to favorite when action of type ADD_TO_FAVORITE
+  is called`, (done) => {
     const action = {
       type: types.ADD_TO_FAVORITES,
       payload: mockData.addToFavoriteResponse
@@ -19,7 +20,8 @@ describe('Favorite Recipe Reducer', () => {
     done();
   });
 
-  it('adds a recipe to favorite when action of type ADD_TO_FAVORITE is called', (done) => {
+  it(`removes a recipe already favorited when action of type ADD_TO_FAVORITE
+  is called`, (done) => {
     const action = {
       type: types.ADD_TO_FAVORITES,
       payload: {
@@ -35,12 +37,14 @@ describe('Favorite Recipe Reducer', () => {
       }
     };
 
-    const newState = recipeReducer(mockData.getFavoriteRecipeResponse.favoriteRecipe, action);
+    const newState = recipeReducer(
+      mockData.getFavoriteRecipeResponse.favoriteRecipe, action);
     expect(newState[0].Recipe.fullname).toEqual('Adam Eve');
     done();
   });
 
-  it('gets all user favorite when action of type GET_ALL_FAVORITE is called', (done) => {
+  it(`gets all user favorite when action of type GET_ALL_FAVORITE
+  is called`, (done) => {
     const action = {
       type: types.GET_ALL_FAVORITE,
       payload: mockData.getFavoriteRecipeResponse
@@ -51,7 +55,8 @@ describe('Favorite Recipe Reducer', () => {
     done();
   });
 
-  it('search a user favorite recipes when action of type SEARCH_USER_FAVORITE is called', (done) => {
+  it(`search a user favorite recipes when action of type SEARCH_USER_FAVORITE
+  is called`, (done) => {
     const action = {
       type: types.SEARCH_USER_FAVORITES,
       payload: mockData.searchUserFavoriteResponse

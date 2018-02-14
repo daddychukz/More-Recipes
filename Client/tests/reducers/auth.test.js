@@ -13,7 +13,7 @@ describe('Favorite Recipe Reducer', () => {
     done();
   });
 
-  it('sets the current user when action of type SET_CURRENT_USER is called', (done) => {
+  it('dispatches action SET_CURRENT_USER', (done) => {
     const action = {
       type: types.SET_CURRENT_USER,
       user: mockData.decodedToken

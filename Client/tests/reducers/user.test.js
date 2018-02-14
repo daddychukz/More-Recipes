@@ -20,7 +20,8 @@ describe('User Reducers', () => {
       done();
     });
 
-    it('logs a user in when action of type USER_LOGGED_IN is called', (done) => {
+    it(`logs a user in when action of type USER_LOGGED_IN is
+    called`, (done) => {
       const action = {
         type: types.USER_LOGGED_IN,
         payload: mockData.signinResponse
@@ -31,7 +32,8 @@ describe('User Reducers', () => {
       done();
     });
 
-    it('gets user profile when action of type GET_USER_PROFILE is called', (done) => {
+    it(`gets user profile when action of type GET_USER_PROFILE
+    is called`, (done) => {
       const action = {
         type: types.GET_USER_PROFILE,
         payload: mockData.userProfile
@@ -42,7 +44,8 @@ describe('User Reducers', () => {
       done();
     });
 
-    it('modifies user profile when action of type EDIT_USER_PROFILE is called', (done) => {
+    it(`modifies user profile when action of type EDIT_USER_PROFILE
+    is called`, (done) => {
       const action = {
         type: types.EDIT_USER_PROFILE,
         payload: mockData.updatedProfileResponse
@@ -53,7 +56,8 @@ describe('User Reducers', () => {
       done();
     });
 
-    it('validates user token when action of type VALIDATE_USER_TOKEN is called', (done) => {
+    it(`validates user token when action of type VALIDATE_USER_TOKEN
+    is called`, (done) => {
       const action = {
         type: types.VALIDATE_USER_TOKEN,
         payload: { message: 'all good' }
@@ -64,7 +68,8 @@ describe('User Reducers', () => {
       done();
     });
 
-    it('resets user password when action of type RESET_USER_PASSWORD is called', (done) => {
+    it(`resets user password when action of type RESET_USER_PASSWORD
+    is called`, (done) => {
       const action = {
         type: types.RESET_USER_PASSWORD,
         payload: { message: 'password updated' }
@@ -74,7 +79,8 @@ describe('User Reducers', () => {
       done();
     });
 
-    it('sends reset password Link when action of type RESET_USER_PASSWORD_REQUEST is called', (done) => {
+    it(`sends reset password Link when action of type
+    RESET_USER_PASSWORD_REQUEST is called`, (done) => {
       const action = {
         type: types.RESET_USER_PASSWORD_REQUEST,
         payload: { message: 'Reset password link sent' }

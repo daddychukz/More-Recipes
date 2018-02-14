@@ -30,17 +30,18 @@ describe('Recipe Reducers', () => {
         done();
       });
 
-    it('retrieves recipes created by a user when action of type GET_USER_RECIPES is called',
-      (done) => {
-        const action = {
-          type: types.GET_USER_RECIPES,
-          payload: mockData.getUserRecipeResponse,
-        };
+    it(`retrieves recipes created by a user when action of type GET_USER_RECIPES
+    is called`,
+    (done) => {
+      const action = {
+        type: types.GET_USER_RECIPES,
+        payload: mockData.getUserRecipeResponse,
+      };
 
-        const newState = recipeReducer(initialState, action);
-        expect(newState).toEqual(action.payload);
-        done();
-      });
+      const newState = recipeReducer(initialState, action);
+      expect(newState).toEqual(action.payload);
+      done();
+    });
 
     it('updates recipe from the store', (done) => {
       const action = {
@@ -71,7 +72,8 @@ describe('Recipe Reducers', () => {
       };
 
       const newState = getRecipes(initialState, action);
-      expect(newState.recipes[0].fullname).toEqual(action.payload.recipes[0].fullname);
+      expect(newState.recipes[0].fullname)
+        .toEqual(action.payload.recipes[0].fullname);
       done();
     });
   });
@@ -88,7 +90,8 @@ describe('Recipe Reducers', () => {
       done();
     });
 
-    it('displays all review when the action type SHOW_REVIEWS is called', (done) => {
+    it(`displays all review when the action type SHOW_REVIEWS
+    is called`, (done) => {
       const action = {
         type: types.SHOW_REVIEWS,
         payload: mockReviewData.getReviewsResponse,
@@ -101,7 +104,8 @@ describe('Recipe Reducers', () => {
   });
 
   describe('Popular Recipe Reducer Test Cases', () => {
-    it('gets most upvoted recipe when the action type GET_POPULAR_RECIPE is called', (done) => {
+    it(`gets most upvoted recipe when the action type GET_POPULAR_RECIPE
+    is called`, (done) => {
       const action = {
         type: types.GET_POPULAR_RECIPE,
         payload: mockData.getPopularRecipesResponse,

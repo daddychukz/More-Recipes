@@ -8,14 +8,16 @@ describe('Single Recipe Reducers', () => {
     done();
   });
 
-  it('gets a single recipe when action of type GET_SINGLE_RECIPE is called', (done) => {
+  it(`gets a single recipe when action of type GET_SINGLE_RECIPE
+  is called`, (done) => {
     const action = {
       type: types.GET_SINGLE_RECIPE,
       payload: mockData.getSingleRecipeResponse
     };
 
     const newState = recipeReducer({}, action);
-    expect(newState.recipe.recipeId).toEqual('434c71b3-04a1-44bb-abe6-11badced59c4');
+    expect(newState.recipe.recipeId)
+      .toEqual('434c71b3-04a1-44bb-abe6-11badced59c4');
     done();
   });
 });
@@ -45,7 +47,8 @@ describe('Upvote Recipe Reducers', () => {
 });
 
 describe('Downvote Recipe Reducers', () => {
-  it('downvotes a recipe when action of type DOWNVOTE_RECIPE is called', (done) => {
+  it(`downvotes a recipe when action of type DOWNVOTE_RECIPE
+  is called`, (done) => {
     const action = {
       type: types.DOWNVOTE_RECIPE,
       payload: { value: 1 }
@@ -56,7 +59,8 @@ describe('Downvote Recipe Reducers', () => {
     done();
   });
 
-  it('downvotes a recipe when action of type DOWNVOTE_RECIPE is called', (done) => {
+  it(`downvotes a recipe when action of type DOWNVOTE_RECIPE
+  is called`, (done) => {
     const action = {
       type: types.DOWNVOTE_RECIPE,
       payload: { value: 0 }

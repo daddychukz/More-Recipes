@@ -394,6 +394,20 @@ describe('User profile test cases', () => {
 });
 
 describe('Reset user password test cases', () => {
+  it(`should fail to load reset password page with Wrong or
+  expired token`, (done) => {
+    request(app)
+      .post('/api/v1/validate-token')
+      .send({ token: 'token' })
+      .expect(401)
+      .end((error, response) => {
+        expect(response.body.message)
+          .to
+          .equal('You do not have Permission to this Page');
+        done();
+      });
+  });
+
   it(`should fail to send reset password link when an unregistered
   email is supplied`, (done) => {
     request(app)

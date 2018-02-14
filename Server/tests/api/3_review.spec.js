@@ -1,5 +1,6 @@
 import request from 'supertest';
 import chai from 'chai';
+import jwtDecode from 'jwt-decode';
 import app from '../../src/app';
 import models from '../../src/models';
 import { userToken, newUser } from './1_user.spec';
@@ -46,6 +47,22 @@ describe('Reviews Operations', () => {
       .expect(400)
       .end((err, res) => {
         expect(res.body.error.message).to.equal('Invalid Recipe ID');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('it fails to add a review to a recipe with invalid recipeId', (done) => {
+    const decoded = jwtDecode(userToken.token);
+    request(app)
+      .post(`/api/v1/recipes/${decoded.userId}/reviews`)
+      .set('authorization', userToken.token2)
+      .send({
+        review: 'Nice'
+      })
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.error.message).to.equal('Wrong Recipe Id');
         if (err) return done(err);
         done();
       });
