@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import PropTypes from 'prop-types';
+import customHistory from '../common/commonFunctions';
 import * as userActions from '../../actions/userActions';
 
 /**
@@ -21,12 +22,12 @@ class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Email: '',
-      UserName: '',
-      FullName: '',
-      Password: '',
-      ConfirmPassword: '',
-      errors: {},
+      email: '',
+      userName: '',
+      fullName: '',
+      password: '',
+      confirmPassword: '',
+      error: false,
       isLoading: false
     };
     this.onChange = this.onChange.bind(this);
@@ -57,10 +58,16 @@ class SignupForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    if (this.state.Password !== this.state.ConfirmPassword) {
+    if (this.state.password !== this.state.confirmPassword) {
+      this.setState({
+        error: true
+      });
       toastr.error('Passwords do not match');
     } else {
-      this.props.actions.signUp(this.state);
+      this.props.actions.signUp(this.state).then(
+        () => customHistory.push('/recipe-box'),
+        error => toastr.error(error.response.data.error.message)
+      );
     }
   }
 
@@ -76,13 +83,13 @@ class SignupForm extends React.Component {
     return (
       <div>
         {/* SIGNUP CARD  */}
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} id="signup-form">
           <div className="form-group">
             <input
-              value={this.state.FullName}
+              value={this.state.fullName}
               onChange={this.onChange}
               type="text"
-              name="FullName"
+              name="fullName"
               className="form-control form-control-lg"
               placeholder="Full Name"
               required
@@ -90,10 +97,10 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
-              value={this.state.UserName}
+              value={this.state.userName}
               onChange={this.onChange}
               type="text"
-              name="UserName"
+              name="userName"
               className="form-control form-control-lg"
               placeholder="Username"
               required
@@ -101,10 +108,11 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
-              value={this.state.Email}
+              id="email"
+              value={this.state.email}
               onChange={this.onChange}
               type="email"
-              name="Email"
+              name="email"
               className="form-control form-control-lg"
               placeholder="Email"
               required
@@ -112,10 +120,11 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
+              id="password"
               value={this.state.Password}
               onChange={this.onChange}
               type="password"
-              name="Password"
+              name="password"
               className="form-control form-control-lg"
               placeholder="Password"
               required
@@ -123,10 +132,10 @@ class SignupForm extends React.Component {
           </div>
           <div className="form-group">
             <input
-              value={this.state.ConfirmPassword}
+              value={this.state.confirmPassword}
               onChange={this.onChange}
               type="password"
-              name="ConfirmPassword"
+              name="confirmPassword"
               className="form-control form-control-lg"
               placeholder="Confirm Password"
               required
@@ -157,4 +166,5 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(userActions, dispatch),
 });
 
+export { SignupForm as PureSignup };
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

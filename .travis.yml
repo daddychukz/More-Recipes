@@ -1,18 +1,20 @@
 
-language: node_js
+language:
+  - node_js
 node_js:
-- "6"
+  - "6"
 services:
-- postgresql
+  - postgresql
 
 before_script:
   - psql -c 'create database chuksrecipes;' -U postgres
   - psql -c 'create database recipetest;' -U postgres
   - sequelize db:migrate
+  - npm install -g codecov
 
 env:
   global:
     - export NODE_ENV=test
-  
+
 after_success:
-  - npm run coverage
+  - npm run coverage:all

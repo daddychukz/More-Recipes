@@ -24,8 +24,8 @@ class LoginForm extends React.Component {
     super(props);
 
     this.state = {
-      Email: '',
-      Password: '',
+      email: '',
+      password: '',
       errors: {},
       isLoading: false,
       resetEmail: ''
@@ -83,12 +83,12 @@ class LoginForm extends React.Component {
   responseGoogle(response) {
     const { email, name, googleId, imageUrl } = response.profileObj;
     this.props.signUp({
-      FullName: name,
-      UserName: email,
-      Email: email,
-      Password: googleId,
-      ConfirmPassword: googleId,
-      ImageUrl: imageUrl });
+      fullName: name,
+      userName: email,
+      email,
+      password: googleId,
+      confirmPassword: googleId,
+      imageUrl });
   }
 
   /**
@@ -105,7 +105,7 @@ class LoginForm extends React.Component {
   sendResetLink(event) {
     event.preventDefault();
     const userEmail = {
-      Email: this.state.resetEmail
+      email: this.state.resetEmail
     };
     this.props.resetPasswordRequest(userEmail)
       .then(
@@ -129,10 +129,10 @@ class LoginForm extends React.Component {
 
           <div className="form-group">
             <input
-              value={this.state.Email}
+              value={this.state.email}
               onChange={this.onChange}
               type="email"
-              name="Email"
+              name="email"
               className="form-control form-control-lg"
               placeholder="Email"
               required
@@ -140,10 +140,10 @@ class LoginForm extends React.Component {
           </div>
           <div className="form-group">
             <input
-              value={this.state.Password}
+              value={this.state.password}
               onChange={this.onChange}
               type="password"
-              name="Password"
+              name="password"
               className="form-control form-control-lg"
               placeholder="Password"
               required
@@ -164,6 +164,7 @@ class LoginForm extends React.Component {
             <li className="list-inline-item">
               <Link className="btn btn-lg" to="#" title="Google">
                 <GoogleLogin
+                  id="GoogleLogin"
                   style={{ width: '',
                     backgroundColor: '#49A0B5',
                     borderColor: 'transparent',
@@ -234,4 +235,5 @@ const mapDispatchToProps = dispatch => ({
   resetPasswordRequest: email => dispatch(userActions.resetPasswordRequest(email))
 });
 
+export { LoginForm as PureLogin };
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

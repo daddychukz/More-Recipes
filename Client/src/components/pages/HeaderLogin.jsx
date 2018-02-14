@@ -34,7 +34,8 @@ const Header = () => (
                 to="#"
                 className="nav-link"
                 data-toggle="modal"
-                data-target="#contactModal">Contact</Link>
+                data-target="#contactModal"
+              >Contact</Link>
             </li>
           </ul>
         </div>

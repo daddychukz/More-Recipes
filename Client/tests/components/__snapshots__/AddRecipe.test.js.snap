@@ -1,0 +1,395 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add recipe page test suite renders AddRecipe component 1`] = `
+<div>
+  <div>
+    <nav
+      className="navbar navbar-expand-md bg-dark navbar-dark fixed-top"
+    >
+      <div
+        className="container"
+      >
+        <a
+          className="navbar-brand"
+          href="/recipe-box"
+          onClick={[Function]}
+        >
+          <h3
+            id="logo"
+          >
+            More-Recipes
+          </h3>
+        </a>
+        <button
+          className="navbar-toggler"
+          data-target="#navbarCollapse"
+          data-toggle="collapse"
+        >
+          <span
+            className="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          className="collapse navbar-collapse"
+          id="navbarCollapse"
+        >
+          <ul
+            className="navbar-nav ml-auto"
+          >
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link false"
+                href="/recipe-box"
+                id="home"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/add-recipe"
+                id="addRecipe"
+                onClick={[Function]}
+              >
+                Add Recipe
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/my-recipe"
+                id="my-recipe"
+                onClick={[Function]}
+              >
+                My Recipes
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <a
+                className="nav-link"
+                href="/my-favorite"
+                onClick={[Function]}
+              >
+                Favorites
+              </a>
+            </li>
+            <li
+              className="nav-item"
+            >
+              <div
+                className="btn-group open"
+              >
+                <i
+                  aria-hidden="true"
+                  className="fa fa-user-circle fa-2x pull-right"
+                  data-toggle="dropdown"
+                  id="drop-down"
+                />
+                <ul
+                  className="dropdown-menu"
+                >
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/my-profile"
+                      onClick={[Function]}
+                    >
+                      Profile
+                    </a>
+                  </li>
+                  <li
+                    className="divider"
+                  />
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/"
+                      id="logout"
+                      onClick={[Function]}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div
+      className="modal fade text-dark"
+      id="contactModal"
+    >
+      <div
+        className="modal-dialog"
+      >
+        <div
+          className="modal-content"
+        >
+          <div
+            className="modal-header bg-primary"
+          >
+            <h5
+              className="modal-title"
+              id="contactModalTitle"
+              style={
+                Object {
+                  "color": "white",
+                }
+              }
+            >
+              Contact Us
+            </h5>
+          </div>
+          <div
+            className="modal-body"
+          >
+            <form>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="name"
+                >
+                  Name
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className="form-control"
+                  type="email"
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  htmlFor="messager"
+                >
+                  Message
+                </label>
+                <textarea
+                  className="form-control"
+                />
+              </div>
+            </form>
+          </div>
+          <div
+            className="modal-footer"
+          >
+            <button
+              className="btn btn-primary btn-block"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    id="header"
+  />
+  <div
+    className="container"
+  >
+    <nav
+      className="breadcrumb"
+    >
+      <a
+        className="breadcrumb-item"
+        href="#"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+      <span
+        className="breadcrumb-item active"
+      >
+        Recipe
+      </span>
+    </nav>
+  </div>
+  <section>
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-4 d-none d-lg-block"
+        >
+          <div
+            className="list-group mb-3"
+          >
+            <li
+              className="list-group-item active text-center"
+            >
+              <h5
+                id="Fname"
+              />
+            </li>
+            <a
+              className="list-group-item"
+              href="/my-recipe"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-cutlery"
+                id="my-recipe"
+              />
+                My Recipes
+              <span
+                className="badge badge-pill badge-info float-right"
+              >
+                0
+              </span>
+            </a>
+            <a
+              className="list-group-item"
+              href="/my-favorite"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-star"
+                id="my-favorite"
+              />
+                My Favourites
+              <span
+                className="badge badge-pill badge-info float-right"
+                id="favCount"
+              >
+                0
+              </span>
+            </a>
+            <a
+              className="list-group-item"
+              href="/my-profile"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-user"
+                id="my-profile"
+              />
+                My Profile
+            </a>
+          </div>
+          <ul
+            className="list-group mb-3"
+          >
+            <li
+              className="list-group-item active text-center"
+            >
+              <h5>
+                Popular Recipes
+              </h5>
+            </li>
+          </ul>
+        </div>
+        <div
+          className="col-md-12 col-lg-8"
+        >
+          <div>
+            <form
+              id="recipe-form"
+              onSubmit={[Function]}
+            >
+              <div
+                className="form-group"
+              >
+                <label
+                  className="text-dark"
+                  htmlFor="title"
+                >
+                  Recipe Title
+                </label>
+                <input
+                  className="form-control"
+                  id="title"
+                  name="title"
+                  onChange={[Function]}
+                  required={true}
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <label
+                  className="text-dark"
+                  htmlFor="description"
+                >
+                  Recipe Description
+                </label>
+                <textarea
+                  className="form-control"
+                  name="description"
+                  onChange={[Function]}
+                  required={true}
+                  rows="6"
+                  value=""
+                />
+              </div>
+              <div
+                className="form-group"
+              >
+                <div>
+                  <img
+                    src="http://res.cloudinary.com/chuks-andela32/image/upload/c_scale,dpr_auto,h_150,w_200/home_gipmmy.jpg"
+                  />
+                </div>
+                <input
+                  className="form-control-file"
+                  onClick={[Function]}
+                  type="button"
+                  value="Add Image"
+                />
+                <small
+                  className="form-text text-muted"
+                  id="fileHelp"
+                >
+                  Please upload an example image of recipe for better reviews.
+                </small>
+              </div>
+              <button
+                className="btn btn-info"
+                type="submit"
+              >
+                Post Recipe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br />
+</div>
+`;

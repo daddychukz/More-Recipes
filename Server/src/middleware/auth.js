@@ -33,7 +33,7 @@ const Auth = {
         }
       });
     } else {
-      res.status(401).send({ message: 'No token provided' });
+      res.status(401).send({ message: 'Unauthorized' });
     }
   },
 

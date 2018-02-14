@@ -8,7 +8,7 @@ import RecipeDetail from '../components/pages/RecipeDetail';
 import MyRecipe from '../components/pages/MyRecipe';
 import MyFavorite from '../components/pages/MyFavorite';
 import MyProfile from '../components/pages/MyProfile';
-import ResetPassword from '../components/pages/ResetPassword';
+import Resetpassword from '../components/pages/ResetPassword';
 import requireAuth from '../utils/requireAuth';
 import noAuth from '../utils/noAuth';
 
@@ -36,7 +36,7 @@ const myRoutes = () => (
       <Route
         path="/reset-password/:token"
         exact
-        component={noAuth(ResetPassword)}
+        component={noAuth(Resetpassword)}
       />
       <Route component={NotFound} />
     </Switch>

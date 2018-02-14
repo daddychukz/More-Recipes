@@ -53,8 +53,7 @@ export const getUserFavorite = (userId) => {
 export const searchUserFavorite = (limit, offset, searchString) => {
   return (dispatch) => {
     return axios.get(
-      `/api/v1/search/favorites?limit=${limit}&offset=${offset}
-      &searchString=${searchString}`
+      `/api/v1/search/favorites?limit=${limit}&offset=${offset}&searchString=${searchString}`
     )
       .then((response) => {
         dispatch(searchUserFavoriteAction(response.data));

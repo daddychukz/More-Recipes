@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Authenticate Protected Routes test suite Redirects Authenticated user from login page to recipe box 1`] = `
+<Home
+  history={
+    Object {
+      "push": [MockFunction] {
+        "calls": Array [
+          Array [
+            "/",
+          ],
+          Array [
+            "/recipe-box",
+          ],
+        ],
+      },
+    }
+  }
+  isAuthenticated={true}
+/>
+`;
+
+exports[`Component: Authenticate Protected Routes test suite Redirects user to loginpage with invalid token 1`] = `
+<Home
+  history={
+    Object {
+      "push": [MockFunction] {
+        "calls": Array [
+          Array [
+            "/",
+          ],
+        ],
+      },
+    }
+  }
+  isAuthenticated={false}
+/>
+`;

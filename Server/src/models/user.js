@@ -78,30 +78,47 @@ export default (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (newUser) => {
-        newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
+        newUser.password = bcrypt
+          .hashSync(newUser.password, bcrypt.genSaltSync(8));
       },
       afterUpdate: (newUser) => {
-        newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8));
+        newUser.password = bcrypt
+          .hashSync(newUser.password, bcrypt.genSaltSync(8));
       }
     }
   });
   User.associate = (models) => {
     // associations can be defined here
-    User.hasMany(models.Recipe, { foreignKey: 'userId', onDelete: 'SET NULL' });
-    User.hasMany(models.Review, { foreignKey: 'userId', onDelete: 'SET NULL' });
-    User.hasMany(models.Favorite, { foreignKey: 'userId', onDelete: 'SET NULL' });
-    User.hasMany(models.Vote, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    User.hasMany(models.Recipe, {
+      foreignKey: 'userId',
+      onDelete: 'SET NULL'
+    });
+    User.hasMany(models.Review, {
+      foreignKey: 'userId',
+      onDelete: 'SET NULL'
+    });
+    User.hasMany(models.Favorite, {
+      foreignKey: 'userId',
+      onDelete: 'SET NULL'
+    });
+    User.hasMany(models.Vote, {
+      foreignKey: 'userId',
+      onDelete: 'SET NULL'
+    });
   };
 
-  User.prototype.generateResetPasswordLink = function generateResetPasswordLink() {
-    return `${process.env.HOST}/reset-password/${this.generateResetPasswordToken().replace(/\./g, '-io')}`;
-  };
+  User.prototype.generateResetPasswordLink =
+    function generateResetPasswordLink() {
+      return `${process.env.HOST}/reset-password/
+      ${this.generateResetPasswordToken().replace(/\./g, '-io')}`;
+    };
 
-  User.prototype.generateResetPasswordToken = function generateResetPasswordToken() {
-    return jwt.sign({
-      userId: this.userId
-    }, process.env.SECRET, { expiresIn: '1h' });
-  };
+  User.prototype.generateResetPasswordToken =
+    function generateResetPasswordToken() {
+      return jwt.sign({
+        userId: this.userId
+      }, process.env.SECRET, { expiresIn: '1h' });
+    };
 
   return User;
 };

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="27">
+
+  <testsuite name="hometest"
+    errors="0" failures="0" hostname="" id="" package="hometest" skipped="0"
+    tests="27" time="155.8" timestamp="Tue, 13 Feb 2018 04:04:05 GMT">
+  
+    <testcase name="Display homepage and ensure all element are available" classname="hometest" time="6.519" assertions="8">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it should not signin a user who has not registered" classname="hometest" time="4.763" assertions="7">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Does not sign user up without filling appropriate fields" classname="hometest" time="5.143" assertions="10">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user gets error when signup field is not properly field" classname="hometest" time="4.843" assertions="11">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it registers a user and redirect to recipe box" classname="hometest" time="5.792" assertions="10">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="cannot add recipe without Title or Description" classname="hometest" time="5.448" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a recipe to recipe box" classname="hometest" time="5.809" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user cannot add a recipe to recipe box with same title of a recipe he already added" classname="hometest" time="5.594" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a second recipe to recipe box" classname="hometest" time="5.576" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a third recipe to recipe box" classname="hometest" time="6.449" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a fourth recipe to recipe box" classname="hometest" time="6.500" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a fifth recipe to recipe box" classname="hometest" time="6.483" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add a sixthrecipe to recipe box" classname="hometest" time="6.514" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can search for a recipe in recipe box" classname="hometest" time="3.244" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can view a recipe" classname="hometest" time="2.186" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can upvote a recipe" classname="hometest" time="3.166" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can downvote a recipe" classname="hometest" time="3.163" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can remove downvote" classname="hometest" time="3.129" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can favorite a recipe" classname="hometest" time="5.444" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can add review to a recipe" classname="hometest" time="8.366" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can remove a recipe from favorites" classname="hometest" time="4.293" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can edit a recipe he/she created" classname="hometest" time="7.428" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can delete a recipe he/she created" classname="hometest" time="4.665" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can edit his/her profile" classname="hometest" time="10.54" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user cannot change his/her password with wrong oldpassword" classname="hometest" time="9.594" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user can change his/her password" classname="hometest" time="9.502" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="it logs out a user" classname="hometest" time="5.636" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

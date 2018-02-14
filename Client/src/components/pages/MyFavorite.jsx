@@ -25,7 +25,7 @@ class MyFavoriteRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Category: 'Soup',
+      category: 'Soup',
       isLoading: true,
       isSearching: false,
       searchString: ''
@@ -106,7 +106,7 @@ class MyFavoriteRecipe extends React.Component {
   deleteRecipe(recipe) {
     const recipeId = recipe.recipeId;
     const category = {
-      Category: this.state.Category
+      category: this.state.category
     };
     return () => {
       this.props.deleteFavorite(recipeId, category).then(
@@ -185,6 +185,7 @@ class MyFavoriteRecipe extends React.Component {
                                   <td>{favorites.category}</td>
                                   <td>{newDate}</td>
                                   <td><Link
+                                    id="deleteFav"
                                     onClick={this.deleteRecipe(favorites)}
                                     to="#"
                                     title="Delete"
@@ -240,4 +241,5 @@ const mapDispatchToProps = dispatch => ({
     searchUserFavorite(limit, offset, searchString))
 });
 
+export { MyFavoriteRecipe as PureFavorite };
 export default connect(mapStateToProps, mapDispatchToProps)(MyFavoriteRecipe);

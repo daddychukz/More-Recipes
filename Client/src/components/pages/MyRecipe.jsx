@@ -26,11 +26,11 @@ class MyRecipe extends React.Component {
     super(props);
     this.state = {
       recipeDetail: {},
-      Title: '',
-      Description: '',
+      title: '',
+      description: '',
       imageUrl: '',
       publicId: '',
-      Category: 'Soup',
+      category: 'Soup',
       currentPage: 1,
       pagination: {
         totalPages: 1,
@@ -47,6 +47,7 @@ class MyRecipe extends React.Component {
     this.deleteRecipe = this.deleteRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
     this.onPageChange = this.onPageChange.bind(this);
+    this.openDeleteModal = this.openDeleteModal.bind(this);
   }
 
   /**
@@ -65,12 +66,14 @@ class MyRecipe extends React.Component {
           this.setState({
             isLoading: false,
             pagination: {
-              ...this.state.pagination,
+              boundaryPagesRange: 1,
+              siblingPagesRange: 2,
+              limit: 5,
+              offset: 0,
               totalPages: this.props.recipes.pagination.pageCount,
             }
           });
-        })
-      .catch(() => {});
+        });
   }
 
   /**
@@ -87,8 +90,8 @@ class MyRecipe extends React.Component {
     const recipe = {
       imageUrl: this.state.imageUrl,
       publicId: this.state.publicId,
-      Title: this.state.Title,
-      Description: this.state.Description,
+      title: this.state.title,
+      description: this.state.description,
     };
     this.props.updateRecipe(recipeID, recipe).then(
       () => {
@@ -149,10 +152,26 @@ class MyRecipe extends React.Component {
     return () => this.setState({
       recipeDetail: recipe,
       publicId: recipe.publicId,
-      Title: recipe.title,
-      Description: recipe.description,
+      title: recipe.title,
+      description: recipe.description,
       recipeId: recipe.recipeId
     });
+  }
+
+    /**
+   * @param {any} recipe
+   *
+   * @memberof MyRecipe
+   *
+   * @returns {object} recipes
+   */
+  openDeleteModal(recipe) {
+    return () => {
+      this.setState({
+        recipeDetail: recipe
+      });
+      $('#delete-recipe').modal('show');
+    };
   }
 
   /**
@@ -188,7 +207,10 @@ class MyRecipe extends React.Component {
         () => {
           toastr.success(`Recipe (${recipe.title}) deleted successfully`);
           this.setState({ pagination: {
-            ...this.state.pagination,
+            boundaryPagesRange: 1,
+            siblingPagesRange: 2,
+            limit: 5,
+            offset: 0,
             totalPages: this.props.recipes.pagination.pageCount,
           }
           });
@@ -240,7 +262,7 @@ class MyRecipe extends React.Component {
                         <tr>
                           <th>Title</th>
                           <th>Created</th>
-                          <th />
+                          <th>Action</th>
                         </tr>
                         {
                           !isEmpty(this.props.recipes.recipes) ?
@@ -255,7 +277,10 @@ class MyRecipe extends React.Component {
                                     maxWidth: '160px',
                                     whiteSpace: 'normal' }}
                                   >
-                                    <Link to={`/recipe/${recipe.recipeId}`}>
+                                    <Link
+                                      id="title"
+                                      to={`/recipe/${recipe.recipeId}`}
+                                    >
                                       {recipe.title}
                                     </Link>
                                   </td>
@@ -274,10 +299,9 @@ class MyRecipe extends React.Component {
                                       />&nbsp;
                                     </Link>
                                     <Link
+                                      onClick={this.openDeleteModal(recipe)}
                                       to="#"
                                       title="Delete"
-                                      data-toggle="modal"
-                                      data-target="#delete-recipe"
                                     >
                                       <i
                                         className="fa fa-trash text-danger"
@@ -285,15 +309,17 @@ class MyRecipe extends React.Component {
                                       />
                                     </Link>
                                     <EditRecipeModal
-                                      Title={this.state.Title}
+                                      title={this.state.title}
                                       onChange={this.onChange}
-                                      Description={this.state.Description}
+                                      description={this.state.description}
                                       publicId={this.state.publicId}
                                       uploadWidget={this.uploadWidget}
                                       onSubmit={this.onSubmit}
                                     />
                                     <DeleteRecipeModal
-                                      onClick={this.deleteRecipe(recipe)}
+                                      onClick={this.deleteRecipe(
+                                        this.state.recipeDetail
+                                      )}
                                     />
                                   </td>
                                 </tr>
@@ -312,7 +338,7 @@ class MyRecipe extends React.Component {
                 {
                   this.props.recipes.pagination.totalCount > 5 ?
                     <Pagination
-                      pagination={{ ...this.state.pagination }}
+                      pagination={this.state.pagination}
                       currentPage={this.state.currentPage}
                       onChange={this.onPageChange}
                     /> :
@@ -357,4 +383,5 @@ const mapDispatchToProps = dispatch => ({
   )
 });
 
+export { MyRecipe as PureUserRecipe };
 export default connect(mapStateToProps, mapDispatchToProps)(MyRecipe);

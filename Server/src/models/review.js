@@ -45,8 +45,14 @@ export default (sequelize, DataTypes) => {
   });
   Review.associate = (models) => {
     // associations can be defined here
-    Review.belongsTo(models.Recipe, { foreignKey: 'recipeId', onDelete: 'SET NULL' });
-    Review.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL' });
+    Review.belongsTo(models.Recipe, {
+      foreignKey: 'recipeId',
+      onDelete: 'SET NULL'
+    });
+    Review.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'SET NULL'
+    });
   };
   return Review;
 };

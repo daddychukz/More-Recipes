@@ -24,7 +24,7 @@ describe('User Favorite Operations', () => {
         recipeId: recipe.recipe3.recipeId,
         userId: newUser.user.userId,
       })
-      .expect(406)
+      .expect(400)
       .end((error, response) => {
         expect(response.body.message)
           .to.equal('Category Field should not be Empty');
@@ -40,7 +40,7 @@ describe('User Favorite Operations', () => {
       .send({
         recipeId: recipe.recipe3.recipeId,
         userId: newUser.user.userId,
-        Category: 'Soups'
+        category: 'Soups'
       })
       .expect(404)
       .end((err, response) => {
@@ -57,7 +57,7 @@ describe('User Favorite Operations', () => {
       .send({
         recipeId: recipe.recipe3.recipeId,
         userId: newUser.user.userId,
-        Category: 'Soups'
+        category: 'Soups'
       })
       .expect(201)
       .end((err, response) => {
@@ -75,13 +75,12 @@ describe('User Favorite Operations', () => {
       .send({
         recipeId: recipe.recipe3.recipeId,
         userId: newUser.user.userId,
-        Category: 'Lunch'
+        category: 'Lunch'
       })
       .expect(201)
       .end((err, response) => {
         expect(response.body.message)
           .to.equal('Recipe added to your favorites');
-        if (err) return done(err);
         done();
       });
   });
@@ -93,13 +92,12 @@ describe('User Favorite Operations', () => {
       .send({
         recipeId: recipe.recipe3.recipeId,
         userId: newUser.user.userId,
-        Category: 'Soups'
+        category: 'Soups'
       })
       .expect(200)
       .end((err, response) => {
         expect(response.body.message)
           .to.equal('Recipe removed from your favorites');
-        if (err) return done(err);
         done();
       });
   });
@@ -109,8 +107,7 @@ describe('User Favorite Operations', () => {
       .get(`/api/v1/users/${newUser.user.userId}/recipes`)
       .set('authorization', userToken.token)
       .expect(200)
-      .end((err) => {
-        if (err) return done(err);
+      .end(() => {
         done();
       });
   });
@@ -124,7 +121,6 @@ describe('User Favorite Operations', () => {
       .end((err, response) => {
         expect(response.body.message)
           .to.equal('You do not have Permission to this Page');
-        if (err) return done(err);
         done();
       });
   });
@@ -134,9 +130,9 @@ describe('User Favorite Operations', () => {
     request(app)
       .get(`/api/v1/users/${newUser.user.userId}/recipes`)
       .set('authorization', userToken.token2)
-      .expect(204)
-      .end((err) => {
-        if (err) return done(err);
+      .expect(404)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('No recipe favorited');
         done();
       });
   });
@@ -148,7 +144,6 @@ describe('User Favorite Operations', () => {
       .expect(200)
       .end((err, response) => {
         expect(response.body.searchResult[0].Recipe.title).to.equal('Yam');
-        if (err) return done(err);
         done();
       });
   });
@@ -160,7 +155,6 @@ describe('User Favorite Operations', () => {
       .expect(404)
       .end((err, response) => {
         expect(response.body.message).to.equal('Recipe not Found!');
-        if (err) return done(err);
         done();
       });
   });

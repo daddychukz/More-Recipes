@@ -4,25 +4,25 @@
 *   Signup:
 *     type: object
 *     properties:
-*       FullName:
+*       fullName:
 *         type: string
-*       Email:
+*       email:
 *         type: string
 *         format: email
-*       UserName:
+*       userName:
 *         type: string
-*       Password:
+*       password:
 *         type: string
 *         format: password
-*       ConfirmPassword:
+*       confirmPassword:
 *         type: string
 *         format: password
 *     example:
-*       FullName: Adam Eve
-*       Email: example@example.com
-*       UserName: username
-*       Password: password
-*       ConfirmPassword: password
+*       fullName: Adam Eve
+*       email: example@example.com
+*       userName: username
+*       password: password
+*       confirmPassword: password
 */
 
 /**
@@ -30,15 +30,15 @@
 * definitions:
 *   Signin:
 *     properties:
-*       Email:
+*       email:
 *         type: string
 *         format: email
-*       Password:
+*       password:
 *         type: string
 *         format: password
 *     example:
-*       Email: example@example.com
-*       Password: password
+*       email: example@example.com
+*       password: password
 */
 
 /**
@@ -46,13 +46,13 @@
 * definitions:
 *   Recipes:
 *     properties:
-*       Title:
+*       title:
 *         type: string
-*       Description:
+*       description:
 *         type: string
 *     example:
-*       Title: Jollof Rice
-*       Description: lorem ipsum bla bla bla
+*       title: Jollof Rice
+*       description: lorem ipsum bla bla bla
 */
 
 /**
@@ -60,10 +60,10 @@
 * definitions:
 *   Favorites:
 *     properties:
-*       Category:
+*       category:
 *         type: string
 *     example:
-*       Category: Lunch
+*       category: Lunch
 */
 
 /**
@@ -71,17 +71,17 @@
 * definitions:
 *   UserPass:
 *     properties:
-*       OldPassword:
+*       oldPassword:
 *         type: string
-*       Password:
+*       password:
 *         type: string
 *         format: password
-*       UserId:
+*       userId:
 *         type: string
 *     example:
-*       OldPassword: password
-*       Password: password
-*       UserId: id
+*       oldPassword: password
+*       password: password
+*       userId: id
 */
 
 /**
@@ -89,13 +89,13 @@
 * definitions:
 *   User:
 *     properties:
-*       UserName:
+*       userName:
 *         type: string
-*       Address:
+*       address:
 *         type: string
 *     example:
-*       UserName: Enter name
-*       Address: Enter address
+*       userName: Enter name
+*       address: Enter address
 */
 
 /**
@@ -103,10 +103,10 @@
 * definitions:
 *   Reviews:
 *     properties:
-*       Review:
+*       review:
 *         type: string
 *     example:
-*       Review: Cool Stuff!
+*       review: Cool Stuff!
 */
 
 // Register a new User
@@ -481,7 +481,7 @@
 *   post:
 *     tags:
 *       - Reviews
-*     description: Post a Review on a Recipe
+*     description: Post a review on a Recipe
 *     produces:
 *       - application/json
 *     security:
@@ -492,8 +492,8 @@
 *         in: path
 *         required: true
 *         type: string
-*       - name: Post Review
-*         description: Click on the example to the right and enter new Review details
+*       - name: Post review
+*         description: Click on the example to the right and enter new review details
 *         in: body
 *         required: true
 *         type: string
@@ -553,8 +553,8 @@
 *         in: path
 *         required: true
 *         type: string
-*       - name: Specify Recipe Category
-*         description: Click on the example to the right and enter new Review details
+*       - name: Specify Recipe category
+*         description: Click on the example to the right and enter new review details
 *         in: body
 *         required: true
 *         type: string

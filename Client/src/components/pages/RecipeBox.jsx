@@ -55,7 +55,10 @@ class RecipeBox extends React.Component {
         recipes: this.props.allRecipe.recipes,
         isLoading: false,
         pagination: {
-          ...this.state.pagination,
+          boundaryPagesRange: 1,
+          siblingPagesRange: 2,
+          limit: 4,
+          offset: 0,
           totalPages: this.props.allRecipe.pagination.pageCount,
         }
       });
@@ -112,7 +115,10 @@ class RecipeBox extends React.Component {
           this.setState({
             isLoading: false,
             pagination: {
-              ...this.state.pagination,
+              boundaryPagesRange: 1,
+              siblingPagesRange: 2,
+              limit: 4,
+              offset: 0,
               totalPages: this.props.allRecipe.pagination.pageCount,
             }
           });
@@ -155,6 +161,7 @@ class RecipeBox extends React.Component {
                 {/* RECIPE CATALOG  */}
                 <div className="col-md-12 col-lg-8" id="display">
                   <input
+                    id="search"
                     value={this.state.searchString}
                     onInput={this.onInputChange}
                     className="form-control"
@@ -188,7 +195,10 @@ class RecipeBox extends React.Component {
                                     {newDate}
                                   </small>
                                   <h3 style={{ wordWrap: 'break-word' }}>
-                                    <Link to={`/recipe/${allRecipes.recipeId}`}>
+                                    <Link
+                                      id="recipe-title"
+                                      to={`/recipe/${allRecipes.recipeId}`}
+                                    >
                                       {allRecipes.title}
                                     </Link>
                                   </h3>
@@ -208,7 +218,7 @@ class RecipeBox extends React.Component {
                   {
                     this.props.allRecipe.pagination.totalCount > 4 ?
                       <Pagination
-                        pagination={{ ...this.state.pagination }}
+                        pagination={this.state.pagination}
                         currentPage={this.state.currentPage}
                         onChange={this.onPageChange}
                       /> :
@@ -218,8 +228,6 @@ class RecipeBox extends React.Component {
               </div>
             </div>
           </section>
-
-          {/* <Footer /> */}
         </div>
       );
     }
@@ -275,4 +283,5 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
+export { RecipeBox as PureRecipeBox };
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeBox);

@@ -6,7 +6,7 @@ import errorHandling from './HandleErrors/errorHandling';
 
 require('dotenv').config();
 
-const userModel = db.User;
+const UserModel = db.User;
 const errors = {};
 
 const Secret = process.env.SECRET;
@@ -26,35 +26,35 @@ class User {
    */
   static signUp(request, response) {
     const {
-      Email, UserName, FullName, Password, ConfirmPassword, ImageUrl
+      email, userName, fullName, password, confirmPassword, imageUrl
     } = request.body;
-    if (!Email || Email.trim().length === 0) {
+    if (!email || email.trim().length === 0) {
       errors.error = { message: 'Email Field should not be Empty' };
       return response.status(406).json(errors);
-    } if (!UserName || UserName.trim().length === 0) {
+    } if (!userName || userName.trim().length === 0) {
       errors.error = { message: 'Username Field should not be Empty' };
       return response.status(406).json(errors);
-    } if (!FullName || FullName.trim().length === 0) {
+    } if (!fullName || fullName.trim().length === 0) {
       errors.error = { message: 'Fullname Field should not be Empty' };
       return response.status(406).json(errors);
-    } if (!Password) {
+    } if (!password) {
       errors.error = { message: 'Password Field should not be Empty' };
       return response.status(406).json(errors);
-    } if (Password !== ConfirmPassword) {
+    } if (password !== confirmPassword) {
       errors.error = { message: 'Password Mismatch!' };
       return response.status(406).json(errors);
     }
-    userModel
+    UserModel
       .create({
-        email: Email,
-        fullname: FullName,
-        username: UserName,
-        password: Password,
-        confirmPassword: ConfirmPassword,
-        imageUrl: ImageUrl
+        email,
+        fullname: fullName,
+        username: userName,
+        password,
+        confirmPassword,
+        imageUrl
       })
       .then((user) => {
-        const { fullname, username, email, userId, imageUrl, publicUrl } = user;
+        const { fullname, username, userId, imageUrl, publicUrl } = user;
         if (user) {
           const token = jwt.sign({
             username,
@@ -64,8 +64,8 @@ class User {
             publicUrl
           }, Secret, { expiresIn: '24h' });
           response.status(201).send({
-            Message: 'User created successfully',
-            User: {
+            message: 'User created successfully',
+            user: {
               fullname,
               username,
               email,
@@ -88,19 +88,19 @@ class User {
    * @returns {object} user
    */
   static signIn(request, response) {
-    const { Email, Password } = request.body;
-    if (!Email || Email.trim().length === 0) {
+    const { email, password } = request.body;
+    if (!email || email.trim().length === 0) {
       return response.status(406).json({
         message: 'Email Field should not be Empty',
       });
-    } else if (!Password) {
+    } else if (!password) {
       return response.status(406).json({
         message: 'Password Field should not be Empty',
       });
     }
-    userModel.findOne({
+    UserModel.findOne({
       where: {
-        email: Email
+        email
       },
     })
       .then((user) => {
@@ -112,8 +112,8 @@ class User {
           publicUrl
         } = user;
         if (user) {
-          bcrypt.compare(Password, user.password, (error, password) => {
-            if (password) {
+          bcrypt.compare(password, user.password, (error, decoded) => {
+            if (decoded) {
               const token = jwt.sign({
                 username,
                 userId,
@@ -146,7 +146,7 @@ class User {
    * @returns {object} user details
    */
   static getUserProfile(request, response) {
-    userModel.findOne({
+    UserModel.findOne({
       where: {
         userId: request.decoded.userId
       },
@@ -173,9 +173,9 @@ class User {
    * @returns {void}
    */
   static resetPasswordRequest(request, response) {
-    userModel.findOne({
+    UserModel.findOne({
       where: {
-        email: request.body.Email
+        email: request.body.email
       },
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'password']
@@ -198,22 +198,23 @@ class User {
   /**
    * @description updates user password
    *
-   * @param {any} Password
+   * @param {any} password
    * @param {any} userId
    * @param {any} response HTTP response object
    *
    * @returns {object} response
    */
-  static updatePassword(Password, userId, response) {
+  static updatePassword(password, userId, response) {
     const updateRecord = {};
-    userModel.findOne({
+    UserModel.findOne({
       where: {
         userId
       }
     }).then((userInfo) => {
       if (userInfo) {
-        if (Password) {
-          updateRecord.password = bcrypt.hashSync(Password, bcrypt.genSaltSync(8));
+        if (password) {
+          updateRecord.password = bcrypt
+            .hashSync(password, bcrypt.genSaltSync(8));
           userInfo.update(updateRecord)
             .then(() => response.status(200).json({
               message: 'Password Successfuly Updated'
@@ -235,32 +236,32 @@ class User {
    */
   static resetPassword(request, response) {
     const {
-      Password, Token, OldPassword, UserId
+      password, token, oldPassword, userId
     } = request.body;
-    if (Token) {
-      jwt.verify(Token, process.env.SECRET, (error, decoded) => {
+    if (token) {
+      jwt.verify(token, process.env.SECRET, (error, decoded) => {
         if (error) {
-          response.status(401).json({ message: 'Invalid Token' });
+          response.status(401).json({ message: 'Unauthorized' });
         } else {
-          User.updatePassword(Password, decoded.userId, response);
+          User.updatePassword(password, decoded.userId, response);
         }
       });
     } else {
-      userModel.findOne({
+      UserModel.findOne({
         where: {
-          userId: UserId
+          userId
         },
       })
         .then((user) => {
-          bcrypt.compare(OldPassword, user.password, (error, password) => {
-            if (password) {
-              User.updatePassword(Password, UserId, response);
+          bcrypt.compare(oldPassword, user.password, (error, decoded) => {
+            if (decoded) {
+              User.updatePassword(password, userId, response);
             } else {
               response.status(409).send({ message: 'Incorrect User Password' });
             }
           });
         }).catch(() =>
-          response.status(401).json({ message: 'Invalid Token' }));
+          response.status(401).json({ message: 'Unauthorized' }));
     }
   }
 
@@ -275,47 +276,48 @@ class User {
   static updateUserProfile(request, response) {
     const updateRecord = {};
     const {
-      FullName,
-      About,
-      UserName,
-      Address,
-      Phone,
-      Hobbies,
-      ImageUrl,
-      PublicId
+      fullName,
+      about,
+      userName,
+      address,
+      phone,
+      hobbies,
+      imageUrl,
+      publicId
     } = request.body;
-    userModel.findOne({
+    UserModel.findOne({
       where: {
         userId: request.decoded.userId
       },
     }).then((userInfo) => {
-      if (FullName) {
-        updateRecord.fullname = FullName;
+      if (fullName) {
+        updateRecord.fullname = fullName;
       }
-      if (About) {
-        updateRecord.about = About;
+      if (about) {
+        updateRecord.about = about;
       }
-      if (UserName) {
-        updateRecord.username = UserName;
+      if (userName) {
+        updateRecord.username = userName;
       }
-      if (Address) {
-        updateRecord.address = Address;
+      if (address) {
+        updateRecord.address = address;
       }
-      if (Phone) {
-        updateRecord.phone = Phone;
+      if (phone) {
+        updateRecord.phone = phone;
       }
-      if (Hobbies) {
-        updateRecord.hobbies = Hobbies;
+      if (hobbies) {
+        updateRecord.hobbies = hobbies;
       }
-      if (ImageUrl) {
-        updateRecord.imageUrl = ImageUrl;
+      if (imageUrl) {
+        updateRecord.imageUrl = imageUrl;
       }
-      if (PublicId) {
-        updateRecord.publicUrl = PublicId;
+      if (publicId) {
+        updateRecord.publicUrl = publicId;
       }
       userInfo.update(updateRecord)
         .then((updatedRecord) => {
           const {
+            userId,
             fullname,
             about,
             username,
@@ -327,6 +329,7 @@ class User {
             email
           } = updatedRecord;
           response.status(202).send({
+            userId,
             fullname,
             about,
             username,

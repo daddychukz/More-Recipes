@@ -22,8 +22,9 @@ class ResetPasswordForm extends React.Component {
     super(props);
     this.state = {
       token: this.props.token,
-      Password: '',
-      ConfirmPassword: ''
+      password: '',
+      confirmPassword: '',
+      error: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -54,11 +55,14 @@ class ResetPasswordForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const userData = {
-      Token: this.state.token,
-      Password: this.state.Password,
-      ConfirmPassword: this.state.ConfirmPassword
+      token: this.state.token,
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword
     };
-    if (this.state.Password !== this.state.ConfirmPassword) {
+    if (this.state.password !== this.state.confirmPassword) {
+      this.setState({
+        error: true
+      });
       toastr.error('Passwords do not match');
     } else {
       this.props.resetPassword(userData).then(
@@ -86,7 +90,7 @@ class ResetPasswordForm extends React.Component {
               value={this.state.Password}
               onChange={this.onChange}
               type="password"
-              name="Password"
+              name="password"
               className="form-control"
               required
             />
@@ -99,7 +103,7 @@ class ResetPasswordForm extends React.Component {
               value={this.state.ConfirmPassword}
               onChange={this.onChange}
               type="password"
-              name="ConfirmPassword"
+              name="confirmPassword"
               className="form-control"
               required
             />
@@ -127,4 +131,5 @@ const mapDispatchToProps = dispatch => ({
   resetPassword: userData => dispatch(userActions.resetPassword(userData))
 });
 
+export { ResetPasswordForm as ResetPassword };
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm);

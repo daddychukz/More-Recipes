@@ -32,8 +32,8 @@ class RecipeDetail extends React.Component {
       upvote: 'fa fa-2x fa-thumbs-o-up',
       downvote: 'fa fa-2x fa-thumbs-o-down',
       favoriteIcon: 'fa fa-2x fa-star-o',
-      Review: '',
-      Category: '',
+      review: '',
+      category: '',
       selectCategory: '',
       upvoteCount: 0,
       downvoteCount: 0,
@@ -207,12 +207,12 @@ class RecipeDetail extends React.Component {
     event.preventDefault();
     const recipeId = this.props.match.params.recipeId;
     const review = {
-      Review: this.state.Review
+      review: this.state.review
     };
     this.props.reviewRecipe(recipeId, review)
       .then(
         () => {
-          this.setState({ Review: '' });
+          this.setState({ review: '' });
         }
       );
   }
@@ -244,7 +244,7 @@ class RecipeDetail extends React.Component {
       this.setState({
         selectCategory: uniqueCategories[0],
         isDisabled: false,
-        Category: '' });
+        category: '' });
 
       $('#category').modal('show');
     }
@@ -264,8 +264,8 @@ class RecipeDetail extends React.Component {
       recipe.userId === this.props.user.userId;
 
     const category = {
-      Category: this.state.Category ?
-        this.state.Category : this.state.selectCategory
+      category: this.state.category ?
+        this.state.category : this.state.selectCategory
     };
     this.props.addFavorite(recipeId, category).then(
       () => {
@@ -413,7 +413,10 @@ class RecipeDetail extends React.Component {
                             {this.props.singleRecipe.fullname}
                           </h6>
                           <br />
-                          <p style={{ wordWrap: 'break-word' }}>
+                          <p
+                            id="desc"
+                            style={{ wordWrap: 'break-word' }}
+                          >
                             {this.props.singleRecipe.description}</p>
                         </div>
                       }
@@ -422,6 +425,7 @@ class RecipeDetail extends React.Component {
                       <ul className="list-inline">
                         <li className="list-inline-item">
                           <Link
+                            id="upvote"
                             className="btn btn-sm"
                             to="#"
                             onClick={this.upvote}
@@ -433,6 +437,7 @@ class RecipeDetail extends React.Component {
                                             |
                         <li className="list-inline-item">
                           <Link
+                            id="downvote"
                             className="btn btn-sm"
                             to="#"
                             onClick={this.downVote}
@@ -452,12 +457,16 @@ class RecipeDetail extends React.Component {
 
                         <li className="list-inline-item float-right">
                           <Link
+                            id="favorite"
                             onClick={this.openModal}
                             className="btn btn-sm"
                             to="#"
                             title="Favorite"
                           >
-                            <i className={this.state.favoriteIcon} />
+                            <i
+                              id="favIcon"
+                              className={this.state.favoriteIcon}
+                            />
                           </Link></li>
                       </ul>
                       <br />
@@ -465,9 +474,9 @@ class RecipeDetail extends React.Component {
                         <h3>Post a Review</h3>
                         <div className="form-group">
                           <textarea
-                            value={this.state.Review}
+                            value={this.state.review}
                             onChange={this.onChange}
-                            name="Review"
+                            name="review"
                             className="form-control"
                             rows="6"
                             required
@@ -505,12 +514,12 @@ class RecipeDetail extends React.Component {
                                   </Image>
                                 </div>
                                 <div className="p-2 align-self-end">
-                                  <h5><a to="#">{reviews.User.fullname}</a>
+                                  <h5 id="fullname">{reviews.User.fullname}
                                   </h5>
                                   <small className="text-muted">
                                     {reviews.createdAt}
                                   </small>
-                                  <p>{reviews.review}</p>
+                                  <p id="user-review">{reviews.review}</p>
                                 </div>
                               </div>
                             </div>
@@ -533,7 +542,7 @@ class RecipeDetail extends React.Component {
           getUniqueCategories={this.getUniqueCategories()}
           onInput={this.onInput}
           onClick={this.favoriteRecipe}
-          Category={this.state.Category}
+          category={this.state.category}
         />
       </div>
     );
@@ -593,4 +602,5 @@ const mapDispatchToProps = dispatch => ({
   getFavorite: Id => dispatch(favoriteActions.getUserFavorite(Id))
 });
 
+export { RecipeDetail as PureRecipeDetail };
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetail);

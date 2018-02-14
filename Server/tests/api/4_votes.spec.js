@@ -11,7 +11,7 @@ describe('test cases for upvoting a recipe', () => {
     request(app)
       .post('/api/v1/recipes/98c58f26-0423-4276-b70f-80364abe5were/upvote')
       .set('authorization', userToken.token)
-      .expect(406)
+      .expect(400)
       .end((error, response) => {
         expect(response.body.error.message).to.equal('Invalid Recipe ID');
         if (error) done(error);
@@ -94,7 +94,7 @@ describe('test cases for downvoting a recipe', () => {
     request(app)
       .post('/api/v1/recipes/98c58f26-0423-4276-b70f-80364abe5were/downvote')
       .set('authorization', userToken.token)
-      .expect(406)
+      .expect(400)
       .end((error, response) => {
         expect(response.body.error.message).to.equal('Invalid Recipe ID');
         if (error) done(error);

@@ -14,7 +14,7 @@ const favoriteRecipeModal = (props) => {
   const {
     onClick,
     onInput,
-    Category,
+    category,
     getUniqueCategories,
     value,
     onChange,
@@ -53,9 +53,9 @@ const favoriteRecipeModal = (props) => {
               <div className="form-group">
                 <input
                   onInput={onInput}
-                  value={Category}
+                  value={category}
                   type="text"
-                  name="Category"
+                  name="category"
                   className="form-control form-control-lg"
                   placeholder="or enter new category"
                   required
@@ -83,7 +83,7 @@ favoriteRecipeModal.defaultProps = {
 favoriteRecipeModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   onInput: PropTypes.func.isRequired,
-  Category: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   getUniqueCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,

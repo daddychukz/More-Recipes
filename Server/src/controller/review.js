@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 import db from '../models';
 import errorHandling from './HandleErrors/errorHandling';
 
-const userReview = db.Review;
+const UserReview = db.Review;
 
 /**
  * @class Review
@@ -18,16 +18,16 @@ class Review {
    * @returns {object} review
    */
   static reviewRecipe(request, response) {
-    if (!request.body.Review || request.body.Review.trim().length === 0) {
-      return response.status(406).json({
+    if (!request.body.review || request.body.review.trim().length === 0) {
+      return response.status(400).json({
         message: 'Review Field should not be Empty',
       });
     }
-    userReview.create({
+    UserReview.create({
       userId: request.decoded.userId,
       recipeId: request.params.recipeID,
       fullname: request.decoded.fullname,
-      review: request.body.Review
+      review: request.body.review
     }).then((rev) => {
       response.status(201).json({
         id: rev.id,
@@ -55,7 +55,7 @@ class Review {
    * @returns {array} reviews
    */
   static retrieveReviews(request, response) {
-    userReview
+    UserReview
       .all({
         where: {
           recipeId: request.params.recipeID,
@@ -72,7 +72,9 @@ class Review {
         if (!isEmpty(reviews)) {
           return response.status(200).json({ reviews });
         }
-        response.status(204).send();
+        response.status(404).json({
+          message: 'No Reviews Created'
+        });
       })
       .catch(error => errorHandling.validateRecipeIdErrors(error, response));
   }

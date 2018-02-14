@@ -25,12 +25,12 @@ class MyProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      PublicId: '',
-      FullName: '',
-      About: '',
-      Hobbies: '',
-      Phone: '',
-      Address: '',
+      publicId: '',
+      fullName: '',
+      about: '',
+      hobbies: '',
+      phone: '',
+      address: '',
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
@@ -56,13 +56,13 @@ class MyProfile extends React.Component {
     this.props.getUserProfile().then(
       () => {
         this.setState({
-          FullName: this.props.profile.fullname,
-          Phone: this.props.profile.phone,
-          Address: this.props.profile.address,
-          About: this.props.profile.about,
-          Hobbies: this.props.profile.hobbies,
-          PublicId: this.props.profile.publicUrl,
-          Email: this.props.profile.email,
+          fullName: this.props.profile.fullname,
+          phone: this.props.profile.phone,
+          address: this.props.profile.address,
+          about: this.props.profile.about,
+          hobbies: this.props.profile.hobbies,
+          publicId: this.props.profile.publicUrl,
+          email: this.props.profile.email,
           isLoading: false
         });
       })
@@ -81,13 +81,13 @@ class MyProfile extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const data = {
-      ImageUrl: this.state.ImageUrl,
-      PublicId: this.state.PublicId,
-      FullName: this.state.FullName,
-      About: this.state.About,
-      Hobbies: this.state.Hobbies,
-      Phone: this.state.Phone,
-      Address: this.state.Address
+      imageUrl: this.state.imageUrl,
+      publicId: this.state.publicId,
+      fullName: this.state.fullName,
+      about: this.state.about,
+      hobbies: this.state.hobbies,
+      phone: this.state.phone,
+      address: this.state.address
     };
     this.props.updateUserProfile(data).then(
       () => {
@@ -124,8 +124,8 @@ class MyProfile extends React.Component {
       tags: ['daddy'] },
     (error, result) => {
       this.setState({
-        ImageUrl: result[0].secure_url,
-        PublicId: result[0].public_id
+        imageUrl: result[0].secure_url,
+        publicId: result[0].public_id
       });
     });
   }
@@ -141,9 +141,9 @@ class MyProfile extends React.Component {
   changePassword() {
     const { newPassword, confirmPassword } = this.state;
     const userData = {
-      Password: this.state.newPassword,
-      OldPassword: this.state.oldPassword,
-      UserId: this.props.profile.userId,
+      password: this.state.newPassword,
+      oldPassword: this.state.oldPassword,
+      userId: this.props.profile.userId,
     };
     if (newPassword !== confirmPassword) {
       toastr.error('Passwords do not match');
@@ -190,8 +190,9 @@ class MyProfile extends React.Component {
    * @returns {void}
    */
   logout() {
-    this.props.logout();
-    customHistory.push('/');
+    this.props.logout().then(
+      () => customHistory.push('/')
+    );
   }
 
   /**
@@ -289,7 +290,7 @@ class MyProfile extends React.Component {
                                 />&nbsp;
                                 {this.props.profile.address}
                               </address>
-                              <p>
+                              <p id="phone">
                                 <i
                                   className="fa fa-phone obj-color"
                                   aria-hidden="true"
@@ -297,7 +298,7 @@ class MyProfile extends React.Component {
                                 {this.props.profile.phone}
                               </p>
                               <Link
-                                className="btn btn-info"
+                                className="btn btn-info password"
                                 to="#"
                                 role="button"
                                 data-toggle="modal"
@@ -327,12 +328,12 @@ class MyProfile extends React.Component {
         <EditProfileModal
           onSubmit={this.onSubmit}
           onChange={this.onChange}
-          fullname={this.state.FullName}
-          phone={this.state.Phone}
-          hobbies={this.state.Hobbies}
-          about={this.state.About}
-          address={this.state.Address}
-          publicID={this.state.PublicId}
+          fullname={this.state.fullName}
+          phone={this.state.phone}
+          hobbies={this.state.hobbies}
+          about={this.state.about}
+          address={this.state.address}
+          publicID={this.state.publicId}
           uploadWidget={this.uploadWidget}
         />
       </div>
@@ -370,4 +371,6 @@ const mapDispatchToProps = dispatch => ({
     userActions.updateUserProfile(userData)),
   logout: () => dispatch(userActions.logout())
 });
+
+export { MyProfile as PureProfile };
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);
