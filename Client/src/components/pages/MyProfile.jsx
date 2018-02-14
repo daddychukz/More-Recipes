@@ -52,7 +52,7 @@ class MyProfile extends React.Component {
    *
    * @returns {object} fetches user profile information
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUserProfile().then(
       () => {
         this.setState({

@@ -102,6 +102,14 @@ const fakeData = {
     publicId: 'home_gipmmy.jpg'
   },
 
+  recipeUpdate: {
+    title: 'Egusi soup',
+    description: 'Egusi soup preparation',
+    imageUrl: 'image url',
+    publicId: 'public id'
+
+  },
+
   incompleteRecipe: {
     userId: '0c29ce2f-0dab-4a68-a776-ca1338577cda',
     fullName: 'Emeka Oka',

@@ -153,10 +153,10 @@ describe('MyFavorite test suite', () => {
 
   it('displays default user image', () => {
     props.profile.publicUrl = 'user-male_jvc8hn.jpg';
-    sinon.spy(shallowWrapper.instance(), 'componentWillMount');
+    sinon.spy(shallowWrapper.instance(), 'componentDidMount');
     shallowWrapper.setState(state);
-    shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.calledOnce)
+    shallowWrapper.instance().componentDidMount();
+    expect(shallowWrapper.instance().componentDidMount.calledOnce)
       .toEqual(true);
   });
 });
