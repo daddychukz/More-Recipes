@@ -44,7 +44,7 @@ class MyFavoriteRecipe extends React.Component {
    *
    * @returns { object } fetches users favorite recipes
    */
-  componentWillMount() {
+  componentDidMount() {
     const userId = this.props.user.userId;
     this.props.getFavorite(userId).then(
       () => {

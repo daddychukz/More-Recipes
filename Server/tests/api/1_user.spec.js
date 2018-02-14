@@ -69,8 +69,8 @@ describe('User Signin/Signup', () => {
         newUser.user = res.body.user;
         expect(newUser.user).to.have.property('fullname');
         expect(newUser.user).to.have.property('email');
-        expect(res.body.user.email).to.equal('chuks@yahoo.com');
-        expect(res.body.user.fullname).to.equal('Daddychuks');
+        expect(res.body.user.email).to.equal(fakeData.userOne.email);
+        expect(res.body.user.fullname).to.equal(fakeData.userOne.fullName);
         if (err) return done(err);
         done();
       });
@@ -99,8 +99,8 @@ describe('User Signin/Signup', () => {
         newUser.user2 = res.body.user;
         expect(newUser.user2).to.have.property('fullname');
         expect(newUser.user2).to.have.property('email');
-        expect(res.body.user.email).to.equal('emma@yahoo.com');
-        expect(res.body.user.fullname).to.equal('Emmanuel');
+        expect(res.body.user.email).to.equal(fakeData.userFour.email);
+        expect(res.body.user.fullname).to.equal(fakeData.userFour.fullName);
         if (err) return done(err);
         done();
       });
@@ -382,8 +382,8 @@ describe('User profile test cases', () => {
       .send(fakeData.userUpdate)
       .expect(202)
       .end((error, response) => {
-        expect(response.body.email).to.equal('chuks@yahoo.com');
-        expect(response.body.about).to.equal('learner');
+        expect(response.body.email).to.equal(fakeData.userOne.email);
+        expect(response.body.about).to.equal(fakeData.userUpdate.about);
         expect(response.body).to.haveOwnProperty('fullname');
         expect(response.body).to.haveOwnProperty('username');
         expect(response.body).to.haveOwnProperty('address');

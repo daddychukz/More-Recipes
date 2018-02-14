@@ -11,7 +11,6 @@ module.exports = {
     '/Client/src/reducers/index',
     '/Client/tests/mocks/',
     '/Client/src/store/configStore'
-    // '/Client/src/utils/'
   ],
   collectCoverage: true,
   collectCoverageFrom: [

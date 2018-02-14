@@ -88,11 +88,6 @@ const config = {
       new webpack.HotModuleReplacementPlugin()
     ]) : (
     [
-      new Dotenv({
-        path: './.env', // Path to .env file
-        safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe)
-        systemvars: true
-      }),
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: true
       })

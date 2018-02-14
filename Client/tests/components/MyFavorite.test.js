@@ -120,9 +120,9 @@ describe('MyFavorite test suite', () => {
       recipeId: '8',
       Recipe: {}
     });
-    sinon.spy(shallowWrapper.instance(), 'componentWillMount');
+    sinon.spy(shallowWrapper.instance(), 'componentDidMount');
     shallowWrapper.setState(state);
-    shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.called).toEqual(true);
+    shallowWrapper.instance().componentDidMount();
+    expect(shallowWrapper.instance().componentDidMount.called).toEqual(true);
   });
 });
