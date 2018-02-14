@@ -8,6 +8,7 @@ More-Recipes and  get feedback in form of reviews and votes from other users who
 recipe. Users can also keep a list of their favorite recipes on the application.
 
 <b>View App Here</b> https://chuks-recipes.herokuapp.com/
+<b>View API Documentation Here</b> https://chuks-recipes.herokuapp.com/api-docs
 
 <h3>TECHNOLOGIES USED</h3>
 <hr>
