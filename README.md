@@ -7,8 +7,8 @@ have invented or learnt.  Suppose a user comes up with a recipe,  he/she can pos
 More-Recipes and  get feedback in form of reviews and votes from other users who explore that
 recipe. Users can also keep a list of their favorite recipes on the application.
 
-<b>View App Here</b> https://chuks-recipes.herokuapp.com/
-<b>View API Documentation Here</b> https://chuks-recipes.herokuapp.com/api-docs
+<b>View App Here</b> https://chuks-recipes.herokuapp.com/ <br/><br/>
+<b>View API Doc Here</b> https://chuks-recipes.herokuapp.com/api-docs
 
 <h3>TECHNOLOGIES USED</h3>
 <hr>
