@@ -143,7 +143,9 @@ describe('User Favorite Operations', () => {
       .set('authorization', userToken.token)
       .expect(200)
       .end((err, response) => {
-        expect(response.body.searchResult[0].Recipe.title).to.equal('Yam');
+        expect(response.body.searchResult[0].Recipe.title)
+          .to
+          .equal(fakeData.recipe3.title);
         done();
       });
   });

@@ -46,7 +46,7 @@ class RecipeBox extends React.Component {
    *
    * @returns { object } fetches all recipes
    */
-  componentWillMount() {
+  componentDidMount() {
     const limit = this.state.pagination.limit;
     const offset = this.state.pagination.offset;
     const searchString = this.state.searchString;

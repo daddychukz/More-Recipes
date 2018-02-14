@@ -108,17 +108,17 @@ describe('RecipeBox test suite', () => {
       title: 'yam',
       description: 'preparation'
     });
-    sinon.spy(shallowWrapper.instance(), 'componentWillMount');
-    shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.calledOnce)
+    sinon.spy(shallowWrapper.instance(), 'componentDidMount');
+    shallowWrapper.instance().componentDidMount();
+    expect(shallowWrapper.instance().componentDidMount.calledOnce)
       .toEqual(true);
   });
 
   it('displays loader when recipes is loading', () => {
     state.isLoading = true;
     shallowWrapper.setState(state);
-    shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.called)
+    shallowWrapper.instance().componentDidMount();
+    expect(shallowWrapper.instance().componentDidMount.called)
       .toEqual(true);
     expect(state.isLoading).toBe(true);
   });
@@ -126,8 +126,8 @@ describe('RecipeBox test suite', () => {
   it('displays pagination component', () => {
     props.allRecipe.pagination.totalCount = 5;
     shallowWrapper.setState(state);
-    shallowWrapper.instance().componentWillMount();
-    expect(shallowWrapper.instance().componentWillMount.called)
+    shallowWrapper.instance().componentDidMount();
+    expect(shallowWrapper.instance().componentDidMount.called)
       .toEqual(true);
   });
 });
