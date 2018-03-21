@@ -94,7 +94,6 @@ const config = {
         'ClientId',
         'CloudName',
         'UploadPreset',
-        'NODE_ENV',
         'SECRET'
       ]),
       new webpack.optimize.UglifyJsPlugin({
