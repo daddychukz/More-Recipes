@@ -20,12 +20,14 @@ export default (ComposedComponent) => {
      */
     componentWillMount() {
       const token = localStorage.getItem('jwtToken');
-      jwt.verify(token, process.env.SECRET, (error) => {
-        if (error) {
-          localStorage.removeItem('jwtToken');
-          this.props.history.push('/');
-        }
-      });
+      if (token) {
+        jwt.verify(token, process.env.SECRET, (error) => {
+          if (error) {
+            // localStorage.removeItem('jwtToken');
+            // this.props.history.push('/');
+          }
+        });
+      }
       if (this.props.isAuthenticated) {
         this.props.history.push('/recipe-box');
       }

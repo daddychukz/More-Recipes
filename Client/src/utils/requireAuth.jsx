@@ -25,8 +25,8 @@ export default (ComposedComponent) => {
       const token = localStorage.getItem('jwtToken');
       jwt.verify(token, process.env.SECRET, (error) => {
         if (error) {
-          localStorage.removeItem('jwtToken');
-          this.props.history.push('/');
+          // localStorage.removeItem('jwtToken');
+          // this.props.history.push('/');
         }
       });
     }

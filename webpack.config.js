@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 
+require('dotenv').config();
+
 // resolve path of application
 const path = require('path');
 
@@ -88,6 +90,13 @@ const config = {
       new webpack.HotModuleReplacementPlugin()
     ]) : (
     [
+      new webpack.EnvironmentPlugin([
+        'ClientId',
+        'CloudName',
+        'UploadPreset',
+        'NODE_ENV',
+        'SECRET'
+      ]),
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: true
       })

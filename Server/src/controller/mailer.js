@@ -1,17 +1,12 @@
 import nodemailer from 'nodemailer';
+import sendgridTransport from 'nodemailer-sendgrid-transport';
 
-const setup = () => nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: false,
+const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
+    api_user: process.env.SENDGRID_API_USER,
+    api_key: process.env.SENDGRID_API_PASSWORD
   }
-});
+}));
 
 const from = '"Chuks Recipes" <info@chuksrecipes.com';
 
@@ -23,7 +18,6 @@ const from = '"Chuks Recipes" <info@chuksrecipes.com';
  * @returns {object} message
  */
 const sendResetPasswordEmail = (user) => {
-  const transport = setup();
   const email = {
     from,
     to: user.email,
@@ -37,7 +31,13 @@ const sendResetPasswordEmail = (user) => {
         </a>
         `,
   };
-  transport.sendMail(email);
+  transporter.sendMail(email, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`Message sent: ${info.response}`);
+    }
+  });
 };
 
 export default sendResetPasswordEmail;

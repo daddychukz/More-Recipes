@@ -33,7 +33,10 @@ Template/node_modules/
 Template/src/scss/
 Template/gulpfile.js
 Template/package.json
-server/dist/
+Server/dist/
+Client/dist/
+e2ereports/
+e2etests/
 .env
 .nyc_output/
 .coveralls.yml
