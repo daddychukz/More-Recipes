@@ -41,3 +41,5 @@ e2etests/
 .nyc_output/
 .coveralls.yml
 package-lock.json
+server.js
+package-lock.json

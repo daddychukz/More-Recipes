@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    container_name: recipes
+    restart: always
+    build: .
+    ports:
+      - "8080:5000"

@@ -15,7 +15,7 @@ client.query(query, (err, res) => {
   console.log('>>>>>', res);
 });
 
-postgres://postgres:daddy@10.0.1.4:5432/postgres?ssl=true
+postgres://postgres:chuks@192.168.1.88:5432/postgres?ssl=true
 
 postgres://<username>:<password>@<host>:<portnumber>/<database>?ssl=true
 

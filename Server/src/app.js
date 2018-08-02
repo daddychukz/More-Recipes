@@ -41,7 +41,7 @@ app.get('/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
-app.use(express.static('Client/dist/app'));
+app.use(express.static('Client/dist'));
 app.use(express.static('Client/src'));
 app.use(express.static('Server/public'));
 

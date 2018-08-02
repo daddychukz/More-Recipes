@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuks-app
+  labels:
+    #Project ID
+    app: more-recipes
+spec:
+  #Run two instances of our application
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: more-recipes
+    spec:
+      #Container details
+      containers:
+        - name: more-recipes-app
+          image: gcr.io/andela-learning/recipes:v2
+          # This setting makes nodes pull the docker image every time before
+          # starting the pod. This is useful when debugging, but should be turned
+          # off in production.
+          imagePullPolicy: Always
+          #Ports to expose
+          ports:
+          - name: http-server
+            containerPort: 5000
