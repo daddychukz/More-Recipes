@@ -15,7 +15,7 @@
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "postinstall": "npm run build && npm run client:build",
     "client:build": "webpack -p && cp Client/src/index.html Client/dist/index.html",
-    "prod": "node Server/dist/app.js",
+    "prod": "NODE_ENV=production node Server/dist/app.js",
     "test:client": "jest && codecov",
     "undo:migrations": "sequelize db:migrate:undo:all",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
