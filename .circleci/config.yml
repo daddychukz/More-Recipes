@@ -34,9 +34,9 @@ jobs:
 
       # run tests!
       - run: npm test
-      - run: # run coverage report
-          name: code-coverage
-          command: npm run coverage:all
+    #  - run: # run coverage report
+    #      name: code-coverage
+    #      command: npm run coverage:all
       - store_artifacts: # special step to save test results as as artifact
           path: test-results.xml
           prefix: tests

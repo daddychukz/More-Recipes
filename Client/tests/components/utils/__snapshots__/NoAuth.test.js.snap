@@ -7,9 +7,6 @@ exports[`Component: Authenticate Protected Routes test suite Redirects Authentic
       "push": [MockFunction] {
         "calls": Array [
           Array [
-            "/",
-          ],
-          Array [
             "/recipe-box",
           ],
         ],
@@ -24,13 +21,7 @@ exports[`Component: Authenticate Protected Routes test suite Redirects user to l
 <Home
   history={
     Object {
-      "push": [MockFunction] {
-        "calls": Array [
-          Array [
-            "/",
-          ],
-        ],
-      },
+      "push": [MockFunction],
     }
   }
   isAuthenticated={false}

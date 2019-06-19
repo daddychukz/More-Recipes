@@ -4,13 +4,7 @@ exports[`Component: Authenticate Protected Routes test suite Redirects user to h
 <Connect(ResetPassword)
   history={
     Object {
-      "push": [MockFunction] {
-        "calls": Array [
-          Array [
-            "/",
-          ],
-        ],
-      },
+      "push": [MockFunction],
     }
   }
   isAuthenticated={true}
@@ -23,9 +17,6 @@ exports[`Component: Authenticate Protected Routes test suite Redirects user to h
     Object {
       "push": [MockFunction] {
         "calls": Array [
-          Array [
-            "/",
-          ],
           Array [
             "/",
           ],
