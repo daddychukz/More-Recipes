@@ -34,9 +34,12 @@ jobs:
 
       # run tests!
       - run: npm test
-    #  - run: # run coverage report
-    #      name: code-coverage
-    #      command: npm run coverage:all
+    #   - run: # run coverage report
+    #       name: code-coverage
+    #       command: npm run coverage:all
+      - run: # run coverage report
+          name: Push to Heroku
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git devops-fixes
       - store_artifacts: # special step to save test results as as artifact
           path: test-results.xml
           prefix: tests
